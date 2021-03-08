@@ -43,7 +43,7 @@ Launching nodes
 
 * :code:`roslaunch asclinic template.launch` starts nodes as defined in the file :code:`template.launch` that is located in the :code:`launch/` folder of the :code:`asclinic` package
 
-* :code:`roslaunch asclinic template.launch alsopy:=true` as above but with the argument :code:`alsopy` set to :code:`true`, which is then then used inside the launch file to also launch the template python node
+* :code:`roslaunch asclinic template.launch alsopython:=true` as above but with the argument :code:`alsopython` set to :code:`true`, which is then then used inside the launch file to also launch the template python node
 
 
 Displaying information about nodes

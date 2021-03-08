@@ -77,28 +77,30 @@ The following table summarises the mapping:
 	| Line  | Default        |   Pin   | Default        | Line  |
 	|-------|----------------|---------|----------------|-------|
 	|       | 3.3V Supply    |  1 |  2 | 5.0V Supply    |       |
-	|  !191!| I2C1 SDA       |  3 |  4 | 5.0V Supply    |       |
-	|  !189!| I2C1 SCL       |  5 |  6 | Ground         |       |
-	|   211 | GPIO 09        |  7 |  8 | UART1_TX       |  !203!|
-	|       | Ground         |  9 | 10 | UART1_RX       |  !205!|
-	|  ^207^| UART1_RTS      | 11 | 12 | I2S0_SCLK      |   199 |
-	|   106 | SPI1_SCK       | 13 | 14 | Ground         |       |
-	|  ^218^| GPIO 12        | 15 | 16 | SPI1_CS1       |  ^112^|
-	|       | 3.3V Supply    | 17 | 18 | SPI1_CS0       |   110 |
-	|    89 | SPI0_MOSI      | 19 | 20 | Ground         |       |
-	|    93 | SPI0_MOSO      | 21 | 22 | SPI1_MISO      |  ^108^|
-	|    91 | SPI0_SCK       | 23 | 24 | SPI0_CS0       |    95 |
-	|       | Ground         | 25 | 26 | SPI0_CS0       |    97 |
-	|  !187!| I2C0           | 27 | 28 | I2C0 SCL       |  !185!|
-	|   118 | GPIO 01        | 29 | 30 | Ground         |       |
-	|  ^216^| GPIO 11        | 31 | 32 | GPIO 07        |  ^206^|
-	|   228 | GPIO 13        | 33 | 34 | Ground         |       |
-	|   197 | I2S_FS         | 35 | 36 | UART1_CTS      |   209 |
-	|   104 | SPI1_MOSI      | 37 | 38 | I2S0_SDIN      |   195 |
-	|       | Ground         | 25 | 26 | I2S0_SDOUT     |   193 |
+	|       | I2C1 SDA       |  3 |  4 | 5.0V Supply    |       |
+	|       | I2C1 SCL       |  5 |  6 | Ground         |       |
+	|   148 | GPIO 09        |  7 |  8 | UART1_TX       |       |
+	|       | Ground         |  9 | 10 | UART1_RX       |       |
+	|   140 | UART1_RTS      | 11 | 12 | I2S0_SCLK      |   157 |
+	|   192 | SPI1_SCK       | 13 | 14 | Ground         |       |
+	|    20 | GPIO 12        | 15 | 16 | SPI1_CS1       |   196 |
+	|       | 3.3V Supply    | 17 | 18 | SPI1_CS0       |   195 |
+	|   205 | SPI0_MOSI      | 19 | 20 | Ground         |       |
+	|   204 | SPI0_MOSO      | 21 | 22 | SPI1_MISO      |   193 |
+	|   203 | SPI0_SCK       | 23 | 24 | SPI0_CS0       |   206 |
+	|       | Ground         | 25 | 26 | SPI0_CS0       |   207 |
+	|       | I2C0           | 27 | 28 | I2C0 SCL       |       |
+	|   133 | GPIO 01        | 29 | 30 | Ground         |       |
+	|   134 | GPIO 11        | 31 | 32 | GPIO 07        |   136 |
+	|   105 | GPIO 13        | 33 | 34 | Ground         |       |
+	|   160 | I2S_FS         | 35 | 36 | UART1_CTS      |   141 |
+	|   194 | SPI1_MOSI      | 37 | 38 | I2S0_SDIN      |   159 |
+	|       | Ground         | 25 | 26 | I2S0_SDOUT     |   158 |
 	|-------|----------------|---------|----------------|-------|
 
 
-.. note:: the :code:`Tegra line` numbers marked with exclamation marks, i.e., of the form :code:`!xxx!`, should **NOT** be used as GPIO pins. The information displayed by :code:`sudo gpioinfo tegra-gpio` lists these lines as :code:`unused`, but they should still **NOT** be used as GPIO pins
+..
+	.. note:: the :code:`Tegra line` numbers marked with exclamation marks, i.e., of the form :code:`!xxx!`, should **NOT** be used as GPIO pins. The information displayed by :code:`sudo gpioinfo tegra-gpio` lists these lines as :code:`unused`, but they should still **NOT** be used as GPIO pins
 
-.. note:: the :code:`Tegra line` numbers marked with hats, i.e., of the form :code:`^xxx^`, did not work when tested without additional configuration..
+..
+	.. note:: the :code:`Tegra line` numbers marked with hats, i.e., of the form :code:`^xxx^`, did not work when tested without additional configuration..
