@@ -1,0 +1,102 @@
+.. _comm-protocol-GPIO:
+
+Single Pin GPIO (General Purpose Input Output)
+==============================================
+
+A single pin GPIO has only two states, :code:`0` and :code:`1`, which can be either driven by the computer associated with the GPIO pin, or driven by an external device connected to the pin. The timing of driving changes between the two states can be arbitary up to the resolution of the microcontroller that controls the GPIO.
+
+For interfacing with the GPIO pins, we use the library :code:`libgpiod`, which stands for:
+
+:code:`lib`\_rary for :code:`g`\_eneral :code:`p`\_urpose :code:`i`\_nput/:code:`o`\_utput :code:`d`\_evices
+
+For an Ubuntu operating system, this library can be is installed via:
+
+.. code-block:: bash
+
+	sudo apt install gpiod
+
+Further details of :code:`libgpiod` can be found here:
+
+https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git/about/
+
+The following is a helpful presentation to get startup with using :code:`libgpiod`:
+
+* `PDF of slides <https://ostconf.com/system/attachments/files/000/001/532/original/Linux_Piter_2018_-_New_GPIO_interface_for_linux_userspace.pdf?1541021776>`_
+* Recorded presentation: https://youtu.be/BK6gOLVRKuU
+
+
+
+Other libraries considered were :code:`sysfs`
+
+https://blog.adafruit.com/2018/11/26/sysfs-is-dead-long-live-libgpiod-libgpiod-for-linux-circuitpython/
+
+
+And :code:`WiringPi`:
+
+http://wiringpi.com/
+
+http://wiringpi.com/wiringpi-deprecated/
+
+And :code:`jetson-gpio`:
+
+https://github.com/NVIDIA/jetson-gpio
+
+A compehensive list of possible GPIO libraries is found here:
+
+https://elinux.org/RPi_GPIO_Code_Samples#wiringPi_-_gpio_utility
+
+Some hints for using :code:`libgpiod` can be found here:
+
+https://microchipdeveloper.com/32mpu:apps-gpio
+
+https://stackoverflow.com/questions/51310506/using-c-libgpiod-library-how-can-i-set-gpio-lines-to-be-outputs-and-manipulat
+
+`<https://ostconf.com/system/attachments/files/000/001/532/original/Linux_Piter_2018_-_New_GPIO_interface_for_linux_userspace.pdf?1541021776>`_
+
+The command line tools provided by :code:`libgpiod` are:
+- :code:`gpiodetect` list all gpiochips present on the system, their names, labels and number of GPIO lines
+- :code:`gpioinfo` list all lines of specified gpiochips, their names, consumers, direction, active state and additional flags
+- :code:`gpioget` read values of specified GPIO lines
+- :code:`gpioset` set values of specified GPIO lines, potentially keep the lines exported and wait until timeout, user input or signal
+- :code:`gpiofind` find the gpiochip name and line offset given the line name
+- :code:`gpiomon` wait for events on GPIO lines, specify which events to watch, how many events to process before exiting or if the events should be reported to the console
+
+For the Jetson TX2 Developer Kit, the command:
+
+.. code-block:: bash
+
+	sudo gpiodetect
+
+
+should display the following:
+
+.. code-block:: bash
+
+	gpiochip0 [tegra-gpio] (192 lines)
+	gpiochip1 [tegra-gpio-aon] (64 lines)
+	gpiochip2 [tca9539] (16 lines)
+	gpiochip3 [tca9539] (16 lines)
+	gpiochip4 [max77620-gpio] (8 lines)
+
+All the GPIO line of the J21 40-pin expansion header are connected into the :code:`tegra-gpio`, i.e., into :code:`gpiochip0`.
+
+To display the details of the 192 `tegra-gpio` line, use either of the following commands:
+```
+sudo gpioinfo gpiochip0
+sudo gpioinfo tegra-gpio
+```
+This should list most of the lines as `unnamed` `unused` `input` `active-high`.
+
+
+Test that a GPIO input is working
+*********************************
+
+The :code:`gpioget` and :code:`gpiomon` command line tools can be used to perform a quick test that a input to a GPIO pin is properly connected and functioning as expected.
+
+To read the value, :code:`{0,1}`, from the GPIO pin, used the command:
+
+.. code-block:: bash
+
+	sudo gpioget <gpio_chip_name> <line_number>
+
+For example, if the input is connected to pin 18 of the J21 expansion header, then according to the table above pin 18 connects to line 161 of the :code:`tegra-gpio` chip. Hence you can read the value of pin 18 with the
