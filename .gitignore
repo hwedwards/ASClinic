@@ -1,2 +1,9 @@
 # Ignore the _build directory of the documentation
 docs/_build/
+
+# Ignore the "build" and "devel" folder of the catkin_ws
+catkin_ws/build/
+catkin_ws/devel/
+
+# Ignore the auto-generated "CMakeLists.txt" if the catkin_ws
+catkin_ws/src/CMakeLists.txt
