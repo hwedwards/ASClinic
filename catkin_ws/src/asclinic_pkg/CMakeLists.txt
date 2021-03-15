@@ -137,6 +137,7 @@ catkin_package(
 # )
 include_directories(
   include
+  src/drivers/src/
   #include/nodes
   ${catkin_INCLUDE_DIRS}
 )
@@ -159,6 +160,9 @@ include_directories(
 # TEMPLATE CPP NODE:
 add_executable(template_cpp_node          src/nodes/template_cpp_node.cpp)
 add_executable(template_cpp_node_minimal  src/nodes/template_cpp_node_minimal.cpp)
+add_executable(template_gpio              src/nodes/template_gpio.cpp)
+add_executable(template_i2c               src/nodes/template_i2c.cpp
+                                          src/drivers/src/i2c_driver/i2c_driver.cpp)
 
 
 ## Rename C++ executable without prefix
@@ -174,6 +178,8 @@ add_executable(template_cpp_node_minimal  src/nodes/template_cpp_node_minimal.cp
 # TEMPLATE CPP NODE:
 add_dependencies(template_cpp_node          asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(template_cpp_node_minimal  asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(template_gpio              asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(template_i2c               asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 
 
 ## Specify libraries to link a library or executable target against
@@ -184,6 +190,8 @@ add_dependencies(template_cpp_node_minimal  asclinic_pkg_generate_messages_cpp $
 # TEMPLATE CPP NODE
 target_link_libraries(template_cpp_node          ${catkin_LIBRARIES})
 target_link_libraries(template_cpp_node_minimal  ${catkin_LIBRARIES})
+target_link_libraries(template_gpio              ${catkin_LIBRARIES} -lgpiod)
+target_link_libraries(template_i2c               ${catkin_LIBRARIES} -lgpiod)
 
 
 #############

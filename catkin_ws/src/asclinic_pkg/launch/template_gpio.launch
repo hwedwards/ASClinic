@@ -1,0 +1,15 @@
+<launch>
+
+	<!-- START A GROUP WITH NAMESPACE "template" -->
+	<group ns="template_namespace_for_launch_group">
+		<!-- LAUNCH A "Template GPIO" NODE -->
+		<node
+			pkg    = "asclinic_pkg"
+			name   = "template_gpio"
+			output = "screen"
+			type   = "template_gpio"
+		/>
+
+	</group>
+
+</launch>

@@ -1,0 +1,15 @@
+<launch>
+
+	<!-- START A GROUP WITH NAMESPACE "template" -->
+	<group ns="template_namespace_for_launch_group">
+		<!-- LAUNCH A "Template I2C" NODE -->
+		<node
+			pkg    = "asclinic_pkg"
+			name   = "template_i2c"
+			output = "screen"
+			type   = "template_i2c"
+		/>
+
+	</group>
+
+</launch>
