@@ -83,24 +83,26 @@ The following table summarises the mapping:
 	|       | Ground         |  9 | 10 | UART1_RX       |       |
 	|   140 | UART1_RTS      | 11 | 12 | I2S0_SCLK      |   157 |
 	|   192 | SPI1_SCK       | 13 | 14 | Ground         |       |
-	|    20 | GPIO 12        | 15 | 16 | SPI1_CS1       |   196 |
+	|  ^ 20^| GPIO 12        | 15 | 16 | SPI1_CS1       |   196 |
 	|       | 3.3V Supply    | 17 | 18 | SPI1_CS0       |   195 |
 	|   205 | SPI0_MOSI      | 19 | 20 | Ground         |       |
 	|   204 | SPI0_MOSO      | 21 | 22 | SPI1_MISO      |   193 |
 	|   203 | SPI0_SCK       | 23 | 24 | SPI0_CS0       |   206 |
 	|       | Ground         | 25 | 26 | SPI0_CS0       |   207 |
-	|       | I2C0           | 27 | 28 | I2C0 SCL       |       |
+	|       | I2C0 SDA       | 27 | 28 | I2C0 SCL       |       |
 	|   133 | GPIO 01        | 29 | 30 | Ground         |       |
 	|   134 | GPIO 11        | 31 | 32 | GPIO 07        |   136 |
 	|   105 | GPIO 13        | 33 | 34 | Ground         |       |
 	|   160 | I2S_FS         | 35 | 36 | UART1_CTS      |   141 |
 	|   194 | SPI1_MOSI      | 37 | 38 | I2S0_SDIN      |   159 |
-	|       | Ground         | 25 | 26 | I2S0_SDOUT     |   158 |
+	|       | Ground         | 39 | 40 | I2S0_SDOUT     |   158 |
 	|-------|----------------|---------|----------------|-------|
 
+
+.. note::
+	Pins (3,5) correspond to I2C bus 8, and pins (27,28) correspond to I2C bus 1. Hence the connected devices can be quickly checked from command line using: :code:`sudo i2cdetect -y -r <bus_number>` where :code:`<bus_number>` is replaced by 8 or 1.
 
 ..
 	.. note:: the :code:`Tegra line` numbers marked with exclamation marks, i.e., of the form :code:`!xxx!`, should **NOT** be used as GPIO pins. The information displayed by :code:`sudo gpioinfo tegra-gpio` lists these lines as :code:`unused`, but they should still **NOT** be used as GPIO pins
 
-..
-	.. note:: the :code:`Tegra line` numbers marked with hats, i.e., of the form :code:`^xxx^`, did not work when tested without additional configuration..
+.. note:: the :code:`Tegra line` numbers marked with hats, i.e., of the form :code:`^xxx^`, did not work when tested without additional configuration..

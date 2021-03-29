@@ -12,6 +12,14 @@ The `ROS Tutorials <http://wiki.ros.org/ROS/Tutorials>`_ are a great place to st
 * `Understanding ROS Nodes <http://wiki.ros.org/ROS/Tutorials/UnderstandingNodes>`_
 
 
+What is ROS?
+************
+The best answer to this is given on the `ROS wiki page <http://wiki.ros.org/ROS/Introduction>`_ where it states:
+
+* *ROS is an open-source, meta-operating system for your robot. It provides the services you would expect from an operating system, including hardware abstraction, low-level device control, implementation of commonly-used functionality, message-passing between processes, and package management. It also provides tools and libraries for obtaining, building, writing, and running code across multiple computers*
+
+See the `home page of the ROS wiki <http://wiki.ros.org>`_ for the familiarising with various aspects of ROS.
+
 Compiling
 *********
 

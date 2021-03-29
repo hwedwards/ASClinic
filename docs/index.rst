@@ -21,6 +21,8 @@ This wiki is expected to grow and expand as semester progresses, and everyone is
 	hardware/power_supply
 	hardware/single_board_computers
 	hardware/communication_protocols
+	software/workflows
+
 
 
 

@@ -62,10 +62,10 @@ Power a Robot
 1. :ref:`Turn on <voltaic-v88-on-off>` the Voltaic V88 power bank.
 2. If the Voltaic V88 has two or fewer bars, then :ref:`charge it <voltaic-v88-charge-from-ac>` before proceeding.
 3. :ref:`Select the voltage <voltaic-v88-change-voltage>` necessary for your robot.
-4. Pur the Voltaic V88 in :ref:`Always On Mode <voltaic-v88-always-on>`.
-5. Plug in the DC cable to the **DC Output Port** if the Voltaic V88.
-6. Plug in the DC cable to the DC power jack of your robot.
-7. Press the power button on the Voltaic V88 to begin powering your robot.
+4. :ref:`Turn off <voltaic-v88-on-off>` the Voltaic V88 power bank.
+5. Connect the power jack of your robot to the **DC Output Port** of the Voltaic V88.
+6. Press the power button on the Voltaic V88 to begin powering your robot.
+7. Put the Voltaic V88 in :ref:`Always On Mode <voltaic-v88-always-on>` to prevent an unexpected shutdown during periods of low current draw.
 
 .. warning:: Do NOT simultaneously charge the Voltaic V88 power bank and use it to power your robot.
 

@@ -100,3 +100,13 @@ To read the value, :code:`{0,1}`, from the GPIO pin, used the command:
 	sudo gpioget <gpio_chip_name> <line_number>
 
 For example, if the input is connected to pin 18 of the J21 expansion header, then according to the table above pin 18 connects to line 161 of the :code:`tegra-gpio` chip. Hence you can read the value of pin 18 with the
+
+.. code-block:: bash
+
+	sudo gpioget tegra-gpio 161
+
+To monitor a line for multiple of a particular event, use the following:
+
+.. code-block:: bash
+
+	sudo gpiomon --num-events=3 --rising-edge tegra-gpio 161
