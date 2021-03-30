@@ -85,6 +85,7 @@ private:
 	//   CCCC   OOO   N   N  SSSS     T    R   R   UUU    CCCC    T     OOO   R   R
 	// ----------------------------------------------------------------------------
 public:
+	Pololu_SMC_G2();
 	Pololu_SMC_G2(I2C_Driver * i2c_driver);
 	Pololu_SMC_G2(I2C_Driver * i2c_driver, uint8_t address);
 

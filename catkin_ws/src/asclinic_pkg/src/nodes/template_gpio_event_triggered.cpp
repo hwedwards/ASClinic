@@ -28,16 +28,19 @@
 #include <gpiod.h>
 
 
+
+
+
 // Respond to subscriber receiving a message
 void templateSubscriberCallback(const std_msgs::Int32& msg)
 {
-	ROS_INFO_STREAM("[TEMPLATE GPIO] Message receieved with data = " << msg.data);
+	ROS_INFO_STREAM("[TEMPLATE GPIO EVENT TRIG.] Message receieved with data = " << msg.data);
 }
 
 int main(int argc, char* argv[])
 {
 	// Initialise the node
-	ros::init(argc, argv, "template_gpio");
+	ros::init(argc, argv, "template_gpio_event_triggered");
 	ros::NodeHandle nodeHandle("~");
 	// Initialise a publisher
 	ros::Publisher gpio_event_publisher = nodeHandle.advertise<std_msgs::Int32>("gpio_event", 10, false);
@@ -50,8 +53,30 @@ int main(int argc, char* argv[])
 	// > Note: for the 40-pin header of the Jetson SBCs, this
 	//   is "/dev/gpiochip0"
 	const char * gpio_chip_name = "/dev/gpiochip0";
-	// Specify the line GPIO number of the connected device
-	int line_number = 148;
+
+	// Get the GPIO line number to monitor
+	// Notes:
+	// > If you look at the "template_gpio.launch" file located in
+	//   the "launch" folder, you see the following lines of code:
+	//       <param
+	//           name   = "line_number"
+	//           value  = 148
+	//       />
+	// > These lines of code add a parameter named "line_number"
+	//   to the this node.
+	// > Thus, to access this "line_number" parameter, we first
+	//   get a handle to this node within the namespace that it
+	//   was launched.
+	//std::string namespace = ros::this_node::getNamespace();
+	int line_number = 0;
+	if ( !nodeHandle.getParam("line_number", line_number) )
+	{
+		ROS_INFO("[TEMPLATE GPIO EVENT TRIG.] FAILED to get \"line_number\" parameter. Using default value instead.");
+		// Set the line number to a default value
+		line_number = 148;
+	}
+	// > Display the line number being monitored
+	ROS_INFO_STREAM("[TEMPLATE GPIO EVENT TRIG.] Will monitor \"line_number\" = " << line_number);
 
 	// Initialise a GPIO chip, line, and event object
 	struct gpiod_chip *chip;
@@ -81,23 +106,23 @@ int main(int argc, char* argv[])
 	//   of this line is low.
 	int value;
 	value = gpiod_ctxless_get_value(gpio_chip_name, line_number, false, "foobar");
-	ROS_INFO_STREAM("[TEMPLATE GPIO] On startup of node, chip " << gpio_chip_name << " line " << line_number << " returned value = " << value);
+	ROS_INFO_STREAM("[TEMPLATE GPIO EVENT TRIG.] On startup of node, chip " << gpio_chip_name << " line " << line_number << " returned value = " << value);
 
 	// Open the GPIO chip
 	chip = gpiod_chip_open(gpio_chip_name);
 	// Retrieve the GPIO line
 	line = gpiod_chip_get_line(chip,line_number);
 	// Display the status
-	ROS_INFO_STREAM("[TEMPLATE GPIO] Chip " << gpio_chip_name << " opened and line " << line_number << " retrieved");
+	ROS_INFO_STREAM("[TEMPLATE GPIO EVENT TRIG.] Chip " << gpio_chip_name << " opened and line " << line_number << " retrieved");
 
 	// Request the line events to be mointored
-	// Note: only one of these should be uncommented
+	// > Note: only one of these should be uncommented
 	//gpiod_line_request_rising_edge_events(line, "foobar");
 	//gpiod_line_request_falling_edge_events(line, "foobar");
 	gpiod_line_request_both_edges_events(line, "foobar");
 
 	// Display the line event values for rising and falling
-	ROS_INFO_STREAM("[TEMPLATE GPIO] The constants defined for distinguishing line events are:, GPIOD_LINE_EVENT_RISING_EDGE = " << GPIOD_LINE_EVENT_RISING_EDGE << ", and GPIOD_LINE_EVENT_FALLING_EDGE = " << GPIOD_LINE_EVENT_FALLING_EDGE);
+	ROS_INFO_STREAM("[TEMPLATE GPIO EVENT TRIG.] The constants defined for distinguishing line events are:, GPIOD_LINE_EVENT_RISING_EDGE = " << GPIOD_LINE_EVENT_RISING_EDGE << ", and GPIOD_LINE_EVENT_FALLING_EDGE = " << GPIOD_LINE_EVENT_FALLING_EDGE);
 
 	// Enter a loop that continues while ROS is still running
 	while (ros::ok())
@@ -162,17 +187,17 @@ int main(int argc, char* argv[])
 					case -1:
 					{
 						// Display the status
-						ROS_INFO("[TEMPLATE GPIO] gpiod_line_event_wait returned the status that an error occurred");
+						ROS_INFO("[TEMPLATE GPIO EVENT TRIG.] gpiod_line_event_wait returned the status that an error occurred");
 						break;
 					}
 
 					default:
 					{
 						// Display the status
-						ROS_INFO_STREAM("[TEMPLATE GPIO] gpiod_line_event_read returned an unrecognised status, return_flag =  " << returned_read_flag );
+						ROS_INFO_STREAM("[TEMPLATE GPIO EVENT TRIG.] gpiod_line_event_read returned an unrecognised status, return_flag =  " << returned_read_flag );
 						break;
 					}
-				}
+				} // END OF: "switch (returned_read_flag)"
 				break;
 			}
 
@@ -190,18 +215,18 @@ int main(int argc, char* argv[])
 			case -1:
 			{
 				// Display the status
-				ROS_INFO("[TEMPLATE GPIO] gpiod_line_event_wait returned the status that an error occurred");
+				ROS_INFO("[TEMPLATE GPIO EVENT TRIG.] gpiod_line_event_wait returned the status that an error occurred");
 				break;
 			}
 
 			default:
 			{
 				// Display the status
-        			ROS_INFO_STREAM("[TEMPLATE GPIO] gpiod_line_event_wait returned an unrecognised status, return_flag =  " << returned_wait_flag );
+				ROS_INFO_STREAM("[TEMPLATE GPIO EVENT TRIG.] gpiod_line_event_wait returned an unrecognised status, return_flag =  " << returned_wait_flag );
 				break;
 			}
-		}
-	}
+		} // END OF: "switch (returned_wait_flag)"
+	} // END OF: "while (ros::ok())"
 
 	// Close the GPIO chip
 	gpiod_chip_close(chip);
