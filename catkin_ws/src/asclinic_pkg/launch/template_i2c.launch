@@ -2,14 +2,21 @@
 
 	<!-- START A GROUP WITH NAMESPACE "template" -->
 	<group ns="template_namespace_for_launch_group">
-		<!-- LAUNCH A "Template I2C" NODE -->
+		<!-- LAUNCH A "Template I2C Internal" NODE -->
 		<node
 			pkg    = "asclinic_pkg"
-			name   = "template_i2c"
+			name   = "template_i2c_internal"
 			output = "screen"
-			type   = "template_i2c"
+			type   = "template_i2c_internal"
 		/>
 
+		<!-- LAUNCH A "Template I2C External" NODE -->
+		<node
+			pkg    = "asclinic_pkg"
+			name   = "template_i2c_external"
+			output = "screen"
+			type   = "template_i2c_external"
+		/>
 	</group>
 
 </launch>

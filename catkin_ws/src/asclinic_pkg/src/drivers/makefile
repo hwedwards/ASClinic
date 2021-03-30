@@ -20,40 +20,67 @@ $(info List of header files found:)
 $(info > $(HEADERS))
 $(info )
 
-# Auto-generate a list of all source files
+# Auto-generate a list of all C++ source files
 # > Specify the extension of source files
-SRCEXT := cpp
+SRCEXTCPP := cpp
 # > Find all files with this extension in the source directory
-SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
+SOURCESCPP := $(shell find $(SRCDIR) -type f -name *.$(SRCEXTCPP))
 # > Echo the list of sources
-$(info List of source files found:)
-$(info > $(SOURCES))
+$(info List of C++ source files found:)
+$(info > $(SOURCESCPP))
+$(info )
+
+
+# Auto-generate a list of all C source files
+# > Specify the extension of source files
+SRCEXTC := c
+# > Find all files with this extension in the source directory
+SOURCESC := $(shell find $(SRCDIR) -type f -name *.$(SRCEXTC))
+# > Echo the list of sources
+$(info List of C source files found:)
+$(info > $(SOURCESC))
 $(info )
 
 # Auto-generate a list of all object files
-# to be compiled. The same as the "SOURCES"
-# list but with the extension and directory
-# changed.
+# to be compiled from C++ code.
+# > The same as the "SOURCESCPP" list but with
+#   the extension and directory changed.
 # > ".cpp" is replaced with ".o" by using the
-#   modifier ".$(SRCEXT)=.o"
+#   modifier ".$(SRCEXTCPP)=.o"
 # > "$(SRCDIR)/" is repalced with "$(BUILDDIR)/"
 #   by using the "patsubstr" function ("pattern
 #   substitute string"), see:
 #   https://www.gnu.org/software/make/manual/html_node/Text-Functions.html
 #   for documentation of the function
-OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-#TEMPSRCNODIR := $(notdir $(SOURCES))
-#OBJECTS := $(addprefix $(BUILDDIR)/,$(TEMPSRCNODIR:.$(SRCEXT)=.o))
+OBJECTSCPP := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCESCPP:.$(SRCEXTCPP)=.o))
+#TEMPSRCNODIR := $(notdir $(SOURCESCPP))
+#OBJECTSCPP := $(addprefix $(BUILDDIR)/,$(TEMPSRCNODIR:.$(SRCEXTCPP)=.o))
 # > Echo the list of objects
-$(info List of objects to be generated:)
-$(info > $(OBJECTS))
+$(info List of objects to be generated from C++ code:)
+$(info > $(OBJECTSCPP))
 $(info )
 # Ensure that a directory exists for all the objects
-$(shell mkdir -p $(dir $(OBJECTS)))
+$(shell mkdir -p $(dir $(OBJECTSCPP)))
+
+# Auto-generate a list of all object files
+# to be compiled from C-code.
+# > The same as the "SOURCESC" list but with
+#   the extension and directory changed.
+OBJECTSC := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCESC:.$(SRCEXTC)=.o))
+# > Echo the list of objects
+$(info List of objects to be generated from C code:)
+$(info > $(OBJECTSC))
+$(info )
+# Ensure that a directory exists for all the objects
+$(shell mkdir -p $(dir $(OBJECTSC)))
 
 # Specify the test source code and target directories
 TESTSRCDIR := test
 TARGETDIR := bin
+
+# Ensure that a directory exists for the targets
+$(shell mkdir -p $(TARGETDIR))
+
 
 # Auto-generate a list of all test source files
 # > Specify the extension of source files
@@ -95,8 +122,8 @@ $(info )
 
 all: $(TARGETS)
 
-$(TARGETS): $(TESTOBJECTS) $(OBJECTS)
-	$(CC) -o $@ $(subst $(TARGETDIR),$(BUILDDIR),$@).o $(OBJECTS) -lgpiod
+$(TARGETS): $(TESTOBJECTS) $(OBJECTSCPP) $(OBJECTSC)
+	$(CC) -o $@ $(subst $(TARGETDIR),$(BUILDDIR),$@).o $(OBJECTSCPP) $(OBJECTSC) -lgpiod
 	@echo " Linking..."
 
 #$(TARGET): $(BUILDDIR)/test.o $(BUILDDIR)/i2c_driver.o $(BUILDDIR)/pololu_smc_g2.o
@@ -105,14 +132,17 @@ $(TARGETS): $(TESTOBJECTS) $(OBJECTS)
 
 
 
-$(TESTOBJECTS) : $(patsubst $(BUILDDIR)/%,$(TESTSRCDIR)/%,$(@:.o=.$(SRCEXT))) $(HEADERS)
-	$(CC) -o $@ -c $(patsubst $(BUILDDIR)/%,$(TESTSRCDIR)/%,$(@:.o=.$(SRCEXT))) -I$(SRCDIR)
+$(TESTOBJECTS) : $(patsubst $(BUILDDIR)/%,$(TESTSRCDIR)/%,$(@:.o=.$(SRCEXTCPP))) $(HEADERS)
+	$(CC) -o $@ -c $(patsubst $(BUILDDIR)/%,$(TESTSRCDIR)/%,$(@:.o=.$(SRCEXTCPP))) -I$(SRCDIR)
 
 #$(BUILDDIR)/test.o : $(SRCDIR)/test.cpp $(SRCDIR)/i2c_driver/i2c_driver.h
 #	$(CC) -o $(BUILDDIR)/test.o -c $(SRCDIR)/test.cpp -I$(SRCDIR)/i2c_driver
 
-$(OBJECTS) : $(patsubst $(BUILDDIR)/%,$(SRCDIR)/%,$(@:.o=.$(SRCEXT))) $(patsubst $(BUILDDIR)/%,$(SRCDIR)/%,$(@:.0=.h))
-	$(CC) -o $@ -c $(patsubst $(BUILDDIR)/%,$(SRCDIR)/%,$(@:.o=.$(SRCEXT))) -I$(SRCDIR)
+$(OBJECTSCPP) : $(patsubst $(BUILDDIR)/%,$(SRCDIR)/%,$(@:.o=.$(SRCEXTCPP))) $(patsubst $(BUILDDIR)/%,$(SRCDIR)/%,$(@:.0=.h))
+	$(CC) -o $@ -c $(patsubst $(BUILDDIR)/%,$(SRCDIR)/%,$(@:.o=.$(SRCEXTCPP))) -I$(SRCDIR)
+
+$(OBJECTSC) : $(patsubst $(BUILDDIR)/%,$(SRCDIR)/%,$(@:.o=.$(SRCEXTC))) $(patsubst $(BUILDDIR)/%,$(SRCDIR)/%,$(@:.0=.h))
+	$(CC) -o $@ -c $(patsubst $(BUILDDIR)/%,$(SRCDIR)/%,$(@:.o=.$(SRCEXTC))) -I$(SRCDIR)
 
 #$(BUILDDIR)/i2c_driver.o : $(SRCDIR)/i2c_driver/i2c_driver.cpp $(SRCDIR)/i2c_driver/i2c_driver.h
 #	$(CC) -o $(BUILDDIR)/i2c_driver.o -c $(SRCDIR)/i2c_driver/i2c_driver.cpp -I$(SRCDIR)/i2c_driver

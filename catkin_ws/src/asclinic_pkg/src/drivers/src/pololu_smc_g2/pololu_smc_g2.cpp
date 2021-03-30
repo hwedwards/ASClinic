@@ -34,6 +34,12 @@
 //  C      O   O  N  NN      S    T    R   R  U   U  C        T    O   O  R   R
 //   CCCC   OOO   N   N  SSSS     T    R   R   UUU    CCCC    T     OOO   R   R
 // ----------------------------------------------------------------------------
+Pololu_SMC_G2::Pololu_SMC_G2()
+{
+	this->m_i2c_address = POLOLU_SMC_G2_I2C_ADDRESS_DEFAULT;
+	//this->m_i2c_driver = i2c_driver;
+}
+
 Pololu_SMC_G2::Pololu_SMC_G2(I2C_Driver * i2c_driver)
 {
 	this->m_i2c_address = POLOLU_SMC_G2_I2C_ADDRESS_DEFAULT;

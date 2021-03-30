@@ -2,12 +2,28 @@
 
 	<!-- START A GROUP WITH NAMESPACE "template" -->
 	<group ns="template_namespace_for_launch_group">
-		<!-- LAUNCH A "Template GPIO" NODE -->
+		<!-- LAUNCH A "Template GPIO Event Triggered" NODE -->
 		<node
 			pkg    = "asclinic_pkg"
-			name   = "template_gpio"
+			name   = "template_gpio_event_triggered"
 			output = "screen"
-			type   = "template_gpio"
+			type   = "template_gpio_event_triggered"
+		/>
+		<param
+			name   = "line_number"
+			value  = "148"
+		/>
+
+		<!-- LAUNCH A "Template GPIO Polling" NODE -->
+		<node
+			pkg    = "asclinic_pkg"
+			name   = "template_gpio_polling"
+			output = "screen"
+			type   = "template_gpio_polling"
+		/>
+		<param
+			name   = "line_number"
+			value  = "157"
 		/>
 
 	</group>
