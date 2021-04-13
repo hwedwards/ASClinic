@@ -60,8 +60,10 @@ List the current configuration using:
 .. warning:: Do **NOT** choose a :code:`tegra-gpio` line at random for your GPIO use case, even if it is listed as :code:`unused`. Only use lines that are documented as mapping to a specific pin on the J12 40-pin expansion header.
 
 
+.. _sbc-jetson-xavier-nx-pin-mapping:
+
 Mapping pin number to line number
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A mapping from pin-number on the J12 40-pin expansion header to the line-number is also given on `this page on the Jetson hacks website <https://www.jetsonhacks.com/nvidia-jetson-xavier-nx-gpio-header-pinout/>`_.
 

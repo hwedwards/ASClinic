@@ -7,17 +7,18 @@ Once the device is physically connected to a GPIO, and before attempting to inte
 See the :ref:`GPIO page <comm-protocol-GPIO>` for details of the command line tools, and see the :ref:`SBC page <single-board-computers>` for details of the GPIO pins for the relevant SBC.
 
 
-For example, if the input is connected to pin 7 of the J21 expansion header of the Jetson Xavier NX, then this corresponds to line 148 of the :code:`gpiochip0` chip. Hence you can read the value of pin 7 with the command:
+For example, if the input is connected to pin 7 of the J21 expansion header of the Jetson Xavier NX, then this corresponds to line 148 of the :code:`gpiochip0` chip (:ref:`see the table here for this pin-to-line-number mapping <sbc-jetson-xavier-nx-pin-mapping>`).
+Hence you can read the value of pin 7 with the command:
 
 .. code-block:: bash
 
-	sudo gpioget gpiochip0 148
+  sudo gpioget gpiochip0 148
 
 To monitor a line for multiple of a particular event, use the command:
 
 .. code-block:: bash
 
-	sudo gpiomon --num-events=3 --rising-edge gpiochip0 148
+  sudo gpiomon --num-events=3 --rising-edge gpiochip0 148
 
 To interface with a single GPIO pin via a ROS node, there are two templates provided:
 
@@ -45,20 +46,25 @@ Then you can launch the template GPIO nodes with:
 
 
 .. note::
+  **GPIOD Library:**
   `This website <https://libgpiod-dlang.dpldocs.info/gpiod.html>`_ provides a comprehensive list of all the function offered by the :code:`gpiod` library for monitoring a GPIO pin.
 
 
 
 .. note::
-  The line number to monitor is specified as a parameter in the launch file.
+  **Adding parameters to nodes in the launch file:**
+  The line number to monitor is specified using a :code:`<param/>` parameter tag in the launch file.
   Hence, to change the line number being monitored, you simply need to change the line number parameter in the launch file and re-launch the node.
 
   * This has the benefit that you can change the line number without needing to recompile the code.
-  * This has the disadvantage that you cannot specify the line number parameter when using :code:`rosrun`.
+  * This has the disadvantage that you cannot specify the line number parameter when using the :code:`rosrun` command to start the node.
+  * Be careful that two separate nodes cannot access the same GPIO line because the first nodes that runs and open are particular line blocks all other process from accessing that line.
+
 
 
 
 .. note::
+  **Compilation flag for nodes using GPIOD:**
   When you copy either template C++ file, you will need to add it to the :code:`CMakeLists.txt` file in the repository at the relative file path:
 
   .. code-block:: bash
