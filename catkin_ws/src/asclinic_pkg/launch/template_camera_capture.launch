@@ -1,0 +1,10 @@
+<launch>
+	<group ns="template_camera">
+		<node
+			pkg    = "asclinic_pkg"
+			name   = "template_camera_capture"
+			output = "screen"
+			type   = "template_camera_capture.py"
+		/>
+	</group>
+</launch>
