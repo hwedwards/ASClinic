@@ -57,7 +57,7 @@ const uint8_t m_pololu_smc_address_right = 14;
 Pololu_SMC_G2 m_pololu_smc_right (&m_i2c_driver, m_pololu_smc_address_right);
 
 // > For the PCA9685 PWM Servo Driver driver
-const uint8_t m_pca9685_address = 0x40;
+const uint8_t m_pca9685_address = 0x42;
 PCA9685 m_pca9685_servo_driver (&m_i2c_driver, m_pca9685_address);
 
 
