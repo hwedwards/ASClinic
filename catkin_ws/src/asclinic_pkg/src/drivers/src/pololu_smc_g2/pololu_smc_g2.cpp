@@ -1121,3 +1121,176 @@ bool Pololu_SMC_G2::get_current_limiting_occurrence_count(uint16_t * value)
 {
 	return this->get_variable(POLOLU_SMC_G2_GET_VARIABLE_CURRENT_LIMITING_OCCURRENCE_COUNT, value);
 }
+
+
+
+
+
+// CONVENIENCE FUNCTIONS
+bool Pololu_SMC_G2::initialise_with_limits(int new_current_limit_in_milliamps, int new_max_speed_limit, int new_max_accel_limit, int new_max_decel_limit, bool verbose)
+{
+	// Initialise a boolean variable for the result
+	// of calls to functions
+	bool result;
+
+	// Initialise a boolean variable for the overall
+	// result to return
+	bool return_result = true;
+
+	// Send the "exit safe start" command
+	result = this->exit_safe_start();
+	if (verbose)
+	{
+		if (!result)
+			std::cout << "POLOLU SMC G2 DRIVER: FAILED - exit safe start NOT successful for I2C address " << static_cast<int>(this->get_i2c_address());
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// > Check the status flag registers
+	uint16_t error_status;
+	result = this->get_error_status(&error_status);
+	if (verbose)
+	{
+		if (result)
+			std::cout << "POLOLU SMC G2 DRIVER: get error status returned: " << std::bitset<16>(error_status) << ", for I2C address " << static_cast<int>(this->get_i2c_address());
+		else
+			std::cout << "POLOLU SMC G2 DRIVER: FAILED - get error status NOT successful for I2C address " << static_cast<int>(this->get_i2c_address());
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// Short sleep
+	usleep(1000);
+
+	// > Check the input voltage
+	float input_voltage_value;
+	result = this->get_input_voltage_in_volts(&input_voltage_value);
+	if (verbose)
+	{
+		if (result)
+			std::cout << "POLOLU SMC G2 DRIVER: get input voltage value returned: " << input_voltage_value << " [Volts], for I2C address " << static_cast<int>(this->get_i2c_address());
+		else
+			std::cout << "POLOLU SMC G2 DRIVER: FAILED - get input voltage value NOT successful for I2C address " << static_cast<int>(this->get_i2c_address());
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// Short sleep
+	usleep(1000);
+
+	// Set the current limit
+	result = this->set_current_limit_in_milliamps(new_current_limit_in_milliamps);
+	if (verbose)
+	{
+		if (!result)
+			std::cout << "POLOLU SMC G2 DRIVER: FAILED - set current limit NOT successful for I2C address " << static_cast<int>(this->get_i2c_address());
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// Check the current limit that was set
+	uint16_t current_limit_value;
+	result = this->get_current_limit(&current_limit_value);
+	if (verbose)
+	{
+		if (result)
+			std::cout << "POLOLU SMC G2 DRIVER: get current limit returned: " << current_limit_value << ", for I2C address " << static_cast<int>(this->get_i2c_address());
+		else
+			std::cout << "POLOLU SMC G2 DRIVER: FAILED - get current limit NOT successful for I2C address " << static_cast<int>(this->get_i2c_address());
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// Short sleep
+	usleep(1000);
+
+	// Send the max speed limit
+	int max_speed_limit_response_code;
+	result = this->set_motor_limit_max_speed(new_max_speed_limit, &max_speed_limit_response_code);
+	if (verbose)
+	{
+		if (!result)
+			std::cout << "POLOLU SMC G2 DRIVER: FAILED - set max speed limit NOT successful with response code " << max_speed_limit_response_code << ", for I2C address " << static_cast<int>(this->get_i2c_address());
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// Check the max speed limit that was set
+	uint16_t max_speed_limit_value;
+	result = this->get_max_speed_forward(&max_speed_limit_value);
+	if (verbose)
+	{
+		if (result)
+			std::cout << "POLOLU SMC G2 DRIVER: get max speed limit returned: " << max_speed_limit_value << ", for I2C address " << static_cast<int>(this->get_i2c_address());
+		else
+			std::cout << "POLOLU SMC G2 DRIVER: FAILED - get max speed limit NOT successful for I2C address " << static_cast<int>(this->get_i2c_address());
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// Short sleep
+	usleep(1000);
+
+	// Set the max acceleration limit
+	int max_accel_limit_response_code;
+	result = this->set_motor_limit_max_acceleration(new_max_accel_limit, &max_accel_limit_response_code);
+	if (verbose)
+	{
+		if (!result)
+			std::cout << "POLOLU SMC G2 DRIVER: FAILED - set max acceleration limit NOT successful with response code " << max_accel_limit_response_code << " for I2C address " << static_cast<int>(this->get_i2c_address());
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// Check the max speed acceleration that was set
+	uint16_t max_accel_limit_value;
+	result = this->get_max_acceleration_forward(&max_accel_limit_value);
+	if (verbose)
+	{
+		if (result)
+			std::cout << "POLOLU SMC G2 DRIVER: get max acceleration limit returned: " << max_accel_limit_value << ", for I2C address " << static_cast<int>(this->get_i2c_address());
+		else
+			std::cout << "POLOLU SMC G2 DRIVER: FAILED - get max acceleration limit NOT successful for I2C address " << static_cast<int>(this->get_i2c_address());
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// Short sleep
+	usleep(1000);
+
+	// Set the max deceleration limit
+	int max_decel_limit_response_code;
+	result = this->set_motor_limit_max_deceleration(new_max_decel_limit, &max_decel_limit_response_code);
+	if (verbose)
+	{
+		if (!result)
+			std::cout << "POLOLU SMC G2 DRIVER: FAILED - set max deceleration limit NOT successful with response code " << max_decel_limit_response_code << " for I2C address " << static_cast<int>(this->get_i2c_address());
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// > Check the max speed deceleration that was set
+	uint16_t max_decel_limit_value;
+	result = this->get_max_deceleration_forward(&max_decel_limit_value);
+	if (verbose)
+	{
+		if (result)
+			std::cout << "POLOLU SMC G2 DRIVER: get max deceleration limit returned: " << max_decel_limit_value << ", for I2C address " << static_cast<int>(this->get_i2c_address());
+		else
+			std::cout << "POLOLU SMC G2 DRIVER: FAILED - get max deceleration limit NOT successful for I2C address " << static_cast<int>(this->get_i2c_address());
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// Short sleep
+	usleep(1000);
+
+	if (verbose)
+	{
+		std::cout << "POLOLU SMC G2 DRIVER: Finished setting up the Pololu SMC with I2C address " << static_cast<int>(this->get_i2c_address());
+	}
+
+	// Return the "cumulative" result
+	return return_result;
+}

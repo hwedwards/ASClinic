@@ -43,6 +43,8 @@
 #include <stdio.h>
 // #include <sys/ioctl.h>
 #include <unistd.h>
+#include <iostream>
+#include <bitset>
 
 #include "pca9685/pca9685_constants.h"
 
@@ -180,6 +182,12 @@ public:
 
 	// TURN OFF ALL CHANNELS
 	bool set_all_channels_full_off();
+
+
+
+// CONVENIENCE FUNCTIONS
+public:
+	bool initialise_with_frequency_in_hz(float new_freq_in_hz, bool verbose);
 
 }; // END OF CLASS DEFINITION
 

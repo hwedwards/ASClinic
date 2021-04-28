@@ -42,6 +42,8 @@
 #include <stdio.h>
 // #include <sys/ioctl.h>
 #include <unistd.h>
+#include <iostream>
+#include <bitset>
 
 #include "pololu_smc_g2/pololu_smc_g2_constants.h"
 
@@ -220,6 +222,11 @@ public:
 	bool get_current_in_milliamps(uint16_t * value);
 	bool get_current_limiting_consecutive_count(uint16_t * value);
 	bool get_current_limiting_occurrence_count(uint16_t * value);
+
+
+// Convenience Functions
+public:
+	bool initialise_with_limits(int new_current_limit_in_milliamps, int new_max_speed_limit, int new_max_accel_limit, int new_max_decel_limit, bool verbose);
 
 }; // END OF CLASS DEFINITION
 

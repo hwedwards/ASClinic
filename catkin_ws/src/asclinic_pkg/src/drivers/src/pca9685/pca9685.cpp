@@ -970,3 +970,168 @@ bool PCA9685::set_all_channels_full_off()
 	bool flag_on_off = false;
 	return this->write_pwm_full_on_or_full_off(channel_start_register, flag_on_off, PCA9685_I2C_WRITE_ATTEMPTS_DEFAULT);
 }
+
+
+
+// CONVENIENCE FUNCTIONS
+bool PCA9685::initialise_with_frequency_in_hz(float new_freq_in_hz, bool verbose)
+{
+
+	// Initialise a boolean variable for the result
+	// of calls to functions
+	bool result;
+
+	// Initialise a boolean variable for the overall
+	// result to return
+	bool return_result = true;
+
+	// > Set the mode 1 defaults
+	result = this->set_mode1_defaults();
+	if (verbose)
+	{
+		if (result)
+			printf("PCA9685 - set mode 1 defaults successful, for I2C address %d\n", this->get_i2c_address() );
+		else
+			printf("FAILED - PCA9685 - set mode 1 defaults NOT successful for I2C address %d\n", this->get_i2c_address() );
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// Short sleep
+	usleep(1000);
+
+	// > Set the mode 2 defaults
+	result = this->set_mode2_defaults_for_driving_servos();
+	if (verbose)
+	{
+		if (result)
+			printf("PCA9685 - set mode 2 defaults successful, for I2C address %d\n", this->get_i2c_address() );
+		else
+			printf("FAILED - PCA9685 - set mode 2 defaults NOT successful for I2C address %d\n", this->get_i2c_address() );
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// Short sleep
+	usleep(1000);
+
+	// > Call the wakeup function
+	result = this->wakeup();
+	if (verbose)
+	{
+		if (result)
+			printf("PCA9685 - wakeup successful, for I2C address %d\n", this->get_i2c_address() );
+		else
+			printf("FAILED - PCA9685 - wakeup NOT successful for I2C address %d\n", this->get_i2c_address() );
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// Short sleep
+	usleep(1000);
+
+	// > Get the current mode 1 configuration
+	uint8_t current_mode1;
+	result = this->get_mode1(&current_mode1);
+	if (verbose)
+	{
+		if (result)
+		{
+			std::cout << "PCA9685 - get mode 1 returned: " << std::bitset<8>(current_mode1) << ", for I2C address " << static_cast<int>(this->get_i2c_address()) << "\n";
+			std::cout << "                     expected: " << "00100000" << "\n";
+		}
+		else
+		{
+			printf("FAILED - PCA9685 - get mode 1 NOT successful for I2C address %d\n", this->get_i2c_address() );
+		}
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+
+	// > Get the current mode 2 configuration
+	uint8_t current_mode2;
+	result = this->get_mode2(&current_mode2);
+	if (verbose)
+	{
+		if (result)
+		{
+			std::cout << "PCA9685 - get mode 2 returned: " << std::bitset<8>(current_mode2) << ", for I2C address " << static_cast<int>(this->get_i2c_address()) << "\n";
+			std::cout << "                     expected: " << "00000100" << "\n";
+		}
+		else
+		{
+			printf("FAILED - PCA9685 - get mode 2 NOT successful for I2C address %d\n", this->get_i2c_address() );
+		}
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// Short sleep
+	usleep(1000);
+
+	// > Set the frequency
+	result = this->set_pwm_frequency_in_hz(new_freq_in_hz);
+	if (verbose)
+	{
+		if (result)
+			printf("PCA9685 - set the PWM frequency successfully, for I2C address %d\n", this->get_i2c_address() );
+		else
+			printf("FAILED - PCA9685 - set the PWM frequency NOT successful for I2C address %d\n", this->get_i2c_address() );
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// Short sleep
+	usleep(1000);
+
+	// > Get the frequency to double check
+	float pwm_freq_retrieved;
+	uint8_t pre_scale_retrieved;
+	result = this->get_pwm_frequency_in_hz_and_prescale(&pwm_freq_retrieved, &pre_scale_retrieved);
+	if (verbose)
+	{
+		if (result)
+			printf("PCA9685 - get PWM frequency returned:\n> freq = %f\n> pre scale = %d\nfor I2C address %d\n", pwm_freq_retrieved, pre_scale_retrieved, this->get_i2c_address() );
+		else
+			printf("FAILED - PCA9685 - get PWM frequency NOT successful for I2C address %d\n", this->get_i2c_address() );
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// Check that the frequency retrieved agrees with
+	// what was requested, to within 1Hz
+	float freq_diff = pwm_freq_retrieved - new_freq_in_hz;
+	if ( (freq_diff < -1.0) || (1.0 < freq_diff) )
+	{
+		if (verbose)
+		{
+			std::cout << "PCA9685 DRIVER: ERROR requested and set frequency differ by more than 1Hz. freq requested = " << new_freq_in_hz << ", freq set = " << pwm_freq_retrieved;
+		}
+		// Update the "cumulative" result
+		return_result = false;
+	}
+
+	// Short sleep
+	usleep(1000);
+
+	// > Set all channels to full off
+	result = this->set_all_channels_full_off();
+	if (verbose)
+	{
+		if (result)
+			printf("PCA9685 - set all channels to full off successfully, for I2C address %d\n", this->get_i2c_address() );
+		else
+			printf("FAILED - PCA9685 - set all channels to full off NOT successful for I2C address %d\n", this->get_i2c_address() );
+	}
+
+	if (verbose)
+	{
+		std::cout << "PCA9685 DRIVER: Finished setting up the PCA9685 servo driver with I2C address " << static_cast<int>(this->get_i2c_address());
+	}
+	// Update the "cumulative" result
+	return_result = (return_result && result);
+
+	// Return the "cumulative" result
+	return return_result;
+}

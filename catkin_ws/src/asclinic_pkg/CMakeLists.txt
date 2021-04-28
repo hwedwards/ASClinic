@@ -59,6 +59,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
   FILES
   TemplateMessage.msg
+  ServoPulseWidth.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -164,7 +165,8 @@ add_executable(template_gpio_event_triggered  src/nodes/template_gpio_event_trig
 add_executable(template_gpio_polling          src/nodes/template_gpio_polling.cpp)
 add_executable(template_i2c_internal          src/nodes/template_i2c_internal.cpp
                                               src/drivers/src/i2c_driver/i2c_driver.cpp
-                                              src/drivers/src/pololu_smc_g2/pololu_smc_g2.cpp)
+                                              src/drivers/src/pololu_smc_g2/pololu_smc_g2.cpp
+                                              src/drivers/src/pca9685/pca9685.cpp)
 add_executable(template_i2c_external          src/nodes/template_i2c_external.cpp
                                               src/drivers/src/i2c_driver/i2c_driver.cpp
                                               src/drivers/src/vl53l1x/vl53l1x.cpp
