@@ -47,6 +47,10 @@ USB_CAMERA_DEVICE_NUMBER = 0
 #         on the "request_save_image" topic.
 SAVE_IMAGE_PATH = "/home/asc01/saved_camera_images/"
 
+# > A flag for whether to save any images that contains
+#   a camera calibration chessboard
+SHOULD_SAVE_CHESSBOARD_IMAGES = True
+
 # > A flag for whether to display the images captured
 SHOULD_SHOW_IMAGES = False
 
@@ -107,22 +111,23 @@ class TemplateCameraCapture:
             rospy.loginfo('[TEMPLATE CAMERA CAPTURE] Now publishing camera frame')
             self.image_publisher.publish(self.cv_bridge.cv2_to_imgmsg(current_frame))
 
-            # Check if the camera frame contains a calibration
-            # chessboard that can be detected by OpenCV
-            # > Convert the image to gray
-            current_frame_as_gray = cv2.cvtColor(current_frame, cv2.COLOR_BGR2GRAY)
-            # > Specify the flags for the find chessboard function
-            find_flags = cv2.CALIB_CB_ADAPTIVE_THRESH #+ cv2.CALIB_CB_NORMALIZE_IMAGE + cv2.CALIB_CB_FAST_CHECK
-            # > Call the find the chess board corners
-            #   > The second argument is the grid size of internl corner
-            #     points that the function should search for
-            ret, corners = cv2.findChessboardCorners(current_frame_as_gray, (6,5), flags=find_flags)
-            # If found, then set the save image flag to true
-            if ret == True:
-                rospy.loginfo("[TEMPLATE CAMERA CAPTURE] Chessboard FOUND, this image will be saved")
-                self.should_save_image = True
-            #else:
-            #    rospy.loginfo("[TEMPLATE CAMERA CAPTURE] Chessboard NOT found")
+            if (SHOULD_SAVE_CHESSBOARD_IMAGES):
+                # Check if the camera frame contains a calibration
+                # chessboard that can be detected by OpenCV
+                # > Convert the image to gray scale
+                current_frame_as_gray = cv2.cvtColor(current_frame, cv2.COLOR_BGR2GRAY)
+                # > Specify the flags for the find chessboard function
+                find_flags = cv2.CALIB_CB_ADAPTIVE_THRESH #+ cv2.CALIB_CB_NORMALIZE_IMAGE + cv2.CALIB_CB_FAST_CHECK
+                # > Call the find the chessboard corners
+                #   > The second argument is the grid size of internl corner
+                #     points that the function should search for
+                ret, corners = cv2.findChessboardCorners(current_frame_as_gray, (6,5), flags=find_flags)
+                # If found, then set the save image flag to true
+                if ret == True:
+                    rospy.loginfo("[TEMPLATE CAMERA CAPTURE] Chessboard FOUND, this image will be saved")
+                    self.should_save_image = True
+                #else:
+                #    rospy.loginfo("[TEMPLATE CAMERA CAPTURE] Chessboard NOT found")
 
             # Save the camera frame if requested
             if (self.should_save_image):
