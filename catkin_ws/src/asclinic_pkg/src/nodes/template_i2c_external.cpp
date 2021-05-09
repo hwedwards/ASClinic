@@ -73,8 +73,14 @@ int main(int argc, char* argv[])
 	}
 
 	// Initialise an object for the VL53L1X distance sensor
+	// > If connected directly to the I2C bus
 	const uint8_t vl53l1x_address = 0x29;
 	VL53L1X vl53l1x_object (&i2c_driver, vl53l1x_address);
+	// > If connected to the I2C multiplexer
+	//const uint8_t vl53l1x_address = 0x29;
+	//const uint8_t mux_channel     = 0;
+	//const uint8_t mux_i2c_address = 0x70;
+	//VL53L1X vl53l1x_object_on_mux_ch0 (&i2c_driver, vl53l1x_address, mux_channel, mux_i2c_address);
 
 	// Specify the distancing specifications
 	// > Distance Mode (1 = short distance, 2 = long distance)
@@ -92,7 +98,7 @@ int main(int argc, char* argv[])
 	// Enter a loop that continues while ROS is still running
 	while (ros::ok())
 	{
-		// Read data from teh VL53L1X distance sensor
+		// Read data from the VL53L1X distance sensor
 		VL53L1X_Result_t tof_res;
 		bool success_get_distance = vl53l1x_object.get_distance_measurement(&tof_res);
 

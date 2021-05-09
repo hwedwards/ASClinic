@@ -46,6 +46,14 @@
 
 
 
+// I2C ADDRESS
+#define VL53L1X_I2C_ADDRESS_DEFAULT     0x29 /**< Default VL53L1X I2C Slave Address */
+#define TCA9548A_I2C_ADDRESS_DEFAULT    0x70 /**< Default TCA9548A I2C Slave Address */
+
+
+
+
+
 // ----------------------------------------------------------
 //   CCCC  L        A     SSSS   SSSS     DDDD   EEEEE  FFFFF
 //  C      L       A A   S      S         D   D  E      F
@@ -68,6 +76,10 @@ private:
 	uint8_t m_i2c_address;
 	I2C_Driver * m_i2c_driver;
 
+	bool m_is_connected_to_TCA9548A_mux;
+	uint8_t m_mux_channel;
+	uint8_t m_mux_i2c_address;
+
 
 
 
@@ -82,6 +94,7 @@ private:
 public:
 	VL53L1X(I2C_Driver * i2c_driver);
 	VL53L1X(I2C_Driver * i2c_driver, uint8_t address);
+	VL53L1X(I2C_Driver * i2c_driver, uint8_t address, uint8_t mux_channel, uint8_t mux_i2c_address);
 
 
 
@@ -98,6 +111,12 @@ public:
 	uint8_t get_i2c_address();
 	bool set_i2c_address(uint8_t new_address);
 
+	uint8_t get_mux_channel();
+	bool set_mux_channel(uint8_t new_channel);
+
+	uint8_t get_mux_i2c_address();
+	bool set_mux_i2c_address(uint8_t new_address);
+
 	// ------------------------------------------------------------
 	//  FFFFF  U   U  N   N   CCCC  TTTTT  III   OOO   N   N   SSSS
 	//  F      U   U  NN  N  C        T     I   O   O  NN  N  S
@@ -107,6 +126,8 @@ public:
 	// ------------------------------------------------------------
 
 public:
+	bool set_mux_channel();
+
 	bool read_register(uint16_t dev, uint8_t register_address, uint16_t * value);
 
 	bool write_register(uint16_t dev, uint8_t register_address, uint16_t value);

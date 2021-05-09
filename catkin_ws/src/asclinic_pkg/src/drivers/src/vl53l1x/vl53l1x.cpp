@@ -86,8 +86,12 @@
 // ----------------------------------------------------------------------------
 VL53L1X::VL53L1X(I2C_Driver * i2c_driver)
 {
-	this->m_i2c_address = 29;
+	this->m_i2c_address = VL53L1X_I2C_ADDRESS_DEFAULT;
 	this->m_i2c_driver = i2c_driver;
+
+	this->m_is_connected_to_TCA9548A_mux = false;
+	this->m_mux_channel = 0;
+	this->m_mux_i2c_address = TCA9548A_I2C_ADDRESS_DEFAULT;
 }
 
 VL53L1X::VL53L1X(I2C_Driver * i2c_driver, uint8_t address)
@@ -96,13 +100,53 @@ VL53L1X::VL53L1X(I2C_Driver * i2c_driver, uint8_t address)
 	if (address > 127)
 	{
 		// Inform the user
-		perror("Address supplied is greater than 127. Instead setting the address to the default of 29.");
-		// Default the address to 29
-		address = 29;
+		perror("Address supplied is greater than 127. Instead setting the address to the default of 0x29 (decimal 41).");
+		// Default the address
+		address = VL53L1X_I2C_ADDRESS_DEFAULT;
 	}
 
 	this->m_i2c_address = address;
 	this->m_i2c_driver = i2c_driver;
+
+	this->m_is_connected_to_TCA9548A_mux = false;
+	this->m_mux_channel = 0;
+	this->m_mux_i2c_address = TCA9548A_I2C_ADDRESS_DEFAULT;
+}
+
+VL53L1X::VL53L1X(I2C_Driver * i2c_driver, uint8_t address, uint8_t mux_channel, uint8_t mux_i2c_address)
+{
+	// Check that the address is in the range [0,127]
+	if (address > 127)
+	{
+		// Inform the user
+		perror("I2C address supplied is greater than 127. Instead setting the I2C address to the default of 0x29 (decimal 41).");
+		// Default the address
+		address = VL53L1X_I2C_ADDRESS_DEFAULT;
+	}
+
+	this->m_i2c_address = address;
+	this->m_i2c_driver = i2c_driver;
+
+	// Check that the mux channel is in the range [0,7]
+	// and the mux I2C address is in the range [0,127]
+	if (mux_channel<=7 && mux_i2c_address<=127)
+	{
+		this->m_is_connected_to_TCA9548A_mux = true;
+		this->m_mux_channel = mux_channel;
+		this->m_mux_i2c_address = mux_i2c_address;
+	}
+	else
+	{
+		// Inform the user
+		if (mux_channel > 7)
+			perror("Mux channel supplied in greater than 7. Instead setting that a mux is NOT being used.");
+		if (mux_i2c_address > 127)
+			perror("Mux I2C address supplied in greater than 127. Instead setting that a mux is NOT being used.");
+		// Default the mux to not in use
+		this->m_is_connected_to_TCA9548A_mux = false;
+		this->m_mux_channel = 0;
+		this->m_mux_i2c_address = TCA9548A_I2C_ADDRESS_DEFAULT;
+	}
 }
 
 
@@ -134,6 +178,36 @@ bool VL53L1X::set_i2c_address(uint8_t new_address)
 
 
 
+uint8_t VL53L1X::get_mux_channel()
+{
+	return this->m_mux_channel;
+}
+
+bool VL53L1X::set_mux_channel(uint8_t new_channel)
+{
+	if (new_channel<0 || new_channel>7)
+	{
+		return false;
+	}
+	this->m_mux_channel = new_channel;
+	return true;
+}
+
+uint8_t VL53L1X::get_mux_i2c_address()
+{
+	return this->m_mux_i2c_address;
+}
+
+bool VL53L1X::set_mux_i2c_address(uint8_t new_address)
+{
+	if (new_address<0 || new_address>127)
+	{
+		return false;
+	}
+	this->m_mux_i2c_address = new_address;
+	return true;
+}
+
 
 
 // ------------------------------------------------------------
@@ -145,8 +219,47 @@ bool VL53L1X::set_i2c_address(uint8_t new_address)
 // ------------------------------------------------------------
 
 // PRIVATE FUNCTION:
+bool VL53L1X::set_mux_channel()
+{
+	// Check if connected to a mux
+	if (this->m_is_connected_to_TCA9548A_mux)
+	{
+		// Convert the mux channel to the regiter value
+		uint8_t mux_register_value = (0x01 << (this->m_mux_channel));
+		// Put the mux register value into a uint8 array
+		uint8_t write_array[] = { mux_register_value };
+		// Specify the number of bytes in the array
+		int num_write_bytes = sizeof(write_array);
+
+		// Call the i2c_driver function
+		bool wasSuccessful = this->m_i2c_driver->write_data(this->m_mux_i2c_address, num_write_bytes, write_array);
+		// Check the status
+		if (wasSuccessful)
+		{
+			// Return flag that the operation was successful
+			return true;
+		}
+		else
+		{
+			// Inform the user
+			//perror("FAILED to set mux channel.");
+			// Return flag that the operation was unsuccessful
+			return false;
+		}
+	}
+	else
+	{
+		return true;
+	}
+}
+
+// PRIVATE FUNCTION:
 bool VL53L1X::read_register(uint16_t dev, uint8_t register_address, uint16_t * value)
 {
+	// Set the mux channel
+	bool set_mux_wasSuccessful = this->set_mux_channel();
+	if (!set_mux_wasSuccessful)
+		return false;
 	// Put the "register address" into a uint8 array
 	uint8_t write_array[] = { register_address };
 	// Specify the number of bytes in the array
@@ -188,9 +301,10 @@ bool VL53L1X::read_register(uint16_t dev, uint8_t register_address, uint16_t * v
 // PRIVATE FUNCTION:
 bool VL53L1X::write_register(uint16_t dev, uint8_t register_address, uint16_t value)
 {
-	// Cast the "dev" to the uint8_t I2C address
-	uint8_t i2c_address = dev & 0xFF;
-
+	// Set the mux channel
+	bool set_mux_wasSuccessful = this->set_mux_channel();
+	if (!set_mux_wasSuccessful)
+		return false;
 	// Convert the new limit value to its two
 	// byte representation
 	// > The first data byte written contains the
@@ -217,7 +331,7 @@ bool VL53L1X::write_register(uint16_t dev, uint8_t register_address, uint16_t va
 	else
 	{
 		// Inform the user
-		//perror("FAILED to exit safe start.");
+		//perror("FAILED to write register.");
 		// Return flag that the operation was unsuccessful
 		return false;
 	}
@@ -234,6 +348,11 @@ bool VL53L1X::read_byte(uint16_t index, uint8_t *data)
 	int i2c_fd = this->m_i2c_driver->get_file_descriptor();
 	if (i2c_fd>=0)
 	{
+		// Set the mux channel
+		bool set_mux_wasSuccessful = this->set_mux_channel();
+		if (!set_mux_wasSuccessful)
+			return false;
+		// Call the VL53L1 API function
 		uint16_t dev = i2c_fd;
 		VL53L1X_ERROR result_of_call = VL53L1_RdByte(dev, index, data);
 		if (result_of_call==0)
@@ -252,6 +371,11 @@ bool VL53L1X::read_word(uint16_t index, uint16_t *data)
 	int i2c_fd = this->m_i2c_driver->get_file_descriptor();
 	if (i2c_fd>=0)
 	{
+		// Set the mux channel
+		bool set_mux_wasSuccessful = this->set_mux_channel();
+		if (!set_mux_wasSuccessful)
+			return false;
+		// Call the VL53L1 API function
 		uint16_t dev = i2c_fd;
 		VL53L1X_ERROR result_of_call = VL53L1_RdWord(dev, index, data);
 		if (result_of_call==0)
@@ -270,6 +394,11 @@ bool VL53L1X::read_dword(uint16_t index, uint32_t *data)
 	int i2c_fd = this->m_i2c_driver->get_file_descriptor();
 	if (i2c_fd>=0)
 	{
+		// Set the mux channel
+		bool set_mux_wasSuccessful = this->set_mux_channel();
+		if (!set_mux_wasSuccessful)
+			return false;
+		// Call the VL53L1 API function
 		uint16_t dev = i2c_fd;
 		VL53L1X_ERROR result_of_call = VL53L1_RdDWord(dev, index, data);
 		if (result_of_call==0)
@@ -288,6 +417,11 @@ bool VL53L1X::boot_state(uint8_t *state)
 	int i2c_fd = this->m_i2c_driver->get_file_descriptor();
 	if (i2c_fd>=0)
 	{
+		// Set the mux channel
+		bool set_mux_wasSuccessful = this->set_mux_channel();
+		if (!set_mux_wasSuccessful)
+			return false;
+		// Call the VL53L1 API function
 		uint16_t dev = i2c_fd;
 		VL53L1X_ERROR result_of_call = VL53L1X_BootState(dev, state);
 		if (result_of_call==0)
@@ -306,6 +440,11 @@ bool VL53L1X::sensor_init()
 	int i2c_fd = this->m_i2c_driver->get_file_descriptor();
 	if (i2c_fd>=0)
 	{
+		// Set the mux channel
+		bool set_mux_wasSuccessful = this->set_mux_channel();
+		if (!set_mux_wasSuccessful)
+			return false;
+		// Call the VL53L1 API function
 		uint16_t dev = i2c_fd;
 		VL53L1X_ERROR result_of_call = VL53L1X_SensorInit(dev);
 		if (result_of_call==0)
@@ -324,6 +463,11 @@ bool VL53L1X::set_distance_mode(uint16_t dist_mode)
 	int i2c_fd = this->m_i2c_driver->get_file_descriptor();
 	if (i2c_fd>=0)
 	{
+		// Set the mux channel
+		bool set_mux_wasSuccessful = this->set_mux_channel();
+		if (!set_mux_wasSuccessful)
+			return false;
+		// Call the VL53L1 API function
 		uint16_t dev = i2c_fd;
 		VL53L1X_ERROR result_of_call = VL53L1X_SetDistanceMode(dev,dist_mode);
 		if (result_of_call==0)
@@ -343,6 +487,11 @@ bool VL53L1X::start_ranging()
 	int i2c_fd = this->m_i2c_driver->get_file_descriptor();
 	if (i2c_fd>=0)
 	{
+		// Set the mux channel
+		bool set_mux_wasSuccessful = this->set_mux_channel();
+		if (!set_mux_wasSuccessful)
+			return false;
+		// Call the VL53L1 API function
 		uint16_t dev = i2c_fd;
 		VL53L1X_ERROR result_of_call = VL53L1X_StartRanging(dev);
 		if (result_of_call==0)
@@ -361,6 +510,11 @@ bool VL53L1X::check_for_data_ready(uint8_t *is_data_ready)
 	int i2c_fd = this->m_i2c_driver->get_file_descriptor();
 	if (i2c_fd>=0)
 	{
+		// Set the mux channel
+		bool set_mux_wasSuccessful = this->set_mux_channel();
+		if (!set_mux_wasSuccessful)
+			return false;
+		// Call the VL53L1 API function
 		uint16_t dev = i2c_fd;
 		VL53L1X_ERROR result_of_call = VL53L1X_CheckForDataReady(dev, is_data_ready);
 		if (result_of_call==0)
@@ -380,6 +534,11 @@ bool VL53L1X::get_result(VL53L1X_Result_t *pointer_to_results)
 	int i2c_fd = this->m_i2c_driver->get_file_descriptor();
 	if (i2c_fd>=0)
 	{
+		// Set the mux channel
+		bool set_mux_wasSuccessful = this->set_mux_channel();
+		if (!set_mux_wasSuccessful)
+			return false;
+		// Call the VL53L1 API function
 		uint16_t dev = i2c_fd;
 		VL53L1X_ERROR result_of_call = VL53L1X_GetResult(dev, pointer_to_results);
 		if (result_of_call==0)
@@ -409,6 +568,11 @@ bool VL53L1X::clear_interrupt()
 	int i2c_fd = this->m_i2c_driver->get_file_descriptor();
 	if (i2c_fd>=0)
 	{
+		// Set the mux channel
+		bool set_mux_wasSuccessful = this->set_mux_channel();
+		if (!set_mux_wasSuccessful)
+			return false;
+		// Call the VL53L1 API function
 		uint16_t dev = i2c_fd;
 		VL53L1X_ERROR result_of_call = VL53L1X_ClearInterrupt(dev);
 		if (result_of_call==0)
