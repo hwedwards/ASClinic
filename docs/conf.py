@@ -16,6 +16,7 @@
 
 import os
 import sys
+import sphinx_rtd_theme
 
 sys.path.append(os.path.abspath('exts'))
 
@@ -35,8 +36,17 @@ release = '0.1.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-	#'sphinx_comments'
+	#'sphinx_comments',
+	'sphinx_rtd_theme',
+	#'sphinx_rtd_dark_mode',
 ]
+
+# If using the "sphinx_rtd_dark_mode" extension,
+# then specify the default starting mode:
+# > user starts in dark mode
+#default_dark_mode = True
+# > user starts in light mode
+#default_dark_mode = False
 
 # Configuration for the sphinx_comments extension
 #comments_config = {
@@ -58,7 +68,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
-html_theme_path = ['_themes', ]
+#html_theme_path = ['_themes', ]
 html_theme_options = {
 	# ToC options
 	'collapse_navigation': False,
@@ -83,6 +93,12 @@ html_theme_options = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# These paths are either relative to html_static_path
+# or fully qualified paths (eg. https://...)
+html_css_files = [
+    #'css/dark.css',
+]
 
 # If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
 html_show_copyright = False

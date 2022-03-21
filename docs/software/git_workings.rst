@@ -1,13 +1,8 @@
-.. _git-basics:
+.. _git-workings:
 
-Git Basics
-==========
+Working with Git
+================
 
-What is git?
-************
-
-Git is a version control software, and as such it is used to track modifications to source code of your project.
-The tutorials linked below provide details about the inner workings and advantages of doing version control with git.
 
 Links to git tutorials
 **********************
@@ -18,6 +13,7 @@ You can find many great git tutorials on the web, for example:
 * `Git Handbook on Github Guides <https://guides.github.com/introduction/git-handbook/>`_
 * `Git Cheat Sheet by Github <https://training.github.com>`_
 * `MUEEC Git Workshop recording on YouTube <https://youtu.be/vUgsyfbOUl4>`_
+* `The coding train git playlist on YouTube <https://youtube.com/playlist?list=PLRqwX-V7Uu6ZF9C0YMKuns9sLDzK6zoiV>`_
 
 
 Where to host your git
@@ -102,3 +98,8 @@ View previous commits
 * :code:`git diff <commit1> <commit2>` to display the differences between :code:`<commit1>` and :code`<commit2>`, which are the hash keys displayed by :code:`git log`
 
 * :code:`git diff --help` to display the manual entry for :code:`git diff`
+
+..
+  Managing conflicts
+  > Explain that can clone to multiples places on one computer for testing conflicts 
+  > #. Write out an example of creating and merging conflicts
