@@ -1,7 +1,7 @@
-.. _cmd-line-basics:
+.. _linux-cmd-line:
 
-Command Line Basics
-===================
+LINUX COMMAND LINE
+==================
 
 The list below provides basic commands for performing tasks from a Linux terminal, but it is by no means exhaustive.
 You can find many great command line tutorials on the web, for example:

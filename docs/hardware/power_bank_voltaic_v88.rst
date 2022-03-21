@@ -3,7 +3,7 @@
 Voltaic V88 Power Bank
 ======================
 
-The Voltaic V88 power bank can be viewed on the manufacturers website `here <https://voltaicsystems.com/v88/>`_, and the manual can be viewed online `here <https://voltaicsystems.com/content/Voltaic%20Systems%20V88%20Instruction%20Booklet.pdf>`_.
+The Voltaic V88 power bank can be viewed on the manufacturers website `here <https://voltaicsystems.com/v88/>`__, and the manual can be viewed online `here <https://voltaicsystems.com/content/Voltaic%20Systems%20V88%20Instruction%20Booklet.pdf>`__.
 
 The following provides the most relevant details extracted directly from the manuel. Then the instructions for using the Voltaic V88 to power a robot device are given.
 

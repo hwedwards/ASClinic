@@ -189,3 +189,116 @@ If you followed the steps above, then:
 * :code:`<catkin workspace>` should be :code:`~/asclinic-system/catkin_ws`
 
 **Note:** the workspace setup script will only appear after the first compilation of the catkin workspace.
+
+
+OpenCV Installation
+*******************
+
+In order to use OpenCV and the included libraries for ArUco marker detection, certain packages need to be installed. These installation steps are currently **NOT** included in the :ref:`software-installation-manual` nor in the :ref:`software-installation-script`.
+
+
+Install pip3
+############
+
+The installation steps in this workflow are for using OpenCV and the ArUco library via pyhton3. Hence install the python3 package manager :code:`pip3` using the following:
+
+.. code-block:: bash
+
+  sudo apt install python3-pip
+
+
+Install OpenCV Contributions for python
+#######################################
+
+The OpenCV contributions package relies on a number of other python3 packages that need to be installed first. Run the following installation commands in order:
+
+.. code-block:: bash
+
+  pip3 install scikit-build
+
+.. code-block:: bash
+
+  pip3 install Cython
+
+.. code-block:: bash
+
+  pip3 install numpy
+
+.. code-block:: bash
+
+  pip3 install opencv-contrib-python
+
+
+
+When each of the above installation steps is complete, it should return something similar to the following:
+
+.. code-block:: bash
+
+  Successfully installed distro-1.5.0 packaging-20.9 pyparsing-2.4.7 scikit-build-0.11.1 setuptools-56.0.0 wheel-0.36.2
+
+.. code-block:: bash
+
+  Successfully installed Cython-0.29.23
+
+.. code-block:: bash
+
+  Successfully installed numpy-1.19.5
+
+.. code-block:: bash
+
+  Successfully installed numpy-1.19.5 opencv-contrib-python-4.5.1.48
+
+
+
+
+Install ROS packages for running python3 scripts
+################################################
+
+In order to run python3 node in ROS, run the following installation commands in order:
+
+.. code-block:: bash
+
+  sudo apt-get install python3-pip python3-yaml
+
+.. code-block:: bash
+
+  pip3 install rospkg catkin_pkg --user
+
+
+You can now run a python node in ROS as python3, simply adjust the very first line of the script to the following:
+
+.. code-block:: python
+
+  #!/usr/bin/env python3
+
+
+
+Extra steps
+###########
+
+After following the installation steps in the sections above, you should be able to run a python3 ROS node the call OpenCV and ArUco functions. However, certain errors may still occur when calling certain functions. As always with programming, read the details of the error and attempt to determine whether a package is missing that needs to be installed.
+
+For example, the OpenCV function :code:`imshow()` needs the following package to be installed:
+
+.. code-block::
+
+  sudo apt install libcanberra-gtk0 libcanberra-gtk-module
+
+
+
+
+
+.. EXTRA COMMANDS THAT WERE TRIED BUT ARE POSSIBLY NOT NEEDED
+  # Uninstall opencv-python
+  #pip3 uninstall opencv-python
+  # This step is probably not needed because this returned the message:
+  #   Cannot uninstall requirement opencv-python, not installed
+
+  # Add the boost library as required in the CMakeList.txt
+  #find_package(Boost REQUIRED python3)
+  # Though it is not clear if this really needs to be added
+
+  # Set the following environment variable (and add to .bashrc)
+  #export  OPENBLAS_CORETYPE=ARMV8
+  # Though it all seemed to work without setting this
+

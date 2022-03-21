@@ -1,24 +1,16 @@
-.. _ros-cmd-line-basics:
+.. _ros-cmd-line:
 
-ROS COMMAND LINE BASICS
-=======================
+ROS command line
+================
 
-The list below provides basic commands for performing tasks within the ROS (Robot Operating System) framework, but it is by no means exhaustive.
+The list below provides the essential commands for performing tasks within the ROS framework, but it is by no means exhaustive.
+
 The `ROS Tutorials <http://wiki.ros.org/ROS/Tutorials>`_ are a great place to start for understanding these commands in more details, some highlights are:
 
 * `Navigating the ROS Filesystem <http://wiki.ros.org/ROS/Tutorials/NavigatingTheFilesystem>`_
 * `Creatinga ROS Package <http://wiki.ros.org/ROS/Tutorials/CreatingPackage>`_
 * `Building a ROS Package <http://wiki.ros.org/ROS/Tutorials/BuildingPackages>`_
 * `Understanding ROS Nodes <http://wiki.ros.org/ROS/Tutorials/UnderstandingNodes>`_
-
-
-What is ROS?
-************
-The best answer to this is given on the `ROS wiki page <http://wiki.ros.org/ROS/Introduction>`_ where it states:
-
-* *ROS is an open-source, meta-operating system for your robot. It provides the services you would expect from an operating system, including hardware abstraction, low-level device control, implementation of commonly-used functionality, message-passing between processes, and package management. It also provides tools and libraries for obtaining, building, writing, and running code across multiple computers*
-
-See the `home page of the ROS wiki <http://wiki.ros.org>`_ for the familiarising with various aspects of ROS.
 
 Compiling
 *********
@@ -43,15 +35,19 @@ Launching nodes
 
 * :code:`rosrun [package_name] [node_name]` launches the node named :code:`[node_name]` from the package named :code:`[package_name]`
 
-* :code:`rosrun asclinic template_cpp` launches the node named :code:`template_cpp` from the package named :code:`asclinic`
+* :code:`rosrun asclinic_pkg template_cpp` launches the node named :code:`template_cpp` from the package named :code:`asclinic_pkg`
+
+  * **Note** the :code:`rosrun` command requires that the :code:`ROS Master` and the :code:`rosout` nodes are already running, i.e., by running :code:`roscore` first.
 
 * :code:`roslaunch [package] [filename.launch]` starts nodes as defined in the launch file named :code:`[filename.launch]` that is located in the :code:`launch/` folder of :code:`[package]`
 
   * **Note** the :code:`roslaunch` command actually searches for launch files anywhere within the package, but keeping them in folder named :code:`launch/` is good practice
 
-* :code:`roslaunch asclinic template.launch` starts nodes as defined in the file :code:`template.launch` that is located in the :code:`launch/` folder of the :code:`asclinic` package
+  * **Note** the :code:`roslaunch` command can be used whether or not the :code:`ROS Master` and the :code:`rosout` are already running. If not already running, then :code:`roslaunch` will also launch the :code:`ROS Master` and :code:`rosout` nodes.
 
-* :code:`roslaunch asclinic template.launch alsopython:=true` as above but with the argument :code:`alsopython` set to :code:`true`, which is then then used inside the launch file to also launch the template python node
+* :code:`roslaunch asclinic_pkg template.launch` starts nodes as defined in the file :code:`template.launch` that is located in the :code:`launch/` folder of the :code:`asclinic_pkg` package
+
+* :code:`roslaunch asclinic_pkg template.launch alsopython:=true` as above but with the argument :code:`alsopython` set to :code:`true`, which is then then used inside the launch file to also launch the template python node
 
 
 Displaying information about nodes
