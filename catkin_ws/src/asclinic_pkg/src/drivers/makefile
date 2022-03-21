@@ -123,7 +123,7 @@ $(info )
 all: $(TARGETS)
 
 $(TARGETS): $(TESTOBJECTS) $(OBJECTSCPP) $(OBJECTSC)
-	$(CC) -o $@ $(subst $(TARGETDIR),$(BUILDDIR),$@).o $(OBJECTSCPP) $(OBJECTSC) -lgpiod
+	$(CC) -o $@ $(subst $(TARGETDIR),$(BUILDDIR),$@).o $(OBJECTSCPP) $(OBJECTSC) -lgpiod -lpthread
 	@echo " Linking..."
 
 #$(TARGET): $(BUILDDIR)/test.o $(BUILDDIR)/i2c_driver.o $(BUILDDIR)/pololu_smc_g2.o

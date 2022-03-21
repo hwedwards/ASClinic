@@ -32,7 +32,7 @@ int main()
 
 	// Initialise an object for each of the Pololu
 	// simple motor controllers
-	const uint8_t pololu_smc_address1 = 70;
+	const uint8_t pololu_smc_address1 = 14;
 	Pololu_SMC_G2 pololu_smc1 (&i2c_driver, pololu_smc_address1);
 	const uint8_t pololu_smc_address2 = 13;
 	Pololu_SMC_G2 pololu_smc2 (&i2c_driver, pololu_smc_address2);
