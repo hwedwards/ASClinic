@@ -17,3 +17,6 @@ catkin_ws/src/asclinic_pkg/src/drivers/bin/
 
 # Ignore typical unwanted files
 .DS_Store
+
+# Ignore swp files
+*.swp

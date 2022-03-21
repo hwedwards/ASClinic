@@ -25,7 +25,9 @@ int main()
 //		}
 //	}
 
-	int line_number = 148;
+	// int line_number = 148;
+	int line_number = 134;
+	// int line_number = 105;
 	const char * gpio_chip_name = "/dev/gpiochip0";
 
 	int num_events_to_display = 20;
