@@ -76,20 +76,20 @@ ros::Timer m_timer_for_publishing;
 //      To identify the full name of this subscription topic.
 //   2) Then use the following command to send  message on
 //      that topic
-//        rostopic pub --once <namespace>/set_motor_duty_cycle std_msgs/UInt16 10
+//        rostopic pub --once <namespace>/set_motor_duty_cycle std_msgs/Float32 10.1
 //      where "<namespace>/set_motor_duty_cycle" is the full
 //      name identified in step 1.
 //
-void templateSubscriberCallback(const std_msgs::UInt16& msg)
+void templateDriveMotorsSubscriberCallback(const std_msgs::Float32& msg)
 {
 	ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] Message receieved with data = " << msg.data);
 
-	// Clip the data to be in the range [0,100]
-	int pwm_duty_cycle = msg.data;
-	if (pwm_duty_cycle < 0)
-		pwm_duty_cycle = 0;
-	if (pwm_duty_cycle > 100)
-		pwm_duty_cycle = 100;
+	// Clip the data to be in the range [-100.0,100.0]
+	float pwm_duty_cycle = msg.data;
+	if (pwm_duty_cycle < -100.0f)
+		pwm_duty_cycle = -100.0f;
+	if (pwm_duty_cycle > 100.0f)
+		pwm_duty_cycle = 100.0f;
 
 	// Initialise a pointer for iterating through
 	// the Pololu SMC objects
@@ -195,9 +195,9 @@ int main(int argc, char* argv[])
 	// Initialise a publisher
 	//ros::Publisher current_measurement_publisher = nodeHandle.advertise<std_msgs::UInt16>("current_measurement", 10, false);
 	// Initialise a subscriber
-	ros::Subscriber set_motor_duty_cycle_subscriber = nodeHandle.subscribe("set_motor_duty_cycle", 1, templateSubscriberCallback);
+	ros::Subscriber set_motor_duty_cycle_subscriber = nodeHandle.subscribe("set_motor_duty_cycle", 1, templateDriveMotorsSubscriberCallback);
 	// Initialise a subscriber for the servo driver
-	ros::Subscriber set_servo_pulse_width_subscriber = nodeHandle.subscribe("set_servo_pulse_width", 1, templateSubscriberCallback);
+	ros::Subscriber set_servo_pulse_width_subscriber = nodeHandle.subscribe("set_servo_pulse_width", 1, templateServoSubscriberCallback);
 
 	// Initialise a publisher for the current
 	// sensor measurement
@@ -267,7 +267,7 @@ int main(int argc, char* argv[])
 	}
 
 
-	// SET THE CONFIGURATION OF THE PERVO DRIVER
+	// SET THE CONFIGURATION OF THE SERVO DRIVER
 
 	// Specify the frequency of the servo driver
 	float new_frequency_in_hz = 50.0;

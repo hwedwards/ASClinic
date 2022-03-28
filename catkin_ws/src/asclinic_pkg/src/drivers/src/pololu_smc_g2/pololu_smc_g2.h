@@ -143,6 +143,7 @@ public:
 	// A SIGNED MOTOR TARGET SPEED
 	bool set_motor_target_speed_3200(int target_speed);
 	bool set_motor_target_speed_percent(int target_speed);
+	bool set_motor_target_speed_percent(float target_speed);
 	bool set_motor_target_speed_7bit(int target_speed);
 
 	// SET MOTOR LIMITS

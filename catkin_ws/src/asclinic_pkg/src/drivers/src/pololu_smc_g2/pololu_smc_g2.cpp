@@ -495,6 +495,14 @@ bool Pololu_SMC_G2::set_motor_target_speed_percent(int target_speed)
 		return this->motor_forward_percent(target_speed);
 }
 
+bool Pololu_SMC_G2::set_motor_target_speed_percent(float target_speed)
+{
+	// Convert the percent to the nearest 3200 integer
+	int target_speed_3200 = static_cast<int>( target_speed * 32.0f );
+	// Call the function for signed 3200 speeds
+	return this->set_motor_target_speed_3200(target_speed_3200);
+}
+
 bool Pololu_SMC_G2::set_motor_target_speed_7bit(int target_speed)
 {
 	if (target_speed<0)
