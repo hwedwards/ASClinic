@@ -44,6 +44,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <bitset>
+#include <cmath>
 
 #include "pololu_smc_g2/pololu_smc_g2_constants.h"
 
