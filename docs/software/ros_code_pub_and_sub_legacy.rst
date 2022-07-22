@@ -1,7 +1,7 @@
-.. _ros-simple-pub-and-sub:
+.. _ros-code-pub-and-sub-legacy:
 
-Simple ROS Publisher and ROS Subscriber
-=======================================
+Write a ROS Publisher and ROS Subscriber based on :code:`asclinic-system`
+=========================================================================
 
 The key ROS concepts in this workflow are generic to ROS, for which the following ROS tutorial pages are the most relevant:
 

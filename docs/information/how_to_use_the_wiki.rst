@@ -30,9 +30,6 @@ The following is an example of such questions for the ROS part of this wiki, for
      - Services
 
      Additionally explain how these elements are used together, drawing an example to support your explanation.
-  
-  #. What is the code required to create a :ref:`ros-simple-pub-and-sub`, both in C++ and in Python.
-  #. List and explain some of the :ref:`ros-cmd-line` essentials. As part of this, explain the difference between using :code:`rosrun` and :code:`roslaunch` to start up nodes.
 
 .. hint::
 
@@ -92,8 +89,8 @@ What this wiki is
 *****************
 This guide is a composition of many short step-by-step guides for a variety of aspects that are applicable to many different robotics projects. The goal is to get you familiar and competent with the various sub-systems of the robot platform so that you can then head-off on the exploratory trail of the robotics project you want to pursue.
 
-How this wiki suit you
-**********************
+How this wiki suits you
+***********************
 Every engineer, engineering student, teacher, and hobbyist comes to the table with a unique set of skills and experiences. For instance, an individual may be an expert in one area and a novice in another area, for example having engineered lots of custom projects with Arduino but never installed or used a Linux distribution. Hence an expert will be bored by a step-by-step guide aimed at a novice, and a novice will be derailed by a step-by-step guide aimed at an expert.
 
 Hence the onus is on you to self-asses whether you need to follow every step of a guide, or whether you can skip ahead to the steps that are specific to the hardware and software involved.

@@ -1,6 +1,6 @@
 .. _ros-cmd-line:
 
-ROS command line
+ROS COMMAND LINE
 ================
 
 The list below provides the essential commands for performing tasks within the ROS framework, but it is by no means exhaustive.
@@ -23,9 +23,15 @@ Compiling
 Sourcing a ROS package
 **********************
 
-* :code:`<path_to_catkin_ws>/devel/setup.bash` sources the :code:`setup.bash` script that was automatically created when the :code:`catkin_make` command was successfully run
+* :code:`source /opt/ros/<ros-distro>/setup.bash` sources the :code:`setup.bash` script for the ROS distribution specified by :code:`<ros-distro>`.
 
-* :code:`~/asclinic-system/catkin_ws/devel/setup.bash` sources the :code:`setup.bash` script for when this repository was cloned to the default location for the logged in user, i.e., to :code:`~/asclinic-system/`
+* :code:`source /opt/ros/melodic/setup.bash` sources the :code:`setup.bash` script for the ROS melodic distribution.
+
+* :code:`source <path_to_catkin_ws>/devel/setup.bash` sources the :code:`setup.bash` script that was automatically created when the :code:`catkin_make` command was successfully run
+
+* :code:`source ~/asclinic-system/catkin_ws/devel/setup.bash` sources the :code:`setup.bash` script for when this repository was cloned to the default location for the logged in user, i.e., to :code:`~/asclinic-system/`
+
+* :code:`echo $ROS_PACKAGE_PATH` to display which paths are sources in the current terminal session.
 
 
 Launching nodes

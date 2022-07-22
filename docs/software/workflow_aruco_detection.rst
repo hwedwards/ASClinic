@@ -3,6 +3,13 @@
 ArUco Marker Detection
 ======================
 
+
+Install OpenCV
+**************
+
+Mostly likely this is already installed because it is included in both the :ref:`software-installation-manual` and :ref:`software-installation-script`. If not already installed, follow the :ref:`install_opencv` instructions.
+
+
 Template overview
 *****************
 

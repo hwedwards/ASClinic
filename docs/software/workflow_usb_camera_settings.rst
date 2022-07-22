@@ -4,16 +4,10 @@ USB Camera Settings
 ===================
 
 
-Install the command line tool
-*****************************
+Install the v4l2-ctl command line tool
+**************************************
 
-The settings of a USB camera can be adjusted using the command line interface program :code:`v4l2-ctl`, which stands for video for linux controls. This program is installed using the following:
-
-.. code-block:: bash
-
-  sudo apt install v4l-utils
-
-  sudo apt install libv4l libv4l-dev v4l-utils qv4l2 (may be part of v4l-utils) v4l2ucp
+Mostly likely this is already installed because it is included in both the :ref:`software-installation-manual` and :ref:`software-installation-script`. If not already installed, follow the :ref:`install_v4l_utilities` instructions.
 
 Find the device
 ***************

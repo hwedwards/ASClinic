@@ -6,6 +6,11 @@ Camera calibration
 As the computer onboard is the robot is generally not connected to an external screen, it may at first seem difficult and unintuitive to work with data from the camera. You can consider setting up a remote desktop connection to the robot, and this will make certain parts of the workflow more like using you personal computer. But at the end of the day, the majority of your interface to the robot is through terminal commands and code, for which opening multiple :code:`ssh` connections is sufficient.
 
 
+Install OpenCV
+**************
+
+Mostly likely this is already installed because it is included in both the :ref:`software-installation-manual` and :ref:`software-installation-script`. If not already installed, follow the :ref:`install_opencv` instructions.
+
 
 Capture camera images
 *********************

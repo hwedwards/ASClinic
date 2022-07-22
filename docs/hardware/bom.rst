@@ -43,12 +43,6 @@ Sensors
     - **Website**
     - **Documentation**
 
-  * - Sparkfun 9DoF IMU Breakout
-
-      (ICM-20948)
-    - `Link <https://www.sparkfun.com/products/15335>`__
-    - `Link <https://cdn.sparkfun.com/assets/7/f/e/c/d/DS-000189-ICM-20948-v1.3.pdf>`__
-
   * - Sparkfun Distance Sensor
 
       Breakout (VL53L1X)
@@ -60,6 +54,37 @@ Sensors
       (Sharp GP2Y0D810Z0F)
     - `Link <https://www.pololu.com/product/1134>`__
     - `Link <https://www.pololu.com/product/1134/resources>`__
+
+  * - Logitech C922 webcam
+
+    - `Link <https://www.logitech.com/en-au/products/webcams/c922-pro-stream-webcam.960-001090.html>`__
+    - same
+
+  * - Logitech C270 webcam
+
+    - `Link <https://www.logitech.com/en-au/products/webcams/c270-hd-webcam.960-000584.html>`__
+    - same
+
+  * - Logitech Brio webcam
+
+    - `Link <https://www.logitech.com/en-au/products/webcams/brio-4k-hdr-webcam.960-001105.html>`__
+    - same
+
+  * - Leopard Imaging Camera
+
+      for Jetson (IMX219)
+    - `Link <https://www.leopardimaging.com/product/nvidia-jetson-cameras/nvidia_nano_mipi_camera_kits/li-imx219-mipi-ff-nano/li-imx219-mipi-ff-nano-h136/>`__
+    - `Link <https://www.leopardimaging.com/uploads/LI-IMX219-MIPI-FF-NANO_SPEC.pdf>`__
+
+  * - Arducam Camera with Motorized
+
+      Focus for Jetson (IMX477)
+    - `Link <https://www.arducam.com/product/arducam-12mp-imx477-motorized-focus-high-quality-camera-for-jetson-nano/>`__
+    - `Link <https://www.arducam.com/docs/camera-for-jetson-nano/native-jetson-cameras-imx219-imx477/imx477-12mp-auto-focus-motorized-focus-camera/>`__
+
+  * - RPLidar A1 from SlamTec
+    - `Link <https://www.slamtec.com/en/Lidar/A1>`__
+    - `Link <https://www.slamtec.com/en/Support#rplidar-a-series>`__
 
   * - Adafriit RGB Color Sensor
 
@@ -85,17 +110,14 @@ Sensors
     - `Link <https://www.adafruit.com/product/4816>`__
     - `Link <https://www.bosch-sensortec.com/products/environmental-sensors/pressure-sensors/bmp390l/#documents>`__
 
-  * - Leopard Imaging Camera
 
-      for Jetson (IMX219)
-    - `Link <https://www.leopardimaging.com/product/nvidia-jetson-cameras/nvidia_nano_mipi_camera_kits/li-imx219-mipi-ff-nano/li-imx219-mipi-ff-nano-h136/>`__
-    - `Link <https://www.leopardimaging.com/uploads/LI-IMX219-MIPI-FF-NANO_SPEC.pdf>`__
 
-  * - Arducam Camera with Motorized
+..
+  * - Sparkfun 9DoF IMU Breakout
 
-      Focus for Jetson (IMX477)
-    - `Link <https://www.arducam.com/product/arducam-12mp-imx477-motorized-focus-high-quality-camera-for-jetson-nano/>`__
-    - `Link <https://www.arducam.com/docs/camera-for-jetson-nano/native-jetson-cameras-imx219-imx477/imx477-12mp-auto-focus-motorized-focus-camera/>`__
+      (ICM-20948)
+    - `Link <https://www.sparkfun.com/products/15335>`__
+    - `Link <https://cdn.sparkfun.com/assets/7/f/e/c/d/DS-000189-ICM-20948-v1.3.pdf>`__
 
 
 Actuators
@@ -111,18 +133,6 @@ Actuators
   * - **Item**
     - **Website**
     - **Documentation**
-
-  * - Pololu 50:1 Metal Gear Motor
-
-      (37Dx70L with 64 CPR Encoder)
-    - `Link <https://www.pololu.com/product/4753>`__
-    - `Link <https://www.pololu.com/product/4753/resources>`__
-
-  * - Pololu High-Power Simple Motor
-
-      Controller (G2 24v19)
-    - `Link <https://www.pololu.com/product/1367>`__
-    - `Link <https://www.pololu.com/docs/0J77>`__
 
   * - Power HD High-Torque Servo
 
@@ -141,6 +151,24 @@ Actuators
       (DF05BB)
     - `Link <https://core-electronics.com.au/df05bb-standard-servo-5kg.html>`__
     - same
+
+  * - Adafruit Servo Driver (PCA9685)
+
+      16-Channel, 12-bit
+    - `Link <https://www.adafruit.com/product/815>`__
+    - `Link <https://learn.adafruit.com/16-channel-pwm-servo-driver>`__
+
+  * - Pololu 50:1 Metal Gear Motor
+
+      (37Dx70L with 64 CPR Encoder)
+    - `Link <https://www.pololu.com/product/4753>`__
+    - `Link <https://www.pololu.com/product/4753/resources>`__
+
+  * - Pololu High-Power Simple Motor
+
+      Controller (G2 24v19)
+    - `Link <https://www.pololu.com/product/1367>`__
+    - `Link <https://www.pololu.com/docs/0J77>`__
 
 Power supply
 ************
@@ -186,8 +214,14 @@ Wheels
   * - Scooter Wheels
 
       100x24mm
-    - `Link <https://www.littlebird.com.au/products/scooter-skate-wheel-100x24mm-black>`__
     - `Link <https://www.pololu.com/product/3278>`__
+    - same
+
+  * - Scooter Wheels
+
+      144x29mm
+    - `Link <https://www.pololu.com/product/3281>`__
+    - same
 
   * - Metal ball caster
 
