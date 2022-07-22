@@ -46,8 +46,12 @@ Then you can launch the template GPIO nodes with:
 
 
 .. note::
-  **GPIOD Library:**
-  `This website <https://libgpiod-dlang.dpldocs.info/gpiod.html>`_ provides a comprehensive list of all the function offered by the :code:`gpiod` library for monitoring a GPIO pin.
+
+  **GPIOD Library - C++ Documentation:**
+  The following two websites both provide a comprehensive list of all the functions offered by the :code:`gpiod` library for monitoring a GPIO pin:
+
+    * `gpiod documentation hosted by dlang <https://libgpiod-dlang.dpldocs.info/gpiod.html>`_
+    * `gpiod doxygen documentation hosted by lane-fu <https://www.lane-fu.com/linuxmirror/libgpiod/doc/html/index.html>`_
 
 
 

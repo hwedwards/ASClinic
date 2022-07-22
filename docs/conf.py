@@ -30,15 +30,31 @@ author = 'Paul Beuchat'
 release = '0.1.0'
 
 
-# -- General configuration ---------------------------------------------------
+
+# -- Useful Links ------------------------
+# > For setup of C++ auto documentation
+#   https://devblogs.microsoft.com/cppblog/clear-functional-c-documentation-with-sphinx-breathe-doxygen-cmake/
+
+
+# -- General configuration ---------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
 	#'sphinx_comments',
+	#
+	# > The the theme:
 	'sphinx_rtd_theme',
 	#'sphinx_rtd_dark_mode',
+	#'sphinxcontrib.examplecode',
+	#'sphinxcontrib.osexample',
+	#
+	# > For graphics
+	'sphinx.ext.graphviz',
+	#
+	# > For auto documentation:
+	#'sphinx.ext.napoleon',
 ]
 
 # If using the "sphinx_rtd_dark_mode" extension,
@@ -62,7 +78,32 @@ templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 
-# -- Options for HTML output -------------------------------------------------
+
+
+# -- Napoleon configuration --------------
+#    > For python auto documentation
+#napoleon_google_docstring = False
+#napoleon_numpy_docstring = True
+#napoleon_include_init_with_doc = False
+#napoleon_include_private_with_doc = True
+#napoleon_include_special_with_doc = True
+#napoleon_use_admonition_for_examples = False
+#napoleon_use_admonition_for_notes = False
+#napoleon_use_admonition_for_references = False
+#napoleon_use_ivar = False
+#napoleon_use_param = True
+#napoleon_use_rtype = True
+#napoleon_preprocess_types = False
+#napoleon_type_aliases = None
+#napoleon_attr_annotations = True
+
+
+
+# -- GraphViz configuration --------------
+graphviz_output_format = 'svg'
+
+
+# -- Options for HTML output -------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.

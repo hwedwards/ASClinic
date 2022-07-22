@@ -10,6 +10,7 @@ You can find many great command line tutorials on the web, for example:
 * `Linux commands cheat sheet <https://www.linuxtrainingacademy.com/linux-commands-cheat-sheet/>`_
 * `linuxcommand.org <https://linuxcommand.org/index.php>`_
 * `Software carpentry shell tutorial <https://swcarpentry.github.io/shell-novice/>`_
+* `UNIX Tutorial for Beginners <http://www.ee.surrey.ac.uk/Teaching/Unix/>`_
 
 
 Navigating directories
@@ -132,6 +133,14 @@ Secure shell and secure copying
 
   * **Note** see `this tutorial on using scp <https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/>`_ for more details
 
+Mosh - mobile shell connection
+******************************
+
+* :code:`mosh username@ip_address` log in as :code:`username` to a terminal on the remote machine at :code:`ip_address` using mosh, which stands for mobile shell.
+
+  * If you are using :code:`ssh` in areas of your campus with patchy WiFi connection, then a frequent occurrence of broken :code:`ssh` pipelines can be frustrating. As described on the `mosh website <https://mosh.org>`_, mosh is a "remote terminal application that allows roaming and supports intermittent connectivity", and hence is ideal for such situations where the WiFi connection is patchy.
+
+  * To use mosh, it needs to be installed on both the robot (see :ref:`install_mosh`) and your personal computer. 
 
 Miscellaneous
 *************

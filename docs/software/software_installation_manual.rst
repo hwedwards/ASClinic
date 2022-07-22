@@ -7,6 +7,11 @@ Manual Installation
 The :ref:`installation script <software-installation-script>` automates the steps described below.
 It is recommended that you follow the manual installation steps described below the first time you are installing the :code:`asclinic-system` on a :ref:`single board computer <single-board-computers>`.
 
+.. contents:: Contents of this page
+   :local:
+   :backlinks: none
+   :depth: 2
+
 
 
 Flash SD Card
@@ -51,7 +56,7 @@ Then, enter the following command to check the "ignore broadcast" status:
 
   less /proc/sys/net/ipv4/icmp/echo_ignore_broadcasts
 
-If the output is 1 then broadcast pings are ignored, otherwise, if the output 0 then broadcast pings will be reponded to.
+If the output is 1 then broadcast pings are ignored, otherwise, if the output 0 then broadcast pings will be responded to.
 
 To again ignore broadcast pings, simply remove the above changes made to the :code:`sysctl.conf` file and then enter the :code:`sysctl -p` command.
 
@@ -96,15 +101,22 @@ To re enable IPv6 addresses, simply remove the above changes made to the :code:`
 
 
 
-Install ROS
-***********
 
-Follow the `ROS installation instructions <http://wiki.ros.org/ROS/Installation>`_ recommended for the version of Ubuntu installed in the step above.
 
-* Ubuntu 18.04: install `ROS Melodic <http://wiki.ros.org/melodic/Installation/Ubuntu>`_
-* Ubuntu 20.04: install `ROS Noetic <http://wiki.ros.org/noetic/Installation/Ubuntu>`_
+.. _install_mosh:
 
-**Note:** ensure the you complete the step to initialize :code:`rosdep`.
+Install mosh
+************
+
+Mosh, which stands for mobile shell, is an alternative to ssh (which stands for secure shell). As described on the `mosh website <https://mosh.org>`_, mosh is a "remote terminal application that allows roaming and supports intermittent connectivity". Hence mosh can avoid the annoyance of broken ssh pipelines in those areas of your campus with patchy WiFi connection.
+
+Install :code:`mosh`:
+
+.. code-block::
+
+  sudo apt-get install mosh
+
+
 
 
 
@@ -125,6 +137,15 @@ Afterwards, to test the successful installation, execute the following command i
 
 **Note:** for the :code:`i2cdetect` command, the :code:`1` argument indicate the I2C bus.
 
+To allow the gpiod library to be used without requiring root priviliges, add the user you are logged in with to the :code:`i2c` group (and any other users that need such access):
+
+.. code-block::
+
+  sudo usermod -a -G i2c $(whoami)
+
+where :code:`$(whoami)` simply provides the username of the user that is currently logged in.
+
+
 
 
 Install GPIO library
@@ -134,7 +155,7 @@ Install the :code:`gpiod`, :code:`libgpiod-dev`, and :code:`libgpiod-doc` librar
 
 .. code-block::
 
-  sudo apt-get install gpiod
+  sudo apt-get install gpiod libgpiod-dev libgpiod-doc
 
 Afterwards, to test the successful installation, execute the following command in a terminal:
 
@@ -142,7 +163,86 @@ Afterwards, to test the successful installation, execute the following command i
 
   sudo gpiodetect
 
+To allow the gpiod library to be used without requiring root privileges, we now add a :code:`udev` rule to give the user access to a particular gpio chip.
 
+Creating a new user group names :code:`gpiod`:
+
+.. code-block::
+
+  sudo groupadd gpiod
+
+Now add a :code:`udev` rule to give the :code:`gpiod` group access to :code:`gpiochip0`. Create the following file with you preferred editor, for example:
+
+.. code-block::
+
+  sudo vi /etc/udev/rules.d/60-gpiod.rules
+
+Add the following comments and rule to the file just opened:
+
+.. code-block::
+
+  # udev rules for giving gpio port access to the gpiod group
+  # This allows use of certain libgpiod functions without sudo
+  SUBSYSTEM==\"gpio\", KERNEL==\"gpiochip0\", GROUP=\"gpiod\", MODE=\"0660\"
+
+The first two lines are comments for a reminder for when you look back at this file in the (distant) future. The third line specifies that any members of the :code:`gpiod` group are allowed to access the :code:`gpiochip0` kernel that is part of the :code:`gpio` subsystem.
+
+Add the user you are logged in with to the :code:`gpiod` group (and any other users that need such access):
+
+.. code-block::
+
+  sudo usermod -a -G gpiod $(whoami)
+
+where :code:`$(whoami)` simply provides the username of the user that is currently logged in.
+
+.. important::
+
+  New :code:`udev` rules only comes into effect after a restart of the computer, after which you can check that the rule is working correctly by using the following command:
+
+  .. code-block::
+
+    gpioinfo gpiochip0
+
+The following commands may be useful to check various details about the groups.
+
+* List of all groups that the :code:`$(whoami)` user currently belongs to:
+
+  .. code-block::
+
+    groups $(whoami)
+
+* List of all the members of a particular group, for example the :code:`sudo` group:
+
+  .. code-block::
+
+    getent group sudo
+
+* Look at the file that list all groups and their members:
+
+  .. code-block::
+
+    less /etc/group
+
+
+
+
+.. _install_ros:
+
+Install ROS
+***********
+
+Follow the `ROS installation instructions <http://wiki.ros.org/ROS/Installation>`_ recommended for the version of Ubuntu installed in the step above.
+
+* Ubuntu 18.04: install `ROS Melodic <http://wiki.ros.org/melodic/Installation/Ubuntu>`_
+* Ubuntu 20.04: install `ROS Noetic <http://wiki.ros.org/noetic/Installation/Ubuntu>`_
+
+**Note:** ensure the you complete the step to initialize :code:`rosdep`.
+
+
+
+
+
+.. _install_clone_asclinic_system:
 
 Clone this repository
 *********************
@@ -156,8 +256,8 @@ Clone the :code:`asclinic-system` repository into the desired location on your S
 
 
 
-Compile the ROS package
-***********************
+Compile the ASClinic ROS package
+********************************
 
 To compile the asclinic ROS Package, first change directory to the :code:`catkin_ws` directory, where :code:`ws` stands for workspace:
 
@@ -178,12 +278,12 @@ Add ROS setup scripts to bashrc
 
 Add the following :code:`source` commands to the bottom of the file :code:`~/.bashrc` (replace :code:`<ros version name>` and :code`<catkin workspace>` accordingly)
 
-.. code-block::
+.. code-block:: bash
 
   source /opt/ros/<ros version name>/setup.bash
   source <catkin workspace>/devel/setup.bash
 
-If you followed the steps above, then:
+If you followed the steps :ref:`install_ros` and :ref:`install_clone_asclinic_system` above, then:
 
 * :code:`<ros version name>` should be either :code:`melodic` or :code:`noetic`
 * :code:`<catkin workspace>` should be :code:`~/asclinic-system/catkin_ws`
@@ -191,10 +291,101 @@ If you followed the steps above, then:
 **Note:** the workspace setup script will only appear after the first compilation of the catkin workspace.
 
 
+
+.. _install_rplidar_for_ros:
+
+Install the Slamtec RPLidar ROS package
+***************************************
+
+
+These instructions are based on the information provided by the `git repository for the Slamtec RPLidar ROS package <https://github.com/slamtec/rplidar_ros>`_.
+
+Clone the RPLidar ROS package into the :code:`catkin_ws/src/` directory of your :code:`asclinic-system` git repository:
+
+.. code-block:: bash
+
+  cd ~/asclinic-system/catkin_ws/src/
+  git clone https://github.com/Slamtec/rplidar_ros.git
+
+Remove to the :code:`.git` directory that is created as part of cloning in order to avoid having this RPLidar git repository nested inside your git repository.
+
+.. code-block:: bash
+
+  rm -rf rplidar_ros/.git/
+
+.. note::
+
+  Removing the :code:`.git` directory means that you can no longer :code:`pull` updates that Slamtec makes to the :code:`rplidar_ros` repository. Instead you would need to remove the whole :code:`rplidar_ros` directory and clone the repository again.
+
+
+Add the following :code:`udev` rule so that the RPLidar device is automatically recognised when it is plugged in to a USB port. First open the file for editing:
+
+.. code-block:: bash
+
+  sudo nano /etc/udev/rules.d/rplidar.rules
+
+Then add the following contents to the file and save:
+
+.. code-block:: bash
+
+  # Configure the rplidar device port be a fixed symbolink link
+  KERNEL=="ttyUSB*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE:="0777", SYMLINK+="rplidar"
+
+If you want this :code:`udev` rule to take immediate effect, then you can :code:`reload` and :code:`restart` the service:
+
+.. code-block:: bash
+
+  sudo service udev reload
+  sudo service udev restart
+
+When the RPLidar device is plugged in, you check the symbolic link that this rule creates by the following listing:
+
+.. code-block:: bash
+
+  ls -l /dev/rplidar
+
+
+.. important::
+
+  This step of adding a :code:`udev` rule has not been tested with 2 RPLidar devices connected.
+
+.. note::
+
+  This step of adding a :code:`udev` rule is not necessary, but it does make using the RPLidar device much more convenient. Without this step, every time you plug in the RPLidar or boot the robot, you would need to manually the mode of the USB device handle that it is allocated to, for example:
+
+  .. code-block:: bash
+
+    sudo chmod 0777 /dev/ttyUSB0
+
+
+
+
+
+.. _install_v4l_utilities:
+
+Install the Video for Linux (v4l) utilities
+*******************************************
+
+The settings of a USB camera can be adjusted using the command line interface program :code:`v4l2-ctl`, which stands for video for linux controls. This program is installed as part of the following package:
+
+.. code-block:: bash
+
+  sudo apt install v4l-utils
+
+
+The following are additional video for linux tools that can come in handy:
+
+.. code-block:: bash
+
+  sudo apt install libv4l-dev qv4l2 v4l2ucp
+
+
+.. _install_opencv:
+
 OpenCV Installation
 *******************
 
-In order to use OpenCV and the included libraries for ArUco marker detection, certain packages need to be installed. These installation steps are currently **NOT** included in the :ref:`software-installation-manual` nor in the :ref:`software-installation-script`.
+In order to use OpenCV and the included libraries for ArUco marker detection, certain packages need to be installed.
 
 
 Install pip3
@@ -204,7 +395,7 @@ The installation steps in this workflow are for using OpenCV and the ArUco libra
 
 .. code-block:: bash
 
-  sudo apt install python3-pip
+  sudo apt-get install python3-pip
 
 
 Install OpenCV Contributions for python
@@ -273,8 +464,8 @@ You can now run a python node in ROS as python3, simply adjust the very first li
 
 
 
-Extra steps
-###########
+Extra steps for some camera use cases
+#####################################
 
 After following the installation steps in the sections above, you should be able to run a python3 ROS node the call OpenCV and ArUco functions. However, certain errors may still occur when calling certain functions. As always with programming, read the details of the error and attempt to determine whether a package is missing that needs to be installed.
 
@@ -282,7 +473,7 @@ For example, the OpenCV function :code:`imshow()` needs the following package to
 
 .. code-block::
 
-  sudo apt install libcanberra-gtk0 libcanberra-gtk-module
+  sudo apt-get install libcanberra-gtk0 libcanberra-gtk-module
 
 
 

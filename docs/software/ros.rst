@@ -7,50 +7,45 @@ ROBOT OPERATING SYSTEMS (ROS)
   :maxdepth: 2
   :hidden:
 
-  ros_what
-  ros_why
-  ros_key_elements
-  ros-simple-pub-and-sub
+  ros_in_words
+  ros_code_from_a_clean_slate
+  ros_code_first_robotic_system
   ros_cmd_line
   
 
 
-.. admonition:: Contents of this part posed as questions
+ROS (the robot operating system) is a large topic with many plausible levels-of-detail and plausible presentation/tutorial methods. This wiki in separated into the following sub-sections that increase in complexity and level-of-detail.
 
-  #. :ref:`ros-what` Explain at a high-level.
-  #. :ref:`ros-why` Explain why the features of ROS are considered useful for developing a robot.
-  #. Explain each of :ref:`ros-key-elements`, i.e., explain each of the following:
-
-     - Nodes
-     - Topics
-     - Messages
-     - Publishing and subscribing
-     - Services
-
-     Additionally explain how these elements are used together, drawing an example to support your explanation.
-  
-  #. What is the code required to create a :ref:`ros-simple-pub-and-sub`, both in C++ and in Python.
-  #. List and explain some of the :ref:`ros-cmd-line` essentials. As part of this, explain the difference between using :code:`rosrun` and :code:`roslaunch` to start up nodes.
+  #. :ref:`ros-in-words`: provides an introduction to the core concepts and key elements of ROS within involving any programming. This level-of-detail should be enough to design a first draft of a ROS architecture for how you bring your robotics project together using ROS.
 
 
+  #. :ref:`ros-code-from-a-clean-slate`: provides step-by-step tutorials for how the core concepts and key elements of ROS materialise through code (C++ and Python) and command line tools. This section will likely feel quite boring (apologies for that) because no exciting robotics behaviour is achieved. But remember that **this section contains the basic building blocks needed to do everything exciting in the next section**.
+
+
+  #. :ref:`ros-code-first-robotic-system`: provides step-by-step tutorials for how to put together the building blocks from the previous section to create a first robotic system.
+
+
+  #. :ref:`ros-cmd-line`: provides a list and brief explanation for the essential command line tools.
 
 
 
 ..
-  NOTES FOR WHAT TO INCLUDE:
-  - What is ROS (service oriented architecture)
-  - Why use ROS (it is the functionality you would anyway create if you started from scratch)
-  - Is it a blessing or a necessary evil.
+  .. literalinclude:: ros.rst
+    :language: RST
+    :emphasize-lines: 12,15-18
+    :linenos:
+
+
+
+..
+  NOTES FOR WHAT STILL TO INCLUDE:
+  
   - Who uses ROS (lots of example, links, and videos, https://www.designnews.com/automation-motion-control/10-robot-companies-you-should-know-use-ros)
   - Limitations of ROS (latency) (topic transport: http://wiki.ros.org/Topics)
   - What is ROS 2
   - Installation of ROS (simply link to instructions) but make the Ubuntu ROS version clear
   - What programming language does ROS use (including note about python version)
   - Structure of folder in ROS (this is key to how the toolchain works)
-  - catkin_make produces the build and devel folders (deleting these can make a difference when there are "strange" errors)
-  - To access the auto-completion, you need to course setup.bash EVERY time you open a connection (add details for adding to .bashrc)
-  - Describe what catkin_make does (looked into "_pkg" folder; then followed instructions in the CMakeList.txt; which gives instructions to compile the C++ files in the folder /src/nodes; then the excitable files are stored in the build and devel folder.)
-  - Python files can be launched anytime.
   - Describe how to have multiple of the same asclinic_pkg on the same computer.
-  - How to launch (roslaunch versus rescore + rosrun)
-  - Step-by-step instructions for adding a python and C++ ROS node the exemplifies custom messages in both directions, services in both directions, launching, and terminal interrogation. Use a robot function to motivate.
+  - Put it all together, use this as a hint to draw a nice feedback loop with graphviz:
+    - https://stackoverflow.com/questions/54724783/graphviz-drawing-nodes-in-given-order-to-correctly-draw-tree

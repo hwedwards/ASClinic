@@ -3,6 +3,19 @@
 SPHYINX RST CHEAT SHEET
 =======================
 
+A few example resources for cheat sheets:
+
+* `The Sublime and Sphyinx Guide <https://sublime-and-sphinx-guide.readthedocs.io/en/latest/code_blocks.html>`_
+
+* `reStructuredTest and Sphinx reference guide on documatt <https://restructuredtext.documatt.com/index.html>`_
+
+
+.. contents:: Contents of this page
+   :local:
+   :backlinks: none
+   :depth: 2
+
+
 Section headings
 ****************
 
@@ -18,7 +31,47 @@ For this wiki, we use the following:
 Lists
 *****
 
-Nested lists must be indent to the same level as the text starts.
+Nested lists must be indent to the same level as the text starts. This is easy to miss when using an enumerated list because it requires an indent of 3 spaces instead of the usual 2 space indent.
+
+The following does NOT properly produced an indented sub-list:
+
+.. code-block::
+
+  #. Main list item.
+
+    #. This item is NOT indented enough.
+
+The following DOES produced an indented sub-list:
+
+.. code-block::
+
+  #. Main list item.
+
+     #. This item is indented enough, i.e., by 3 spaces.
+
+
+Contents of an individual .rst file
+***********************************
+
+The :code:`contents` directive inserts a hyperlinked list of all the heading in that .rst file. The directive with its option:
+
+.. code-block::
+
+  .. contents:: Contents of this page
+     :local:
+     :backlinks: none
+     :depth: 2
+
+For which the results can be seen at the top of this page. The options are well explained on `this documatt page
+<https://restructuredtext.documatt.com/element/contents.html>`_, and summarised as:
+
+  * :code:`:local:` exclude the top-level title of this page from the contents.
+  * :code:`:backlinks: none`, remove hyperlinks from the section heading back to the contents.
+  * :code:`:depth: 2`, specifies the depth to display in the contents.
+
+.. note::
+
+  The :code:`contents` directive must be used before the first sub-heading of the page.
 
 
 Admonition directives
@@ -51,7 +104,7 @@ The following are perhaps the two most common admonition directives with a speci
 
   This is a note admonition, created using the syntax :code:`.. note:: Contents of the note goes here.`
 
-.. warning:: I'm warning.
+.. warning::
 
   This is a warning admonition, created using the syntax :code:`.. warning:: Contents of the warning goes here.`
 

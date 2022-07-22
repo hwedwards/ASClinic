@@ -13,6 +13,7 @@ WORKFLOWS
   workflow_usb_camera_settings
   workflow_camera_calibration
   workflow_aruco_detection
+  workflow_rplidar
 
 
 
@@ -24,3 +25,4 @@ The following workflows are intended to assist you to get familiar with the vari
 * Workflow for: :ref:`Adjusting the controls of a USB camera <workflow_usb_camera_settings>`.
 * Workflow for: :ref:`Recording images from a camera, and subsequently using these for calibrating the intrinsic parameters <workflow_camera_calibration>`.
 * Workflow for: :ref:`Dececting aruco markers in camera images, and estimating the pose of the marker relative to the camera <workflow_aruco_detection>`.
+* Workflow for: :ref:`Launching and retreiving data from the RPLidar rotating time-of-flight distance sensor <workflow_rplidar>`.
