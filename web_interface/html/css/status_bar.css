@@ -1,0 +1,71 @@
+.status-icon-radio
+{
+	height: 40px;
+	width: 55px;
+	object-fit: contain;
+	text-align: center;
+	margin-left:     0px;
+	margin-right:    0px;
+	margin-top:      0px;
+	margin-bottom:   0px;
+	padding-left:   10px;
+	padding-right:  10px;
+	padding-top:     0px;
+	padding-bottom:  0px;
+}
+
+.status-icon-battery
+{
+	height: 40px;
+	width: 26px;
+	object-fit: contain;
+	text-align: center;
+	margin-left:     0px;
+	margin-right:    0px;
+	margin-top:      0px;
+	margin-bottom:   0px;
+	padding-left:   10px;
+	padding-right:  10px;
+	padding-top:     0px;
+	padding-bottom:  0px;
+}
+
+.status-icon-flying-state
+{
+	height: 40px;
+	width: 51px;
+	object-fit: contain;
+	text-align: center;
+	margin-left:     0px;
+	margin-right:    0px;
+	margin-top:      0px;
+	margin-bottom:   0px;
+	padding-left:   10px;
+	padding-right:  10px;
+	padding-top:     0px;
+	padding-bottom:  0px;
+}
+
+
+
+/* SETTINGS FOR WHEN THE SCREEN IS SMALL */
+@media screen and (max-width: 420px)
+{
+	.status-icon-radio
+	{
+		padding-left:   5px;
+		padding-right:  5px;
+	}
+
+	.status-icon-battery
+	{
+		padding-left:   5px;
+		padding-right:  5px;
+	}
+
+	.status-icon-flying-state
+	{
+		padding-left:   5px;
+		padding-right:  5px;
+	}
+}

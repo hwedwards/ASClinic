@@ -1,0 +1,115 @@
+<body>
+	<div class="body-container">
+		<main style="text-align:left;">
+
+			<br>
+
+			<table class="git-table">
+				<tr>
+					<td class="git-button-cell left">
+						<button
+							class="button-push navy fullwidth"
+							id="buttonGitStatus"
+							onclick="callGit_outputLabelID_shouldAppend_shouldConfirm('status', 'terminalOutput', true, false)"
+							>
+							git status
+							<div class="div-for-button-highlight-on-touchscreen navy"></div>
+						</button> 
+					</td>
+					<td class="git-button-cell right">
+						<button
+							class="button-push navy fullwidth"
+							id="buttonGitPull"
+							onclick="callGit_outputLabelID_shouldAppend_shouldConfirm('pull', 'terminalOutput', true, false)"
+							>
+							git pull
+							<div class="div-for-button-highlight-on-touchscreen navy"></div>
+						</button> 
+					</td>
+				</tr>
+				<tr>
+					<td class="git-button-cell left">
+						<button
+							class="button-push navy fullwidth"
+							id="buttonGitDiff"
+							onclick="callGit_outputLabelID_shouldAppend_shouldConfirm('diff', 'terminalOutput', true, false)"
+							>
+							git diff
+							<div class="div-for-button-highlight-on-touchscreen navy"></div>
+						</button> 
+					</td>
+					<td class="git-button-cell right">
+						<button
+							class="button-push navy fullwidth"
+							id="buttonCatkinMake"
+							onclick="callGit_outputLabelID_shouldAppend_shouldConfirm('catkin_make', 'terminalOutput', false, false)"
+							>
+							catkin make
+							<div class="div-for-button-highlight-on-touchscreen navy"></div>
+						</button>
+						<!-- ALTERNATIVE FOR THIS BUTTON -->
+						<!-- onclick="callBashScript_outputLabelID_clearOtherLabels_clickOtherButtons('catkin_make', 'terminalOutput' , null, null)" -->
+					</td>
+				</tr>
+			</table>
+
+			<div class="git-checkout-label">git checkout</div>
+			<table class="git-table">
+				<tr>
+					<td class="git-button-cell left">
+						<button
+							class="button-push red fullwidth"
+							id="buttonGitCheckoutAll"
+							onclick="callGit_outputLabelID_shouldAppend_shouldConfirm('checkoutall', 'terminalOutput', true, true)"
+							>
+							all
+							<div class="div-for-button-highlight-on-touchscreen red"></div>
+						</button>
+					</td>
+					<td class="git-button-cell right">
+						<!--
+						<button
+							class="button-push red fullwidth"
+							id="buttonGitCheckoutMaster"
+							onclick="callGit_outputLabelID_shouldAppend_shouldConfirm('checkoutmaster', 'terminalOutput', true, true)"
+							>
+							master
+							<div class="div-for-button-highlight-on-touchscreen red"></div>
+						</button>
+						-->
+						&nbsp
+					</td>
+				</tr>
+			</table>
+
+			<br><br>
+
+			
+
+			<table class="terminal-label-table">
+				<tr>
+					<td class="terminal-label-cell">
+						<div class="terminal-label">TERMINAL OUTPUT</div>
+					</td>
+					<td>
+						<button
+							class="button-push navy monospace short"
+							id="buttonGitCheckout"
+							onclick="clearLabelWithGivenID('terminalOutput')"
+							>
+							clear
+							<div class="div-for-button-highlight-on-touchscreen navy"></div>
+						</button>
+					</td>
+				</tr>
+			</table>
+
+			<div class="terminal-background">
+				<div class="terminal-contents" id="terminalOutput"></div>
+			</div>
+		
+			<br>
+
+		</main>
+	</div>
+</body>

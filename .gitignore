@@ -15,6 +15,12 @@ catkin_ws/src/CMakeLists.txt
 catkin_ws/src/asclinic_pkg/src/drivers/build/
 catkin_ws/src/asclinic_pkg/src/drivers/bin/
 
+# Ignore any ROS log directories
+**/.ros/log/
+
+# Ignore the RPLidar package
+catkin_ws/src/rplidar_ros/
+
 # Ignore typical unwanted files
 .DS_Store
 

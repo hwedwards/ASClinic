@@ -4,8 +4,9 @@
 	<!-- Two nodes canNOT access the same GPIO line -->
 	<!-- The first node to open a line blocks other processes from accessing it -->
 
-	<!-- START A GROUP WITH NAMESPACE "template" -->
-	<group ns="ns_for_group">
+	<!-- START A GROUP WITH A NAMESPACE -->
+	<group ns="asc">
+
 		<!-- LAUNCH A "Template Encoder Read Multi Threaded" NODE -->
 		<node
 			pkg    = "asclinic_pkg"
@@ -18,8 +19,16 @@
 				value  = "133"
 			/>
 			<param
+				name   = "line_number_for_motor_left_channel_b"
+				value  = "134"
+			/>
+			<param
 				name   = "line_number_for_motor_right_channel_a"
 				value  = "105"
+			/>
+			<param
+				name   = "line_number_for_motor_right_channel_b"
+				value  = "160"
 			/>
 			<param
 				name   = "delta_t_for_publishing_counts"
@@ -28,11 +37,11 @@
 			<!-- NOTE: The following parameters are purely for the convenience of testing. -->
 			<param
 				name   = "time_in_seconds_to_drive_motors"
-				value  = "10.0"
+				value  = "20.0"
 			/>
 			<param
 				name   = "drive_motor_target_speed"
-				value  = "30"
+				value  = "80"
 			/>
 		</node>
 

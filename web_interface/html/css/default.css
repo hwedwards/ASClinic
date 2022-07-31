@@ -1,0 +1,8 @@
+/* IMPORT THE FONT */
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+/* SET THE BACKGROUND COLOUR */
+body
+{
+	background: #34495e;
+}

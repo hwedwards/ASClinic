@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  geometry_msgs
   genmsg
   roslib
 )
@@ -60,7 +61,8 @@ add_message_files(
   FILES
   ServoPulseWidth.msg
   TemplateMessage.msg
-  LeftAndRightInt.msg
+  LeftRightInt32.msg
+  LeftRightFloat32.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -85,6 +87,7 @@ add_message_files(
 generate_messages(
   DEPENDENCIES
   std_msgs
+  geometry_msgs
 )
 
 ################################################
@@ -124,7 +127,7 @@ generate_messages(
 # )
 
 catkin_package(
-  CATKIN_DEPENDS roscpp rospy std_msgs roslib
+  CATKIN_DEPENDS roscpp rospy std_msgs geometry_msgs roslib
 )
 
 ###########
@@ -174,6 +177,8 @@ add_executable(template_i2c_external                 src/nodes/template_i2c_exte
                                                      src/drivers/src/vl53l1x/vl53l1x.cpp
                                                      src/drivers/src/vl53l1x/core/VL53L1X_api.c
                                                      src/drivers/src/vl53l1x/platform/vl53l1_platform.c)
+add_executable(emulate_i2c_internal                  src/nodes/emulate_i2c_internal.cpp)
+add_executable(web_interface_connector               src/nodes/web_interface_connector.cpp)
 
 
 ## Rename C++ executable without prefix
@@ -194,6 +199,8 @@ add_dependencies(template_gpio_polling                 asclinic_pkg_generate_mes
 add_dependencies(template_encoder_read_multi_threaded  asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(template_i2c_internal                 asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(template_i2c_external                 asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(emulate_i2c_internal                  asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(web_interface_connector               asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 
 
 ## Specify libraries to link a library or executable target against
@@ -209,6 +216,8 @@ target_link_libraries(template_gpio_polling                 ${catkin_LIBRARIES} 
 target_link_libraries(template_encoder_read_multi_threaded  ${catkin_LIBRARIES} -lgpiod)
 target_link_libraries(template_i2c_internal                 ${catkin_LIBRARIES})
 target_link_libraries(template_i2c_external                 ${catkin_LIBRARIES})
+target_link_libraries(emulate_i2c_internal                  ${catkin_LIBRARIES})
+target_link_libraries(web_interface_connector               ${catkin_LIBRARIES})
 
 
 #############

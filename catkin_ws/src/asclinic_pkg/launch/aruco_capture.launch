@@ -1,0 +1,16 @@
+<launch>
+
+	<!-- START A GROUP WITH A NAMESPACE -->
+	<group ns="asc">
+
+		<!-- LAUNCH A "Template Aruco Capture" NODE -->
+		<node
+			pkg    = "asclinic_pkg"
+			name   = "template_aruco_capture"
+			output = "screen"
+			type   = "template_aruco_capture.py"
+		/>
+
+	</group>
+
+</launch>

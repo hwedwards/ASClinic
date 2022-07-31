@@ -1,0 +1,155 @@
+.main-tabs
+{
+	display: flex;
+	flex-wrap: wrap;
+	background: #efefef;
+	//box-shadow: 0 48px 80px -32px rgba(0,0,0,0.3);
+	top:    0px;
+	bottom: 0px;
+	margin: 0px;
+}
+
+.main-tab-input {
+  position: absolute;
+  opacity: 0;
+}
+
+.main-tab-label
+{
+	width: auto;
+	padding-left:   30px;
+	padding-right:  30px;
+	padding-top:    20px;
+	padding-bottom: 20px;
+	background: #e5e5e5;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 18px;
+	color: #7f7f7f;
+	transition: background 0.0s, color 0.0s;
+}
+
+.main-tab-label:hover
+{
+	background: #d8d8d8;
+}
+
+.main-tab-label:active
+{
+	background: #ccc;
+}
+
+.main-tab-input:focus + .main-tab-label
+{
+	/*box-shadow: inset 0px 0px 0px 3px #2aa1c0*/;
+	z-index: 1;
+}
+
+.main-tab-input:checked + .main-tab-label
+{
+	background: #fff;
+	color: #000;
+}
+
+/* The "top" specification here is critical  */
+/* Use:                                      */
+/* 189px    when the top banner contains the */
+/*          motors-off button and agent IP   */
+/* 190px    when the top banner contains the */
+/*          motors-off button and status     */
+/*          icons                            */
+/* 229px    when the top banner contains the */
+/*          motors-off button, agent IP, and */
+/*          status icons.                    */
+.main-tab-panel
+{
+	order: 99;
+	display: none;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left:     0px;
+	right:    0px;
+	top:    142px;
+	bottom:   0px;
+	margin-top:      0px;
+	margin-bottom:   0px;
+	margin-left:     0px;
+	margin-right:    0px;
+	max-width:     800px;
+	padding-left:   20px;
+	padding-right:  20px;
+	padding-top:    10px;
+	padding-bottom: 10px;
+	background: #fff;
+	color:black;
+	overflow: hidden;
+	overflow-y: auto;
+}
+
+.main-tab-panel.thin-padding
+{
+	padding-left:   10px;
+	padding-right:  10px;
+}
+
+/* Make the respective panel visible when its tab-input is checked */
+.main-tab-input:checked + .main-tab-label + .main-tab-panel
+{
+	display: block;
+}
+
+
+
+
+/* SETTINGS FOR WHEN THE SCREEN IS SMALL */
+@media screen and (max-width: 600px)
+{
+	/* Make it an accordian */
+	.main-tab-label
+	{
+		width: 25%;
+		padding-left:   0px;
+		padding-right:  0px;
+		padding-top:    20px;
+		padding-bottom: 20px;
+		text-align: center;
+	}
+}
+
+/* SETTINGS FOR WHEN THE SCREEN IS SMALL */
+@media screen and (max-width: 420px)
+{
+	/* Make it an accordian */
+	.main-tab-label
+	{
+		width: 25%;
+		padding-left:   0px;
+		padding-right:  0px;
+		padding-top:    10px;
+		padding-bottom: 10px;
+		text-align: center;
+	}
+
+	/* The "top" specification here is critical  */
+	/* Use:                                      */
+	/* 147px    when the top banner contains the */
+	/*          motors-off button and agent IP   */
+	/* 162px    when the top banner contains the */
+	/*          motors-off button and status     */
+	/*          icons                            */
+	/* 190px    when the top banner contains the */
+	/*          motors-off button, agent IP, and */
+	/*          status icons.                    */
+	.main-tab-panel
+	{
+		top: 108px;
+	}
+
+	.main-tab-panel.thin-padding
+	{
+		padding-left:   5px;
+		padding-right:  5px;
+	}
+	
+}

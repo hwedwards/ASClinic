@@ -1,0 +1,62 @@
+.file-input-label
+{
+	margin:          0px;
+	padding-left:    0px;
+	padding-right:   0px;
+	padding-top:    10px;
+	padding-bottom: 10px;
+	text-align: left;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 1.4em;
+}
+
+.file-input
+{
+	margin:          0px;
+	padding-left:    0px;
+	padding-right:   0px;
+	padding-top:    10px;
+	padding-bottom: 10px;
+	text-align: left;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 1.0em;
+}
+
+.file-upload-status-div
+{
+	margin:          0px;
+	padding-left:    0px;
+	padding-right:   0px;
+	padding-top:    10px;
+	padding-bottom: 10px;
+	text-align: left;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 1.0em;
+}
+
+.file-input-details-div
+{
+	margin:          0px;
+	padding-left:    0px;
+	padding-right:   0px;
+	padding-top:    10px;
+	padding-bottom: 10px;
+	text-align: left;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 1.0em;
+}
+
+
+
+
+
+
+/* SETTINGS FOR WHEN THE SCREEN IS SMALL */
+@media screen and (max-width: 420px)
+{
+
+}

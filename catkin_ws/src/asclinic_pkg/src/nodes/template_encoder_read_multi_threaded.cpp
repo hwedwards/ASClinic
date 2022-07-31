@@ -36,10 +36,11 @@
 //#include <boost/thread/thread.hpp>
 
 // Include the asclinic message types
-#include "asclinic_pkg/LeftAndRightInt.h"
+#include "asclinic_pkg/LeftRightInt32.h"
+#include "asclinic_pkg/LeftRightFloat32.h"
 
 // Namespacing the package
-using namespace asclinic_pkg;
+//using namespace asclinic_pkg;
 
 
 
@@ -52,15 +53,22 @@ ros::Publisher m_encoder_counts_publisher;
 ros::Timer m_timer_for_publishing;
 
 // > For sharing the encoder counts between nodes
-int m_encoder_counts_for_motor_left  = 0;
-int m_encoder_counts_for_motor_right = 0;
+int m_encoder_counts_for_motor_left_a  = 0;
+int m_encoder_counts_for_motor_left_b  = 0;
+int m_encoder_counts_for_motor_right_a = 0;
+int m_encoder_counts_for_motor_right_b = 0;
 
 // > Mutex for preventing multiple-access of shared variables
 std::mutex m_counting_mutex;
 
 // > The line numbers to read
 int m_line_number_for_motor_left_channel_a = 133;
+int m_line_number_for_motor_left_channel_b = 134;
 int m_line_number_for_motor_right_channel_a = 105;
+int m_line_number_for_motor_right_channel_b = 160;
+
+// > Boolean flag for when to stop counting
+bool encoder_thread_should_count = true;
 
 // > The "delta t" used for the frequency of publishing encoder counts
 float m_delta_t_for_publishing_counts = 0.1;
@@ -79,19 +87,25 @@ void timerCallbackForPublishing(const ros::TimerEvent&)
 {
 	// Get the current counts into a local variable
 	// > And reset the shared counts variable to zero
-	int counts_motor_left_local_copy;
-	int counts_motor_right_local_copy;
+	int counts_motor_left_a_local_copy;
+	int counts_motor_left_b_local_copy;
+	int counts_motor_right_a_local_copy;
+	int counts_motor_right_b_local_copy;
 	m_counting_mutex.lock();
-	counts_motor_left_local_copy  = m_encoder_counts_for_motor_left;
-	counts_motor_right_local_copy = m_encoder_counts_for_motor_right;
-	m_encoder_counts_for_motor_left  = 0;
-	m_encoder_counts_for_motor_right = 0;
+	counts_motor_left_a_local_copy  = m_encoder_counts_for_motor_left_a;
+	counts_motor_left_b_local_copy  = m_encoder_counts_for_motor_left_b;
+	counts_motor_right_a_local_copy = m_encoder_counts_for_motor_right_a;
+	counts_motor_right_b_local_copy = m_encoder_counts_for_motor_right_b;
+	m_encoder_counts_for_motor_left_a  = 0;
+	m_encoder_counts_for_motor_left_b  = 0;
+	m_encoder_counts_for_motor_right_a = 0;
+	m_encoder_counts_for_motor_right_b = 0;
 	m_counting_mutex.unlock();
 
 	// Publish a message
-	LeftAndRightInt msg;
-	msg.left  = counts_motor_left_local_copy;
-	msg.right = counts_motor_right_local_copy;
+	asclinic_pkg::LeftRightInt32 msg;
+	msg.left  = counts_motor_left_a_local_copy  + counts_motor_left_b_local_copy;
+	msg.right = counts_motor_right_a_local_copy + counts_motor_right_b_local_copy;
 	m_encoder_counts_publisher.publish(msg);
 
 
@@ -101,19 +115,24 @@ void timerCallbackForPublishing(const ros::TimerEvent&)
 	static bool did_finish_test = false;
 	static bool did_display_cum_sum = false;
 	static float elapsed_time_in_seconds = 0.0;
-	static int cum_sum_left = 0;
-	static int cum_sum_right = 0;
+	static int cum_sum_left_a = 0;
+	static int cum_sum_left_b = 0;
+	static int cum_sum_right_a = 0;
+	static int cum_sum_right_b = 0;
 	// Add the counts
-	cum_sum_left  += counts_motor_left_local_copy;
-	cum_sum_right += counts_motor_right_local_copy;// Increment the time
+	cum_sum_left_a  += counts_motor_left_a_local_copy;
+	cum_sum_left_b  += counts_motor_left_b_local_copy;
+	cum_sum_right_a += counts_motor_right_a_local_copy;
+	cum_sum_right_b += counts_motor_right_b_local_copy;
 	// Increment the time
 	elapsed_time_in_seconds += m_delta_t_for_publishing_counts;
 	// Start the motors after a few seconds
 	if ( !(did_start_motors) && (elapsed_time_in_seconds>=2.0) )
 	{
 		// Publish message to start the motors
-		std_msgs::Float32 target_speed_msg;
-		target_speed_msg.data = m_drive_motor_target_speed;
+		asclinic_pkg::LeftRightFloat32 target_speed_msg;
+		target_speed_msg.left  = m_drive_motor_target_speed;
+		target_speed_msg.right = m_drive_motor_target_speed;
 		m_motor_pwm_publisher.publish(target_speed_msg);
 		// Update the flag
 		did_start_motors = true;
@@ -122,8 +141,9 @@ void timerCallbackForPublishing(const ros::TimerEvent&)
 	if ( !(did_finish_test) && (elapsed_time_in_seconds>=(2.0+m_time_in_seconds_to_drive_motors)) )
 	{
 		// Publish message to stop the motors
-		std_msgs::Float32 target_speed_msg;
-		target_speed_msg.data = 0.0;
+		asclinic_pkg::LeftRightFloat32 target_speed_msg;
+		target_speed_msg.left  = 0.0;
+		target_speed_msg.right = 0.0;
 		m_motor_pwm_publisher.publish(target_speed_msg);
 		// Update the flag
 		did_finish_test = true;
@@ -131,9 +151,11 @@ void timerCallbackForPublishing(const ros::TimerEvent&)
 	// Display the cumulative cum
 	if ( !(did_display_cum_sum) && (elapsed_time_in_seconds>=(2.0+2.0+m_time_in_seconds_to_drive_motors)) )
 	{
-		ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] cumulative sum left = " << cum_sum_left << ", right = " << cum_sum_right);
+		ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] cumulative sum left (A,B) = ( " << cum_sum_left_a << " , " << cum_sum_left_b << " ), right (A,B) = ( " << cum_sum_right_a << " , " << cum_sum_right_b << " )");
 		// Update the flag
 		did_display_cum_sum = true;
+		// Update the flag to end the encoder thread
+		encoder_thread_should_count = false;
 	}
 }
 
@@ -149,12 +171,16 @@ void encoderCountingThreadMain()
 
 	// Make a local copy of the line number member variables
 	int line_number_left_a  = m_line_number_for_motor_left_channel_a;
+	int line_number_left_b  = m_line_number_for_motor_left_channel_b;
 	int line_number_right_a = m_line_number_for_motor_right_channel_a;
+	int line_number_right_b = m_line_number_for_motor_right_channel_b;
 
 	// Initialise a GPIO chip, line, and event objects
 	struct gpiod_chip *chip;
 	struct gpiod_line *line_left_a;
+	struct gpiod_line *line_left_b;
 	struct gpiod_line *line_right_a;
+	struct gpiod_line *line_right_b;
 	struct gpiod_line_bulk line_bulk;
 	struct gpiod_line_event event;
 	struct gpiod_line_bulk event_bulk;
@@ -175,24 +201,36 @@ void encoderCountingThreadMain()
 	//   If true, this indicate to the function that active state
 	//   of this line is low.
 	int value;
+	// > For left motor channel A
 	value = gpiod_ctxless_get_value(gpio_chip_name, line_number_left_a, false, "foobar");
 	ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] On startup of node, chip " << gpio_chip_name << " line " << line_number_left_a << " returned value = " << value);
+	// > For left motor channel B
+	value = gpiod_ctxless_get_value(gpio_chip_name, line_number_left_b, false, "foobar");
+	ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] On startup of node, chip " << gpio_chip_name << " line " << line_number_left_b << " returned value = " << value);
+	// > For right motor channel A
 	value = gpiod_ctxless_get_value(gpio_chip_name, line_number_right_a, false, "foobar");
 	ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] On startup of node, chip " << gpio_chip_name << " line " << line_number_right_a << " returned value = " << value);
+	// > For right motor channel B
+	value = gpiod_ctxless_get_value(gpio_chip_name, line_number_right_b, false, "foobar");
+	ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] On startup of node, chip " << gpio_chip_name << " line " << line_number_right_b << " returned value = " << value);
 
 	// Open the GPIO chip
 	chip = gpiod_chip_open(gpio_chip_name);
 	// Retrieve the GPIO lines
 	line_left_a  = gpiod_chip_get_line(chip,line_number_left_a);
+	line_left_b  = gpiod_chip_get_line(chip,line_number_left_b);
 	line_right_a = gpiod_chip_get_line(chip,line_number_right_a);
+	line_right_b = gpiod_chip_get_line(chip,line_number_right_b);
 	// Initialise the line bulk
 	gpiod_line_bulk_init(&line_bulk);
 	// Add the lines to the line bulk
 	gpiod_line_bulk_add(&line_bulk, line_left_a);
+	gpiod_line_bulk_add(&line_bulk, line_left_b);
 	gpiod_line_bulk_add(&line_bulk, line_right_a);
+	gpiod_line_bulk_add(&line_bulk, line_right_b);
 
 	// Display the status
-	ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] Chip " << gpio_chip_name << " opened and lines " << line_number_left_a << " and " << line_number_right_a << " retrieved");
+	ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] Chip " << gpio_chip_name << " opened and lines " << line_number_left_a << ", " << line_number_left_b << ", " << line_number_right_a << " and " << line_number_right_b << " retrieved");
 
 	// Request the line events to be mointored
 	// > Note: only one of these should be uncommented
@@ -201,10 +239,10 @@ void encoderCountingThreadMain()
 	//gpiod_line_request_bulk_both_edges_events(&line_bulk, "foobar");
 
 	// Display the line event values for rising and falling
-	ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] The constants defined for distinguishing line events are:, GPIOD_LINE_EVENT_RISING_EDGE = " << GPIOD_LINE_EVENT_RISING_EDGE << ", and GPIOD_LINE_EVENT_FALLING_EDGE = " << GPIOD_LINE_EVENT_FALLING_EDGE);
+	//ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] The constants defined for distinguishing line events are:, GPIOD_LINE_EVENT_RISING_EDGE = " << GPIOD_LINE_EVENT_RISING_EDGE << ", and GPIOD_LINE_EVENT_FALLING_EDGE = " << GPIOD_LINE_EVENT_FALLING_EDGE);
 
 	// Enter a loop that endlessly monitors the encoders
-	while (true)
+	while (encoder_thread_should_count)
 	{
 
 		// Monitor for the requested events on the GPIO line bulk
@@ -243,9 +281,13 @@ void encoderCountingThreadMain()
 				{
 					// Increment the respective count
 					if (this_line_number == line_number_left_a)
-						m_encoder_counts_for_motor_left++;
-					if (this_line_number == line_number_right_a)
-						m_encoder_counts_for_motor_right++;
+						m_encoder_counts_for_motor_left_a++;
+					else if (this_line_number == line_number_left_b)
+						m_encoder_counts_for_motor_left_b++;
+					else if (this_line_number == line_number_right_a)
+						m_encoder_counts_for_motor_right_a++;
+					else if (this_line_number == line_number_right_b)
+						m_encoder_counts_for_motor_right_b++;
 
 				} // END OF: "if (returned_read_flag == 0)"
 
@@ -257,8 +299,12 @@ void encoderCountingThreadMain()
 		} // END OF: "if (returned_wait_flag == 1)"
 	} // END OF: "while (true)"
 
+	// Release the lines
+	gpiod_line_release_bulk(&line_bulk);
 	// Close the GPIO chip
 	gpiod_chip_close(chip);
+	// Inform the user
+	ROS_INFO("[TEMPLATE ENCODER READ MULTI THREADED] Lines released and GPIO chip closed");
 }
 
 
@@ -288,14 +334,26 @@ int main(int argc, char* argv[])
 		// Display an error message
 		ROS_INFO("[TEMPLATE ENCODER READ MULTI THREADED] FAILED to get \"line_number_for_motor_left_channel_a\" parameter. Using default value instead.");
 	}
+	// > For channel B of the left side motor
+	if ( !nodeHandle.getParam("line_number_for_motor_left_channel_b", m_line_number_for_motor_left_channel_b) )
+	{
+		// Display an error message
+		ROS_INFO("[TEMPLATE ENCODER READ MULTI THREADED] FAILED to get \"line_number_for_motor_left_channel_b\" parameter. Using default value instead.");
+	}
 	// > For channel A of the right side motor
 	if ( !nodeHandle.getParam("line_number_for_motor_right_channel_a", m_line_number_for_motor_right_channel_a) )
 	{
 		// Display an error message
 		ROS_INFO("[TEMPLATE ENCODER READ MULTI THREADED] FAILED to get \"line_number_for_motor_right_channel_a\" parameter. Using default value instead.");
 	}
+	// > For channel A of the right side motor
+	if ( !nodeHandle.getParam("line_number_for_motor_right_channel_b", m_line_number_for_motor_right_channel_b) )
+	{
+		// Display an error message
+		ROS_INFO("[TEMPLATE ENCODER READ MULTI THREADED] FAILED to get \"line_number_for_motor_right_channel_b\" parameter. Using default value instead.");
+	}
 	// > Display the line numbers being monitored
-	ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] Will monitor line_numbers = " << m_line_number_for_motor_left_channel_a << " and " << m_line_number_for_motor_right_channel_a);
+	ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] Will monitor line_numbers = " << m_line_number_for_motor_left_channel_a << ", " << m_line_number_for_motor_left_channel_b << ", " << m_line_number_for_motor_right_channel_a << ", and " << m_line_number_for_motor_right_channel_b);
 
 	// Get the "detla t" parameter for the publishing frequency
 	if ( !nodeHandle.getParam("delta_t_for_publishing_counts", m_delta_t_for_publishing_counts) )
@@ -304,10 +362,14 @@ int main(int argc, char* argv[])
 		ROS_INFO("[TEMPLATE ENCODER READ MULTI THREADED] FAILED to get \"delta_t_for_publishing_counts\" parameter. Using default value instead.");
 	}
 
+	// Initialise a node handle to the group namespace
+	std::string ns_for_group = ros::this_node::getNamespace();
+	ros::NodeHandle nh_for_group(ns_for_group);
+
 	// Initialise a publisher for the encoder counts
 	// > Note, the second is the size of our publishing queue. We choose to
 	//   buffer encoder counts messages because we want to avoid losing counts.
-	m_encoder_counts_publisher = nodeHandle.advertise<LeftAndRightInt>("encoder_counts", 10, false);
+	m_encoder_counts_publisher = nh_for_group.advertise<asclinic_pkg::LeftRightInt32>("encoder_counts", 10, false);
 
 	// Initialise a timer
 	m_timer_for_publishing = nodeHandle.createTimer(ros::Duration(m_delta_t_for_publishing_counts), timerCallbackForPublishing, false);
@@ -320,10 +382,7 @@ int main(int argc, char* argv[])
 	// Initialise a publisher for commanding the motors
 	// NOTE: this publisher and what it is used for is
 	// purely for the convenience of testing.
-	std::string temp_namespace = ros::this_node::getNamespace();
-	std::string temp_namespace_to_i2c_internal = temp_namespace + "/template_i2c_internal";
-	ros::NodeHandle nodeHandle_to_i2c_internal(temp_namespace_to_i2c_internal);
-	m_motor_pwm_publisher = nodeHandle_to_i2c_internal.advertise<std_msgs::Float32>("set_motor_duty_cycle", 10, false);
+	m_motor_pwm_publisher = nh_for_group.advertise<asclinic_pkg::LeftRightFloat32>("set_motor_duty_cycle", 10, false);
 
 	// Get the parameter for target speed when driving the motors
 	// NOTE: this parameter is purely for the convenience of testing.
