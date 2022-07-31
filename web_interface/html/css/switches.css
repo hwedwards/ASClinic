@@ -1,0 +1,505 @@
+/* =========================== */
+/* ===   PLAIN SWITCH      === */
+/* =========================== */
+.on-off-switch-neighbouring-labelon-off-switch-neighbouring-label
+{
+	display: inline;
+	line-height: 90px;
+}
+
+.on-off-switch
+{
+	position: relative;
+	display: inline-block;
+}
+
+.on-off-switch:after, .on-off-switch:before
+{
+	font-family: Arial;
+	font-feature-settings: normal;
+	font-kerning: auto;
+	font-language-override: normal;
+	font-stretch: normal;
+	font-style: normal;
+	font-synthesis: weight style;
+	font-variant: normal;
+	font-weight: normal;
+	text-rendering: auto;
+}
+
+.on-off-switch label
+{
+	position: relative;
+	display: inline-block;
+
+	width: 90px;
+	height: 42px;
+	background: #ccc;
+	border-radius: 21px;
+	transition: 0.4s;
+}
+
+.on-off-switch label:after
+{
+	position: absolute;
+	left: 0;
+	top: -5px;
+	z-index: 2;
+
+	content: '';
+	
+	width: 50px;
+	height: 50px;
+	background: #fff;
+	border-radius: 100%;
+	box-shadow: 0 0 5px rgba(0,0,0,.2);
+	transition: 0.4s;
+}
+
+.on-off-switch input
+{
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 5;
+
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.on-off-switch input:hover + label:after
+{
+	box-shadow: 0 2px 15px 0 rgba(0, 0, 0, .2), 0 3px 8px 0 rgba(0, 0, 0, .15);
+}
+
+.on-off-switch input:checked + label:after
+{
+	left: 40px;
+}
+
+
+
+
+
+/* =========================== */
+/* ===   TYPE 1            === */
+/* =========================== */
+.on-off-switch.type1 input:checked + label
+{
+	background: #376FCB;
+}
+
+.on-off-switch.type1 input:checked + label:after
+{
+	background: #4285F4;
+}
+
+
+
+
+
+/* =========================== */
+/* ===   TYPE 2            === */
+/* =========================== */
+.on-off-switch.type2:after
+{
+	position: absolute;
+	top: 0px;
+	right: 15px;
+
+	content: '';
+
+	color: #666;
+	font-family: Arial;
+	font-size: 25px;
+	line-height: 48px;
+	font-weight: bold;
+}
+
+.on-off-switch.type2 label
+{
+	width: 90px;
+	height: 40px;
+	background: none;
+	border:3px solid #777;
+	border-radius: 23px;
+}
+
+.on-off-switch.type2 label:after
+{
+	top: 4px;
+	left: auto;
+	right: 4px;
+	overflow: hidden;
+
+	content: 'YES';
+	
+	width: 32px;
+	height: 32px;
+
+	color: #fff;
+	font-family: Arial;
+	font-size: 25px;
+	line-height: 32px;
+	text-align: center;
+	font-weight: bold;
+	text-indent: 100px;
+	background: #777;
+	box-shadow: none;
+	border-radius: 16px;
+
+	transform: translateX(-50px);
+	transition: all 0.4s 0.2s, width 0.2s linear, text-indent 0.4s linear;
+}
+
+.on-off-switch.type2 input:checked + label
+{
+	border-color: #329043;
+}
+
+.on-off-switch.type2 input:checked + label:after
+{
+	left: auto;
+
+	width: 82px;
+	text-indent: 0;
+	background: #3FB454;
+
+	transform: translateX(0px);
+	transition: all 0.4s, width 0.2s 0.4s linear, text-indent 0.3s 0.4s linear;
+}
+
+
+
+
+
+/* =========================== */
+/* ===   TYPE 2            === */
+/* =========================== */
+.on-off-switch.type2forstatusbar:after
+{
+	position: absolute;
+	top: 0px;
+	right: 12px;
+
+	content: '';
+
+	color: #ccc;
+	font-family: Arial;
+	font-size: 18px;
+	line-height: 40px;
+	font-weight: bold;
+}
+
+.on-off-switch.type2forstatusbar label
+{
+	width: 70px;
+	height: 32px;
+	background: none;
+	border:3px solid #ccc;
+	border-radius: 19px;
+}
+
+.on-off-switch.type2forstatusbar label:after
+{
+	top: 4px;
+	left: auto;
+	right: 4px;
+	overflow: hidden;
+
+	content: 'LIVE';
+
+	width: 24px;
+	height: 24px;
+
+	color: #fff;
+	font-family: Arial;
+	font-size: 18px;
+	line-height: 25px;
+	text-align: center;
+	font-weight: bold;
+	text-indent: 80px;
+	background: #ccc;
+	box-shadow: none;
+	border-radius: 12px;
+
+	transform: translateX(-38px);
+	transition: all 0.4s 0.2s, width 0.2s linear, text-indent 0.4s linear;
+}
+
+.on-off-switch.type2forstatusbar input:checked + label
+{
+	border-color: #269CE9;
+}
+
+.on-off-switch.type2forstatusbar input:checked + label:after
+{
+	left: auto;
+
+	width: 62px;
+	text-indent: 0;
+	background: #269CE9;
+
+	transform: translateX(0px);
+	transition: all 0.4s, width 0.2s 0.4s linear, text-indent 0.3s 0.4s linear;
+}
+
+
+
+
+
+/* =========================== */
+/* ===   TYPE 3            === */
+/* =========================== */
+.on-off-switch.type3 label
+{
+	width: 90px;
+	height: 42px;
+	border: 5px solid #555;
+	border-radius: 26px;
+	background: none;
+}
+
+.on-off-switch.type3 label:after
+{
+	top: 2px;
+	left: 2px;
+
+	width: 38px;
+	height: 38px;
+	background: #555;
+	box-shadow(none);
+}
+
+.on-off-switch.type3 input:checked + label
+{
+	border-color: #329043;
+}
+
+.on-off-switch.type3 input:checked + label:after
+{
+	left: 50px;
+	background: #3FB454;
+}
+
+
+
+
+
+/* =========================== */
+/* ===   TYPE 4            === */
+/* =========================== */
+.on-off-switch.type4:after
+{
+	position: absolute;
+	right: 15px;
+	bottom: 15px;
+
+	//content: '\f00c';
+	//content: '\274E';
+	//content: '\2715';
+	//content: '\2716';
+	//content: '\2717';
+	content: '\2718';
+	//content: '\274C';
+
+	color: #aaa;
+}
+
+.on-off-switch.type4:before
+{
+	position: absolute;
+	left: 15px;
+	bottom: 15px;
+	
+	//content: '\f00d';
+	//content: '\2705';
+	//content: '\2713';
+	content: '\2714';
+	
+	color: #fff;
+	z-index: 1;
+}
+
+.on-off-switch.type4 label
+{
+	width: 80px;
+	height: 42px;
+	border-radius: 21px;
+	background: #EAEAEA;
+	box-shadow: 0 0 1px 2px rgba(0,0,0,.15);
+}
+
+.on-off-switch.type4 label:after
+{
+	top: 0;
+
+	width: 42px;
+	height: 42px;
+}
+
+.on-off-switch.type4 input:checked + label
+{
+	background: #269CE9;
+}
+
+.on-off-switch.type4 input:checked + label:after
+{
+	left: 38px;
+}
+
+
+
+
+/* SETTINGS FOR WHEN THE SCREEN IS SMALL */
+@media screen and (max-width: 420px)
+{
+
+	/* =========================== */
+	/* ===   PLAIN SWITCH      === */
+	/* =========================== */
+	.on-off-switch-neighbouring-labelon-off-switch-neighbouring-label
+	{
+		line-height: 70px;
+	}
+
+	.on-off-switch label
+	{
+		width: 70px;
+		height: 32px;
+		border-radius: 16px;
+	}
+
+	.on-off-switch label:after
+	{
+		width: 40px;
+		height: 40px;
+	}
+
+	.on-off-switch input:checked + label:after
+	{
+		left: 30px;
+	}
+
+
+
+
+
+	/* =========================== */
+	/* ===   TYPE 2            === */
+	/* =========================== */
+	.on-off-switch.type2:after
+	{
+		top: 0px;
+		right: 12px;
+
+		content: '';
+
+		font-size: 18px;
+		line-height: 40px;
+		font-weight: bold;
+	}
+
+	.on-off-switch.type2 label
+	{
+		width: 70px;
+		height: 32px;
+		border:3px solid #777;
+		border-radius: 19px;
+	}
+
+	.on-off-switch.type2 label:after
+	{
+		top: 4px;
+		left: auto;
+		right: 4px;
+		overflow: hidden;
+
+		content: 'YES';
+		
+		width: 24px;
+		height: 24px;
+
+		font-size: 18px;
+		line-height: 25px;
+		font-weight: bold;
+		text-indent: 80px;
+		border-radius: 12px;
+
+		transform: translateX(-38px);
+	}
+
+	.on-off-switch.type2 input:checked + label:after
+	{
+		width: 62px;
+	}
+
+
+
+
+
+	/* =========================== */
+	/* ===   TYPE 3            === */
+	/* =========================== */
+	.on-off-switch.type3 label
+	{
+		width: 70px;
+		height: 32px;
+		border: 5px solid #555;
+		border-radius: 21px;
+	}
+
+	.on-off-switch.type3 label:after
+	{
+		top: 2px;
+		left: 2px;
+
+		width: 28px;
+		height: 28px;
+	}
+
+	.on-off-switch.type3 input:checked + label:after
+	{
+		left: 40px;
+	}
+
+
+
+
+
+	/* =========================== */
+	/* ===   TYPE 4            === */
+	/* =========================== */
+	.on-off-switch.type4:after
+	{
+		right: 10px;
+		bottom: 10px;
+	}
+
+	.on-off-switch.type4:before
+	{
+		left: 10px;
+		bottom: 10px;
+	}
+
+	.on-off-switch.type4 label
+	{
+		width: 60px;
+		height: 32px;
+		border-radius: 16px;
+	}
+
+	.on-off-switch.type4 label:after
+	{
+		width: 32px;
+		height: 32px;
+	}
+
+	.on-off-switch.type4 input:checked + label:after
+	{
+		left: 28px;
+	}
+
+}

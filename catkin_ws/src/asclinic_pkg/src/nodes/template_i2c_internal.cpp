@@ -35,10 +35,11 @@
 #include <bitset>
 
 // Include the asclinic message types
+#include "asclinic_pkg/LeftRightFloat32.h"
 #include "asclinic_pkg/ServoPulseWidth.h"
 
 // Namespacing the package
-using namespace asclinic_pkg;
+//using namespace asclinic_pkg;
 
 
 
@@ -61,10 +62,9 @@ const uint8_t m_pca9685_address = 0x42;
 PCA9685 m_pca9685_servo_driver (&m_i2c_driver, m_pca9685_address);
 
 
-// > Publisher and timer for the current
-//   measurements
-ros::Publisher m_current_publisher;
-ros::Timer m_timer_for_publishing;
+// > Publisher for the current duty cycle
+//   setting of the main drive motors
+ros::Publisher m_current_motor_duty_cycle_publisher;
 
 
 
@@ -76,82 +76,77 @@ ros::Timer m_timer_for_publishing;
 //      To identify the full name of this subscription topic.
 //   2) Then use the following command to send  message on
 //      that topic
-//        rostopic pub --once <namespace>/set_motor_duty_cycle std_msgs/Float32 10.1
+//        rostopic pub --once <namespace>/set_motor_duty_cycle asclinic_pkg/LeftRightFloat32 "{left: 10.1, right: 10.1}"
 //      where "<namespace>/set_motor_duty_cycle" is the full
 //      name identified in step 1.
 //
-void templateDriveMotorsSubscriberCallback(const std_msgs::Float32& msg)
+void driveMotorsSubscriberCallback(const asclinic_pkg::LeftRightFloat32& msg)
 {
-	ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] Message receieved with data = " << msg.data);
+	ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] Message received with left = " << msg.left << ", right = " << msg.right);
 
 	// Clip the data to be in the range [-100.0,100.0]
-	float pwm_duty_cycle = msg.data;
-	if (pwm_duty_cycle < -100.0f)
-		pwm_duty_cycle = -100.0f;
-	if (pwm_duty_cycle > 100.0f)
-		pwm_duty_cycle = 100.0f;
-
-	// Initialise a pointer for iterating through
-	// the Pololu SMC objects
-	Pololu_SMC_G2 * pololu_smc_pointer;
+	// > For the left value
+	float pwm_duty_cycle_left = msg.left;
+	if (pwm_duty_cycle_left < -100.0f)
+		pwm_duty_cycle_left = -100.0f;
+	if (pwm_duty_cycle_left > 100.0f)
+		pwm_duty_cycle_left = 100.0f;
+	// > For the right value
+	float pwm_duty_cycle_right = msg.right;
+	if (pwm_duty_cycle_right < -100.0f)
+		pwm_duty_cycle_right = -100.0f;
+	if (pwm_duty_cycle_right > 100.0f)
+		pwm_duty_cycle_right = 100.0f;
 
 	// Initialise one boolean variable for the result
 	// of all calls to Pololu_SMC_G2 functions
 	bool result;
 
-	// Set the target speed to be the same for
-	// both motor controllers
+	// SET THE TARGET DUTY CYCLE FOR EACH MOTOR CONTROLLER
+	// > NOTE: it may be necessary to negate one or both
+	//   of the duty cycles depending on the polarity
+	//   with which each motor is plugged in
 
-	// Iterate over the pololu objects
-	for (int i_smc=0;i_smc<2;i_smc++)
-	{
-		// Point to the appropriate motor controller
-		if (i_smc==0)
-			pololu_smc_pointer = &m_pololu_smc_left;
-		else
-			pololu_smc_pointer = &m_pololu_smc_right;
+	// > Set the LEFT motor controller
+	result = m_pololu_smc_left.set_motor_target_speed_percent(pwm_duty_cycle_left);
+	if (!result)
+		ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] FAILED - Pololu SMC - set motor percent NOT successful for I2C address " << static_cast<int>(m_pololu_smc_left.get_i2c_address()) );
 
-		// Set the target speed
-		result = pololu_smc_pointer->set_motor_target_speed_percent(pwm_duty_cycle);
-		if (!result)
-			ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] FAILED - Pololu SMC - set motor percent NOT successful for I2C address " << pololu_smc_pointer->get_i2c_address() );
-	}
+	// > Set the RIGHT motor controller
+	result = m_pololu_smc_right.set_motor_target_speed_percent(-pwm_duty_cycle_right);
+	if (!result)
+		ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] FAILED - Pololu SMC - set motor percent NOT successful for I2C address " << static_cast<int>(m_pololu_smc_right.get_i2c_address()) );
 
+	// Publish the motor duty cycles
+	asclinic_pkg::LeftRightFloat32 msg_current_duty_cycle;
+	msg_current_duty_cycle.left  = pwm_duty_cycle_left;
+	msg_current_duty_cycle.right = pwm_duty_cycle_right;
+	m_current_motor_duty_cycle_publisher.publish(msg_current_duty_cycle);
 
-	// Get the target speed value to check that
-	// it was set correctly
-
-	// Iterate over the pololu objects
-	for (int i_smc=0;i_smc<2;i_smc++)
-	{
-		// Point to the appropriate motor controller
-		if (i_smc==0)
-			pololu_smc_pointer = &m_pololu_smc_left;
-		else
-			pololu_smc_pointer = &m_pololu_smc_right;
-
-		int16_t current_target_speed_value;
-		result = pololu_smc_pointer->get_target_speed_3200(&current_target_speed_value);
-		if (result)
-		{
-			ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] Pololu SMC - get target speed value returned: " << current_target_speed_value << ", for I2C address " << pololu_smc_pointer->get_i2c_address() );
-		}
-		else
-		{
-			ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] FAILED - Pololu SMC - get target speed value NOT successful for I2C address " << pololu_smc_pointer->get_i2c_address() );
-		}
-	}
 }
 
 
-void templateServoSubscriberCallback(const ServoPulseWidth& msg)
+
+// Respond to subscriber receiving a message
+// > To test this out without creating an additional
+//   ROS node
+//   1) First use the command:
+//        rostopic list
+//      To identify the full name of this subscription topic.
+//   2) Then use the following command to send  message on
+//      that topic
+//        rostopic pub --once <namespace>/set_servo_pulse_width asclinic_pkg/ServoPulseWidth "{channel: 15, pulse_width_in_microseconds: 1100}"
+//      where "<namespace>/set_servo_pulse_width" is the full
+//      name identified in step 1.
+//
+void servoSubscriberCallback(const asclinic_pkg::ServoPulseWidth& msg)
 {
 	// Extract the channel and pulse width from the message
 	uint8_t channel = msg.channel;
 	uint16_t pulse_width_in_us = msg.pulse_width_in_microseconds;
 
 	// Display the message received
-	ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] Message receieved for servo with channel = " << static_cast<int>(channel) << ", and pulse width [us] = " << static_cast<int>(pulse_width_in_us) );
+	ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] Message received for servo with channel = " << static_cast<int>(channel) << ", and pulse width [us] = " << static_cast<int>(pulse_width_in_us) );
 
 	// Limit the pulse width to be either:
 	// > zero
@@ -175,16 +170,6 @@ void templateServoSubscriberCallback(const ServoPulseWidth& msg)
 
 }
 
-// Respond to timer callback
-void timerCallbackForPublishing(const ros::TimerEvent&)
-{
-	// Read the current measurement here
-
-	// Publish a message
-	std_msgs::Float32 msg;
-	msg.data = 0.0;
-	m_current_publisher.publish(msg);
-}
 
 
 int main(int argc, char* argv[])
@@ -192,18 +177,23 @@ int main(int argc, char* argv[])
 	// Initialise the node
 	ros::init(argc, argv, "template_i2c_internal");
 	ros::NodeHandle nodeHandle("~");
-	// Initialise a publisher
-	//ros::Publisher current_measurement_publisher = nodeHandle.advertise<std_msgs::UInt16>("current_measurement", 10, false);
-	// Initialise a subscriber
-	ros::Subscriber set_motor_duty_cycle_subscriber = nodeHandle.subscribe("set_motor_duty_cycle", 1, templateDriveMotorsSubscriberCallback);
-	// Initialise a subscriber for the servo driver
-	ros::Subscriber set_servo_pulse_width_subscriber = nodeHandle.subscribe("set_servo_pulse_width", 1, templateServoSubscriberCallback);
 
-	// Initialise a publisher for the current
-	// sensor measurement
-	m_current_publisher = nodeHandle.advertise<std_msgs::Float32>("great_topic", 10, false);
-	// Initialise a timer
-	m_timer_for_publishing = nodeHandle.createTimer(ros::Duration(0.02), timerCallbackForPublishing, false);
+	// Initialise a node handle to the group namespace
+	std::string ns_for_group = ros::this_node::getNamespace();
+	ros::NodeHandle nh_for_group(ns_for_group);
+
+	// Initialise a subscriber for the duty cycle of the main drive motors
+	ros::Subscriber set_motor_duty_cycle_subscriber = nh_for_group.subscribe("set_motor_duty_cycle", 1, driveMotorsSubscriberCallback);
+	// Initialise a subscriber for the servo driver
+	ros::Subscriber set_servo_pulse_width_subscriber = nh_for_group.subscribe("set_servo_pulse_width", 1, servoSubscriberCallback);
+
+	// Initialise a publisher for the current duty cycle setting of the main drive motors
+	m_current_motor_duty_cycle_publisher = nh_for_group.advertise<asclinic_pkg::LeftRightFloat32>("current_motor_duty_cycle", 10, true);
+
+	// Display command line command for publishing a
+	// motor duty cycle or servo request
+	ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] publish motor duty cycle requests from command line with: rostopic pub --once " << ros::this_node::getNamespace() << "/set_motor_duty_cycle asclinic_pkg/LeftRightFloat32 \"{left: 10.1, right: 10.1}\"");
+	ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] publish motor duty cycle requests from command line with: rostopic pub --once " << ros::this_node::getNamespace() << "/set_servo_pulse_width asclinic_pkg/ServoPulseWidth \"{channel: 15, pulse_width_in_microseconds: 1100}\"");
 
 	// Open the I2C device
 	// > Note that the I2C driver is already instantiated
@@ -220,7 +210,9 @@ int main(int argc, char* argv[])
 		ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] Successfully opened named " << m_i2c_driver.get_device_name() << ", with file descriptor = " << m_i2c_driver.get_file_descriptor());
 	}
 
-	// Note:
+
+
+	// NOTE:
 	// > The drivers are already instantiated as
 	//   member variables of this node for:
 	//   > Each of the Pololu simple motor controllers (SMC)
@@ -232,7 +224,7 @@ int main(int argc, char* argv[])
 
 	// Specify the various limits
 	int new_current_limit_in_milliamps = 5000;
-	int new_max_speed_limit = 2560;
+	int new_max_duty_cycle_limit = 2560;
 	int new_max_accel_limit = 1;
 	int new_max_decel_limit = 5;
 
@@ -257,7 +249,7 @@ int main(int argc, char* argv[])
 
 		// Call the Pololu SMC initialisation function
 		bool verbose_display_for_SMC_init = false;
-		bool result_smc_init = pololu_smc_pointer->initialise_with_limits(new_current_limit_in_milliamps,new_max_speed_limit,new_max_accel_limit,new_max_decel_limit,verbose_display_for_SMC_init);
+		bool result_smc_init = pololu_smc_pointer->initialise_with_limits(new_current_limit_in_milliamps,new_max_duty_cycle_limit,new_max_accel_limit,new_max_decel_limit,verbose_display_for_SMC_init);
 
 		// Display if an error occurred
 		if (!result_smc_init)

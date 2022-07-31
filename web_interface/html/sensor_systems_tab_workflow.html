@@ -1,0 +1,307 @@
+<body>
+	<div class="body-container">
+		<main style="text-align:left;">
+
+			<br>
+
+			This workflow starts from the section at the bottom of the page and works updwards.
+
+			<br>
+			<hr class="hr-basic navy">
+			<br>
+
+			<h2>"Joystick"</h2>
+
+			Use the following buttons to increment the speed of the robot
+
+			<table class="joystick-table">
+				<tr>
+					<td></td>
+					<td class="joystick-table-button-cell">
+						<button
+						class="button-push navy fullwidth"
+						id="buttonIncrementForward"
+						onclick="sendIncrementSpeedMessage( 4.0 , 4.0 )"
+						>
+						forward
+						</button>
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="joystick-table-button-cell">
+						<button
+						class="button-push navy fullwidth"
+						id="buttonIncrementForward"
+						onclick="sendIncrementSpeedMessage( -2.0 , 2.0 )"
+						>
+						left
+						</button>
+					</td>
+					<td class="joystick-table-button-cell">
+						<button
+						class="button-push red fullwidth"
+						id="buttonIncrementForward"
+						onclick="sendSpeedMessage( 0.0 , 0.0 )"
+						>
+						stop
+						</button>
+					</td>
+					<td class="joystick-table-button-cell">
+						<button
+						class="button-push navy fullwidth"
+						id="buttonIncrementForward"
+						onclick="sendIncrementSpeedMessage( 2.0 , -2.0 )"
+						>
+						right
+						</button>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="joystick-table-button-cell">
+						<button
+						class="button-push navy fullwidth"
+						id="buttonIncrementForward"
+						onclick="sendIncrementSpeedMessage( -4.0 , -4.0 )"
+						>
+						backward
+						</button>
+					</td>
+					<td></td>
+				</tr>
+			</table>
+
+			<br>
+			<hr class="hr-basic navy">
+			<br>
+
+			Current wheel speeds (as duty cycle and direction in the range [-100,100])
+
+			<table>
+				<tr>
+					<td>Left: </td>
+					<td>
+					<div
+						style="text-align: left; display: block;"
+						id="leftWheelCurrentDutyCycle"
+						>
+						&nbsp
+					</div>
+					</td>
+				</tr>
+				<tr>
+					<td>Right: </td>
+					<td>
+					<div
+						style="text-align: left; display: block;"
+						id="rightWheelCurrentDutyCycle"
+						>
+						&nbsp
+					</div>
+					</td>
+				</tr>
+			</table>
+
+			<br>
+			<hr class="hr-basic navy">
+			<br>
+
+			<h2>ROS Bridge Web Socket</h2>
+
+			<table class="git-table">
+				<tr>
+					<td class="git-button-cell left">
+						<button
+							class="button-push navy fullwidth"
+							id="buttonRosbridgeConnect"
+							onclick="rosbridgeConnect()"
+							>
+							connect
+							<div class="div-for-button-highlight-on-touchscreen navy"></div>
+						</button>
+					</td>
+					<td class="git-button-cell right">
+						<button
+							class="button-push navy fullwidth"
+							id="buttonRosbridgeClose"
+							onclick="rosbridgeClose()"
+							>
+							close
+							<div class="div-for-button-highlight-on-touchscreen navy"></div>
+						</button>
+					</td>
+				</tr>
+			</table>
+			<br>
+			<table>
+				<tr>
+					<td>URL of host: </td>
+					<td>
+					<div
+						style="text-align: left; display: block;"
+						id="urlOfHostLabel"
+						>
+						&nbsp
+					</div>
+					</td>
+				</tr>
+				<tr>
+					<td>ROS bridge web socket status: </td>
+					<td>
+					<div
+						style="text-align: left; display: block;"
+						id="webSocketStatusLabel"
+						>
+						&nbsp
+					</div>
+					</td>
+				</tr>
+			</table>
+
+			<br>
+
+			Check your web/javascript console for more details of what is happening.
+
+			<br>
+			<hr class="hr-basic navy">
+			<br>
+
+			<h2>ROS Launch</h2>
+
+			<table class="ros-table">
+
+				<tr>
+					<td class="ros-button-cell">
+						<button
+							class="button-push navy fullwidth"
+							id="buttonRosMasterStatus"
+							onclick="callBashScript_outputLabelID_clearOtherLabels_clickOtherButtons('checkForRosMaster', 'rosMasterStatus', ['rosLaunchMasterStatus','killMasterStatus'], 'buttonRosNodeList')"
+							>
+							Check for ROS Master
+							<div class="div-for-button-highlight-on-touchscreen navy"></div>
+						</button>
+					</td>
+					<td class="ros-info-cell">
+						<div id="rosMasterStatus"></div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="ros-button-cell">
+						<button
+							class="button-push navy fullwidth"
+							id="buttonLaunchRosMaster"
+							onclick="roslaunch_outputLabelID_switchID_clearOtherLabels_clickOtherButtons('sensor_systems', 'rosLaunchStatus', 'checkboxEmulateI2C', ['rosMasterStatus','rosKillStatus'], 'buttonRosNodeList')"
+							>
+							Launch ROS
+							<div class="div-for-button-highlight-on-touchscreen navy"></div>
+						</button>
+					</td>
+					<td class="ros-info-cell">
+						<div id="rosLaunchStatus"></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<table>
+							<td class="switch-cell  pad-right">
+								<div class="on-off-switch type4">
+									<input type="checkbox" id="checkboxEmulateI2C"><label for="checkboxEmulateI2C"></label>
+								</div>
+							</td>
+							<td class="ros-info-cell">
+								Emulate I2C
+							</td>
+						</table>
+					</td>
+					<td class="ros-info-cell">
+						&nbsp
+					</td>
+				</tr>
+				<tr>
+					<td class="ros-button-cell">
+						<button
+							class="button-push red fullwidth"
+							id="buttonKillRosMaster"
+							onclick="callBashScript_outputLabelID_clearOtherLabels_clickOtherButtons('killRosAll', 'rosKillStatus', ['rosMasterStatus','rosLaunchStatus'], 'buttonRosNodeList')"
+							>
+							Kill ROS
+							<div class="div-for-button-highlight-on-touchscreen red"></div>
+						</button>
+					</td>
+					<td class="ros-info-cell">
+						<div id="rosKillStatus"></div>
+					</td>
+				</tr>
+
+			</table>
+
+			<br>
+
+			Note: the "Emulate I2C" can be turned on to test the ROS connection to the robot's computer without actually powering the robot's wheels.
+
+
+			<br>
+			<hr class="hr-basic navy">
+			<br>
+
+			<h2>Motion Video Streamer</h2>
+
+			<table class="ros-table">
+
+				<tr>
+					<td class="ros-button-cell">
+						<button
+							class="button-push navy fullwidth"
+							id="buttonMotionStart"
+							onclick="callBashScript_outputLabelID_clearOtherLabels_clickOtherButtons('motionStart', 'motionStartLabel', ['motionStopLabel','motionStatusLabel'], '')"
+							>
+							Start Motion
+							<div class="div-for-button-highlight-on-touchscreen navy"></div>
+						</button>
+					</td>
+					<td class="ros-info-cell">
+						<div id="motionStartLabel"></div>
+					</td>
+				</tr>
+				<tr>
+					<td class="ros-button-cell">
+						<button
+							class="button-push navy fullwidth"
+							id="buttonMotionStop"
+							onclick="callBashScript_outputLabelID_clearOtherLabels_clickOtherButtons('motionStop', 'motionStopLabel', ['motionStartLabel','motionStatusLabel'], '')"
+							>
+							Stop Motion
+							<div class="div-for-button-highlight-on-touchscreen navy"></div>
+						</button>
+					</td>
+					<td class="ros-info-cell">
+						<div id="motionStopLabel"></div>
+					</td>
+				</tr>
+				<tr>
+					<td class="ros-button-cell">
+						<button
+							class="button-push navy fullwidth"
+							id="buttonMotionStatus"
+							onclick="callBashScript_outputLabelID_clearOtherLabels_clickOtherButtons('motionStatus', 'motionStatusLabel', ['motionStartLabel','motionStopLabel'], '')"
+							>
+							Status Motion
+							<div class="div-for-button-highlight-on-touchscreen navy"></div>
+						</button>
+					</td>
+					<td class="ros-info-cell">
+						<div id="motionStatusLabel"></div>
+					</td>
+				</tr>
+
+			</table>
+
+			<br>
+			<hr class="hr-basic navy">
+			<br>
+
+		</main>
+	</div>
+</body>

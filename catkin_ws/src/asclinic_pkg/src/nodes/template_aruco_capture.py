@@ -92,14 +92,14 @@ class TemplateArucoDetector:
     def __init__(self):
         
         # Initialise a publisher for the images
-        self.image_publisher = rospy.Publisher("/global_namespace"+"/camera_image", Image, queue_size=10)
+        self.image_publisher = rospy.Publisher("/asc"+"/camera_image", Image, queue_size=10)
 
         # Initialise a subscriber for flagging when to save an image
-        rospy.Subscriber("/global_namespace"+"/request_save_image", UInt32, self.requestSaveImageSubscriberCallback)
+        rospy.Subscriber("/asc"+"/request_save_image", UInt32, self.requestSaveImageSubscriberCallback)
         # > For convenience, the command line can be used to trigger this subscriber
         #   by publishing a message to the "request_save_image" as follows:
         #
-        # rostopic pub /global_namespace/request_save_image std_msgs/UInt32 "data: 1" 
+        # rostopic pub /asc/request_save_image std_msgs/UInt32 "data: 1" 
 
         # Initialise varaibles for managing the saving of an image
         self.save_image_counter = 0

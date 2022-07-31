@@ -1,0 +1,128 @@
+.control-tabs
+{
+	display: flex;
+	flex-wrap: wrap;
+	background: #efefef;
+	border: 1pt solid #34495E;
+	box-shadow: 0 48px 80px -32px rgba(0,0,0,0.3);
+	//top:    0px;
+	//bottom: 0px;
+	margin: 0px;
+}
+
+.control-tab-input {
+  position: absolute;
+  opacity: 0;
+}
+
+.control-tab-label
+{
+	width: auto;
+	padding-left:   30px;
+	padding-right:  30px;
+	padding-top:    20px;
+	padding-bottom: 20px;
+	background: #e5e5e5;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 18px;
+	color: #7f7f7f;
+	transition: background 0.0s, color 0.0s;
+}
+
+.control-tab-label:hover
+{
+	background: #d8d8d8;
+}
+
+.control-tab-label:active
+{
+	background: #ccc;
+}
+
+.control-tab-input:focus + .control-tab-label
+{
+	/*box-shadow: inset 0px 0px 0px 3px #2aa1c0*/;
+	z-index: 1;
+}
+
+.control-tab-input:checked + .control-tab-label
+{
+	background: #fff;
+	color: #000;
+}
+
+.control-tab-panel
+{
+	order: 99;
+	display: none;
+	position: relative;
+	margin-top:    0px;
+	margin-bottom: 0px;
+	margin-left:   0px;
+	margin-right:  0px;
+	width:100%;
+	padding-left:   20px;
+	padding-right:  20px;
+	padding-top:    10px;
+	padding-bottom: 10px;
+	background: #fff;
+	color:black;
+	overflow: hidden;
+	overflow-y: scroll;
+	border-left: 1px solid;
+	border-right: 1px solid;
+	border-width: 10px;
+	border-color: #c43c35;
+	/*
+	border-color: #c43c35;
+	border-color: #f44336;
+	border-color: #57a957;
+	*/
+}
+
+/* Make the respective panel visible when its tab-input is checked */
+.control-tab-input:checked + .control-tab-label + .control-tab-panel
+{
+	display: block;
+}
+
+
+
+
+/* SETTINGS FOR WHEN THE SCREEN IS SMALL */
+@media screen and (max-width: 600px)
+{
+	/* Make it an accordian */
+	.control-tab-label
+	{
+		width: 50%;
+		padding-left:   0px;
+		padding-right:  0px;
+		padding-top:    20px;
+		padding-bottom: 20px;
+		text-align: center;
+	}
+}
+
+/* SETTINGS FOR WHEN THE SCREEN IS SMALL */
+@media screen and (max-width: 420px)
+{
+	/* Make it an accordian */
+	.control-tab-label
+	{
+		width: 50%;
+		padding-left:   0px;
+		padding-right:  0px;
+		padding-top:    15px;
+		padding-bottom: 15px;
+		text-align: center;
+	}
+
+	.control-tab-panel
+	{
+		padding-left:   10px;
+		padding-right:  10px;
+	}
+
+}

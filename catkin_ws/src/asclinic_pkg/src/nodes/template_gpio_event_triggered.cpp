@@ -42,12 +42,17 @@ int main(int argc, char* argv[])
 	// Initialise the node
 	ros::init(argc, argv, "template_gpio_event_triggered");
 	ros::NodeHandle nodeHandle("~");
+
+	// Initialise a node handle to the group namespace
+	std::string ns_for_group = ros::this_node::getNamespace();
+	ros::NodeHandle nh_for_group(ns_for_group);
+
 	// Initialise a publisher
-	ros::Publisher gpio_event_publisher = nodeHandle.advertise<std_msgs::Int32>("gpio_event", 10, false);
+	ros::Publisher gpio_event_publisher = nh_for_group.advertise<std_msgs::Int32>("gpio_event", 10, false);
 	// Initialise a subscriber
 	// > Note that the subscriber is included only for the purpose
 	//   of demonstrating this template node running stand-alone
-	ros::Subscriber gpio_event_subscriber = nodeHandle.subscribe("gpio_event", 1, templateSubscriberCallback);
+	ros::Subscriber gpio_event_subscriber = nh_for_group.subscribe("gpio_event", 1, templateSubscriberCallback);
 
 	// Specify the chip name of the GPIO interface
 	// > Note: for the 40-pin header of the Jetson SBCs, this
