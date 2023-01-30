@@ -3,12 +3,12 @@
 	<!-- START A GROUP WITH A NAMESPACE -->
 	<group ns="asc">
 
-		<!-- LAUNCH A "Camera Capture" NODE -->
+		<!-- LAUNCH A "I2C for Servos" NODE -->
 		<node
 			pkg    = "asclinic_pkg"
-			name   = "camera_capture"
+			name   = "i2c_for_servos"
 			output = "screen"
-			type   = "camera_capture.py"
+			type   = "i2c_for_servos"
 		/>
 
 	</group>

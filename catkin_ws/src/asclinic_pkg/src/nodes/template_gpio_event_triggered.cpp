@@ -34,7 +34,7 @@
 // Respond to subscriber receiving a message
 void templateSubscriberCallback(const std_msgs::Int32& msg)
 {
-	ROS_INFO_STREAM("[TEMPLATE GPIO EVENT TRIG.] Message receieved with data = " << msg.data);
+	ROS_INFO_STREAM("[TEMPLATE GPIO EVENT TRIG.] Message received with data = " << msg.data);
 }
 
 int main(int argc, char* argv[])

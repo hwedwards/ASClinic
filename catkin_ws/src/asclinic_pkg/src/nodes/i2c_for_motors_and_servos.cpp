@@ -13,7 +13,7 @@
 //                                                 |___/                       
 //
 // DESCRIPTION:
-// Template node for I2C devices connected inside the robot
+// Node for I2C bus with Pololu SMC and servo driver devices connected
 //
 // ----------------------------------------------------------------------------
 
@@ -82,7 +82,7 @@ ros::Publisher m_current_motor_duty_cycle_publisher;
 //
 void driveMotorsSubscriberCallback(const asclinic_pkg::LeftRightFloat32& msg)
 {
-	ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] Message received with left = " << msg.left << ", right = " << msg.right);
+	ROS_INFO_STREAM("[I2C FOR MOTORS AND SERVOS] Message received with left = " << msg.left << ", right = " << msg.right);
 
 	// Clip the data to be in the range [-100.0,100.0]
 	// > For the left value
@@ -108,14 +108,14 @@ void driveMotorsSubscriberCallback(const asclinic_pkg::LeftRightFloat32& msg)
 	//   with which each motor is plugged in
 
 	// > Set the LEFT motor controller
-	result = m_pololu_smc_left.set_motor_target_speed_percent(pwm_duty_cycle_left);
+	result = m_pololu_smc_left.set_motor_target_duty_cycle_percent(pwm_duty_cycle_left);
 	if (!result)
-		ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] FAILED - Pololu SMC - set motor percent NOT successful for I2C address " << static_cast<int>(m_pololu_smc_left.get_i2c_address()) );
+		ROS_INFO_STREAM("[I2C FOR MOTORS AND SERVOS] FAILED - Pololu SMC - set motor percent NOT successful for I2C address " << static_cast<int>(m_pololu_smc_left.get_i2c_address()) );
 
 	// > Set the RIGHT motor controller
-	result = m_pololu_smc_right.set_motor_target_speed_percent(-pwm_duty_cycle_right);
+	result = m_pololu_smc_right.set_motor_target_duty_cycle_percent(-pwm_duty_cycle_right);
 	if (!result)
-		ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] FAILED - Pololu SMC - set motor percent NOT successful for I2C address " << static_cast<int>(m_pololu_smc_right.get_i2c_address()) );
+		ROS_INFO_STREAM("[I2C FOR MOTORS AND SERVOS] FAILED - Pololu SMC - set motor percent NOT successful for I2C address " << static_cast<int>(m_pololu_smc_right.get_i2c_address()) );
 
 	// Publish the motor duty cycles
 	asclinic_pkg::LeftRightFloat32 msg_current_duty_cycle;
@@ -146,7 +146,7 @@ void servoSubscriberCallback(const asclinic_pkg::ServoPulseWidth& msg)
 	uint16_t pulse_width_in_us = msg.pulse_width_in_microseconds;
 
 	// Display the message received
-	ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] Message received for servo with channel = " << static_cast<int>(channel) << ", and pulse width [us] = " << static_cast<int>(pulse_width_in_us) );
+	ROS_INFO_STREAM("[I2C FOR MOTORS AND SERVOS] Message received for servo with channel = " << static_cast<int>(channel) << ", and pulse width [us] = " << static_cast<int>(pulse_width_in_us) );
 
 	// Limit the pulse width to be either:
 	// > zero
@@ -165,7 +165,7 @@ void servoSubscriberCallback(const asclinic_pkg::ServoPulseWidth& msg)
 	// Display if an error occurred
 	if (!result)
 	{
-		ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] FAILED to set pulse width for servo at channel " << static_cast<int>(channel) );
+		ROS_INFO_STREAM("[I2C FOR MOTORS AND SERVOS] FAILED to set pulse width for servo at channel " << static_cast<int>(channel) );
 	}
 
 }
@@ -175,7 +175,7 @@ void servoSubscriberCallback(const asclinic_pkg::ServoPulseWidth& msg)
 int main(int argc, char* argv[])
 {
 	// Initialise the node
-	ros::init(argc, argv, "template_i2c_internal");
+	ros::init(argc, argv, "i2c_for_motors_and_servos");
 	ros::NodeHandle nodeHandle("~");
 
 	// Initialise a node handle to the group namespace
@@ -192,8 +192,8 @@ int main(int argc, char* argv[])
 
 	// Display command line command for publishing a
 	// motor duty cycle or servo request
-	ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] publish motor duty cycle requests from command line with: rostopic pub --once " << ros::this_node::getNamespace() << "/set_motor_duty_cycle asclinic_pkg/LeftRightFloat32 \"{left: 10.1, right: 10.1}\"");
-	ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] publish motor duty cycle requests from command line with: rostopic pub --once " << ros::this_node::getNamespace() << "/set_servo_pulse_width asclinic_pkg/ServoPulseWidth \"{channel: 15, pulse_width_in_microseconds: 1100}\"");
+	ROS_INFO_STREAM("[I2C FOR MOTORS AND SERVOS] publish motor duty cycle requests from command line with: rostopic pub --once " << ros::this_node::getNamespace() << "/set_motor_duty_cycle asclinic_pkg/LeftRightFloat32 \"{left: 10.1, right: 10.1}\"");
+	ROS_INFO_STREAM("[I2C FOR MOTORS AND SERVOS] publish servo requests from command line with: rostopic pub --once " << ros::this_node::getNamespace() << "/set_servo_pulse_width asclinic_pkg/ServoPulseWidth \"{channel: 15, pulse_width_in_microseconds: 1100}\"");
 
 	// Open the I2C device
 	// > Note that the I2C driver is already instantiated
@@ -203,11 +203,11 @@ int main(int argc, char* argv[])
 	// Display the status
 	if (!open_success)
 	{
-		ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] FAILED to open I2C device named " << m_i2c_driver.get_device_name());
+		ROS_INFO_STREAM("[I2C FOR MOTORS AND SERVOS] FAILED to open I2C device named " << m_i2c_driver.get_device_name());
 	}
 	else
 	{
-		ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] Successfully opened named " << m_i2c_driver.get_device_name() << ", with file descriptor = " << m_i2c_driver.get_file_descriptor());
+		ROS_INFO_STREAM("[I2C FOR MOTORS AND SERVOS] Successfully opened named " << m_i2c_driver.get_device_name() << ", with file descriptor = " << m_i2c_driver.get_file_descriptor());
 	}
 
 
@@ -245,16 +245,27 @@ int main(int argc, char* argv[])
 			pololu_smc_pointer = &m_pololu_smc_right;
 
 		// Display the object about to be initialised
-		ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] Now initialising SMC with I2C address " << static_cast<int>(pololu_smc_pointer->get_i2c_address()) );
+		ROS_INFO_STREAM("[I2C FOR MOTORS AND SERVOS] Now initialising SMC with I2C address " << static_cast<int>(pololu_smc_pointer->get_i2c_address()) );
 
-		// Call the Pololu SMC initialisation function
-		bool verbose_display_for_SMC_init = false;
-		bool result_smc_init = pololu_smc_pointer->initialise_with_limits(new_current_limit_in_milliamps,new_max_duty_cycle_limit,new_max_accel_limit,new_max_decel_limit,verbose_display_for_SMC_init);
+		// Check if a device exists at the address
+		bool this_pololu_smc_is_connected = m_i2c_driver.check_for_device_at_address(pololu_smc_pointer->get_i2c_address());
 
-		// Display if an error occurred
-		if (!result_smc_init)
+		if (this_pololu_smc_is_connected)
 		{
-			ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] FAILED - while initialising SMC with I2C address " << static_cast<int>(pololu_smc_pointer->get_i2c_address()) );
+			// Call the Pololu SMC initialisation function
+			bool verbose_display_for_SMC_init = false;
+			bool result_smc_init = pololu_smc_pointer->initialise_with_limits(new_current_limit_in_milliamps,new_max_duty_cycle_limit,new_max_accel_limit,new_max_decel_limit,verbose_display_for_SMC_init);
+
+			// Display if an error occurred
+			if (!result_smc_init)
+			{
+				ROS_INFO_STREAM("[I2C FOR MOTORS AND SERVOS] FAILED - while initialising SMC with I2C address " << static_cast<int>(pololu_smc_pointer->get_i2c_address()) );
+			}
+		}
+		else
+		{
+			// Display that the device is not connected
+			ROS_INFO_STREAM("[I2C FOR MOTORS AND SERVOS] FAILED - SMC device NOT detected at I2C address " << static_cast<int>(pololu_smc_pointer->get_i2c_address()) );
 		}
 	}
 
@@ -264,14 +275,25 @@ int main(int argc, char* argv[])
 	// Specify the frequency of the servo driver
 	float new_frequency_in_hz = 50.0;
 
-	// Call the Servo Driver initialisation function
-	bool verbose_display_for_servo_driver_init = false;
-	bool result_servo_init = m_pca9685_servo_driver.initialise_with_frequency_in_hz(new_frequency_in_hz, verbose_display_for_servo_driver_init);
+	// Check if a device exists at the address
+	bool servo_driver_is_connected = m_i2c_driver.check_for_device_at_address(m_pca9685_servo_driver.get_i2c_address());
 
-	// Display if an error occurred
-	if (!result_servo_init)
+	if (servo_driver_is_connected)
 	{
-		ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] FAILED - while initialising servo driver with I2C address " << static_cast<int>(m_pca9685_servo_driver.get_i2c_address()) );
+		// Call the Servo Driver initialisation function
+		bool verbose_display_for_servo_driver_init = false;
+		bool result_servo_init = m_pca9685_servo_driver.initialise_with_frequency_in_hz(new_frequency_in_hz, verbose_display_for_servo_driver_init);
+
+		// Display if an error occurred
+		if (!result_servo_init)
+		{
+			ROS_INFO_STREAM("[I2C FOR MOTORS AND SERVOS] FAILED - while initialising servo driver with I2C address " << static_cast<int>(m_pca9685_servo_driver.get_i2c_address()) );
+		}
+		}
+	else
+	{
+		// Display that the device is not connected
+		ROS_INFO_STREAM("[I2C FOR MOTORS AND SERVOS] FAILED - Servo driver device NOT detected at I2C address " << static_cast<int>(m_pca9685_servo_driver.get_i2c_address()) );
 	}
 
 	// Spin as a single-threaded node
@@ -283,11 +305,11 @@ int main(int argc, char* argv[])
 	// Display the status
 	if (!close_success)
 	{
-		ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] FAILED to close I2C device named " << m_i2c_driver.get_device_name());
+		ROS_INFO_STREAM("[I2C FOR MOTORS AND SERVOS] FAILED to close I2C device named " << m_i2c_driver.get_device_name());
 	}
 	else
 	{
-		ROS_INFO_STREAM("[TEMPLATE I2C INTERNAL] Successfully closed device named " << m_i2c_driver.get_device_name());
+		ROS_INFO_STREAM("[I2C FOR MOTORS AND SERVOS] Successfully closed device named " << m_i2c_driver.get_device_name());
 	}
 
 	return 0;

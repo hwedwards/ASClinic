@@ -133,6 +133,7 @@ public:
 
 	bool write_data(uint8_t address, uint16_t num_write_btyes, uint8_t * write_data_array);
 	bool write_data_then_read_data(uint8_t address, uint16_t num_write_btyes, uint8_t * write_data_array, uint16_t num_read_btyes, uint8_t * read_data_array);
+	bool check_for_device_at_address(uint8_t address);
 
 }; // END OF CLASS DEFINITION
 

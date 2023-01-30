@@ -13,7 +13,8 @@
 //                                                 |___/                       
 //
 // DESCRIPTION:
-// Template node for I2C devices connected inside the robot
+// Node for emulating the behaviour of the "I2C for Motors and Servos" node
+// Emulation is used to perform some tests without a robot
 //
 // ----------------------------------------------------------------------------
 
@@ -58,9 +59,9 @@ ros::Publisher m_current_motor_duty_cycle_publisher;
 //      where "<namespace>/set_motor_duty_cycle" is the full
 //      name identified in step 1.
 //
-void templateDriveMotorsSubscriberCallback(const asclinic_pkg::LeftRightFloat32& msg)
+void driveMotorsSubscriberCallback(const asclinic_pkg::LeftRightFloat32& msg)
 {
-	ROS_INFO_STREAM("[EMULATE I2C INTERNAL] Message received with left = " << msg.left << ", right = " << msg.right);
+	ROS_INFO_STREAM("[EMULATE I2C FOR MOTORS] Message received with left = " << msg.left << ", right = " << msg.right);
 
 	// Clip the data to be in the range [-100.0,100.0]
 	// > For the left value
@@ -98,14 +99,14 @@ void templateDriveMotorsSubscriberCallback(const asclinic_pkg::LeftRightFloat32&
 //      where "<namespace>/set_servo_pulse_width" is the full
 //      name identified in step 1.
 //
-void templateServoSubscriberCallback(const asclinic_pkg::ServoPulseWidth& msg)
+void servoSubscriberCallback(const asclinic_pkg::ServoPulseWidth& msg)
 {
 	// Extract the channel and pulse width from the message
 	uint8_t channel = msg.channel;
 	uint16_t pulse_width_in_us = msg.pulse_width_in_microseconds;
 
 	// Display the message received
-	ROS_INFO_STREAM("[EMULATE I2C INTERNAL] Message received for servo with channel = " << static_cast<int>(channel) << ", and pulse width [us] = " << static_cast<int>(pulse_width_in_us) );
+	ROS_INFO_STREAM("[EMULATE I2C FOR MOTORS] Message received for servo with channel = " << static_cast<int>(channel) << ", and pulse width [us] = " << static_cast<int>(pulse_width_in_us) );
 
 	// Limit the pulse width to be either:
 	// > zero
@@ -124,7 +125,7 @@ void templateServoSubscriberCallback(const asclinic_pkg::ServoPulseWidth& msg)
 int main(int argc, char* argv[])
 {
 	// Initialise the node
-	ros::init(argc, argv, "template_i2c_internal");
+	ros::init(argc, argv, "emulate_i2c_for_motors");
 	ros::NodeHandle nodeHandle("~");
 
 	// Initialise a node handle to the group namespace
@@ -132,17 +133,17 @@ int main(int argc, char* argv[])
 	ros::NodeHandle nh_for_group(ns_for_group);
 
 	// Initialise a subscriber for the duty cycle of the main drive motors
-	ros::Subscriber set_motor_duty_cycle_subscriber = nh_for_group.subscribe("set_motor_duty_cycle", 1, templateDriveMotorsSubscriberCallback);
+	ros::Subscriber set_motor_duty_cycle_subscriber = nh_for_group.subscribe("set_motor_duty_cycle", 1, driveMotorsSubscriberCallback);
 	// Initialise a subscriber for the servo driver
-	ros::Subscriber set_servo_pulse_width_subscriber = nh_for_group.subscribe("set_servo_pulse_width", 1, templateServoSubscriberCallback);
+	ros::Subscriber set_servo_pulse_width_subscriber = nh_for_group.subscribe("set_servo_pulse_width", 1, servoSubscriberCallback);
 
 	// Initialise a publisher for the current duty cycle setting of the main drive motors
 	m_current_motor_duty_cycle_publisher = nh_for_group.advertise<asclinic_pkg::LeftRightFloat32>("current_motor_duty_cycle", 10, false);
 
 	// Display command line command for publishing a
 	// motor duty cycle or servo request
-	ROS_INFO_STREAM("[EMULATE I2C INTERNAL] publish motor duty cycle requests from command line with: rostopic pub --once " << ros::this_node::getNamespace() << "/set_motor_duty_cycle asclinic_pkg/LeftRightFloat32 \"{left: 10.1, right: 10.1}\"");
-	ROS_INFO_STREAM("[EMULATE I2C INTERNAL] publish motor duty cycle requests from command line with: rostopic pub --once " << ros::this_node::getNamespace() << "/set_servo_pulse_width asclinic_pkg/ServoPulseWidth \"{channel: 15, pulse_width_in_microseconds: 1100}\"");
+	ROS_INFO_STREAM("[EMULATE I2C FOR MOTORS] publish motor duty cycle requests from command line with: rostopic pub --once " << ros::this_node::getNamespace() << "/set_motor_duty_cycle asclinic_pkg/LeftRightFloat32 \"{left: 10.1, right: 10.1}\"");
+	ROS_INFO_STREAM("[EMULATE I2C FOR MOTORS] publish motor duty cycle requests from command line with: rostopic pub --once " << ros::this_node::getNamespace() << "/set_servo_pulse_width asclinic_pkg/ServoPulseWidth \"{channel: 15, pulse_width_in_microseconds: 1100}\"");
 
 	// Spin as a single-threaded node
 	ros::spin();

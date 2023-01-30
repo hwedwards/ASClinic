@@ -40,7 +40,7 @@
 
 // MEMBER VARIABLES FOR THIS NODE:
 // Publisher for motor duty cycle
-// > To the I2C internal node
+// > To the "I2C for motors and servos" node
 ros::Publisher m_set_motor_duty_cycle_publisher;
 // > To the web interface
 ros::Publisher m_current_motor_duty_cycles_publisher;
@@ -150,11 +150,11 @@ int main(int argc, char* argv[])
 	// > Requests from the web interface
 	ros::Subscriber set_motor_duty_cycle_subscriber = nh_for_group.subscribe("set_motor_duty_cycle_from_web_interface", 1, setMotorDutyCycleFromWebInterfaceSubscriberCallback);
 	ros::Subscriber inc_motor_duty_cycle_subscriber = nh_for_group.subscribe("increment_motor_duty_cycle_from_web_interface", 10, incrementMotorDutyCycleFromWebInterfaceSubscriberCallback);
-	// > Updates from the I2C internal node
+	// > Updates from the "I2C for motors and servos" node
 	ros::Subscriber current_motor_duty_cycle_subscriber = nh_for_group.subscribe("current_motor_duty_cycle", 10, currentMotorDutyCycleFromNodeSubscriberCallback);
 
 	// Initialise a publisher for motor duty cycle
-	// > Requests to the I2C internal node
+	// > Requests to the "I2C for motors and servos" node
 	m_set_motor_duty_cycle_publisher = nh_for_group.advertise<asclinic_pkg::LeftRightFloat32>("set_motor_duty_cycle", 1, false);
 	// > Updates to the web interface
 	m_current_motor_duty_cycles_publisher = nh_for_group.advertise<geometry_msgs::Vector3>("current_motor_duty_cycle_for_web_interface", 10, true);

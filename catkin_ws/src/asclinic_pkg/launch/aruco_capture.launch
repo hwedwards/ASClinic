@@ -3,12 +3,12 @@
 	<!-- START A GROUP WITH A NAMESPACE -->
 	<group ns="asc">
 
-		<!-- LAUNCH A "Template Aruco Capture" NODE -->
+		<!-- LAUNCH A "Aruco Capture" NODE -->
 		<node
 			pkg    = "asclinic_pkg"
-			name   = "template_aruco_capture"
+			name   = "aruco_capture"
 			output = "screen"
-			type   = "template_aruco_capture.py"
+			type   = "aruco_capture.py"
 		/>
 
 	</group>

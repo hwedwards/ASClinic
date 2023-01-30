@@ -145,9 +145,9 @@ bool Pololu_SMC_G2::set_motor_limit(uint8_t limit_id, uint16_t value, int * resp
 	// Convert the new limit value to its two
 	// byte representation
 	// > The first data byte contains the low
-	//   seven bits of the speed
+	//   seven bits of the duty cycle
 	// > The second data byte contains the high
-	//   seven bits of the speed.
+	//   seven bits of the duty cycle.
 	uint8_t value_byte_1 = value % 128;
 	uint8_t value_byte_2 = value / 128;
 
@@ -214,27 +214,27 @@ bool Pololu_SMC_G2::exit_safe_start()
 	}
 }
 
-bool Pololu_SMC_G2::motor_forward_3200(int target_speed)
+bool Pololu_SMC_G2::motor_forward_3200(int target_duty_cycle)
 {
-	// Restrict the target speed to be in the range
+	// Restrict the target duty cycle to be in the range
 	// [0,3200]
-	if (target_speed < 0)
-		target_speed = 0;
-	else if (target_speed > 3200)
-		target_speed = 3200;
+	if (target_duty_cycle < 0)
+		target_duty_cycle = 0;
+	else if (target_duty_cycle > 3200)
+		target_duty_cycle = 3200;
 
-	// Convert the target speed to its two byte
+	// Convert the target duty cycle to its two byte
 	// representation
 	// > The first data byte contains the low
-	//   five bits of the speed
+	//   five bits of the duty cycle
 	// > The second data byte contains the high
-	//   seven bits of the speed.
-	uint8_t target_speed_byte_1 = target_speed % 32;
-	uint8_t target_speed_byte_2 = target_speed / 32;
+	//   seven bits of the duty cycle.
+	uint8_t target_duty_cycle_byte_1 = target_duty_cycle % 32;
+	uint8_t target_duty_cycle_byte_2 = target_duty_cycle / 32;
 
 	// Put the "motor forward" command and target
-	// speed into a uint8 array
-	uint8_t command_array[] = { POLOLU_SMC_G2_COMMAND_MOTOR_FORWARD , target_speed_byte_1 , target_speed_byte_2 };
+	// duty cycle into a uint8 array
+	uint8_t command_array[] = { POLOLU_SMC_G2_COMMAND_MOTOR_FORWARD , target_duty_cycle_byte_1 , target_duty_cycle_byte_2 };
 	// Specify the number of bytes in the command
 	int num_command_bytes = sizeof(command_array);
 	// Call the i2c_driver function
@@ -254,18 +254,18 @@ bool Pololu_SMC_G2::motor_forward_3200(int target_speed)
 	}
 }
 
-bool Pololu_SMC_G2::motor_forward_percent(int target_speed)
+bool Pololu_SMC_G2::motor_forward_percent(int target_duty_cycle)
 {
-	// Restrict the target speed to be in the range
+	// Restrict the target duty cycle to be in the range
 	// [0,100]
-	if (target_speed < 0)
-		target_speed = 0;
-	else if (target_speed > 100)
-		target_speed = 100;
+	if (target_duty_cycle < 0)
+		target_duty_cycle = 0;
+	else if (target_duty_cycle > 100)
+		target_duty_cycle = 100;
 
 	// Put the "motor forward" command and target
-	// speed into a uint8 array
-	uint8_t command_array[] = { POLOLU_SMC_G2_COMMAND_MOTOR_FORWARD , 0 , (uint8_t)target_speed };
+	// duty cycle into a uint8 array
+	uint8_t command_array[] = { POLOLU_SMC_G2_COMMAND_MOTOR_FORWARD , 0 , (uint8_t)target_duty_cycle };
 	// Specify the number of bytes in the command
 	int num_command_bytes = sizeof(command_array);
 	// Call the i2c_driver function
@@ -285,18 +285,18 @@ bool Pololu_SMC_G2::motor_forward_percent(int target_speed)
 	}
 }
 
-bool Pololu_SMC_G2::motor_forward_7bit(int target_speed)
+bool Pololu_SMC_G2::motor_forward_7bit(int target_duty_cycle)
 {
-	// Restrict the target speed to be in the range
+	// Restrict the target duty cycle to be in the range
 	// [0,127]
-	if (target_speed < 0)
-		target_speed = 0;
-	else if (target_speed > 127)
-		target_speed = 127;
+	if (target_duty_cycle < 0)
+		target_duty_cycle = 0;
+	else if (target_duty_cycle > 127)
+		target_duty_cycle = 127;
 
 	// Put the "motor forward 7-bit" command and
-	// target speed into a uint8 array
-	uint8_t command_array[] = { POLOLU_SMC_G2_COMMAND_MOTOR_FORWARD_7BIT , 0 , (uint8_t)target_speed };
+	// target duty cycle into a uint8 array
+	uint8_t command_array[] = { POLOLU_SMC_G2_COMMAND_MOTOR_FORWARD_7BIT , 0 , (uint8_t)target_duty_cycle };
 	// Specify the number of bytes in the command
 	int num_command_bytes = sizeof(command_array);
 	// Call the i2c_driver function
@@ -316,27 +316,27 @@ bool Pololu_SMC_G2::motor_forward_7bit(int target_speed)
 	}
 }
 
-bool Pololu_SMC_G2::motor_reverse_3200(int target_speed)
+bool Pololu_SMC_G2::motor_reverse_3200(int target_duty_cycle)
 {
-	// Restrict the target speed to be in the range
+	// Restrict the target duty cycle to be in the range
 	// [0,3200]
-	if (target_speed < 0)
-		target_speed = 0;
-	else if (target_speed > 3200)
-		target_speed = 3200;
+	if (target_duty_cycle < 0)
+		target_duty_cycle = 0;
+	else if (target_duty_cycle > 3200)
+		target_duty_cycle = 3200;
 
-	// Convert the target speed to its two byte
+	// Convert the target duty cycle to its two byte
 	// representation
 	// > The first data byte contains the low
-	//   five bits of the speed
+	//   five bits of the duty cycle
 	// > The second data byte contains the high
-	//   seven bits of the speed.
-	uint8_t target_speed_byte_1 = target_speed % 32;
-	uint8_t target_speed_byte_2 = target_speed / 32;
+	//   seven bits of the duty cycle.
+	uint8_t target_duty_cycle_byte_1 = target_duty_cycle % 32;
+	uint8_t target_duty_cycle_byte_2 = target_duty_cycle / 32;
 
 	// Put the "motor reverse" command and target
-	// speed into a uint8 array
-	uint8_t command_array[] = { POLOLU_SMC_G2_COMMAND_MOTOR_REVERSE , target_speed_byte_1 , target_speed_byte_2 };
+	// duty cycle into a uint8 array
+	uint8_t command_array[] = { POLOLU_SMC_G2_COMMAND_MOTOR_REVERSE , target_duty_cycle_byte_1 , target_duty_cycle_byte_2 };
 	// Specify the number of bytes in the command
 	int num_command_bytes = sizeof(command_array);
 	// Call the i2c_driver function
@@ -356,18 +356,18 @@ bool Pololu_SMC_G2::motor_reverse_3200(int target_speed)
 	}
 }
 
-bool Pololu_SMC_G2::motor_reverse_percent(int target_speed)
+bool Pololu_SMC_G2::motor_reverse_percent(int target_duty_cycle)
 {
-	// Restrict the target speed to be in the range
+	// Restrict the target duty cycle to be in the range
 	// [0,100]
-	if (target_speed < 0)
-		target_speed = 0;
-	else if (target_speed > 100)
-		target_speed = 100;
+	if (target_duty_cycle < 0)
+		target_duty_cycle = 0;
+	else if (target_duty_cycle > 100)
+		target_duty_cycle = 100;
 
 	// Put the "motor reverse" command and target
-	// speed into a uint8 array
-	uint8_t command_array[] = { POLOLU_SMC_G2_COMMAND_MOTOR_REVERSE , 0 , (uint8_t)target_speed };
+	// duty cycle into a uint8 array
+	uint8_t command_array[] = { POLOLU_SMC_G2_COMMAND_MOTOR_REVERSE , 0 , (uint8_t)target_duty_cycle };
 	// Specify the number of bytes in the command
 	int num_command_bytes = sizeof(command_array);
 	// Call the i2c_driver function
@@ -387,18 +387,18 @@ bool Pololu_SMC_G2::motor_reverse_percent(int target_speed)
 	}
 }
 
-bool Pololu_SMC_G2::motor_reverse_7bit(int target_speed)
+bool Pololu_SMC_G2::motor_reverse_7bit(int target_duty_cycle)
 {
-	// Restrict the target speed to be in the range
+	// Restrict the target duty cycle to be in the range
 	// [0,127]
-	if (target_speed < 0)
-		target_speed = 0;
-	else if (target_speed > 127)
-		target_speed = 127;
+	if (target_duty_cycle < 0)
+		target_duty_cycle = 0;
+	else if (target_duty_cycle > 127)
+		target_duty_cycle = 127;
 
 	// Put the "motor reverse 7-bit" command and
-	// target speed into a uint8 array
-	uint8_t command_array[] = { POLOLU_SMC_G2_COMMAND_MOTOR_REVERSE_7BIT , 0 , (uint8_t)target_speed };
+	// target duty cycle into a uint8 array
+	uint8_t command_array[] = { POLOLU_SMC_G2_COMMAND_MOTOR_REVERSE_7BIT , 0 , (uint8_t)target_duty_cycle };
 	// Specify the number of bytes in the command
 	int num_command_bytes = sizeof(command_array);
 	// Call the i2c_driver function
@@ -478,37 +478,37 @@ bool Pololu_SMC_G2::stop_motor()
 
 
 // CONVENIENCE FUNCTIONS FOR SETTING
-// A SIGNED MOTOR TARGET SPEED
-bool Pololu_SMC_G2::set_motor_target_speed_3200(int target_speed)
+// A SIGNED MOTOR TARGET DUTY CYCLE
+bool Pololu_SMC_G2::set_motor_target_duty_cycle_3200(int target_duty_cycle)
 {
-	if (target_speed<0)
-		return this->motor_reverse_3200(-target_speed);
+	if (target_duty_cycle<0)
+		return this->motor_reverse_3200(-target_duty_cycle);
 	else
-		return this->motor_forward_3200(target_speed);
+		return this->motor_forward_3200(target_duty_cycle);
 }
 
-bool Pololu_SMC_G2::set_motor_target_speed_percent(int target_speed)
+bool Pololu_SMC_G2::set_motor_target_duty_cycle_percent(int target_duty_cycle)
 {
-	if (target_speed<0)
-		return this->motor_reverse_percent(-target_speed);
+	if (target_duty_cycle<0)
+		return this->motor_reverse_percent(-target_duty_cycle);
 	else
-		return this->motor_forward_percent(target_speed);
+		return this->motor_forward_percent(target_duty_cycle);
 }
 
-bool Pololu_SMC_G2::set_motor_target_speed_percent(float target_speed)
+bool Pololu_SMC_G2::set_motor_target_duty_cycle_percent(float target_duty_cycle)
 {
 	// Convert the percent to the nearest 3200 integer
-	int target_speed_3200 = static_cast<int>( std::round(target_speed * 32.0f) );
-	// Call the function for signed 3200 speeds
-	return this->set_motor_target_speed_3200(target_speed_3200);
+	int target_duty_cycle_3200 = static_cast<int>( std::round(target_duty_cycle * 32.0f) );
+	// Call the function for signed 3200 duty cycles
+	return this->set_motor_target_duty_cycle_3200(target_duty_cycle_3200);
 }
 
-bool Pololu_SMC_G2::set_motor_target_speed_7bit(int target_speed)
+bool Pololu_SMC_G2::set_motor_target_duty_cycle_7bit(int target_duty_cycle)
 {
-	if (target_speed<0)
-		return this->motor_reverse_7bit(-target_speed);
+	if (target_duty_cycle<0)
+		return this->motor_reverse_7bit(-target_duty_cycle);
 	else
-		return this->motor_forward_7bit(target_speed);
+		return this->motor_forward_7bit(target_duty_cycle);
 }
 
 
@@ -517,16 +517,16 @@ bool Pololu_SMC_G2::set_motor_target_speed_7bit(int target_speed)
 
 // SET MOTOR LIMITS
 // > For setting forward and reverse limits at the same time
-bool Pololu_SMC_G2::set_motor_limit_max_speed(int new_max_speed, int * response_code)
+bool Pololu_SMC_G2::set_motor_limit_max_duty_cycle(int new_max_duty_cycle, int * response_code)
 {
-	// Restrict the new max speed to be in the
+	// Restrict the new max dutycycle to be in the
 	// range [0,3200]
-	if (new_max_speed < 0)
-		new_max_speed = 0;
-	else if (new_max_speed > 3200)
-		new_max_speed = 3200;
+	if (new_max_duty_cycle < 0)
+		new_max_duty_cycle = 0;
+	else if (new_max_duty_cycle > 3200)
+		new_max_duty_cycle = 3200;
 	// Call the function that set the limit
-	return this->set_motor_limit(POLOLU_SMC_G2_SET_MOTOR_LIMIT_MAX_SPEED, new_max_speed, response_code);
+	return this->set_motor_limit(POLOLU_SMC_G2_SET_MOTOR_LIMIT_MAX_SPEED, new_max_duty_cycle, response_code);
 }
 
 bool Pololu_SMC_G2::set_motor_limit_max_acceleration(int new_max_acceleration, int * response_code)
@@ -534,8 +534,8 @@ bool Pololu_SMC_G2::set_motor_limit_max_acceleration(int new_max_acceleration, i
 	// Restrict the new max acceleration to be in the
 	// range [0,3200]
 	// Note: a limit of 0 mean no limit
-	// Note: this is a limit in the change of speed per
-	//       "speed update period"
+	// Note: this is a limit in the change of duty cycle
+	//       per "speed update period"
 	// Note: the "speed update period" is set via the
 	//       windows-based Pololu SMC G2 software
 	//       > Default Value   = 1 ms
@@ -553,8 +553,8 @@ bool Pololu_SMC_G2::set_motor_limit_max_deceleration(int new_max_deceleration, i
 	// Restrict the new max deceleration to be in the
 	// range [0,3200]
 	// Note: a limit of 0 mean no limit
-	// Note: this is a limit in the change of speed per
-	//       "speed update period"
+	// Note: this is a limit in the change of duty cycle
+	//       per "speed update period"
 	// Note: the "speed update period" is set via the
 	//       windows-based Pololu SMC G2 software
 	//       > Default Value   = 1 ms
@@ -580,16 +580,16 @@ bool Pololu_SMC_G2::set_motor_limit_max_brake_duration(int new_max_brake_duratio
 }
 
 // > For setting forward limits
-bool Pololu_SMC_G2::set_motor_limit_max_speed_forward(int new_max_speed, int * response_code)
+bool Pololu_SMC_G2::set_motor_limit_max_duty_cycle_forward(int new_max_duty_cycle, int * response_code)
 {
-	// Restrict the new max speed to be in the
+	// Restrict the new max duty cycle to be in the
 	// range [0,3200]
-	if (new_max_speed < 0)
-		new_max_speed = 0;
-	else if (new_max_speed > 3200)
-		new_max_speed = 3200;
+	if (new_max_duty_cycle < 0)
+		new_max_duty_cycle = 0;
+	else if (new_max_duty_cycle > 3200)
+		new_max_duty_cycle = 3200;
 	// Call the function that set the limit
-	return this->set_motor_limit(POLOLU_SMC_G2_SET_MOTOR_LIMIT_MAX_SPEED_FORWARD, new_max_speed, response_code);
+	return this->set_motor_limit(POLOLU_SMC_G2_SET_MOTOR_LIMIT_MAX_SPEED_FORWARD, new_max_duty_cycle, response_code);
 }
 
 bool Pololu_SMC_G2::set_motor_limit_max_acceleration_forward(int new_max_acceleration, int * response_code)
@@ -631,16 +631,16 @@ bool Pololu_SMC_G2::set_motor_limit_max_brake_duration_forward(int new_max_brake
 }
 
 // > For setting reverse limits
-bool Pololu_SMC_G2::set_motor_limit_max_speed_reverse(int new_max_speed, int * response_code)
+bool Pololu_SMC_G2::set_motor_limit_max_duty_cycle_reverse(int new_max_duty_cycle, int * response_code)
 {
-	// Restrict the new max speed to be in the
+	// Restrict the new max duty cycle to be in the
 	// range [0,3200]
-	if (new_max_speed < 0)
-		new_max_speed = 0;
-	else if (new_max_speed > 3200)
-		new_max_speed = 3200;
+	if (new_max_duty_cycle < 0)
+		new_max_duty_cycle = 0;
+	else if (new_max_duty_cycle > 3200)
+		new_max_duty_cycle = 3200;
 	// Call the function that set the limit
-	return this->set_motor_limit(POLOLU_SMC_G2_SET_MOTOR_LIMIT_MAX_SPEED_REVERSE, new_max_speed, response_code);
+	return this->set_motor_limit(POLOLU_SMC_G2_SET_MOTOR_LIMIT_MAX_SPEED_REVERSE, new_max_duty_cycle, response_code);
 }
 
 bool Pololu_SMC_G2::set_motor_limit_max_acceleration_reverse(int new_max_acceleration, int * response_code)
@@ -700,9 +700,9 @@ bool Pololu_SMC_G2::set_current_limit_in_internal_units(int new_current_limit)
 	// Convert the new current limit to its two
 	// byte representation
 	// > The first data byte contains the low
-	//   seven bits of the speed
+	//   seven bits of the current
 	// > The second data byte contains the high
-	//   seven bits of the speed.
+	//   seven bits of the current.
 	uint8_t new_current_limit_byte_1 = new_current_limit % 128;
 	uint8_t new_current_limit_byte_2 = new_current_limit / 128;
 
@@ -740,7 +740,7 @@ bool Pololu_SMC_G2::set_current_limit_in_milliamps(int new_current_limit)
 	// For the 18v15 model and default values, this is:
 	// [internal units] = ([mA] * 3200 * 2 / 8057 + 993) * 3200/65536
 	//                  = ([mA] * 0.794340 + 993) * 0.0488281
-	// For examples:
+	// For example:
 	//  1000 [mA] =   87.3 [internal units]
 	//  2000 [mA] =  126.1 [internal units]
 	//  5000 [mA] =  242.4 [internal units]
@@ -826,24 +826,24 @@ bool Pololu_SMC_G2::get_error_status(uint16_t * value)
 	return this->get_variable(POLOLU_SMC_G2_GET_VARIABLE_ERROR_STATUS, value);
 }
 
-uint16_t Pololu_SMC_G2::get_error_occurred()
+bool Pololu_SMC_G2::get_error_occurred(uint16_t * value)
 {
-	return 0;
+	return this->get_variable(POLOLU_SMC_G2_GET_VARIABLE_ERRORS_OCCURRED, value);
 }
 
-uint16_t Pololu_SMC_G2::get_serial_erros_occurred()
+bool Pololu_SMC_G2::get_serial_erros_occurred(uint16_t * value)
 {
-	return 0;
+	return this->get_variable(POLOLU_SMC_G2_GET_VARIABLE_SERIAL_ERRORS_OCCURRED, value);
 }
 
-uint16_t Pololu_SMC_G2::get_limit_status()
+bool Pololu_SMC_G2::get_limit_status(uint16_t * value)
 {
-	return 0;
+	return this->get_variable(POLOLU_SMC_G2_GET_VARIABLE_LIMIT_STATUS, value);
 }
 
-uint16_t Pololu_SMC_G2::get_reset_flags()
+bool Pololu_SMC_G2::get_reset_flags(uint16_t * value)
 {
-	return 0;
+	return this->get_variable(POLOLU_SMC_G2_GET_VARIABLE_RESET_FLAGS, value);
 }
 
 // > For the RC channels
@@ -917,13 +917,13 @@ bool Pololu_SMC_G2::get_an2_scaled_value(int16_t * value)
 
 
 // > For diagnostic variables
-// Gets the target speed (-3200 to 3200).
-bool Pololu_SMC_G2::get_target_speed_3200(int16_t * value)
+// Gets the target duty cycle (-3200 to 3200).
+bool Pololu_SMC_G2::get_target_duty_cycle_3200(int16_t * value)
 {
 	return this->get_variable(POLOLU_SMC_G2_GET_VARIABLE_TARGET_SPEED, (uint16_t *)value);
 }
 
-bool Pololu_SMC_G2::get_speed_3200(int16_t * value)
+bool Pololu_SMC_G2::get_duty_cycle_3200(int16_t * value)
 {
 	return this->get_variable(POLOLU_SMC_G2_GET_VARIABLE_SPEED, (uint16_t *)value);
 }
@@ -1028,8 +1028,8 @@ bool Pololu_SMC_G2::get_up_time_in_seconds(float * value)
 
 
 
-// > For motor speed limits (forward)
-bool Pololu_SMC_G2::get_max_speed_forward(uint16_t * value)
+// > For motor duty cycle limits (forward)
+bool Pololu_SMC_G2::get_max_duty_cycle_forward(uint16_t * value)
 {
 	return this->get_variable(POLOLU_SMC_G2_GET_VARIABLE_MAX_SPEED_FORWARD, value);
 }
@@ -1057,7 +1057,7 @@ bool Pololu_SMC_G2::get_brake_duration_forward_in_seconds(float * value)
 	return returnSuccess;
 }
 
-bool Pololu_SMC_G2::get_starting_speed_forward(uint16_t * value)
+bool Pololu_SMC_G2::get_starting_duty_cycle_forward(uint16_t * value)
 {
 	return this->get_variable(POLOLU_SMC_G2_GET_VARIABLE_STARTING_SPEED_FORWARD, value);
 }
@@ -1066,8 +1066,8 @@ bool Pololu_SMC_G2::get_starting_speed_forward(uint16_t * value)
 
 
 
-// > For motor speed limits (reverse)
-bool Pololu_SMC_G2::get_max_speed_reverse(uint16_t * value)
+// > For motor duty cycle limits (reverse)
+bool Pololu_SMC_G2::get_max_duty_cycle_reverse(uint16_t * value)
 {
 	return this->get_variable(POLOLU_SMC_G2_GET_VARIABLE_MAX_SPEED_REVERSE, value);
 }
@@ -1095,7 +1095,7 @@ bool Pololu_SMC_G2::get_brake_duration_reverse_in_seconds(float * value)
 	return returnSuccess;
 }
 
-bool Pololu_SMC_G2::get_starting_speed_reverse(uint16_t * value)
+bool Pololu_SMC_G2::get_starting_duty_cycle_reverse(uint16_t * value)
 {
 	return this->get_variable(POLOLU_SMC_G2_GET_VARIABLE_STARTING_SPEED_REVERSE, value);
 }
@@ -1135,7 +1135,7 @@ bool Pololu_SMC_G2::get_current_limiting_occurrence_count(uint16_t * value)
 
 
 // CONVENIENCE FUNCTIONS
-bool Pololu_SMC_G2::initialise_with_limits(int new_current_limit_in_milliamps, int new_max_speed_limit, int new_max_accel_limit, int new_max_decel_limit, bool verbose)
+bool Pololu_SMC_G2::initialise_with_limits(int new_current_limit_in_milliamps, int new_max_duty_cycle_limit, int new_max_accel_limit, int new_max_decel_limit, bool verbose)
 {
 	// Initialise a boolean variable for the result
 	// of calls to functions
@@ -1213,26 +1213,26 @@ bool Pololu_SMC_G2::initialise_with_limits(int new_current_limit_in_milliamps, i
 	// Short sleep
 	usleep(1000);
 
-	// Send the max speed limit
-	int max_speed_limit_response_code;
-	result = this->set_motor_limit_max_speed(new_max_speed_limit, &max_speed_limit_response_code);
+	// Send the max duty cycle limit
+	int max_duty_cycle_limit_response_code;
+	result = this->set_motor_limit_max_duty_cycle(new_max_duty_cycle_limit, &max_duty_cycle_limit_response_code);
 	if (verbose)
 	{
 		if (!result)
-			std::cout << "POLOLU SMC G2 DRIVER: FAILED - set max speed limit NOT successful with response code " << max_speed_limit_response_code << ", for I2C address " << static_cast<int>(this->get_i2c_address());
+			std::cout << "POLOLU SMC G2 DRIVER: FAILED - set max duty cycle limit NOT successful with response code " << max_duty_cycle_limit_response_code << ", for I2C address " << static_cast<int>(this->get_i2c_address());
 	}
 	// Update the "cumulative" result
 	return_result = (return_result && result);
 
-	// Check the max speed limit that was set
-	uint16_t max_speed_limit_value;
-	result = this->get_max_speed_forward(&max_speed_limit_value);
+	// Check the max duty cycle limit that was set
+	uint16_t max_duty_cycle_limit_value;
+	result = this->get_max_duty_cycle_forward(&max_duty_cycle_limit_value);
 	if (verbose)
 	{
 		if (result)
-			std::cout << "POLOLU SMC G2 DRIVER: get max speed limit returned: " << max_speed_limit_value << ", for I2C address " << static_cast<int>(this->get_i2c_address());
+			std::cout << "POLOLU SMC G2 DRIVER: get max duty cycle limit returned: " << max_duty_cycle_limit_value << ", for I2C address " << static_cast<int>(this->get_i2c_address());
 		else
-			std::cout << "POLOLU SMC G2 DRIVER: FAILED - get max speed limit NOT successful for I2C address " << static_cast<int>(this->get_i2c_address());
+			std::cout << "POLOLU SMC G2 DRIVER: FAILED - get max duty cycle limit NOT successful for I2C address " << static_cast<int>(this->get_i2c_address());
 	}
 	// Update the "cumulative" result
 	return_result = (return_result && result);
@@ -1251,7 +1251,7 @@ bool Pololu_SMC_G2::initialise_with_limits(int new_current_limit_in_milliamps, i
 	// Update the "cumulative" result
 	return_result = (return_result && result);
 
-	// Check the max speed acceleration that was set
+	// Check the max duty cycle acceleration that was set
 	uint16_t max_accel_limit_value;
 	result = this->get_max_acceleration_forward(&max_accel_limit_value);
 	if (verbose)
@@ -1278,7 +1278,7 @@ bool Pololu_SMC_G2::initialise_with_limits(int new_current_limit_in_milliamps, i
 	// Update the "cumulative" result
 	return_result = (return_result && result);
 
-	// > Check the max speed deceleration that was set
+	// > Check the max duty cycle deceleration that was set
 	uint16_t max_decel_limit_value;
 	result = this->get_max_deceleration_forward(&max_decel_limit_value);
 	if (verbose)

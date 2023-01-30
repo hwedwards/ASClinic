@@ -128,38 +128,38 @@ public:
 	// DIRECT COMMANDS:
 	bool exit_safe_start();
 
-	bool motor_forward_3200(int target_speed);
-	bool motor_forward_percent(int target_speed);
-	bool motor_forward_7bit(int target_speed);
+	bool motor_forward_3200(int target_duty_cycle);
+	bool motor_forward_percent(int target_duty_cycle);
+	bool motor_forward_7bit(int target_duty_cycle);
 
-	bool motor_reverse_3200(int target_speed);
-	bool motor_reverse_percent(int target_speed);
-	bool motor_reverse_7bit(int target_speed);
+	bool motor_reverse_3200(int target_duty_cycle);
+	bool motor_reverse_percent(int target_duty_cycle);
+	bool motor_reverse_7bit(int target_duty_cycle);
 
 	bool motor_brake(int brake_amount);
 
 	bool stop_motor();
 
 	// CONVENIENCE FUNCTIONS FOR SETTING
-	// A SIGNED MOTOR TARGET SPEED
-	bool set_motor_target_speed_3200(int target_speed);
-	bool set_motor_target_speed_percent(int target_speed);
-	bool set_motor_target_speed_percent(float target_speed);
-	bool set_motor_target_speed_7bit(int target_speed);
+	// A SIGNED MOTOR TARGET DUTY CYCLE
+	bool set_motor_target_duty_cycle_3200(int target_duty_cycle);
+	bool set_motor_target_duty_cycle_percent(int target_duty_cycle);
+	bool set_motor_target_duty_cycle_percent(float target_duty_cycle);
+	bool set_motor_target_duty_cycle_7bit(int target_duty_cycle);
 
 	// SET MOTOR LIMITS
 	// > For setting forward and reverse limits at the same time
-	bool set_motor_limit_max_speed(int new_max_speed, int * response_code);
+	bool set_motor_limit_max_duty_cycle(int new_max_duty_cycle, int * response_code);
 	bool set_motor_limit_max_acceleration(int new_max_acceleration, int * response_code);
 	bool set_motor_limit_max_deceleration(int new_max_deceleration, int * response_code);
 	bool set_motor_limit_max_brake_duration(int new_max_brake_duration, int * response_code);
 	// > For setting forward limits
-	bool set_motor_limit_max_speed_forward(int new_max_speed, int * response_code);
+	bool set_motor_limit_max_duty_cycle_forward(int new_max_duty_cycle, int * response_code);
 	bool set_motor_limit_max_acceleration_forward(int new_max_acceleration, int * response_code);
 	bool set_motor_limit_max_deceleration_forward(int new_max_deceleration, int * response_code);
 	bool set_motor_limit_max_brake_duration_forward(int new_max_brake_duration, int * response_code);
 	// > For setting reverse limits
-	bool set_motor_limit_max_speed_reverse(int new_max_speed, int * response_code);
+	bool set_motor_limit_max_duty_cycle_reverse(int new_max_duty_cycle, int * response_code);
 	bool set_motor_limit_max_acceleration_reverse(int new_max_acceleration, int * response_code);
 	bool set_motor_limit_max_deceleration_reverse(int new_max_deceleration, int * response_code);
 	bool set_motor_limit_max_brake_duration_reverse(int new_max_brake_duration, int * response_code);
@@ -174,10 +174,10 @@ public:
 	// GET VARIABLES
 	// > For the status flag registers
 	bool get_error_status(uint16_t * value);
-	uint16_t get_error_occurred();
-	uint16_t get_serial_erros_occurred();
-	uint16_t get_limit_status();
-	uint16_t get_reset_flags();
+	bool get_error_occurred(uint16_t * value);
+	bool get_serial_erros_occurred(uint16_t * value);
+	bool get_limit_status(uint16_t * value);
+	bool get_reset_flags(uint16_t * value);
 	// > For the RC channels
 	bool get_rc1_unlimited_raw_value(uint16_t * value);
 	bool get_rc1_raw_value(uint16_t * value);
@@ -193,8 +193,8 @@ public:
 	bool get_an2_raw_value(uint16_t * value);
 	bool get_an2_scaled_value(int16_t * value);
 	// > For diagnostic variables
-	bool get_target_speed_3200(int16_t * value);
-	bool get_speed_3200(int16_t * value);
+	bool get_target_duty_cycle_3200(int16_t * value);
+	bool get_duty_cycle_3200(int16_t * value);
 	bool get_brake_amount(uint16_t * value);
 	bool get_input_voltage_in_volts(float * value);
 	bool get_temperature_a(float * value);
@@ -204,20 +204,20 @@ public:
 	bool get_up_time_low(uint16_t * value);
 	bool get_up_time_high(uint16_t * value);
 	bool get_up_time_in_seconds(float * value);
-	// > For motor speed limits (forward)
-	bool get_max_speed_forward(uint16_t * value);
+	// > For motor duty cycle limits (forward)
+	bool get_max_duty_cycle_forward(uint16_t * value);
 	bool get_max_acceleration_forward(uint16_t * value);
 	bool get_max_deceleration_forward(uint16_t * value);
 	bool get_brake_duration_forward(uint16_t * value);
 	bool get_brake_duration_forward_in_seconds(float * value);
-	bool get_starting_speed_forward(uint16_t * value);
-	// > For motor speed limits (reverse)
-	bool get_max_speed_reverse(uint16_t * value);
+	bool get_starting_duty_cycle_forward(uint16_t * value);
+	// > For motor duty cycle limits (reverse)
+	bool get_max_duty_cycle_reverse(uint16_t * value);
 	bool get_max_acceleration_reverse(uint16_t * value);
 	bool get_max_deceleration_reverse(uint16_t * value);
 	bool get_brake_duration_reverse(uint16_t * value);
 	bool get_brake_duration_reverse_in_seconds(float * value);
-	bool get_starting_speed_reverse(uint16_t * value);
+	bool get_starting_duty_cycle_reverse(uint16_t * value);
 	// > For current limiting and measurement
 	bool get_current_limit(uint16_t * value);
 	bool get_raw_current(uint16_t * value);
@@ -228,7 +228,7 @@ public:
 
 // Convenience Functions
 public:
-	bool initialise_with_limits(int new_current_limit_in_milliamps, int new_max_speed_limit, int new_max_accel_limit, int new_max_decel_limit, bool verbose);
+	bool initialise_with_limits(int new_current_limit_in_milliamps, int new_max_duty_cycle_limit, int new_max_accel_limit, int new_max_decel_limit, bool verbose);
 
 }; // END OF CLASS DEFINITION
 
