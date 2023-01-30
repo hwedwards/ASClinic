@@ -1,7 +1,15 @@
-.. _workflow_usb_camera_settings:
+.. _building-block-usb-camera-settings:
 
 USB Camera Settings
 ===================
+
+.. important::
+
+  Adjusting the settings of a USB camera as described on this page may not persist when running code that accesses the camera, hence:
+  
+  * Use this page to get familiar with the options available for the camera you are using.
+  
+  * Explicitly adjust the desired settings within any code you write that accesses the camera.
 
 
 Install the v4l2-ctl command line tool

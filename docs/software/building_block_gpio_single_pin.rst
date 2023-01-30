@@ -1,4 +1,4 @@
-.. _workflow-gpio-single-pin:
+.. _building-block-gpio-single-pin:
 
 ROS Interface with a Single GPIO Pin
 ====================================

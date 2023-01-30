@@ -1,4 +1,4 @@
-.. _workflow-i2c-servo-driver-pca9685:
+.. _building-block-i2c-servo-driver-pca9685:
 
 Using the servo driver interface (PCA9685)
 ******************************************
@@ -9,7 +9,7 @@ The servos for the robot are driven by a `16-channel 12-bit PWM/servo driver wit
 
   catkin_ws/src/asclinic_pkg/src/drivers/src/pca9685/
 
-The :code:`template_i2c_internal.cpp` is setup to use this PCA9685 driver, and the following steps detail how you can add this functionality to your own ROS C++ I2C node.
+The :code:`i2c_for_sensors.cpp` is setup to use this PCA9685 driver, and the following steps detail how you can add this functionality to your own ROS C++ I2C node.
 
 
 **Step 1.** Include the PCA9685 header in your I2C node by adding the following:
@@ -102,10 +102,10 @@ At this stage, if you try to compile your I2C node with :code:`catkin_make`, it 
 
   .. code-block:: bash
 
-    add_executable(template_i2c_internal    src/nodes/template_i2c_internal.cpp
-                                            src/drivers/src/i2c_driver/i2c_driver.cpp
-                                            src/drivers/src/pololu_smc_g2/pololu_smc_g2.cpp
-                                            src/drivers/src/pca9685/pca9685.cpp)
+    add_executable(i2c_for_sensors    src/nodes/i2c_for_sensors.cpp
+                                      src/drivers/src/i2c_driver/i2c_driver.cpp
+                                      src/drivers/src/pololu_smc_g2/pololu_smc_g2.cpp
+                                      src/drivers/src/pca9685/pca9685.cpp)
 
 
 **Step 8.** Compile your I2C node with :code:`catkin_make` to check that the above steps are correctly implemented.
@@ -139,7 +139,7 @@ In order actually command your servo, you will need to create a subscriber for s
 
   .. code-block:: cpp
 
-    void templateServoSubscriberCallback(const asclinic_pkg::ServoPulseWidth& msg)
+    void servoSubscriberCallback(const asclinic_pkg::ServoPulseWidth& msg)
     {
       // Extract the channel and pulse width from the message
       uint8_t channel = msg.channel;
@@ -189,4 +189,4 @@ In order actually command your servo, you will need to create a subscriber for s
   Where :code:`<namespace_of_your_topic>` is set appropriate to the :code:`nodeHandle` you used when subscribing to the topic in Step 9 above. When this message is recieved by your I2C node, the callback function of Step 10 above will set channel 15 of the servo driver breakout board to have a pulse width of 1100 microseconds.
 
 
-You can `view an example of these steps implemented <https://gitlab.unimelb.edu.au/asclinic/asclinic-system/-/blob/master/catkin_ws/src/asclinic_pkg/src/nodes/template_i2c_internal.cpp>`__ in the :code:`template_i2c_internal.cpp` file of the main repository.
+You can `view an example of these steps implemented <https://gitlab.unimelb.edu.au/asclinic/asclinic-system/-/blob/master/catkin_ws/src/asclinic_pkg/src/nodes/i2c_for_sensors.cpp>`__ in the :code:`i2c_for_sensors.cpp` file of the main repository.

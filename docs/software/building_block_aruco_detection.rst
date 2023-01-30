@@ -1,4 +1,4 @@
-.. _workflow_aruco_detection:
+.. _building-block-aruco-detection:
 
 ArUco Marker Detection
 ======================
@@ -7,13 +7,13 @@ ArUco Marker Detection
 Install OpenCV
 **************
 
-Mostly likely this is already installed because it is included in both the :ref:`software-installation-manual` and :ref:`software-installation-script`. If not already installed, follow the :ref:`install_opencv` instructions.
+Mostly likely this is already installed because it is included in both the :ref:`software-installation-manual` and :ref:`software-installation-script`. If not already installed, follow the :ref:`install_opencv_python` instructions.
 
 
 Template overview
 *****************
 
-To detect markers within images captured by the camera, the template python3 ROS node :code:`template_aruco_detecto.py` is provided. This file is located in the repository at the relative path:
+To detect markers within images captured by the camera, the template python3 ROS node :code:`aruco_capture.py` is provided. This file is located in the repository at the relative path:
 
 .. code-block:: bash
 
@@ -26,18 +26,22 @@ The file is extensively commented and the comments serve as the documentation fo
 
   * Check that the :code:`USB_CAMERA_DEVICE_NUMBER` agrees with that of the camera plugged into your robot.
 
+  * Adjust the values of :code:`DESIRED_CAMERA_FRAME_HEIGHT` and :code:`DESIRED_CAMERA_FRAME_WIDTH` to be the resolution that you desire.
+
+  * Adjust the value of :code:`DESIRED_CAMERA_FRAME_FPS` to be the frame rate that you desire. **Note that** most cameras do not allow any arbitrary value for the frame per second (fps) property, and generally operate at the fps closest to your request, for example, 5 or 30 fps.
+
   * Adjust the :code:`MARKER_SIZE` to be the physical size of the ArUco markers placed around the environment.
 
   * Adjust the path :code:`SAVE_IMAGE_PATH` to be appropriate for your robot and ensure that the path exists.
 
 .. note::
 
-  The units of the :code:`MARKER_SIZE` parameter can be freely chosen, i.e., meters, millimeters, inches. The translation vector returned by the ArUco pose estimate function will be expressed in the same units.
+  The units of the :code:`MARKER_SIZE` parameter can be freely chosen, i.e., meters, millimeters, inches. The translation vector returned by the ArUco pose estimate function is expressed in the same units.
 
 
 .. note::
 
-  The code within :code:`template_aruco_detecto.py` assumes that all markers within the environment have the same physical :code:`MARKER_SIZE`. If you place markers with different sizes, then you will need to specify the marker size for each marker ID, and adjust the code accordingly.
+  The code within :code:`aruco_detecto.py` assumes that all markers within the environment have the same physical :code:`MARKER_SIZE`. If you place markers with different sizes, then you will need to specify the marker size for each marker ID, and adjust the code accordingly.
 
 
 * The subscriber initialised within the :code:`__init__` function for the topic :code:`request_save_image` provides a convenient way to save images to file so that you can visualise the ArUco detection. If you publish a message to this topic, then the node will save the next camera image to file. You do **NOT** need to create a separate node for publishing a message to this topic. Instead, you can publish to this topic by entering the following in a separate terminal window that is logged in to the robot:
@@ -53,18 +57,18 @@ The file is extensively commented and the comments serve as the documentation fo
 * The lines of code for saving images is within the :code:`if (self.should_save_image):` statement. There you see that the file name is index by a number that increments with each imaged saved to file. Hence, within one launch of the node, files will not be over-written. **However**, when you launch the node another time, it will start from index 1 again and hence over-write any previously saved imaged.
 
 
-The template ArUco detector node is launched by the file :code:`template_aruco_detector.launch`, and is hence launched by the command:
+The "aruco capture" node is launched by the file :code:`aruco_capture.launch`, and is hence launched by the command:
 
 .. code-block:: bash
 
-  roslaunch asclinic_pkg template_aruco_detector.launch
+  roslaunch asclinic_pkg aruco_capture.launch
 
 
 
 Setup steps
 ***********
 
-Within the :code:`__init__` function of :code:`template_aruco_detecto.py`, the following important specifications for ArUco marker detection are set:
+Within the :code:`__init__` function of :code:`aruco_detecto.py`, the following important specifications for ArUco marker detection are set:
 
 * The so-called dictionary of ArUco markers to search for:
 
@@ -107,14 +111,14 @@ Within the :code:`__init__` function of :code:`template_aruco_detecto.py`, the f
 
   .. note::
 
-    The intrinsic camera parameter values shown here and in the template are hardcoded to exemplify the format. You **must** update these values to be appropriate for the camera you are using, otherwise the ArUco marker pose estimate will be meaningless. For interest, these hardcode intrinsic camera parameter are for a Logitech C922 webcam with focus level at infinity and resolution of 1920x1080.
+    The intrinsic camera parameter values shown here and in the "aruco capture" node are hardcoded to exemplify the format. You **must** update these values to be appropriate for the camera you are using, otherwise the ArUco marker pose estimate will be meaningless. For interest, these hardcode intrinsic camera parameter are for a Logitech C922 webcam with focus level at infinity and resolution of 1920x1080.
 
 
 
 Detection steps
 ***************
 
-Within the :code:`timerCallbackForPublishing` function of :code:`template_aruco_detecto.py`, the following are the important steps for detecting ArUco marker detection are with the :code:`current_frame` recorded from the camera:
+Within the :code:`timerCallbackForPublishing` function of :code:`aruco_capture.py`, the following are the important steps for detecting ArUco marker detection are with the :code:`current_frame` recorded from the camera:
 
 * Convert the camera image to grayscale
 

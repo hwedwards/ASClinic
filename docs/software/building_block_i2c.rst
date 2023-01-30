@@ -1,4 +1,4 @@
-.. _workflow-i2c:
+.. _building-block-i2c:
 
 ROS Interface with an I2C Bus
 =============================
@@ -23,8 +23,8 @@ ROS templates
 
 To interface with I2C devices via a ROS node, there are two templates provided:
 
-* The file named :code:`template_i2c_external.cpp`: this template manages the I2C bus for devices connected to the exterior of the robot. In the default build wiring configuration, this is I2C bus 8 of the Jetson Xavier NX.
-* The file named :code:`template_i2c_internal.cpp`: this template manages the I2C bus for devices connected in the interior of the robot. In the default build wiring configuration, this is I2C bus 1 of the Jetson Xavier NX.
+* The file named :code:`i2c_for_motors_and_servos.cpp`: this template manages an I2C bus with the Pololu SMC G2 motor controller boards and PCA9685 servo driver board connected.
+* The file named :code:`i2c_for_sensors.cpp`: this template manages an I2C bus with a time-of-flight distance sensor connected.
 
 Both files are located in the repository at the relative file path:
 
@@ -35,14 +35,14 @@ Both files are located in the repository at the relative file path:
 Both files are extensively commented and the comments serve as the documentation for how to edit the file to implement your use case.
 The I2C templates are C++ files because the library used for interfacing with the I2C buses is C++ based, and hence the drivers developed for the I2C devices are also written in C++.
 
-The two template nodes can be respectively launched by files :code:`i2c_internal.launch` and :code:`i2c_external.launch`.
+The two template nodes can be respectively launched by files :code:`i2c_for_motors_and_servos.launch` and :code:`i2c_for_sensors.launch`.
 You should review the launch files to check how they are structured.
 Then you can launch the template I2C nodes with:
 
 .. code-block:: bash
 
-  roslaunch asclinic_pkg i2c_internal.launch
-  roslaunch asclinic_pkg i2c_external.launch
+  roslaunch asclinic_pkg i2c_for_motors_and_servos.launch
+  roslaunch asclinic_pkg i2c_for_sensors.launch
 
 
 ..
@@ -67,8 +67,8 @@ Then you can launch the template I2C nodes with:
 
   .. code-block:: bash
 
-    add_executable(template_i2c_external
-      src/nodes/template_i2c_external.cpp
+    add_executable(i2c_for_sensors
+      src/nodes/i2c_for_sensors.cpp
       src/drivers/src/i2c_driver/i2c_driver.cpp
       src/drivers/src/vl53l1x/vl53l1x.cpp
       src/drivers/src/vl53l1x/core/VL53L1X_api.c
@@ -83,6 +83,8 @@ Then you can launch the template I2C nodes with:
   .. code-block:: bash
 
     catkin_ws/src/asclinic_pkg/src/drivers/src/
+
+  Documentation of the drivers in available in the :ref:`drivers` section of the wiki.
 
 
 
@@ -99,7 +101,7 @@ Important notes on I2C usages in ROS nodes
 
 .. important::
 
-  If your code attempt to communicate with an I2C device that is not physically connected to that bus, then the behaviour is not guaranteed and can be unexpected.
+  If your code attempts to communicate with an I2C device that is not physically connected to that bus, then the behaviour is not guaranteed and can be unexpected.
 
   The I2C drivers are written with the intention to degrade gracefully in the case of a missing device:
 
@@ -118,7 +120,7 @@ Step-by-step guides for the I2C device drivers
 .. toctree::
   :maxdepth: 2
   
-  workflow_i2c_pololu_smc_g2
-  workflow_i2c_servo_driver_pca9685
-  workflow_i2c_tof_driver_vl53l1x
+  building_block_i2c_pololu_smc_g2
+  building_block_i2c_servo_driver_pca9685
+  building_block_i2c_tof_driver_vl53l1x
 

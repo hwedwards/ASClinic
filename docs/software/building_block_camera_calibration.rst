@@ -1,23 +1,23 @@
-.. _workflow_camera_calibration:
+.. _building-block-camera-calibration:
 
 Camera calibration
 ==================
 
-As the computer onboard is the robot is generally not connected to an external screen, it may at first seem difficult and unintuitive to work with data from the camera. You can consider setting up a remote desktop connection to the robot, and this will make certain parts of the workflow more like using you personal computer. But at the end of the day, the majority of your interface to the robot is through terminal commands and code, for which opening multiple :code:`ssh` connections is sufficient.
+As the computer onboard is the robot is generally **not** connected to an external screen, it may at first seem difficult and unintuitive to work with data from the camera. You can consider setting up a remote desktop connection to the robot, and this will make certain parts of the workflow more like using you personal computer. But at the end of the day, the majority of your interface to the robot is through terminal commands and code, for which opening multiple :code:`ssh` connections is sufficient.
 
 
 Install OpenCV
 **************
 
-Mostly likely this is already installed because it is included in both the :ref:`software-installation-manual` and :ref:`software-installation-script`. If not already installed, follow the :ref:`install_opencv` instructions.
+Mostly likely this is already installed because it is included in both the :ref:`software-installation-manual` and :ref:`software-installation-script`. If not already installed, follow the :ref:`install_opencv_python` instructions.
 
 
 Capture camera images
 *********************
 
-In order to calibrate the camera, you first need to be able to capture images from the camera. Before proceeding, follow the :ref:`workflow_usb_camera_settings` workflow to ensure your camera is setup as desired, i.e., auto-focus turned-off.
+In order to calibrate the camera, you first need to be able to capture images from the camera. Before proceeding, follow the :ref:`building-block-usb-camera-settings` page to familiarise with setting available on the camera you are using, for example, whether or not it has auto-focus.
 
-To capture images from the camera and save those images to file, the template python3 ROS node :code:`template_camera_capture.py` is provided. This file is located in the repository at the relative path:
+To capture images from the camera and save those images to file, the template python3 ROS node :code:`camera_capture.py` is provided. This file is located in the repository at the relative path:
 
 .. code-block:: bash
 
@@ -29,6 +29,10 @@ The file is extensively commented and the comments serve as the documentation fo
 * Adjust the parameters at the top of the file to match your use case. Namely:
 
   * Check that the :code:`USB_CAMERA_DEVICE_NUMBER` agrees with that of the camera plugged into your robot.
+
+  * Adjust the values of :code:`DESIRED_CAMERA_FRAME_HEIGHT` and :code:`DESIRED_CAMERA_FRAME_WIDTH` to be the resolution that you desire.
+
+  * Adjust the value of :code:`DESIRED_CAMERA_FRAME_FPS` to be the frame rate that you desire. **Note that** most cameras do not allow any arbitrary value for the frame per second (fps) property, and generally operate at the fps closest to your request, for example, 5 or 30 fps.
 
   * Adjust the path :code:`SAVE_IMAGE_PATH` to be appropriate for your robot and ensure that the path exists.
 
@@ -43,11 +47,11 @@ The file is extensively commented and the comments serve as the documentation fo
 * The lines of code for saving images is within the :code:`if (self.should_save_image):` statement. There you see that the file name is index by a number that increments with each imaged saved to file. Hence, within one launch of the node, files will not be over-written. **However**, when you launch the node another time, it will start from index 1 again and hence over-write any previously saved imaged.
 
 
-The template camera capture node is launched by the file :code:`template_camera_capture.launch`, and is hence launched by the command:
+The "camera capture" node is launched by the file :code:`camera_capture.launch`, and is hence launched by the command:
 
 .. code-block::
 
-  roslaunch asclinic_pkg template_camera_capture.launch
+  roslaunch asclinic_pkg camera_capture.launch
 
 
 Capture chessboard images
@@ -55,7 +59,7 @@ Capture chessboard images
 
 The first step for calibrating the intrinsic parameters of a camera is to collect multiple images (usually 10-20 images is suggested) of a chessboard from various angles. These images can then be post-processed to locate the internal corners of the chessboard within the image.
 
-OpenCV includes a function that finds the internal chessboard corners, namely :code:`cv2.findChessboardCorners(...)`, however, this function can be quite sensitive to lighting conditions of the captured chessboard image. Hence the :code:`template_camera_capture.py` ROS node includes a section that saves any image of a chessboard that is successfully processed by the function :code:`cv2.findChessboardCorners(...)`. To enable this section of the code, simply adjust the parameter :code:`SHOULD_SAVE_CHESSBOARD_IMAGES` at the top of the file to be :code:`True`. The following code snippet from :code:`template_camera_capture.py` shows the steps implemented for processing an image, i.e., the variable :code:`current_frame`, to locate chessboard corners.
+OpenCV includes a function that finds the internal chessboard corners, namely :code:`cv2.findChessboardCorners(...)`, however, this function can be quite sensitive to lighting conditions of the captured chessboard image. Hence the :code:`camera_capture.py` ROS node includes a section that saves any image of a chessboard that is successfully processed by the function :code:`cv2.findChessboardCorners(...)`. To enable this section of the code, simply adjust the parameter :code:`SHOULD_SAVE_CHESSBOARD_IMAGES` at the top of the file to be :code:`True`. The following code snippet from :code:`camera_capture.py` shows the steps implemented for processing an image, i.e., the variable :code:`current_frame`, to locate chessboard corners.
 
 .. code-block:: python
 
@@ -70,7 +74,7 @@ OpenCV includes a function that finds the internal chessboard corners, namely :c
     ret, corners = cv2.findChessboardCorners(current_frame_as_gray, (6,5), flags=find_flags)
     # > If found, then set the save image flag to true
     if (ret == True):
-       rospy.loginfo("[TEMPLATE CAMERA CAPTURE] Chessboard FOUND, this image will be saved")
+       rospy.loginfo("[CAMERA CAPTURE] Chessboard FOUND, this image will be saved")
        self.should_save_image = True
 
 The there two important options that can be adjusted within this code snippet:
@@ -97,7 +101,7 @@ Where:
 
 * :code:`<ip_address>` is the IP address of your robot, for example :code:`10.41.146.223`
 
-* :code:`<path_to_images>` is the folder path and file name where the image data is saved. If this starts with a :code:`/`, then it is an absolute path on the robot. Otherwise, this is a path relative to :code:`/home/<username>`. For example, all images saved by the template node can be copied by using the path :code:`saved_camera_images/image*`
+* :code:`<path_to_images>` is the folder path and file name where the image data is saved. If this starts with a :code:`/`, then it is an absolute path on the robot. Otherwise, this is a path relative to :code:`/home/<username>`. For example, all images saved by the "camera capture" node can be copied by using the path :code:`saved_camera_images/image*`
 
 * :code:`.` means that the copied files will be saved on your local machine in the current directory
 

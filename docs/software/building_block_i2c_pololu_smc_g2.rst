@@ -1,4 +1,4 @@
-.. _workflow-i2c-pololu-smc-g2:
+.. _building-block-i2c-pololu-smc-g2:
 
 Using the DC motor driver interface (Pololu SMC G2)
 ***************************************************
@@ -9,7 +9,7 @@ The DC motors for the main drive wheel of the robot are driven by a `Pololu Simp
 
   catkin_ws/src/asclinic_pkg/src/drivers/src/pololu_smc_g2/
 
-The :code:`template_i2c_internal.cpp` is setup to use this Pololu SMC G2 driver, and the following steps detail how you can add this functionality to your own ROS C++ I2C node.
+The :code:`i2c_motors_and_servos.cpp` is setup to use this Pololu SMC G2 driver, and the following steps detail how you can add this functionality to your own ROS C++ I2C node.
 
 
 
@@ -174,7 +174,7 @@ At this stage, if you try to compile your I2C node with :code:`catkin_make`, it 
 
   .. code-block:: bash
 
-    add_executable(template_i2c_internal    src/nodes/template_i2c_internal.cpp
+    add_executable(i2c_motors_and_servos    src/nodes/i2c_motors_and_servos.cpp
                                             src/drivers/src/i2c_driver/i2c_driver.cpp
                                             src/drivers/src/pololu_smc_g2/pololu_smc_g2.cpp)
 
@@ -293,4 +293,4 @@ In order actually command your main drive wheels, you will need to create a subs
 
 
 
-You can `view an example of these steps implemented <https://gitlab.unimelb.edu.au/asclinic/asclinic-system/-/blob/master/catkin_ws/src/asclinic_pkg/src/nodes/template_i2c_internal.cpp>`__ in the :code:`template_i2c_internal.cpp` file of the main repository.
+You can `view an example of these steps implemented <https://gitlab.unimelb.edu.au/asclinic/asclinic-system/-/blob/master/catkin_ws/src/asclinic_pkg/src/nodes/i2c_motors_and_servos.cpp>`__ in the :code:`i2c_motors_and_servos.cpp` file of the main repository.

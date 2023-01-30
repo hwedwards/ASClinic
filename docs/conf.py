@@ -139,7 +139,15 @@ html_static_path = ['_static']
 # or fully qualified paths (eg. https://...)
 html_css_files = [
     #'css/dark.css',
+    'css/custom_table_behaviour.css',
 ]
+
+# NOTES FOR CUSTOM CSS:
+# > The custom table behaviour is based on the following posts:
+#   - https://stackoverflow.com/questions/69359978/grid-table-does-not-word-wrap
+#   - https://stackoverflow.com/questions/68182085/word-wrap-in-sphinx-autosummary-generated-table
+
+
 
 # If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
 html_show_copyright = False
