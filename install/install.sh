@@ -41,6 +41,11 @@ PATH_FOR_ASCLINIC_SYSTEM_LOCALLY="/home/$(whoami)/"
 
 
 
+# RPLIDAR DEVICE SYMBOLIC LINK FOR USB PORT
+SHOULD_CONFIGURE_SYM_LINK_FOR_RPLIDAR_A1="true"
+
+
+
 # CAMERA UTILITIES
 SHOULD_INSTALL_VIDEO_FOR_LINUX_UTILITIES="true"
 
@@ -224,6 +229,11 @@ then
 	echo "   ${PATH_FOR_ASCLINIC_SYSTEM_LOCALLY}"
 fi
 
+if [[ ${SHOULD_CONFIGURE_SYM_LINK_FOR_RPLIDAR_A1} = "true" ]]
+then
+	echo ">> A symbolic link will be configured for the RPLidar A1 device."
+fi
+
 if [[ ${SHOULD_INSTALL_VIDEO_FOR_LINUX_UTILITIES} = "true" ]]
 then
 	echo ">> The video for linux (v4l) camera utilities will be installed."
@@ -374,7 +384,7 @@ then
 			fi
 			
 		else
-			# Append the neccessary line to the file
+			# Append the necessary line to the file
 			echo "" | sudo tee -a /etc/sysctl.conf
 			echo "###################################################################" | sudo tee -a /etc/sysctl.conf
 			echo "# Respond to all pings" | sudo tee -a /etc/sysctl.conf
@@ -720,6 +730,7 @@ then
 	# > Note: added together with a description in comments
 	echo ""
 	echo ">> Now adding the sourcing of the ROS environment variables to the ~/.bashrc file"
+	echo "" >> ~/.bashrc
 	echo "# SOURCE THE ROS setup.bash FILE" >> ~/.bashrc
 	echo "# (Note: this was added as part of the asclinic-system installation)" >> ~/.bashrc
 	echo "source /opt/ros/${ROS_VERSION_CODENAME}/setup.bash" >> ~/.bashrc
@@ -788,17 +799,59 @@ then
 	echo ""
 	git clone https://gitlab.unimelb.edu.au/asclinic/asclinic-system.git
 
-	# Add the ROS packge devel setup to the .bashrc
+	# Add the ROS package devel setup to the .bashrc
 	# > Note: added together with a description in comments
 	echo ""
 	echo ">> Now adding the sourcing of the asclinic ROS package"
 	echo "   environment variables to the ~/.bashrc file"
+	echo "" >> ~/.bashrc
 	echo "# SOURCE THE asclinic ROS PACKAGE DEVEL setup.bash FILE" >> ~/.bashrc
 	echo "# (Note: this was added as part of the asclinic-system installation)" >> ~/.bashrc
 	echo "source ${PATH_FOR_ASCLINIC_SYSTEM_LOCALLY}asclinic-system/catkin_ws/devel/setup.bash" >> ~/.bashrc
+
+	# Clone the RPLidar package for ROS
+	echo ""
+	echo ">> Now cloning the \"rplidar_ros\" repository:"
+	echo ""
+	cd ${PATH_FOR_ASCLINIC_SYSTEM_LOCALLY}
+	cd asclinic-system/catkin_ws/src/
+	git clone https://github.com/Slamtec/rplidar_ros.git
+	# Remove the ".git" folder to avoid having a nested git repository
+	rm -rf rplidar_ros/.git/
 fi
 # END OF: SETUP THE asclinic-system LOCALLY
 # ============================================ #
+
+
+
+
+
+# ============================================ #
+# RPLIDAR DEVICE SYMBOLIC LINK FOR USB PORT
+if [[ ${SHOULD_CONFIGURE_SYM_LINK_FOR_RPLIDAR_A1} = "true" ]]
+then
+	# Inform the user
+	echo ""
+	echo ""
+	echo "NOW CONFIGURING A SYMBOLIC LINK FOR THE RPLIDAR DEVICE"
+
+	# Add the udev rule
+	echo ""
+	echo ">> Now configuring udev rules \"/etc/udev/rules.d/rplidar.rules\":"
+	echo ""
+	echo "# Configure the rplidar device port be a fixed symbolic link" | sudo tee /etc/udev/rules.d/rplidar.rules
+	echo "KERNEL==\"ttyUSB*\", ATTRS{idVendor}==\"10c4\", ATTRS{idProduct}==\"ea60\", MODE:=\"0777\", SYMLINK+=\"rplidar\"" | sudo tee -a /etc/udev/rules.d/rplidar.rules
+
+	echo ""
+	echo ">> Now restarting \"udev\":"
+	echo ""
+	sudo service udev reload
+	sudo service udev restart
+fi
+# END OF: RPLIDAR DEVICE SYMBOLIC LINK FOR USB PORT
+# ============================================ #
+
+
 
 
 
@@ -820,9 +873,19 @@ then
 
 	# Install additional v4l packages
 	echo ""
-	echo ">> Now installing \"libv4l-dev\", \"qv4l2\", and \"v4l2ucp\" packages:"
+	echo ">> Now installing \"libv4l-dev\" package:"
 	echo ""
-	sudo apt -y install libv4l-dev qv4l2 v4l2ucp
+	sudo apt -y install libv4l-dev
+
+	echo ""
+	echo ">> Now installing \"qv4l2\" package:"
+	echo ""
+	sudo apt -y install qv4l2
+
+	echo ""
+	echo ">> Now installing \"uvcdynctrl\" package:"
+	echo ""
+	sudo apt -y install uvcdynctrl
 
 	# Inform the user, and check that the installation worked
 	echo ""
@@ -859,33 +922,54 @@ then
 	# > This should avoid installation errors that may
 	#   occur while building wheel for opencv-contrib-python
 	echo ""
-	echo ">> Now installing \"scikit-build\" package using pip3:"
+	echo ">> Now upgrading the \"pip\" package itself using pip3:"
 	echo ""
-	pip3 install --upgrade pip setuptools wheel
+	sudo pip3 install --upgrade pip
 
-	# Install the "scikit-build" pacakge
 	echo ""
-	echo ">> Now installing \"scikit-build\" package using pip3:"
+	echo ">> Now upgrading the \"setuptools\" and \"wheel\" packages using pip3:"
 	echo ""
-	pip3 install scikit-build
+	sudo pip3 install --upgrade setuptools wheel
 
-	# Install the "Cython" pacakge
-	echo ""
-	echo ">> Now installing \"Cython\" package using pip3:"
-	echo ""
-	pip3 install Cython
+	# Upgrade the "scikit-build" pacakge
+	#echo ""
+	#echo ">> Now upgrading \"scikit-build\" package using pip3:"
+	#echo ""
+	#sudo pip3 install --upgrade scikit-build
 
-	# Install the "numpy" pacakge
+	# Upgrade the "Cython" pacakge
+	#echo ""
+	#echo ">> Now upgrading \"Cython\" package using pip3:"
+	#echo ""
+	#sudo pip3 install --upgrade Cython
+
+	# Upgrade the "numpy" pacakge
 	echo ""
-	echo ">> Now installing \"numpy\" package using pip3:"
+	echo ">> Now upgrading \"numpy\" package using pip3:"
 	echo ""
-	pip3 install numpy
+	sudo pip3 install --upgrade numpy
 
 	# Install the "opencv-contrib-python" pacakge
 	echo ""
 	echo ">> Now installing \"opencv-contrib-python\" package using pip3:"
 	echo ""
-	pip3 install opencv-contrib-python
+	sudo pip3 install opencv-contrib-python
+
+	# Add the user's local Python directory to the PATH
+	# > This is required if the installation steps above
+	#   are performed using "pip3 install --user", as
+	#   opposed to using "sudo pip3 install"
+	#pip3 install --user opencv-contrib-python
+	#echo ""
+	#echo ">> Now adding $(whoami) local Python directory to the"
+	#echo "   PATH environment variable."
+	#echo "   This is added via the .bashrc so that it will be set"
+	#echo "   everytime that $(whoami) logs-in or open a terminal."
+	#echo "" >> ~/.bashrc
+	#echo "# Add $(whoami) local python directory to the PATH environment variable" >> ~/.bashrc
+	#echo "export PATH=$PATH:~/.local/lib/python" >> ~/.bashrc
+	#source ~/.bashrc
+	#echo $PATH
 fi
 # END OF: INSTALL OPEN CV CONTRINUTED MODULES FOR PYTHON
 # ============================================ #
@@ -1009,7 +1093,7 @@ then
 	#       requirements of such additions, e.g.:
 	#     > File must be in mode 0440
 	echo ""
-	echo "Now adding a \"sudoers\" directive for the \"www-data\" user to be able to perform git pull"
+	echo ">> Now adding a \"sudoers\" directive for the \"www-data\" user to be able to perform git pull"
 	echo ""
 	echo "# Give www-data permission to perform git-pull" | sudo tee -a /etc/sudoers.d/www-data-git
 	echo "www-data ALL=(www-data) /usr/bin/git pull" | sudo tee -a /etc/sudoers.d/www-data-git
@@ -1020,7 +1104,7 @@ then
 	#       means that write permission are added
 	#       to the group.
 	echo ""
-	echo "Now giving the \"www-data\" user ownership of the \"/var/www\" directory"
+	echo ">> Now giving the \"www-data\" user ownership of the \"/var/www\" directory"
 	echo ""
 	sudo chown -R www-data /var/www
 	sudo chgrp -R asc-share /var/www
@@ -1029,13 +1113,7 @@ then
 	# Copy across the website
 	sudo -u www-data cp -R /home/asc-share/asclinic-system/web_interface/html/* /var/www/html/
 
-	# CLONE AND CONFIGURE RPLIDAR FOR ROS
-	# Inform the user
-	echo ""
-	echo ""
-	echo "NOW CLONING THE CONFIGURING THE RPLIDAR ROS PACKAGES"
-
-	# Clone the RPLidar package
+	# Clone the RPLidar package for ROS
 	echo ""
 	echo ">> Now cloning the \"rplidar_ros\" repository:"
 	echo ""
@@ -1044,19 +1122,6 @@ then
 	sudo -u www-data git clone https://github.com/Slamtec/rplidar_ros.git
 	# Remove the ".git" folder to avoid having a nested git repository
 	sudo -u www-data rm -rf rplidar_ros/.git/
-
-	# Add the udev rule
-	echo ""
-	echo ">> Now configuring udev rules \"/etc/udev/rules.d/rplidar.rules\":"
-	echo ""
-	echo "# Configure the rplidar device port be a fixed symbolink link" | sudo tee /etc/udev/rules.d/rplidar.rules
-	echo "KERNEL==\"ttyUSB*\", ATTRS{idVendor}==\"10c4\", ATTRS{idProduct}==\"ea60\", MODE:=\"0777\", SYMLINK+=\"rplidar\"" | sudo tee -a /etc/udev/rules.d/rplidar.rules
-
-	echo ""
-	echo ">> Now restarting \"udev\":"
-	echo ""
-	sudo service udev reload
-	sudo service udev restart
 
 	# ======================================= #
 	# USEFUL COMMANDS

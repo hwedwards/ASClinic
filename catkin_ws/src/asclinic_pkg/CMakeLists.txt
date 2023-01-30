@@ -167,17 +167,20 @@ add_executable(template_cpp_node                     src/nodes/template_cpp_node
 add_executable(template_cpp_node_minimal             src/nodes/template_cpp_node_minimal.cpp)
 add_executable(template_gpio_event_triggered         src/nodes/template_gpio_event_triggered.cpp)
 add_executable(template_gpio_polling                 src/nodes/template_gpio_polling.cpp)
-add_executable(template_encoder_read_multi_threaded  src/nodes/template_encoder_read_multi_threaded.cpp)
-add_executable(template_i2c_internal                 src/nodes/template_i2c_internal.cpp
+add_executable(encoder_read_multi_threaded           src/nodes/encoder_read_multi_threaded.cpp)
+add_executable(i2c_for_motors_and_servos             src/nodes/i2c_for_motors_and_servos.cpp
                                                      src/drivers/src/i2c_driver/i2c_driver.cpp
                                                      src/drivers/src/pololu_smc_g2/pololu_smc_g2.cpp
                                                      src/drivers/src/pca9685/pca9685.cpp)
-add_executable(template_i2c_external                 src/nodes/template_i2c_external.cpp
+add_executable(i2c_for_servos                        src/nodes/i2c_for_servos.cpp
+                                                     src/drivers/src/i2c_driver/i2c_driver.cpp
+                                                     src/drivers/src/pca9685/pca9685.cpp)
+add_executable(i2c_for_sensors                       src/nodes/i2c_for_sensors.cpp
                                                      src/drivers/src/i2c_driver/i2c_driver.cpp
                                                      src/drivers/src/vl53l1x/vl53l1x.cpp
                                                      src/drivers/src/vl53l1x/core/VL53L1X_api.c
                                                      src/drivers/src/vl53l1x/platform/vl53l1_platform.c)
-add_executable(emulate_i2c_internal                  src/nodes/emulate_i2c_internal.cpp)
+add_executable(emulate_i2c_for_motors                src/nodes/emulate_i2c_for_motors.cpp)
 add_executable(web_interface_connector               src/nodes/web_interface_connector.cpp)
 
 
@@ -196,10 +199,11 @@ add_dependencies(template_cpp_node                     asclinic_pkg_generate_mes
 add_dependencies(template_cpp_node_minimal             asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(template_gpio_event_triggered         asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(template_gpio_polling                 asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
-add_dependencies(template_encoder_read_multi_threaded  asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
-add_dependencies(template_i2c_internal                 asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
-add_dependencies(template_i2c_external                 asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
-add_dependencies(emulate_i2c_internal                  asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(encoder_read_multi_threaded           asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(i2c_for_motors_and_servos             asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(i2c_for_servos                        asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(i2c_for_sensors                       asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(emulate_i2c_for_motors                asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(web_interface_connector               asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 
 
@@ -213,10 +217,11 @@ target_link_libraries(template_cpp_node                     ${catkin_LIBRARIES})
 target_link_libraries(template_cpp_node_minimal             ${catkin_LIBRARIES})
 target_link_libraries(template_gpio_event_triggered         ${catkin_LIBRARIES} -lgpiod)
 target_link_libraries(template_gpio_polling                 ${catkin_LIBRARIES} -lgpiod)
-target_link_libraries(template_encoder_read_multi_threaded  ${catkin_LIBRARIES} -lgpiod)
-target_link_libraries(template_i2c_internal                 ${catkin_LIBRARIES})
-target_link_libraries(template_i2c_external                 ${catkin_LIBRARIES})
-target_link_libraries(emulate_i2c_internal                  ${catkin_LIBRARIES})
+target_link_libraries(encoder_read_multi_threaded           ${catkin_LIBRARIES} -lgpiod)
+target_link_libraries(i2c_for_motors_and_servos             ${catkin_LIBRARIES})
+target_link_libraries(i2c_for_servos                        ${catkin_LIBRARIES})
+target_link_libraries(i2c_for_sensors                       ${catkin_LIBRARIES})
+target_link_libraries(emulate_i2c_for_motors                ${catkin_LIBRARIES})
 target_link_libraries(web_interface_connector               ${catkin_LIBRARIES})
 
 

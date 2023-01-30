@@ -3,12 +3,12 @@
 	<!-- START A GROUP WITH A NAMESPACE -->
 	<group ns="asc">
 
-		<!-- LAUNCH A "Template I2C Internal" NODE -->
+		<!-- LAUNCH A "I2C for Motors and Servos" NODE -->
 		<node
 			pkg    = "asclinic_pkg"
-			name   = "template_i2c_internal"
+			name   = "i2c_for_motors_and_servos"
 			output = "screen"
-			type   = "template_i2c_internal"
+			type   = "i2c_for_motors_and_servos"
 		/>
 
 	</group>

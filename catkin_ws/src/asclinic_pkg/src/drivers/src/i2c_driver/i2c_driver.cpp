@@ -110,12 +110,16 @@ bool I2C_Driver::open_i2c_device()
 		perror(this->m_device_name);
 		// Set the file descriptor to the invalid value
 		this->m_file_descriptor = -1;
+		// Set the I2C State variable
+		this->m_state = I2C_Driver::I2C_State::closed;
 		// Return flag that the opening was unsuccessful
 		return false;
 	}
 
 	// Set the file descriptor integer to the member variable
 	this->m_file_descriptor = fd;
+	// Set the I2C State variable
+	this->m_state = I2C_Driver::I2C_State::open;
 	
 	// Return flag that the opening was successful
 	return true;
@@ -129,13 +133,16 @@ bool I2C_Driver::close_i2c_device()
 		// Call the function to close the I2C device
 		close(this->m_file_descriptor);
 		// Set the file descriptor to the invalid value
-		this->m_file_descriptor > -1;
+		this->m_file_descriptor = -1;
+		// Set the I2C State variable
+		this->m_state = I2C_Driver::I2C_State::closed;
 		// Return flag that I2C close was successful
 		return true;
 	}
 	// Return flag that I2C close was unsuccessful
 	return false;
 }
+
 
 bool I2C_Driver::write_data(uint8_t address, uint16_t num_write_btyes, uint8_t * write_data_array)
 {
@@ -188,4 +195,28 @@ bool I2C_Driver::write_data_then_read_data(uint8_t address, uint16_t num_write_b
 	}
 	// Return flag that ioctl was successful
 	return true;
+}
+
+
+bool I2C_Driver::check_for_device_at_address(uint8_t address)
+{
+	// As per this manual page:
+	//   https://manpages.ubuntu.com/manpages/bionic/man8/i2cdetect.8.html
+	// There is no standard method for detecting
+	// a whether or not a device is connected at
+	// a particular address.
+	// The method used here is to write "0" to
+	// the address and read one byte. If a byte
+	// is received, then there is a device connected
+	// at that address, otherwise there is not
+	// considered to be a device at that address.
+
+	// Specify writing zero and reading one byte
+	uint16_t num_write_btyes = 1;
+	uint8_t write_data_array[1] = {0};
+	uint16_t num_read_btyes = 1;
+	uint8_t read_data_array[1];
+
+	// Call the "write_data_then_read_data" function
+	return this->write_data_then_read_data(address, num_write_btyes, write_data_array, num_read_btyes, read_data_array);
 }

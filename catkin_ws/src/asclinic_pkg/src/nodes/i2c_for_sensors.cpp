@@ -13,7 +13,7 @@
 //                                                 |___/                       
 //
 // DESCRIPTION:
-// Template node for opening an I2C device
+// Node for I2C bus with time-of-flight distance sensors connected
 //
 // ----------------------------------------------------------------------------
 
@@ -31,20 +31,20 @@
 
 
 // Respond to subscriber receiving a message
-void templateSubscriberCallback(const std_msgs::UInt16& msg)
+void tofDistanceDataCallback(const std_msgs::UInt16& msg)
 {
-	ROS_INFO_STREAM("[TEMPLATE I2C EXTERNAL] Message receieved with data = " << msg.data);
+	ROS_INFO_STREAM("[I2C FOR SENSORS] Message received with data = " << msg.data);
 }
 
 int main(int argc, char* argv[])
 {
 	// Initialise the node
-	ros::init(argc, argv, "template_i2c_external");
+	ros::init(argc, argv, "i2c_for_sensors");
 	ros::NodeHandle nodeHandle("~");
 	// Initialise a publisher
 	ros::Publisher tof_distance_publisher = nodeHandle.advertise<std_msgs::UInt16>("tof_distance", 10, false);
 	// Initialise a subscriber
-	ros::Subscriber tof_distance_subscriber = nodeHandle.subscribe("tof_distance", 1, templateSubscriberCallback);
+	ros::Subscriber tof_distance_subscriber = nodeHandle.subscribe("tof_distance", 1, tofDistanceDataCallback);
 
 	// Initialise a variable with loop rate for
 	// polling the sensors
@@ -65,11 +65,11 @@ int main(int argc, char* argv[])
 	// Display the status
 	if (!open_success)
 	{
-		ROS_INFO_STREAM("[TEMPLATE I2C EXTERNAL] FAILED to open I2C device named " << i2c_driver.get_device_name());
+		ROS_INFO_STREAM("[I2C FOR SENSORS] FAILED to open I2C device named " << i2c_driver.get_device_name());
 	}
 	else
 	{
-		ROS_INFO_STREAM("[TEMPLATE I2C EXTERNAL] Successfully opened named " << i2c_driver.get_device_name() << ", with file descriptor = " << i2c_driver.get_file_descriptor());
+		ROS_INFO_STREAM("[I2C FOR SENSORS] Successfully opened named " << i2c_driver.get_device_name() << ", with file descriptor = " << i2c_driver.get_file_descriptor());
 	}
 
 	// Initialise an object for the VL53L1X distance sensor
@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
 
 	if (!is_available_vl53l1x)
 	{
-		ROS_INFO("[TEMPLATE I2C EXTERNAL] FAILED to initialised the VL53L1X distance sensor. Sensor is NOT available for usage.");
+		ROS_INFO("[I2C FOR SENSORS] FAILED to initialised the VL53L1X distance sensor. Sensor is NOT available for usage.");
 	}
 
 
@@ -117,13 +117,13 @@ int main(int argc, char* argv[])
 			{
 				// Otherwise display the error status
 				uint16_t temp_status = tof_res.Status;
-				ROS_INFO_STREAM("[TEMPLATE I2C EXTERNAL] VL53L1X \"get_distance_measurement\" returned with an error status, status = " << temp_status << ", distance = " << tof_res.Distance << ", ambient = " << tof_res.Ambient << ", signal per SPAD = " << tof_res.SigPerSPAD << ", # of SPADs = " << tof_res.NumSPADs);
+				ROS_INFO_STREAM("[I2C FOR SENSORS] VL53L1X \"get_distance_measurement\" returned with an error status, status = " << temp_status << ", distance = " << tof_res.Distance << ", ambient = " << tof_res.Ambient << ", signal per SPAD = " << tof_res.SigPerSPAD << ", # of SPADs = " << tof_res.NumSPADs);
 			}
 		}
 		else
 		{
 			// Otherwise display the error
-			ROS_INFO("[TEMPLATE I2C EXTERNAL] FAILED to \"get_distance_measurement\" from VL53L1X distance sensor.");
+			ROS_INFO("[I2C FOR SENSORS] FAILED to \"get_distance_measurement\" from VL53L1X distance sensor.");
 		}
 
 
@@ -141,11 +141,11 @@ int main(int argc, char* argv[])
 	// Display the status
 	if (!close_success)
 	{
-		ROS_INFO_STREAM("[TEMPLATE I2C EXTERNAL] FAILED to close I2C device named " << i2c_driver.get_device_name());
+		ROS_INFO_STREAM("[I2C FOR SENSORS] FAILED to close I2C device named " << i2c_driver.get_device_name());
 	}
 	else
 	{
-		ROS_INFO_STREAM("[TEMPLATE I2C EXTERNAL] Successfully closed device named " << i2c_driver.get_device_name());
+		ROS_INFO_STREAM("[I2C FOR SENSORS] Successfully closed device named " << i2c_driver.get_device_name());
 	}
 
 	return 0;

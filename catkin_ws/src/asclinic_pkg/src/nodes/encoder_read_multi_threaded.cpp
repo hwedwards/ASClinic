@@ -13,7 +13,7 @@
 //                                                 |___/                       
 //
 // DESCRIPTION:
-// Template node for mointoring edge events on a GPIO pin
+// Node for monitoring GPIO pins connected to wheel encoders
 //
 // ----------------------------------------------------------------------------
 
@@ -151,7 +151,7 @@ void timerCallbackForPublishing(const ros::TimerEvent&)
 	// Display the cumulative cum
 	if ( !(did_display_cum_sum) && (elapsed_time_in_seconds>=(2.0+2.0+m_time_in_seconds_to_drive_motors)) )
 	{
-		ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] cumulative sum left (A,B) = ( " << cum_sum_left_a << " , " << cum_sum_left_b << " ), right (A,B) = ( " << cum_sum_right_a << " , " << cum_sum_right_b << " )");
+		ROS_INFO_STREAM("[ENCODER READ MULTI THREADED] cumulative sum left (A,B) = ( " << cum_sum_left_a << " , " << cum_sum_left_b << " ), right (A,B) = ( " << cum_sum_right_a << " , " << cum_sum_right_b << " )");
 		// Update the flag
 		did_display_cum_sum = true;
 		// Update the flag to end the encoder thread
@@ -203,16 +203,16 @@ void encoderCountingThreadMain()
 	int value;
 	// > For left motor channel A
 	value = gpiod_ctxless_get_value(gpio_chip_name, line_number_left_a, false, "foobar");
-	ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] On startup of node, chip " << gpio_chip_name << " line " << line_number_left_a << " returned value = " << value);
+	ROS_INFO_STREAM("[ENCODER READ MULTI THREADED] On startup of node, chip " << gpio_chip_name << " line " << line_number_left_a << " returned value = " << value);
 	// > For left motor channel B
 	value = gpiod_ctxless_get_value(gpio_chip_name, line_number_left_b, false, "foobar");
-	ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] On startup of node, chip " << gpio_chip_name << " line " << line_number_left_b << " returned value = " << value);
+	ROS_INFO_STREAM("[ENCODER READ MULTI THREADED] On startup of node, chip " << gpio_chip_name << " line " << line_number_left_b << " returned value = " << value);
 	// > For right motor channel A
 	value = gpiod_ctxless_get_value(gpio_chip_name, line_number_right_a, false, "foobar");
-	ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] On startup of node, chip " << gpio_chip_name << " line " << line_number_right_a << " returned value = " << value);
+	ROS_INFO_STREAM("[ENCODER READ MULTI THREADED] On startup of node, chip " << gpio_chip_name << " line " << line_number_right_a << " returned value = " << value);
 	// > For right motor channel B
 	value = gpiod_ctxless_get_value(gpio_chip_name, line_number_right_b, false, "foobar");
-	ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] On startup of node, chip " << gpio_chip_name << " line " << line_number_right_b << " returned value = " << value);
+	ROS_INFO_STREAM("[ENCODER READ MULTI THREADED] On startup of node, chip " << gpio_chip_name << " line " << line_number_right_b << " returned value = " << value);
 
 	// Open the GPIO chip
 	chip = gpiod_chip_open(gpio_chip_name);
@@ -230,7 +230,7 @@ void encoderCountingThreadMain()
 	gpiod_line_bulk_add(&line_bulk, line_right_b);
 
 	// Display the status
-	ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] Chip " << gpio_chip_name << " opened and lines " << line_number_left_a << ", " << line_number_left_b << ", " << line_number_right_a << " and " << line_number_right_b << " retrieved");
+	ROS_INFO_STREAM("[ENCODER READ MULTI THREADED] Chip " << gpio_chip_name << " opened and lines " << line_number_left_a << ", " << line_number_left_b << ", " << line_number_right_a << " and " << line_number_right_b << " retrieved");
 
 	// Request the line events to be mointored
 	// > Note: only one of these should be uncommented
@@ -239,7 +239,7 @@ void encoderCountingThreadMain()
 	//gpiod_line_request_bulk_both_edges_events(&line_bulk, "foobar");
 
 	// Display the line event values for rising and falling
-	//ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] The constants defined for distinguishing line events are:, GPIOD_LINE_EVENT_RISING_EDGE = " << GPIOD_LINE_EVENT_RISING_EDGE << ", and GPIOD_LINE_EVENT_FALLING_EDGE = " << GPIOD_LINE_EVENT_FALLING_EDGE);
+	//ROS_INFO_STREAM("[ENCODER READ MULTI THREADED] The constants defined for distinguishing line events are:, GPIOD_LINE_EVENT_RISING_EDGE = " << GPIOD_LINE_EVENT_RISING_EDGE << ", and GPIOD_LINE_EVENT_FALLING_EDGE = " << GPIOD_LINE_EVENT_FALLING_EDGE);
 
 	// Enter a loop that endlessly monitors the encoders
 	while (encoder_thread_should_count)
@@ -304,19 +304,19 @@ void encoderCountingThreadMain()
 	// Close the GPIO chip
 	gpiod_chip_close(chip);
 	// Inform the user
-	ROS_INFO("[TEMPLATE ENCODER READ MULTI THREADED] Lines released and GPIO chip closed");
+	ROS_INFO("[ENCODER READ MULTI THREADED] Lines released and GPIO chip closed");
 }
 
 
 int main(int argc, char* argv[])
 {
 	// Initialise the node
-	ros::init(argc, argv, "template_encoder_read_multi_threaded");
+	ros::init(argc, argv, "encoder_read_multi_threaded");
 	ros::NodeHandle nodeHandle("~");
 
 	// Get the GPIO line number to monitor
 	// Notes:
-	// > If you look at the "template_encoder.launch" file located in
+	// > If you look at the "encoder.launch" file located in
 	//   the "launch" folder, you see the following lines of code:
 	//       <param
 	//           name   = "line_number_for_motor_left_channel_a"
@@ -332,34 +332,34 @@ int main(int argc, char* argv[])
 	if ( !nodeHandle.getParam("line_number_for_motor_left_channel_a", m_line_number_for_motor_left_channel_a) )
 	{
 		// Display an error message
-		ROS_INFO("[TEMPLATE ENCODER READ MULTI THREADED] FAILED to get \"line_number_for_motor_left_channel_a\" parameter. Using default value instead.");
+		ROS_INFO("[ENCODER READ MULTI THREADED] FAILED to get \"line_number_for_motor_left_channel_a\" parameter. Using default value instead.");
 	}
 	// > For channel B of the left side motor
 	if ( !nodeHandle.getParam("line_number_for_motor_left_channel_b", m_line_number_for_motor_left_channel_b) )
 	{
 		// Display an error message
-		ROS_INFO("[TEMPLATE ENCODER READ MULTI THREADED] FAILED to get \"line_number_for_motor_left_channel_b\" parameter. Using default value instead.");
+		ROS_INFO("[ENCODER READ MULTI THREADED] FAILED to get \"line_number_for_motor_left_channel_b\" parameter. Using default value instead.");
 	}
 	// > For channel A of the right side motor
 	if ( !nodeHandle.getParam("line_number_for_motor_right_channel_a", m_line_number_for_motor_right_channel_a) )
 	{
 		// Display an error message
-		ROS_INFO("[TEMPLATE ENCODER READ MULTI THREADED] FAILED to get \"line_number_for_motor_right_channel_a\" parameter. Using default value instead.");
+		ROS_INFO("[ENCODER READ MULTI THREADED] FAILED to get \"line_number_for_motor_right_channel_a\" parameter. Using default value instead.");
 	}
 	// > For channel A of the right side motor
 	if ( !nodeHandle.getParam("line_number_for_motor_right_channel_b", m_line_number_for_motor_right_channel_b) )
 	{
 		// Display an error message
-		ROS_INFO("[TEMPLATE ENCODER READ MULTI THREADED] FAILED to get \"line_number_for_motor_right_channel_b\" parameter. Using default value instead.");
+		ROS_INFO("[ENCODER READ MULTI THREADED] FAILED to get \"line_number_for_motor_right_channel_b\" parameter. Using default value instead.");
 	}
 	// > Display the line numbers being monitored
-	ROS_INFO_STREAM("[TEMPLATE ENCODER READ MULTI THREADED] Will monitor line_numbers = " << m_line_number_for_motor_left_channel_a << ", " << m_line_number_for_motor_left_channel_b << ", " << m_line_number_for_motor_right_channel_a << ", and " << m_line_number_for_motor_right_channel_b);
+	ROS_INFO_STREAM("[ENCODER READ MULTI THREADED] Will monitor line_numbers = " << m_line_number_for_motor_left_channel_a << ", " << m_line_number_for_motor_left_channel_b << ", " << m_line_number_for_motor_right_channel_a << ", and " << m_line_number_for_motor_right_channel_b);
 
 	// Get the "detla t" parameter for the publishing frequency
 	if ( !nodeHandle.getParam("delta_t_for_publishing_counts", m_delta_t_for_publishing_counts) )
 	{
 		// Display an error message
-		ROS_INFO("[TEMPLATE ENCODER READ MULTI THREADED] FAILED to get \"delta_t_for_publishing_counts\" parameter. Using default value instead.");
+		ROS_INFO("[ENCODER READ MULTI THREADED] FAILED to get \"delta_t_for_publishing_counts\" parameter. Using default value instead.");
 	}
 
 	// Initialise a node handle to the group namespace
@@ -377,7 +377,7 @@ int main(int argc, char* argv[])
 	// Get the parameter for how long to drive the motors
 	// NOTE: this parameter is purely for the convenience of testing.
 	if ( !nodeHandle.getParam("time_in_seconds_to_drive_motors", m_time_in_seconds_to_drive_motors) )
-		ROS_INFO("[TEMPLATE ENCODER READ MULTI THREADED] FAILED to get \"time_in_seconds_to_drive_motors\" parameter. Using default value instead.");
+		ROS_INFO("[ENCODER READ MULTI THREADED] FAILED to get \"time_in_seconds_to_drive_motors\" parameter. Using default value instead.");
 
 	// Initialise a publisher for commanding the motors
 	// NOTE: this publisher and what it is used for is
@@ -387,7 +387,7 @@ int main(int argc, char* argv[])
 	// Get the parameter for target speed when driving the motors
 	// NOTE: this parameter is purely for the convenience of testing.
 	if ( !nodeHandle.getParam("drive_motor_target_speed", m_drive_motor_target_speed) )
-		ROS_INFO("[TEMPLATE ENCODER READ MULTI THREADED] FAILED to get \"drive_motor_target_speed\" parameter. Using default value instead.");
+		ROS_INFO("[ENCODER READ MULTI THREADED] FAILED to get \"drive_motor_target_speed\" parameter. Using default value instead.");
 
 	// Create thread for counting the encoder events
 	std::thread encoder_counting_thread (encoderCountingThreadMain);
