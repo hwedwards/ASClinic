@@ -1,4 +1,4 @@
-.. _workflow-i2c-tof-driver-vl53l1x:
+.. _building-block-i2c-tof-driver-vl53l1x:
 
 Using the ToF distance sensor (VL53L1X)
 ***************************************

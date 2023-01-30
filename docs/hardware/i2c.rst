@@ -6,40 +6,47 @@ I2C (Inter-Integrated Circuit)
 A single pin GPIO has only two states, ``0`` and ``1``, which can be either driven by the computer associated with the GPIO pin, or driven by an external device connected to the pin. The timing of driving changes between the two states can be arbitary up to the resolution of the microcontroller that controls the GPIO.
 
 
+As per the manual installation instruction for :ref:`install_i2c`, you should install :code:`libi2c-dev` and :code:`i2c-tools` in order to interface with the I2C buses from linux, i.e.,
 
-Install the libi2c-dev library. In order to be able inspect the LED Display, you may find it useful to also install the i2c tools:
+.. code-block:: bash
 
-sudo apt-get install libi2c-dev i2c-tools
+    sudo apt-get install libi2c-dev i2c-tools
 
-After installation, in a Terminal execute (1 is the I2C bus in this case):
+I2C via command line
+********************
 
-sudo i2cdetect -y -r 1
+The :code:`i2c-tools` package provides the :code:`i2cdetect` command line tool. This tool can be used to quickly detect and display the those devices on the bus that respond to the detect ping (1 is the I2C bus for this example):
 
+.. code-block:: bash
 
+    sudo i2cdetect -y -r 1
 
-``i2c_msg`` struct definition found here:
+Further information about the command line tool can be found from:
 
-* https://docs.huihoo.com/doxygen/linux/kernel/3.7/structi2c__msg.html
-
-and the code definition is found in the ``i2c.h`` file:
-
-* https://docs.huihoo.com/doxygen/linux/kernel/3.7/include_2uapi_2linux_2i2c_8h_source.html
-
-The source code for ``i2c_tools`` is published here:
-
-* https://git.kernel.org/pub/scm/utils/i2c-tools/i2c-tools.git/
-* https://git.kernel.org/pub/scm/utils/i2c-tools/i2c-tools.git/about/
-
-Similar by different documention is found here:
-
-* https://www.kernel.org/doc/Documentation/i2c/dev-interface
-
-A wiki for ``i2c_tools`` is found here:
-
-* https://i2c.wiki.kernel.org/index.php/I2C_Tools
+* An `Ubuntu manual page for i2cdetect <https://manpages.ubuntu.com/manpages/bionic/man8/i2cdetect.8.html>`_
+* The `git repository for i2c-tools <https://git.kernel.org/pub/scm/utils/i2c-tools/i2c-tools.git/about/>`_
+* The `Linux kernel wiki page I2C tools <https://i2c.wiki.kernel.org/index.php/I2C_Tools>`_ has minimal information and links.
 
 
-I2C Addresses
+.. important::
+
+    | As stated on the `Ubuntu manual page for i2cdetect <https://manpages.ubuntu.com/manpages/bionic/man8/i2cdetect.8.html>`_:
+    |   *As  there  is  no  standard I2C detection command, i2cdetect uses arbitrary SMBus commands (namely SMBus quick write and SMBus receive byte) to probe for devices.  By  default,  the command  used is the one believed to be the safest for each address. See options* :code:`-q` *and* :code:`-r` *to change this behaviour.*
+
+
+I2C via C++
+***********
+
+The most complete information and example for using the Linux user-space I2C functions is the :ref:`drivers-cpp-i2c` provided as part of this repository.
+
+The following may assist in if and when you develop you own custom use of the Linux user-space I2C functions:
+
+* The documentation of the :code:`i2c_msg` struct can be found at this `Linux kernel i2c_msg struct reference <https://docs.huihoo.com/doxygen/linux/kernel/3.7/structi2c__msg.html>`_
+
+* The code definition of the :code:`i2c_msg` struct can be found in this `Linux kernel i2c.h header file <https://docs.huihoo.com/doxygen/linux/kernel/3.7/include_2uapi_2linux_2i2c_8h_source.html>`_
+
+
+I2C addresses
 *************
 
 The following table lists the possible I2C address for the various sensor and actuator boards provided. The possible address are separated into three columns:

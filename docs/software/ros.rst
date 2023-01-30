@@ -9,7 +9,6 @@ ROBOT OPERATING SYSTEMS (ROS)
 
   ros_in_words
   ros_code_from_a_clean_slate
-  ros_code_first_robotic_system
   ros_cmd_line
   
 
@@ -19,14 +18,19 @@ ROS (the robot operating system) is a large topic with many plausible levels-of-
   #. :ref:`ros-in-words`: provides an introduction to the core concepts and key elements of ROS within involving any programming. This level-of-detail should be enough to design a first draft of a ROS architecture for how you bring your robotics project together using ROS.
 
 
-  #. :ref:`ros-code-from-a-clean-slate`: provides step-by-step tutorials for how the core concepts and key elements of ROS materialise through code (C++ and Python) and command line tools. This section will likely feel quite boring (apologies for that) because no exciting robotics behaviour is achieved. But remember that **this section contains the basic building blocks needed to do everything exciting in the next section**.
-
-
-  #. :ref:`ros-code-first-robotic-system`: provides step-by-step tutorials for how to put together the building blocks from the previous section to create a first robotic system.
+  #. :ref:`ros-code-from-a-clean-slate`: provides step-by-step tutorials for how the core concepts and key elements of ROS materialise through code (C++ and Python) and command line tools.
 
 
   #. :ref:`ros-cmd-line`: provides a list and brief explanation for the essential command line tools.
 
+
+.. important::
+
+  Section 2 here (i.e., :ref:`ros-code-from-a-clean-slate`) is by definition rather "boring" because no exciting robotics behaviour is demonstrated.
+
+  To get straight into building you robotic system software, you can skip to the section of the wiki titled (i.e., :ref:`building-blocks-for-autonomous-systems`), which jumps straight into interfacing with the actuators and sensors on your robot. From there you are referred back to specific parts of Section 2 here with motivation for why the "boring" parts of ROS upskilling are so important.
+
+  Section 1 (i.e., :ref:`ros-in-words`:) is beneficial for those with beginner and intermediate ROS skills.
 
 
 ..

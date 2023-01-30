@@ -17,7 +17,9 @@ Compiling
 
 * :code:`catkin_make` compiles the ROS package when called from the ROS workspace folder of the repository, i.e., from the folder named :code:`catkin_ws`
 
-* See the `catkin_make documentation <http://wiki.ros.org/catkin/commands/catkin_make>`_ for more usages
+* :code:`catkin_make_isolated` compiles each ROS package separately as per its CMakeList, and then sources the resulting environment.
+
+* See the `catkin_make documentation <http://wiki.ros.org/catkin/commands/catkin_make>`_ and `catkin packages tutorial <http://wiki.ros.org/catkin/Tutorials/using_a_workspace>`_ for more usages and descriptions.
 
 
 Sourcing a ROS package

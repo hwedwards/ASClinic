@@ -25,12 +25,16 @@ This wiki is expected to grow and expand as semester progresses (and also as the
   software/git
   software/software_installation
   software/ros
+  software/building_blocks_for_autonomous_systems
+  software/drivers
   hardware/bom
   hardware/power_supply
   hardware/single_board_computers
   hardware/communication_protocols
-  software/workflows
   information/sphyinx_rst_cheat_sheet
+
+..
+  modelling/modelling
 
 
 

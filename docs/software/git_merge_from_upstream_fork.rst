@@ -1,4 +1,4 @@
-.. _workflow-git-merge-from-upstream-fork:
+.. _git-merge-from-upstream-fork:
 
 Git Merge from Upstream Fork
 ============================

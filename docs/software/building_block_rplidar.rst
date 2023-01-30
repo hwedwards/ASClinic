@@ -1,7 +1,7 @@
-.. _workflow_rplidar:
+.. _building-block-rplidar:
 
-RPLidar Data
-============
+Obtaining RPLidar Data
+======================
 
 
 Install and compile the RPLidar ROS package
@@ -21,7 +21,7 @@ This process clones the RPLidar ROS package git repository into the :code:`catki
 Launch the RPLidar node
 ***********************
 
-The RPLidar ROS package provide a node named :code:`rplidarNode` that read data from the RPLidar device and publishes it to the topic :code:`/scan`. As the RPLidar ROS package is part of your catkin workspace, you can launch an :code:`rplidarNode` in the same way you would launch any other node. The following is a complete launch file for launching the :code:`rplidarNode` into the group namespace :code:`/asc`:
+The RPLidar ROS package provide a node named :code:`rplidarNode` that reads data from the RPLidar device and publishes it to the topic :code:`/scan`. As the RPLidar ROS package is part of your catkin workspace, you can launch an :code:`rplidarNode` in the same way you would launch any other node. The following is a complete launch file for launching the :code:`rplidarNode` into the group namespace :code:`/asc`:
 
 .. code-block:: html
 
@@ -59,10 +59,20 @@ And then launch it with the following command:
 
   roslaunch asclinic_pkg rplidar.launch
 
+The following are some important details about launching an :code:`rplidarNode` in this way:
+
+* As launch file uses the group namespace :code:`/asc`, the data published to by the :code:`rplidarNode` is available on the topic :code:`/asc/scan`
+
+
+* You can add the :code:`<node>...</node>` part of the launch file to any other launch file you have.
+
+* | If you need to know some detail about what the :code:`rplidarNode` is doing, then simply look at the source code located at:
+  |   :code:`catkin_ws/src/rplidar_ros/src/node.cpp`
+  | This one file is the whole not, it is a reasonable length, and it is reasonably easy to parse. You can also `view the rplidarNode code on the RPLidar git hub <https://github.com/Slamtec/rplidar_ros/blob/master/src/node.cpp>`_.
+
 .. note::
 
-  As launch file uses the group namespace :code:`/asc`, the data published to by the :code:`rplidarNode` is available on the topic :code:`/asc/scan`
-
+  For more information about ROS launch file, see the :ref:`ros-run-and-launch` page.
 
 
 Format of the RPLidar scan data

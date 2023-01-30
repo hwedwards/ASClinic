@@ -241,18 +241,6 @@ We now need to make the subscriber in this python node subscribe to the topic fr
   You should now see the :code:`my_subscriber` node display the message data in the terminal window.
 
 
-C++ publisher on a custom message type
-**************************************
-
-Coming soon.
-
-
-Python publisher on a custom message type
-*****************************************
-
-Coming soon.
-
-
 C++ publisher on a group namespace node handle
 **********************************************
 
