@@ -15,6 +15,10 @@
 			type   = "encoder_read_multi_threaded"
 			>
 			<param
+				name   = "gpiochip_number"
+				value  = "1"
+			/>
+			<param
 				name   = "line_number_for_motor_left_channel_a"
 				value  = "133"
 			/>
@@ -48,9 +52,9 @@
 		<!-- LAUNCH A "I2C for Motors and Servos" NODE -->
 		<node
 			pkg    = "asclinic_pkg"
-			name   = "i2c_for_motors_and_servos"
+			name   = "i2c_for_motors"
 			output = "screen"
-			type   = "i2c_for_motors_and_servos"
+			type   = "i2c_for_motors"
 		/>
 
 	</group>

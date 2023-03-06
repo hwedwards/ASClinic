@@ -645,7 +645,7 @@ then
 	# > Add the "udev" rule
 	echo "# udev rules for giving gpio port access to the gpiod group" | sudo tee -a /etc/udev/rules.d/60-gpiod.rules
 	echo "# This allows use of certain libgpiod functions without sudo" | sudo tee -a /etc/udev/rules.d/60-gpiod.rules
-	echo "SUBSYSTEM==\"gpio\", KERNEL==\"gpiochip0\", GROUP=\"gpiod\", MODE=\"0660\"" | sudo tee -a /etc/udev/rules.d/60-gpiod.rules
+	echo "SUBSYSTEM==\"gpio\", KERNEL==\"gpiochip1\", GROUP=\"gpiod\", MODE=\"0660\"" | sudo tee -a /etc/udev/rules.d/60-gpiod.rules
 	# > Display the "udev" rule that was added
 	echo ""
 	echo ">> As a double check, the full contents of \"60-gpiod.rules\" is now:"
@@ -663,11 +663,21 @@ then
 
 	# Inform the user, and check that the installation worked
 	echo ""
-	echo ">> The GPIO congiruation is now complete."
+	echo ">> The GPIO configuration is now complete."
 	echo ">> Now checking the installation was successful by running the command:"
 	echo ">> sudo gpiodetect"
 	echo ""
 	sudo gpiodetect
+
+	echo ""
+	echo ">> You should check that the gpiochip added to the udev rules"
+	echo "   is the gpiochip that you actually need to access for your"
+	echo "   robot. The gpiod command line tools can assist you in"
+	echo "   figuring this out, i.e:"
+	echo "      \"gpiodetect\", \"gpioinfo\", \"gpioget\", \"gpioset\", \"gpiomon\""
+	echo "   For example: the upgrade from the Nvidia Jetpack 4.x to 5.x"
+	echo "   rearranges the gpiochip numbering."
+
 
 	echo ""
 	echo ">> The \"udev\" rules comes into effect after a restart,"

@@ -61,6 +61,9 @@ int m_encoder_counts_for_motor_right_b = 0;
 // > Mutex for preventing multiple-access of shared variables
 std::mutex m_counting_mutex;
 
+// > The "gpiochip" number
+int m_gpiochip_number = 1;
+
 // > The line numbers to read
 int m_line_number_for_motor_left_channel_a = 133;
 int m_line_number_for_motor_left_channel_b = 134;
@@ -167,7 +170,9 @@ void encoderCountingThreadMain()
 	// Specify the chip name of the GPIO interface
 	// > Note: for the 40-pin header of the Jetson SBCs, this
 	//   is "/dev/gpiochip0"
-	const char * gpio_chip_name = "/dev/gpiochip0";
+	std::stringstream temp_string_stream;
+	temp_string_stream << "/dev/gpiochip" << m_gpiochip_number;
+	const char * gpio_chip_name = temp_string_stream.str().c_str();
 
 	// Make a local copy of the line number member variables
 	int line_number_left_a  = m_line_number_for_motor_left_channel_a;
@@ -327,6 +332,14 @@ int main(int argc, char* argv[])
 	// > Thus, to access this parameter, we first get a handle to
 	//   this node within the namespace that it was launched.
 	//
+
+	// Get the "gpiochip" number parameter:
+	if ( !nodeHandle.getParam("gpiochip_number", m_gpiochip_number) )
+	{
+		// Display an error message
+		ROS_INFO("[ENCODER READ MULTI THREADED] FAILED to get \"gpiochip_number\" parameter. Using default value instead.");
+	}
+
 	// Get the line number parameters:
 	// > For channel A of the left side motor
 	if ( !nodeHandle.getParam("line_number_for_motor_left_channel_a", m_line_number_for_motor_left_channel_a) )
@@ -395,6 +408,9 @@ int main(int argc, char* argv[])
 
 	// Spin the node
 	ros::spin();
+
+	// Set the flag to stop counting
+	encoder_thread_should_count = false;
 
 	// Join back the encoder counting thread
 	encoder_counting_thread.join();
