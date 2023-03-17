@@ -17,9 +17,9 @@ private:
 	// private variables
 	static const int GPIO_CHIP_NAME_LENGTH_MAX = 20;
 	static const int LINE_NUMBER_MOTOR_R_CH_A = 105;
-	static const int LINE_NUMBER_MOTOR_R_CH_B = 160;
-	static const int LINE_NUMBER_MOTOR_L_CH_A = 133;
-	static const int LINE_NUMBER_MOTOR_L_CH_B = 134;
+	static const int LINE_NUMBER_MOTOR_R_CH_B = 106;
+	static const int LINE_NUMBER_MOTOR_L_CH_A =  84;
+	static const int LINE_NUMBER_MOTOR_L_CH_B = 130;
 	const int line_numbers[4] = {
 		LINE_NUMBER_MOTOR_R_CH_A,
 		LINE_NUMBER_MOTOR_R_CH_B,

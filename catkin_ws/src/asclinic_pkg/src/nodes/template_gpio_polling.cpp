@@ -65,8 +65,8 @@ int main(int argc, char* argv[])
 
 	// Specify the chip name of the GPIO interface
 	// > Note: for the 40-pin header of the Jetson SBCs, this
-	//   is "/dev/gpiochip0"
-	const char * gpio_chip_name = "/dev/gpiochip0";
+	//   is "/dev/gpiochip1"
+	const char * gpio_chip_name = "/dev/gpiochip1";
 
 	// Get the GPIO line number to monitor
 	// Notes:

@@ -4,7 +4,7 @@
 GPIO_Encoder_Listener::GPIO_Encoder_Listener()
 {
 	struct gpiod_line *line;
-	strcpy(this->gpio_chip_name, "/dev/gpiochip0");
+	strcpy(this->gpio_chip_name, "/dev/gpiochip1");
 	this->gpio_chip = gpiod_chip_open(this->gpio_chip_name);
 	gpiod_line_bulk_init(&(this->bulk));
 	for (int i = 0; i < 4; i++)

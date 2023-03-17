@@ -65,10 +65,10 @@ std::mutex m_counting_mutex;
 int m_gpiochip_number = 1;
 
 // > The line numbers to read
-int m_line_number_for_motor_left_channel_a = 133;
-int m_line_number_for_motor_left_channel_b = 134;
-int m_line_number_for_motor_right_channel_a = 105;
-int m_line_number_for_motor_right_channel_b = 160;
+int m_line_number_for_motor_left_channel_a  = 105;
+int m_line_number_for_motor_left_channel_b  = 106;
+int m_line_number_for_motor_right_channel_a =  84;
+int m_line_number_for_motor_right_channel_b = 130;
 
 // > Boolean flag for when to stop counting
 bool encoder_thread_should_count = true;
@@ -169,7 +169,7 @@ void encoderCountingThreadMain()
 {
 	// Specify the chip name of the GPIO interface
 	// > Note: for the 40-pin header of the Jetson SBCs, this
-	//   is "/dev/gpiochip0"
+	//   is "/dev/gpiochip1"
 	std::stringstream temp_string_stream;
 	temp_string_stream << "/dev/gpiochip" << m_gpiochip_number;
 	const char * gpio_chip_name = temp_string_stream.str().c_str();
@@ -325,7 +325,7 @@ int main(int argc, char* argv[])
 	//   the "launch" folder, you see the following lines of code:
 	//       <param
 	//           name   = "line_number_for_motor_left_channel_a"
-	//           value  = 133
+	//           value  = 105
 	//       />
 	// > These lines of code add a parameter named to this node
 	//   with the parameter name: "line_number_for_motor_left_channel_a"

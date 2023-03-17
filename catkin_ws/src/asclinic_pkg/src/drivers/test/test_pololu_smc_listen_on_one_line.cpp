@@ -151,8 +151,8 @@ void drive_wheels(
 
 void setup_gpio_listener(struct gpiod_chip **chip, struct gpiod_line **line, struct gpiod_line_event *event)
 {
-	const int line_number = 133;
-	const char * gpio_chip_name = "/dev/gpiochip0";
+	const int line_number = 105;
+	const char * gpio_chip_name = "/dev/gpiochip1";
 
 	// struct gpiod_line_event event;
 	// struct gpiod_chip *chip;
@@ -165,7 +165,7 @@ void setup_gpio_listener(struct gpiod_chip **chip, struct gpiod_line **line, str
 			event->ts.tv_nsec);
 
 	// TODO: substitute ctxless with something else (ctxless is deprecated)
-	value = gpiod_ctxless_get_value("/dev/gpiochip0", line_number, false, "foobar");
+	value = gpiod_ctxless_get_value("/dev/gpiochip1", line_number, false, "foobar");
 	printf("[motor encoder]: value = %d\n", value);
 	*chip = gpiod_chip_open(gpio_chip_name);
 	*line = gpiod_chip_get_line(*chip,line_number);

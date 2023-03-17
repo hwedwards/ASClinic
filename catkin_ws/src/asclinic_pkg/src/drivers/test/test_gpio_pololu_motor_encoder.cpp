@@ -9,7 +9,7 @@ int main()
 	// Choose the I2C device.
 	//const char * i2c_device_name = "/dev/i2c-1";
 
-//	::gpiod::chip chip("gpiochip0");
+//	::gpiod::chip chip("gpiochip1");
 //	auto lines = chip.get_lines({ 161 });
 //	lines.request({ "foobar", ::gpiod::line_request::EVENT_BOTH_EDGES, 0});
 //
@@ -26,9 +26,9 @@ int main()
 //	}
 
 	// int line_number = 148;
-	int line_number = 134;
-	// int line_number = 105;
-	const char * gpio_chip_name = "/dev/gpiochip0";
+	int line_number = 105;
+	// int line_number = 130;
+	const char * gpio_chip_name = "/dev/gpiochip1";
 
 	int num_events_to_display = 20;
 
@@ -44,7 +44,7 @@ int main()
 
 	printf("event variable initialised as: %d timestamp: [%8ld.%09ld]\n", event.event_type, event.ts.tv_sec, event.ts.tv_nsec);
 
-	value = gpiod_ctxless_get_value("/dev/gpiochip0", line_number, false, "foobar");
+	value = gpiod_ctxless_get_value("/dev/gpiochip1", line_number, false, "foobar");
 
 	printf("value = %d\n", value);
 

@@ -168,14 +168,14 @@ void get_gpiod_line_and_add_to_bulk(struct gpiod_chip *chip, int *line_numbers,
 void setup_gpio_listener(struct gpiod_chip **chip,
 	struct gpiod_line_bulk *line_bulk, struct gpiod_line_event *event)
 {
-	const int line_number_motor_l_ch_a = 133;
-	const int line_number_motor_l_ch_b = 134;
-	const int line_number_motor_r_ch_a = 105;
-	const int line_number_motor_r_ch_b = 160;
+	const int line_number_motor_l_ch_a = 105;
+	const int line_number_motor_l_ch_b = 106;
+	const int line_number_motor_r_ch_a =  84;
+	const int line_number_motor_r_ch_b = 130;
 	int line_numbers[4] = {line_number_motor_l_ch_a, line_number_motor_l_ch_b,
 		line_number_motor_r_ch_a, line_number_motor_r_ch_b};
 
-	const char *gpio_chip_name = "/dev/gpiochip0";
+	const char *gpio_chip_name = "/dev/gpiochip1";
 
 	struct gpiod_line *lines[4];
 
@@ -226,7 +226,7 @@ void listen_on_gpio(struct gpiod_line_bulk *line_bulk,
 	gpio_line_event_status_init(event_statuses, 4);
 
 	std::map<int, int> line_number_to_index = {
-		{133, 0}, {134, 1}, {105, 2}, {160, 3}};
+		{105, 0}, {106, 1}, {84, 2}, {130, 3}};
 	int line_index;
 
 	event_summaries_init(event_summaries);
@@ -300,7 +300,7 @@ void listen_on_gpio(struct gpiod_line_bulk *line_bulk,
 
 void write_json_test_report(test_config_t *test_config, gpio_line_event_summary_t *event_summaries, gpio_line_event_bulk_log_t **all_events)
 {
-	int line_numbers[4] = {133, 134, 105, 160};
+	int line_numbers[4] = {105, 106, 84, 130};
 	std::ofstream logfile;
 	logfile.open("log/logfile.json");
 	logfile << "{ ";
@@ -342,7 +342,7 @@ void write_json_test_report(test_config_t *test_config, gpio_line_event_summary_
 void print_test_report(gpio_line_event_summary_t *event_summaries,
 	gpio_line_event_bulk_log_t **all_events)
 {
-	int line_numbers[4] = {133, 134, 105, 160};
+	int line_numbers[4] = {105, 106, 84, 130};
 	for (int i = 0; i < 4; i++)
 	{
 		printf(

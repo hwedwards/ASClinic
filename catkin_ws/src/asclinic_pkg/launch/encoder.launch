@@ -20,19 +20,19 @@
 			/>
 			<param
 				name   = "line_number_for_motor_left_channel_a"
-				value  = "133"
-			/>
-			<param
-				name   = "line_number_for_motor_left_channel_b"
-				value  = "134"
-			/>
-			<param
-				name   = "line_number_for_motor_right_channel_a"
 				value  = "105"
 			/>
 			<param
+				name   = "line_number_for_motor_left_channel_b"
+				value  = "106"
+			/>
+			<param
+				name   = "line_number_for_motor_right_channel_a"
+				value  = "84"
+			/>
+			<param
 				name   = "line_number_for_motor_right_channel_b"
-				value  = "160"
+				value  = "130"
 			/>
 			<param
 				name   = "delta_t_for_publishing_counts"
