@@ -50,7 +50,7 @@ from sensor_msgs.msg import Image
 import cv2
 
 # Package to convert between ROS and OpenCV Images
-from cv_bridge import CvBridge
+from cv_bridge import CvBridge, CvBridgeError
 
 
 
@@ -226,7 +226,10 @@ class CameraCapture:
         if (return_flag == True):
             # Publish the camera frame
             rospy.loginfo("[CAMERA CAPTURE] Now publishing camera frame")
-            self.image_publisher.publish(self.cv_bridge.cv2_to_imgmsg(current_frame))
+            try:
+                self.image_publisher.publish(self.cv_bridge.cv2_to_imgmsg(current_frame, "bgr8"))
+            except CvBridgeError as cv_bridge_err:
+                print(cv_bridge_err)
 
             if (SHOULD_SAVE_CHESSBOARD_IMAGES):
                 # Check if the camera frame contains a calibration

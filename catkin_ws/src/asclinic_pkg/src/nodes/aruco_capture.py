@@ -67,7 +67,7 @@ import cv2
 import cv2.aruco as aruco
 
 # Package to convert between ROS and OpenCV Images
-from cv_bridge import CvBridge
+from cv_bridge import CvBridge, CvBridgeError
 
 
 
@@ -94,7 +94,7 @@ SAVE_IMAGE_PATH = "~/saved_camera_images/"
 SHOULD_SHOW_IMAGES = False
 
 # > A flag for whether to publish the images captured
-SHOULD_PUBLISH_CAMERA_IMAGES = False
+SHOULD_PUBLISH_CAMERA_IMAGES = True
 
 
 
@@ -366,12 +366,15 @@ class ArucoDetector:
                 # Display that no aruco markers were found
                 #rospy.loginfo("[ARUCO DETECTOR] No markers found in this image")
                 # Set the frame variable that is used for save/display/publish
-                current_frame_with_marker_outlines = current_frame_gray
+                current_frame_with_marker_outlines = current_frame
 
             # Publish the camera frame
             if (SHOULD_PUBLISH_CAMERA_IMAGES):
                 #rospy.loginfo("[ARUCO DETECTOR] Now publishing camera frame")
-                self.image_publisher.publish(self.cv_bridge.cv2_to_imgmsg(current_frame))
+                try:
+                    self.image_publisher.publish(self.cv_bridge.cv2_to_imgmsg(current_frame_with_marker_outlines, "bgr8"))
+                except CvBridgeError as cv_bridge_err:
+                    print(cv_bridge_err)
 
             # Save the camera frame if requested
             if (self.should_save_image):
