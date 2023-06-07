@@ -219,7 +219,7 @@ bool VL53L1X::set_mux_i2c_address(uint8_t new_address)
 // ------------------------------------------------------------
 
 // PRIVATE FUNCTION:
-bool VL53L1X::set_mux_channel()
+bool VL53L1X::switch_mux_channel_to_this_sensor()
 {
 	// Check if connected to a mux
 	if (this->m_is_connected_to_TCA9548A_mux)
@@ -257,7 +257,7 @@ bool VL53L1X::set_mux_channel()
 bool VL53L1X::read_register(uint16_t dev, uint8_t register_address, uint16_t * value)
 {
 	// Set the mux channel
-	bool set_mux_wasSuccessful = this->set_mux_channel();
+	bool set_mux_wasSuccessful = this->switch_mux_channel_to_this_sensor();
 	if (!set_mux_wasSuccessful)
 		return false;
 	// Put the "register address" into a uint8 array
@@ -302,7 +302,7 @@ bool VL53L1X::read_register(uint16_t dev, uint8_t register_address, uint16_t * v
 bool VL53L1X::write_register(uint16_t dev, uint8_t register_address, uint16_t value)
 {
 	// Set the mux channel
-	bool set_mux_wasSuccessful = this->set_mux_channel();
+	bool set_mux_wasSuccessful = this->switch_mux_channel_to_this_sensor();
 	if (!set_mux_wasSuccessful)
 		return false;
 	// Convert the new limit value to its two
@@ -349,7 +349,7 @@ bool VL53L1X::read_byte(uint16_t index, uint8_t *data)
 	if (i2c_fd>=0)
 	{
 		// Set the mux channel
-		bool set_mux_wasSuccessful = this->set_mux_channel();
+		bool set_mux_wasSuccessful = this->switch_mux_channel_to_this_sensor();
 		if (!set_mux_wasSuccessful)
 			return false;
 		// Call the VL53L1 API function
@@ -372,7 +372,7 @@ bool VL53L1X::read_word(uint16_t index, uint16_t *data)
 	if (i2c_fd>=0)
 	{
 		// Set the mux channel
-		bool set_mux_wasSuccessful = this->set_mux_channel();
+		bool set_mux_wasSuccessful = this->switch_mux_channel_to_this_sensor();
 		if (!set_mux_wasSuccessful)
 			return false;
 		// Call the VL53L1 API function
@@ -395,7 +395,7 @@ bool VL53L1X::read_dword(uint16_t index, uint32_t *data)
 	if (i2c_fd>=0)
 	{
 		// Set the mux channel
-		bool set_mux_wasSuccessful = this->set_mux_channel();
+		bool set_mux_wasSuccessful = this->switch_mux_channel_to_this_sensor();
 		if (!set_mux_wasSuccessful)
 			return false;
 		// Call the VL53L1 API function
@@ -418,7 +418,7 @@ bool VL53L1X::boot_state(uint8_t *state)
 	if (i2c_fd>=0)
 	{
 		// Set the mux channel
-		bool set_mux_wasSuccessful = this->set_mux_channel();
+		bool set_mux_wasSuccessful = this->switch_mux_channel_to_this_sensor();
 		if (!set_mux_wasSuccessful)
 			return false;
 		// Call the VL53L1 API function
@@ -441,7 +441,7 @@ bool VL53L1X::sensor_init()
 	if (i2c_fd>=0)
 	{
 		// Set the mux channel
-		bool set_mux_wasSuccessful = this->set_mux_channel();
+		bool set_mux_wasSuccessful = this->switch_mux_channel_to_this_sensor();
 		if (!set_mux_wasSuccessful)
 			return false;
 		// Call the VL53L1 API function
@@ -464,7 +464,7 @@ bool VL53L1X::set_distance_mode(uint16_t dist_mode)
 	if (i2c_fd>=0)
 	{
 		// Set the mux channel
-		bool set_mux_wasSuccessful = this->set_mux_channel();
+		bool set_mux_wasSuccessful = this->switch_mux_channel_to_this_sensor();
 		if (!set_mux_wasSuccessful)
 			return false;
 		// Call the VL53L1 API function
@@ -488,7 +488,7 @@ bool VL53L1X::start_ranging()
 	if (i2c_fd>=0)
 	{
 		// Set the mux channel
-		bool set_mux_wasSuccessful = this->set_mux_channel();
+		bool set_mux_wasSuccessful = this->switch_mux_channel_to_this_sensor();
 		if (!set_mux_wasSuccessful)
 			return false;
 		// Call the VL53L1 API function
@@ -511,7 +511,7 @@ bool VL53L1X::check_for_data_ready(uint8_t *is_data_ready)
 	if (i2c_fd>=0)
 	{
 		// Set the mux channel
-		bool set_mux_wasSuccessful = this->set_mux_channel();
+		bool set_mux_wasSuccessful = this->switch_mux_channel_to_this_sensor();
 		if (!set_mux_wasSuccessful)
 			return false;
 		// Call the VL53L1 API function
@@ -535,7 +535,7 @@ bool VL53L1X::get_result(VL53L1X_Result_t *pointer_to_results)
 	if (i2c_fd>=0)
 	{
 		// Set the mux channel
-		bool set_mux_wasSuccessful = this->set_mux_channel();
+		bool set_mux_wasSuccessful = this->switch_mux_channel_to_this_sensor();
 		if (!set_mux_wasSuccessful)
 			return false;
 		// Call the VL53L1 API function
@@ -569,7 +569,7 @@ bool VL53L1X::clear_interrupt()
 	if (i2c_fd>=0)
 	{
 		// Set the mux channel
-		bool set_mux_wasSuccessful = this->set_mux_channel();
+		bool set_mux_wasSuccessful = this->switch_mux_channel_to_this_sensor();
 		if (!set_mux_wasSuccessful)
 			return false;
 		// Call the VL53L1 API function
