@@ -188,7 +188,7 @@ int main()
 
 		// > Send the "exit safe start" command
 		int max_speed_limit_response_code;
-		result = pololu_smc_pointer->set_motor_limit_max_speed(new_max_speed_limit, &max_speed_limit_response_code);
+		result = pololu_smc_pointer->set_motor_limit_max_duty_cycle(new_max_speed_limit, &max_speed_limit_response_code);
 		if (result)
 		{
 			printf("Pololu SMC - set max speed limit successful with response code %d, for I2C address %d\n", max_speed_limit_response_code, pololu_smc_pointer->get_i2c_address() );
@@ -200,7 +200,7 @@ int main()
 
 		// > Check the max speed limit that was set
 		uint16_t max_speed_limit_value;
-		result = pololu_smc_pointer->get_max_speed_forward(&max_speed_limit_value);
+		result = pololu_smc_pointer->get_max_duty_cycle_forward(&max_speed_limit_value);
 		if (result)
 		{
 			printf("Pololu SMC - get max speed limit returned: %d, for I2C address %d\n", max_speed_limit_value, pololu_smc_pointer->get_i2c_address() );
@@ -375,7 +375,7 @@ int main()
 					pololu_smc_pointer = &pololu_smc2;
 
 				int16_t current_speed_value;
-				result = pololu_smc_pointer->get_speed_3200(&current_speed_value);
+				result = pololu_smc_pointer->get_duty_cycle_3200(&current_speed_value);
 				if (result)
 				{
 					printf("Pololu SMC - get speed value returned: %d, for I2C address %d\n", current_speed_value, pololu_smc_pointer->get_i2c_address() );
@@ -404,7 +404,7 @@ int main()
 
 				int temp_target_speed = this_target_speed_percent * direction_multiplier;
 
-				result = pololu_smc_pointer->set_motor_target_speed_percent(temp_target_speed);
+				result = pololu_smc_pointer->set_motor_target_duty_cycle_percent(temp_target_speed);
 				if (result)
 				{
 					printf("Pololu SMC - motor percent set to: %d, for I2C address %d\n", this_target_speed_percent, pololu_smc_pointer->get_i2c_address() );
@@ -426,7 +426,7 @@ int main()
 					pololu_smc_pointer = &pololu_smc2;
 
 				int16_t current_target_speed_value;
-				result = pololu_smc_pointer->get_target_speed_3200(&current_target_speed_value);
+				result = pololu_smc_pointer->get_target_duty_cycle_3200(&current_target_speed_value);
 				if (result)
 				{
 					printf("Pololu SMC - get target speed value returned: %d, for I2C address %d\n", current_target_speed_value, pololu_smc_pointer->get_i2c_address() );

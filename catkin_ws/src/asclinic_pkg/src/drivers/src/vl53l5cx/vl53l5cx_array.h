@@ -13,7 +13,7 @@
 //                                                 |___/                       
 //
 // DESCRIPTION:
-// I2C driver for the VL53L1X time-of-flight distance sensor
+// Class for managing an array of VL53L5CX time-of-flight distance sensors
 //
 // ----------------------------------------------------------------------------
 
@@ -21,14 +21,14 @@
 
 
 
-#ifndef VL53L1X_CPP_INTERFACE_H
-#define VL53L1X_CPP_INTERFACE_H
+#ifndef VL53L5CX_ARRAY_CPP_INTERFACE_H
+#define VL53L5CX_ARRAY_CPP_INTERFACE_H
 
 
 
 
 
-#include <fcntl.h>
+// #include <fcntl.h>
 // #include <linux/i2c.h>
 // #include <linux/i2c-dev.h>
 #include <stdint.h>
@@ -36,19 +36,44 @@
 // #include <sys/ioctl.h>
 #include <unistd.h>
 
-#include "vl53l1x/platform/vl53l1_platform.h"
-#include "vl53l1x/core/VL53L1X_api.h"
-//#include "vl53l1x/core/VL53L1X_calibration.h"
+#include <vector>
+
+#include <mutex>
+#include <thread>
+
+// #include "vl53l5cx/platform/vl53l5cx_platform.h"
+// #include "vl53l5cx/VL53L5CX_ULD_API/inc/vl53l5cx_api.h"
+// #include "vl53l5cx/VL53L5CX_ULD_API/inc/vl53l5cx_plugin_xtalk.h
+// #include "vl53l5cx/VL53L5CX_ULD_API/inc/vl53l5cx_plugin_detection_thresholds.h
+// #include "vl53l5cx/VL53L5CX_ULD_API/inc/vl53l5cx_plugin_motion_indicator.h
+// #include "vl53l5cx/VL53L5CX_ULD_API/inc/vl53l5cx_buffers.h
 
 #include "i2c_driver/i2c_driver.h"
 
+//#include "vl53l5cx/VL53L5CX_ULD_API/inc/vl53l5cx_api.h"
+#include "vl53l5cx/vl53l5cx.h"
 
 
 
 
-// I2C ADDRESS
-#define VL53L1X_I2C_ADDRESS_DEFAULT     0x29 /**< Default VL53L1X I2C Slave Address */
-#define TCA9548A_I2C_ADDRESS_DEFAULT    0x70 /**< Default TCA9548A I2C Slave Address */
+
+#define VL53L5CX_ARRAY_RESOLUTION_DEFAULT             ((uint8_t) 16U) /**< Default VL53L5CX Resolution for the array */
+#define VL53L5CX_ARRAY_RANGING_FREQUENCT_DEFAULT      10              /**< Default VL53L5CX Ranging frequency for the array */
+#define VL53L5CX_ARRAY_INTEGRATION_TIME_MS_DEFAULT    50              /**< Default VL53L5CX Integration time in milliseconds for the array */
+#define VL53L5CX_ARRAY_SHARPENER_PERCENT_DEFAULT      20              /**< Default VL53L5CX Sharpener percent for the array */
+#define VL53L5CX_ARRAY_TARGET_ORDER_DEFAULT           ((uint8_t) 1U) /**< Default VL53L5CX Target order for the array */
+#define VL53L5CX_ARRAY_RANGING_MODE_DEFAULT           ((uint8_t) 1U) /**< Default VL53L5CX Ranging mode for the array */
+
+// The following values are from the file:
+// > "vl53l5cx/VL53L5CX_ULD_API/inc/vl53l5cx_api.h"
+//VL53L5CX_RESOLUTION_4X4			((uint8_t) 16U)
+//VL53L5CX_RESOLUTION_8X8			((uint8_t) 64U)
+
+//VL53L5CX_TARGET_ORDER_CLOSEST		((uint8_t) 1U)
+//VL53L5CX_TARGET_ORDER_STRONGEST	((uint8_t) 2U)
+
+//VL53L5CX_RANGING_MODE_CONTINUOUS	((uint8_t) 1U)
+//VL53L5CX_RANGING_MODE_AUTONOMOUS	((uint8_t) 3U)
 
 
 
@@ -62,8 +87,28 @@
 //   CCCC  LLLLL  A   A  SSSS   SSSS      DDDD   EEEEE  F
 // ----------------------------------------------------------
 
-class VL53L1X
+class VL53L5CX_Array
 {
+	// ----------------------------------
+	//  EEEEE  N   N  U   U  M   M   SSSS
+	//  E      NN  N  U   U  MM MM  S
+	//  EEE    N N N  U   U  M M M   SSS
+	//  E      N  NN  U   U  M   M      S
+	//  EEEEE  N   N   UUU   M   M  SSSS
+	// ----------------------------------
+
+	enum class State : int
+	{
+		uninitialised = 0,
+		initialising = 1,
+		idle = 2,
+		ranging = 3,
+	};
+
+
+
+
+
 	// ------------------------------------------------------------
 	//  V   V    A    RRRR   III    A    BBBB   L      EEEEE   SSSS
 	//  V   V   A A   R   R   I    A A   B   B  L      E      S
@@ -73,13 +118,23 @@ class VL53L1X
 	// ------------------------------------------------------------
 
 private:
-	uint8_t m_i2c_address;
 	I2C_Driver * m_i2c_driver;
 
-	bool m_is_connected_to_TCA9548A_mux;
-	uint8_t m_mux_channel;
 	uint8_t m_mux_i2c_address;
+	
+	VL53L5CX_Array::State m_state;
 
+	std::vector<VL53L5CX> m_sensor_array;
+	uint8_t m_num_sensors = 0;
+
+	VL53L5CX_ResultsData m_results_data_array[8];
+
+	std::mutex m_state_mutex;
+	std::mutex m_results_mutex;
+
+	std::thread m_init_and_ranging_thread;
+
+	bool m_should_stop_ranging = false;
 
 
 
@@ -92,9 +147,8 @@ private:
 	//   CCCC   OOO   N   N  SSSS     T    R   R   UUU    CCCC    T     OOO   R   R
 	// ----------------------------------------------------------------------------
 public:
-	VL53L1X(I2C_Driver * i2c_driver);
-	VL53L1X(I2C_Driver * i2c_driver, uint8_t address);
-	VL53L1X(I2C_Driver * i2c_driver, uint8_t address, uint8_t mux_channel, uint8_t mux_i2c_address);
+	VL53L5CX_Array();
+	VL53L5CX_Array(I2C_Driver * i2c_driver, uint8_t mux_i2c_address);
 
 
 
@@ -108,14 +162,14 @@ public:
 	//   GGGG  EEEEE    T        && &     SSSS   EEEEE    T
 	// ------------------------------------------------------
 public:
-	uint8_t get_i2c_address();
-	bool set_i2c_address(uint8_t new_address);
-
-	uint8_t get_mux_channel();
-	bool set_mux_channel(uint8_t new_channel);
-
 	uint8_t get_mux_i2c_address();
 	bool set_mux_i2c_address(uint8_t new_address);
+
+	void set_i2c_driver_and_mux_i2c_address(I2C_Driver * i2c_driver, uint8_t mux_i2c_address);
+
+
+
+
 
 	// ------------------------------------------------------------
 	//  FFFFF  U   U  N   N   CCCC  TTTTT  III   OOO   N   N   SSSS
@@ -126,48 +180,20 @@ public:
 	// ------------------------------------------------------------
 
 public:
-	bool switch_mux_channel_to_this_sensor();
+	bool add_sensor(uint8_t mux_channel);
 
-	bool read_register(uint16_t dev, uint8_t register_address, uint16_t * value);
-
-	bool write_register(uint16_t dev, uint8_t register_address, uint16_t value);
-
-public:
-
-	bool read_byte(uint16_t index, uint8_t *data);
-	bool read_word(uint16_t index, uint16_t *data);
-	bool read_dword(uint16_t index, uint32_t *data);
-	
-	bool boot_state(uint8_t *state);
-	
-	bool sensor_init();
-	
-	// /* status += VL53L1X_SetInterruptPolarity(Dev, 0); */
-
-	bool set_distance_mode(uint16_t dist_mode);
-
-	// status += VL53L1X_SetTimingBudgetInMs(Dev, 100);
-	// status += VL53L1X_SetInterMeasurementInMs(Dev, 100);
+	bool initialise_then_start_ranging_in_a_separate_thread();
 
 	bool start_ranging();
 
-	bool check_for_data_ready(uint8_t *is_data_ready);
+	bool stop_ranging();
 
-	// status = VL53L1X_UltraLite_WaitForInterrupt(ST_TOF_IOCTL_WFI);
+	bool get_results_data_array();
 
-	bool get_result(VL53L1X_Result_t *pointer_to_results);
+	bool get_distance_measurements(VL53L5CX_ResultsData * results_data);
 
-	bool clear_interrupt();
-
-
-// Convenience Functions
-public:
-	bool initialise(uint16_t distance_mode);
-
-	bool initialise_and_start_ranging(uint16_t distance_mode);
-
-	bool get_distance_measurement(VL53L1X_Result_t *pointer_to_results);
-
+private:
+	void init_all_sensors_then_range();
 
 }; // END OF CLASS DEFINITION
 
@@ -175,4 +201,4 @@ public:
 
 
 
-#endif // VL53L1X_CPP_INTERFACE_H
+#endif // VL53L5CX_ARRAY_CPP_INTERFACE_H

@@ -70,7 +70,7 @@ bool setup_and_check_pololu_status(Pololu_SMC_G2 *pololu_smc)
 
 void drive_one_wheel(Pololu_SMC_G2 *pololu_smc, int speed)
 {
-	if (pololu_smc->set_motor_target_speed_percent(speed))
+	if (pololu_smc->set_motor_target_duty_cycle_percent(speed))
 	{
 		printf("Pololu SMC - motor percent set to: %d, for I2C address %d\n",
 			speed, pololu_smc->get_i2c_address());

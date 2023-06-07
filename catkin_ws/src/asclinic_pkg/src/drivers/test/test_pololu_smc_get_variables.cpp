@@ -253,7 +253,7 @@ int main()
 
 		// > For diagnostic variables
 		int16_t target_speed_value;
-		result = pololu_smc_pointer->get_target_speed_3200(&target_speed_value);
+		result = pololu_smc_pointer->get_target_duty_cycle_3200(&target_speed_value);
 		if (result)
 		{
 			printf("Pololu SMC - get target speed value returned: %d, for I2C address %d\n", target_speed_value, pololu_smc_pointer->get_i2c_address() );
@@ -264,7 +264,7 @@ int main()
 		}
 
 		int16_t speed_value;
-		result = pololu_smc_pointer->get_speed_3200(&speed_value);
+		result = pololu_smc_pointer->get_duty_cycle_3200(&speed_value);
 		if (result)
 		{
 			printf("Pololu SMC - get speed value returned: %d, for I2C address %d\n", speed_value, pololu_smc_pointer->get_i2c_address() );
@@ -379,7 +379,7 @@ int main()
 
 		// > For motor speed limits (forward)
 		uint16_t max_speed_forward_value;
-		result = pololu_smc_pointer->get_max_speed_forward(&max_speed_forward_value);
+		result = pololu_smc_pointer->get_max_duty_cycle_forward(&max_speed_forward_value);
 		if (result)
 		{
 			printf("Pololu SMC - get max speed forward value returned: %d [0-3200], for I2C address %d\n", max_speed_forward_value, pololu_smc_pointer->get_i2c_address() );
@@ -434,7 +434,7 @@ int main()
 		}
 
 		uint16_t starting_speed_forward_value;
-		result = pololu_smc_pointer->get_starting_speed_forward(&starting_speed_forward_value);
+		result = pololu_smc_pointer->get_starting_duty_cycle_forward(&starting_speed_forward_value);
 		if (result)
 		{
 			printf("Pololu SMC - get starting speed forward value returned: %d [0-3200], for I2C address %d\n", starting_speed_forward_value, pololu_smc_pointer->get_i2c_address() );
