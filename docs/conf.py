@@ -17,14 +17,15 @@
 import os
 import sys
 import sphinx_rtd_theme
+import sphinx_rtd_dark_mode
 
 sys.path.append(os.path.abspath('exts'))
 
 # -- Project information -----------------------------------------------------
 
 project = 'asclinic-wiki'
-copyright = '2021, The University of Melbourne'
-author = 'Paul Beuchat'
+copyright = '2023, Paul N. Beuchat'
+author = 'Paul N. Beuchat'
 
 # The full version, including alpha/beta/rc tags
 release = '0.1.0'
@@ -44,14 +45,17 @@ release = '0.1.0'
 extensions = [
 	#'sphinx_comments',
 	#
-	# > The the theme:
+	# > The read-the-docs theme:
 	'sphinx_rtd_theme',
-	#'sphinx_rtd_dark_mode',
+	'sphinx_rtd_dark_mode',
 	#'sphinxcontrib.examplecode',
 	#'sphinxcontrib.osexample',
 	#
 	# > For graphics
 	'sphinx.ext.graphviz',
+	#
+	# > For collapsible toggles
+	'sphinx_togglebutton',
 	#
 	# > For auto documentation:
 	#'sphinx.ext.napoleon',
@@ -62,12 +66,16 @@ extensions = [
 # > user starts in dark mode
 #default_dark_mode = True
 # > user starts in light mode
-#default_dark_mode = False
+default_dark_mode = False
 
 # Configuration for the sphinx_comments extension
 #comments_config = {
 #   "hypothesis": True
 #}
+
+# Configuration for the sphinx_togglebutton extension:
+togglebutton_hint = "Click to display content."
+togglebutton_hint_hide = "Click to display content."
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -138,8 +146,8 @@ html_static_path = ['_static']
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)
 html_css_files = [
-    #'css/dark.css',
     'css/custom_table_behaviour.css',
+    #'css/custom_list_styling.css',
 ]
 
 # NOTES FOR CUSTOM CSS:

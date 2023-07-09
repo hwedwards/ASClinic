@@ -382,3 +382,21 @@ The steps detailed on this page are mostly taken from:
   * `ROS documentation: roslaunch <https://wiki.ros.org/roslaunch>`_
   * `ROS documentation: rosnode <https://wiki.ros.org/rosnode>`_
   * `ROS tutorials: roslaunch tips for larger projects <https://wiki.ros.org/roslaunch/Tutorials/Roslaunch%20tips%20for%20larger%20projects>`_
+
+
+
+|
+
+----
+
+.. image:: https://i.creativecommons.org/l/by/4.0/88x31.png
+  :alt: Creative Commons License
+  :align: left
+  :target: http://creativecommons.org/licenses/by/4.0/
+
+| Paul N. Beuchat, 2023
+| This page is licensed under a `Creative Commons Attribution 4.0 International License <http://creativecommons.org/licenses/by/4.0/>`_.
+
+----
+
+|

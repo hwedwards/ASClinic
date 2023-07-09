@@ -5,11 +5,11 @@ Code for a simple publisher and subscriber (C++ and Python)
 
 Requirements for this page:
 
-  * ROS is installed on the computer you are working on (be that working "directly" on the computer or remotely connected to it).
-  * A catkin workspace and ROS package initialised as per :ref:`ros-create-catkin-ws-and-package`
-  * At a minimum, the simple nodes as per :ref:`ros-code-node-simple`
-  * Preferably the spinning nodes as per :ref:`ros-code-spin-at-frequency`
-  * Familiarity with how to :ref:`ros-run-and-launch`
+* ROS is installed on the computer you are working on (be that working "directly" on the computer or remotely connected to it).
+* A catkin workspace and ROS package initialised as per :ref:`ros-create-catkin-ws-and-package`
+* At a minimum, the simple nodes as per :ref:`ros-code-node-simple`
+* Preferably the spinning nodes as per :ref:`ros-code-spin-at-frequency`
+* Familiarity with how to :ref:`ros-run-and-launch`
 
 .. contents:: Contents of this page
    :local:
@@ -947,3 +947,21 @@ The steps detailed on this page are mostly taken from:
 
 * `ROS overview: roscpp Publishers and Subscribers <https://wiki.ros.org/roscpp/Overview/Publishers%20and%20Subscribers>`_
 * `ROS overview: rospy Publishers and Subscribers <https://wiki.ros.org/rospy/Overview/Publishers%20and%20Subscribers>`_
+
+
+
+|
+
+----
+
+.. image:: https://i.creativecommons.org/l/by/4.0/88x31.png
+  :alt: Creative Commons License
+  :align: left
+  :target: http://creativecommons.org/licenses/by/4.0/
+
+| Paul N. Beuchat, 2023
+| This page is licensed under a `Creative Commons Attribution 4.0 International License <http://creativecommons.org/licenses/by/4.0/>`_.
+
+----
+
+|

@@ -5,8 +5,8 @@ Code up a ROS node from scratch (C++ and Python)
 
 Requirements for this page:
 
-  * ROS is installed on the computer you are working on (be that working "directly" on the computer or remotely connected to it).
-  * A catkin workspace and ROS package initialised as per :ref:`ros-create-catkin-ws-and-package`
+* ROS is installed on the computer you are working on (be that working "directly" on the computer or remotely connected to it).
+* A catkin workspace and ROS package initialised as per :ref:`ros-create-catkin-ws-and-package`
 
 .. contents:: Contents of this page
    :local:
@@ -397,3 +397,21 @@ The steps detailed on this page are mostly taken from:
   * `ROS overview: Initialization and shutdown <https://wiki.ros.org/roscpp/Overview/Initialization%20and%20Shutdown>`_
   * `ROS overview: callbacks and spinning <https://wiki.ros.org/roscpp/Overview/Callbacks%20and%20Spinning>`_
   * `ROS Cpp Class Reference for ros::NodeHandle <https://docs.ros.org/en/noetic/api/roscpp/html/classros_1_1NodeHandle.html>`_
+
+
+
+|
+
+----
+
+.. image:: https://i.creativecommons.org/l/by/4.0/88x31.png
+  :alt: Creative Commons License
+  :align: left
+  :target: http://creativecommons.org/licenses/by/4.0/
+
+| Paul N. Beuchat, 2023
+| This page is licensed under a `Creative Commons Attribution 4.0 International License <http://creativecommons.org/licenses/by/4.0/>`_.
+
+----
+
+|

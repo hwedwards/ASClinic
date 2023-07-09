@@ -5,8 +5,8 @@ Create a catkin workspace and a ROS package
 
 Requirements for this page:
 
-  * ROS is installed on the computer you are working on (be that working "directly" on the computer or remotely connected to it).
-  * A git account that you can push to and pull from on the computer with ROS installed.
+* ROS is installed on the computer you are working on (be that working "directly" on the computer or remotely connected to it).
+* A git account that you can push to and pull from on the computer with ROS installed.
 
 .. contents:: Contents of this page
    :local:
@@ -333,3 +333,20 @@ The steps detailed on this page are mostly taken from:
   * `ROS tutorial: Creating a ROS package <https://wiki.ros.org/catkin/Tutorials/CreatingPackage>`_
   * `Atlassian explanation of git ignore patterns <https://www.atlassian.com/git/tutorials/saving-changes/gitignore#git-ignore-patterns>`_
 
+
+
+|
+
+----
+
+.. image:: https://i.creativecommons.org/l/by/4.0/88x31.png
+  :alt: Creative Commons License
+  :align: left
+  :target: http://creativecommons.org/licenses/by/4.0/
+
+| Paul N. Beuchat, 2023
+| This page is licensed under a `Creative Commons Attribution 4.0 International License <http://creativecommons.org/licenses/by/4.0/>`_.
+
+----
+
+|

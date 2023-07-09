@@ -30,7 +30,26 @@ ROS (the robot operating system) is a large topic with many plausible levels-of-
 
   To get straight into building you robotic system software, you can skip to the section of the wiki titled (i.e., :ref:`building-blocks-for-autonomous-systems`), which jumps straight into interfacing with the actuators and sensors on your robot. From there you are referred back to specific parts of Section 2 here with motivation for why the "boring" parts of ROS upskilling are so important.
 
-  Section 1 (i.e., :ref:`ros-in-words`:) is beneficial for those with beginner and intermediate ROS skills.
+  Section 1 (i.e., :ref:`ros-in-words`) is beneficial for those with beginner and intermediate ROS skills.
+
+
+
+|
+
+----
+
+.. image:: https://i.creativecommons.org/l/by/4.0/88x31.png
+  :alt: Creative Commons License
+  :align: left
+  :target: http://creativecommons.org/licenses/by/4.0/
+
+| Paul N. Beuchat, 2023
+| This page is licensed under a `Creative Commons Attribution 4.0 International License <http://creativecommons.org/licenses/by/4.0/>`_.
+
+----
+
+|
+
 
 
 ..

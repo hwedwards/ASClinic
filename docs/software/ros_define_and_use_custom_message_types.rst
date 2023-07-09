@@ -324,3 +324,20 @@ The steps detailed on this page are mostly taken from:
 
 * `ROS tutorial: Creating Messages and Services <https://wiki.ros.org/ROS/Tutorials/CreatingMsgAndSrv>`_
 
+
+
+|
+
+----
+
+.. image:: https://i.creativecommons.org/l/by/4.0/88x31.png
+  :alt: Creative Commons License
+  :align: left
+  :target: http://creativecommons.org/licenses/by/4.0/
+
+| Paul N. Beuchat, 2023
+| This page is licensed under a `Creative Commons Attribution 4.0 International License <http://creativecommons.org/licenses/by/4.0/>`_.
+
+----
+
+|
