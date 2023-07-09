@@ -6,15 +6,18 @@ AUTONOMOUS SYSTEM BUILDING BLOCKS
 .. toctree::
   :maxdepth: 2
   :hidden:
+  :numbered:
 
   building_block_rplidar
   building_block_usb_camera_settings
   building_block_camera_calibration
   building_block_aruco_detection
+  building_block_image_streaming_with_ros
   building_block_i2c
   building_block_i2c_pololu_smc_g2
   building_block_i2c_servo_driver_pca9685
   building_block_gpio_single_pin
+  building_block_gpio_encoder_counting
   
   
   
@@ -28,9 +31,11 @@ This section provides step-by-step guides for some of the key hardware-software 
 
 * :ref:`Interrogating and adjusting (web) camera setting via command line. <building-block-usb-camera-settings>`
 
-* :ref:`Recording images from a (web) camera, and subsequently using these for calibrating the intrinsic parameters. <building-block-camera-calibration>`
+* :ref:`Recording images from a (web) camera, and subsequently using these for calibrating the intrinsic parameters. <building-block-image-streaming-with-ros>`
 
 * :ref:`Detecting ArUco fiducial markers in (web) camera images, and estimating the pose of the marker relative to the camera <building-block-aruco-detection>`.
+
+* :ref:`Steam ROS Image type messages to be viewed from any browser on the network <building-block-image-streaming-with-ros>`.
 
 * :ref:`Setting up an I2C communication bus. <building-block-i2c>`
 
@@ -40,7 +45,7 @@ This section provides step-by-step guides for some of the key hardware-software 
 
 * :ref:`Reading data via a single GPIO pin. <building-block-gpio-single-pin>`
 
-* Reading and counting encoder data via GPIO pins.
+* :ref:`Reading and counting encoder data via GPIO pins. <building-block-gpio-encoder-counting>`
 
 
 .. important::
@@ -60,3 +65,21 @@ As a friendly reminder of the many sub-systems required for an AGV to rover abou
 * Path planning and finite-state-machine (FSM) cognition.
 * Trajectory generation and trajectory tracking control.
 * ... more?
+
+
+
+|
+
+----
+
+.. image:: https://i.creativecommons.org/l/by/4.0/88x31.png
+  :alt: Creative Commons License
+  :align: left
+  :target: http://creativecommons.org/licenses/by/4.0/
+
+| Paul N. Beuchat, 2023
+| This page is licensed under a `Creative Commons Attribution 4.0 International License <http://creativecommons.org/licenses/by/4.0/>`_.
+
+----
+
+|

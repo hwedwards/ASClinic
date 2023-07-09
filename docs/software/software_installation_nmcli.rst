@@ -95,3 +95,21 @@ Connect to, or change the connection to, a saved network:
   nmcli connection up <network-ssid>.
 
 For these previous two commands, :code:`<network-ssid>` should replaced by the SSID of the network, i.e., the network name.
+
+
+
+|
+
+----
+
+.. image:: https://i.creativecommons.org/l/by/4.0/88x31.png
+  :alt: Creative Commons License
+  :align: left
+  :target: http://creativecommons.org/licenses/by/4.0/
+
+| Paul N. Beuchat, 2023
+| This page is licensed under a `Creative Commons Attribution 4.0 International License <http://creativecommons.org/licenses/by/4.0/>`_.
+
+----
+
+|

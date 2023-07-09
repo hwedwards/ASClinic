@@ -167,3 +167,21 @@ Letting :math:`t_{\mathrm{vec}}` denote :code:`tvec` and :math:`R` denote :code:
      \begin{bmatrix}x\\y\\z\end{bmatrix}^{\,\mathrm{camera}\,\mathrm{frame}} = t_{\mathrm{vec}} + R \, \begin{bmatrix}x\\y\\z\end{bmatrix}^{\,\mathrm{marker}\,\mathrm{frame}}
 
 Based on a known location and rotation of the particular ArUco marker relative to the world frame, it is possible to compute an estimate of the camera's location within the world frame, and hence an estimate of robot's pose on which the camera is mounted.
+
+
+
+|
+
+----
+
+.. image:: https://i.creativecommons.org/l/by/4.0/88x31.png
+  :alt: Creative Commons License
+  :align: left
+  :target: http://creativecommons.org/licenses/by/4.0/
+
+| Paul N. Beuchat, 2023
+| This page is licensed under a `Creative Commons Attribution 4.0 International License <http://creativecommons.org/licenses/by/4.0/>`_.
+
+----
+
+|

@@ -1,7 +1,7 @@
 .. _building-block-gpio-single-pin:
 
-ROS Interface with a Single GPIO Pin
-====================================
+Interface with a Single GPIO Pin
+================================
 
 Once the device is physically connected to a GPIO, and before attempting to interface using ROS, you should use the command line tool to check the device is properly connected.
 See the :ref:`GPIO page <comm-protocol-GPIO>` for details of the command line tools, and see the :ref:`SBC page <single-board-computers>` for details of the GPIO pins for the relevant SBC.
@@ -81,3 +81,21 @@ Then you can launch the template GPIO nodes with:
   .. code-block:: bash
 
     target_link_libraries(template_gpio ${catkin_LIBRARIES} -lgpiod)
+
+
+
+|
+
+----
+
+.. image:: https://i.creativecommons.org/l/by/4.0/88x31.png
+  :alt: Creative Commons License
+  :align: left
+  :target: http://creativecommons.org/licenses/by/4.0/
+
+| Paul N. Beuchat, 2023
+| This page is licensed under a `Creative Commons Attribution 4.0 International License <http://creativecommons.org/licenses/by/4.0/>`_.
+
+----
+
+|

@@ -226,3 +226,21 @@ External links
 * The launch process recommended above is based on the launch file found `here in the RPlidar ROS package <https://github.com/Slamtec/rplidar_ros/tree/master/launch>`_
 
 * `Definition of the LaserScan message type <https://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/LaserScan.html>`_
+
+
+
+|
+
+----
+
+.. image:: https://i.creativecommons.org/l/by/4.0/88x31.png
+  :alt: Creative Commons License
+  :align: left
+  :target: http://creativecommons.org/licenses/by/4.0/
+
+| Paul N. Beuchat, 2023
+| This page is licensed under a `Creative Commons Attribution 4.0 International License <http://creativecommons.org/licenses/by/4.0/>`_.
+
+----
+
+|

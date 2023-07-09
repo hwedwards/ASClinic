@@ -29,3 +29,21 @@ The `ROS wiki introduction page <https://wiki.ros.org/ROS/Introduction#Goals>`_ 
 
 .. important::
   Each time you feel that you have gained new skills and mastery with ROS, take some time to write down another alternative answer to the question: why use ROS?
+
+
+
+|
+
+----
+
+.. image:: https://i.creativecommons.org/l/by/4.0/88x31.png
+  :alt: Creative Commons License
+  :align: left
+  :target: http://creativecommons.org/licenses/by/4.0/
+
+| Paul N. Beuchat, 2023
+| This page is licensed under a `Creative Commons Attribution 4.0 International License <http://creativecommons.org/licenses/by/4.0/>`_.
+
+----
+
+|

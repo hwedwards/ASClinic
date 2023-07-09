@@ -116,11 +116,26 @@ Important notes on I2C usages in ROS nodes
 Step-by-step guides for the I2C device drivers
 **********************************************
 
+* :ref:`building-block-i2c-pololu-smc-g2`
+* :ref:`building-block-i2c-servo-driver-pca9685`
 
-.. toctree::
-  :maxdepth: 2
-  
-  building_block_i2c_pololu_smc_g2
-  building_block_i2c_servo_driver_pca9685
-  building_block_i2c_tof_driver_vl53l1x
+..
+  * :ref:`building_block_i2c_tof_driver_vl53l1x`
 
+
+
+|
+
+----
+
+.. image:: https://i.creativecommons.org/l/by/4.0/88x31.png
+  :alt: Creative Commons License
+  :align: left
+  :target: http://creativecommons.org/licenses/by/4.0/
+
+| Paul N. Beuchat, 2023
+| This page is licensed under a `Creative Commons Attribution 4.0 International License <http://creativecommons.org/licenses/by/4.0/>`_.
+
+----
+
+|

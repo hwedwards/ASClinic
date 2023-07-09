@@ -6,6 +6,9 @@ Single Pin GPIO (General Purpose Input Output)
 A single pin GPIO has only two states, :code:`0` and :code:`1`, which can be either driven by the computer associated with the GPIO pin, or driven by an external device connected to the pin. The timing of driving changes between the two states can be arbitary up to the resolution of the microcontroller that controls the GPIO.
 
 
+
+.. _comm-protocol-GPIO-gpiod-library:
+
 The :code:`gpiod` library
 *************************
 

@@ -22,6 +22,7 @@ Section headings
 A heading in define by underlining the titile with a puncuation character that is at least as long as the title. The typical punction marks to use are :code:`= * # - ^ "` and their usage should be consitent within a project.
 
 For this wiki, we use the following:
+
 * :code:`=` for the top-level title, e.g., the title of this page.
 * :code:`*` for section headings, e.g., the "Section headings" heading of this section (that is a mouthful!).
 * :code:`#` for subsection headings.

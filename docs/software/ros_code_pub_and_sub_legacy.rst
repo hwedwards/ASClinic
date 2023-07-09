@@ -254,3 +254,21 @@ The following two lines of code create a node handle to the groups namespace:
   ros::NodeHandle node_handle_for_group(m_namespace);
 
 The first line gets a string to the namespace of the node, which will hence be the namespace of the group in which the node was launched. The second line creates a :code:`ros::NodeHandle` type variable with the variable name :code:`node_handle_for_group`. You can subsequently use :code:`node_handle_for_group.advertise(...)` and :code:`node_handle_for_group.subscribe(...)` to publish and subscribe to topics within this namespace.
+
+
+
+|
+
+----
+
+.. image:: https://i.creativecommons.org/l/by/4.0/88x31.png
+  :alt: Creative Commons License
+  :align: left
+  :target: http://creativecommons.org/licenses/by/4.0/
+
+| Paul N. Beuchat, 2023
+| This page is licensed under a `Creative Commons Attribution 4.0 International License <http://creativecommons.org/licenses/by/4.0/>`_.
+
+----
+
+|
