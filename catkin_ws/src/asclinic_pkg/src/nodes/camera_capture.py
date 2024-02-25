@@ -55,6 +55,13 @@ from cv_bridge import CvBridge, CvBridgeError
 
 
 # DEFINE THE PARAMETERS
+# > For the verbosity level of displaying info
+CAMERA_CAPTURE_VERBOSITY = 1
+# Note: the levels of increasing verbosity are defined as:
+# 0 : Info is not displayed. Warnings and errors are still displayed
+# 1 : Startup info is displayed
+# 2 : Info about detected chessboards is displayed
+
 # > For the number of the USB camera device
 #   i.e., for /dev/video0, this parameter should be 0
 USB_CAMERA_DEVICE_NUMBER = 0
@@ -70,13 +77,16 @@ CHESSBOARD_SIZE_WIDTH  = 6
 
 # > For where to save images captured by the camera
 #   Note: ensure that this path already exists
-#   Note: images are only saved when a message is received
+#   Note: one image is saved each time a message is received
 #         on the "request_save_image" topic.
-SAVE_IMAGE_PATH = "~/saved_camera_images/"
+SAVE_IMAGE_PATH = "/home/asc/saved_camera_images/"
 
 # > A flag for whether to save any images that contains
 #   a camera calibration chessboard
-SHOULD_SAVE_CHESSBOARD_IMAGES = True
+SHOULD_SAVE_ALL_CHESSBOARD_IMAGES = True
+
+# > A flag for whether to publish the images captured
+SHOULD_PUBLISH_CAMERA_IMAGES = False
 
 # > A flag for whether to display the images captured
 SHOULD_SHOW_IMAGES = False
@@ -87,11 +97,47 @@ class CameraCapture:
 
     def __init__(self):
         
+        # Get the parameters:
+        # > For the verbosity level of displaying info
+        CAMERA_CAPTURE_VERBOSITY = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_verbosity")
+
+        # > For the number of the USB camera device
+        USB_CAMERA_DEVICE_NUMBER = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_usb_camera_device_number")
+
+        # > For the camera frame height
+        DESIRED_CAMERA_FRAME_HEIGHT = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_desired_camera_frame_height")
+
+        # > For the camera frame width
+        DESIRED_CAMERA_FRAME_WIDTH = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_desired_camera_frame_width")
+
+        # > For the camera fps
+        DESIRED_CAMERA_FPS = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_desired_camera_fps")
+
+        # > For the height of the chessboard grid
+        CHESSBOARD_SIZE_HEIGHT = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_chessboard_size_height")
+
+        # > For the width of the chessboard grid
+        CHESSBOARD_SIZE_WIDTH  = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_chessboard_size_width")
+
+        # > For where to save images captured by the camera
+        SAVE_IMAGE_PATH = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_save_image_path")
+
+        # > For whether to save any images that contain a chessboard
+        SHOULD_SAVE_ALL_CHESSBOARD_IMAGES = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_should_save_all_chessboard_images")
+
+        # > For whether to publish the images captured
+        SHOULD_PUBLISH_CAMERA_IMAGES = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_should_publish_camera_images")
+
+        # > For whether to display the images captured
+        SHOULD_SHOW_IMAGES = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_should_show_camera_images")
+
+
+
         # Initialise a publisher for the images
-        self.image_publisher = rospy.Publisher("/asc"+"/camera_image", Image, queue_size=10)
+        self.image_publisher = rospy.Publisher(node_namespace+"camera_image", Image, queue_size=10)
 
         # Initialise a subscriber for flagging when to save an image
-        rospy.Subscriber("/asc"+"/request_save_image", UInt32, self.requestSaveImageSubscriberCallback)
+        rospy.Subscriber(node_namespace+"request_save_image", UInt32, self.requestSaveImageSubscriberCallback)
         # > For convenience, the command line can be used to trigger this subscriber
         #   by publishing a message to the "request_save_image" as follows:
         #
@@ -127,20 +173,21 @@ class CameraCapture:
         # Display the properties of the camera upon initialisation
         # > A list of all the properties available can be found here:
         #   https://docs.opencv.org/4.x/d4/d15/group__videoio__flags__base.html#gaeb8dd9c89c10a5c63c139bf7c4f5704d
-        print("\n[CAMERA CAPTURE] Camera properties upon initialisation:")
-        print("CV_CAP_PROP_FRAME_HEIGHT : '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_HEIGHT)))
-        print("CV_CAP_PROP_FRAME_WIDTH :  '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_WIDTH)))
-        print("CAP_PROP_FPS :             '{}'".format(self.cam.get(cv2.CAP_PROP_FPS)))
-        print("CAP_PROP_FOCUS :           '{}'".format(self.cam.get(cv2.CAP_PROP_FOCUS)))
-        print("CAP_PROP_AUTOFOCUS :       '{}'".format(self.cam.get(cv2.CAP_PROP_AUTOFOCUS)))
-        print("CAP_PROP_BRIGHTNESS :      '{}'".format(self.cam.get(cv2.CAP_PROP_BRIGHTNESS)))
-        print("CAP_PROP_CONTRAST :        '{}'".format(self.cam.get(cv2.CAP_PROP_CONTRAST)))
-        print("CAP_PROP_SATURATION :      '{}'".format(self.cam.get(cv2.CAP_PROP_SATURATION)))
-        #print("CAP_PROP_HUE :             '{}'".format(self.cam.get(cv2.CAP_PROP_HUE)))
-        #print("CAP_PROP_CONVERT_RGB :     '{}'".format(self.cam.get(cv2.CAP_PROP_CONVERT_RGB)))
-        #print("CAP_PROP_POS_MSEC :        '{}'".format(self.cam.get(cv2.CAP_PROP_POS_MSEC)))
-        #print("CAP_PROP_FRAME_COUNT  :    '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_COUNT)))
-        print("CAP_PROP_BUFFERSIZE :      '{}'".format(self.cam.get(cv2.CAP_PROP_BUFFERSIZE)))
+        if (CAMERA_CAPTURE_VERBOSITY >= 1):
+            print("\n[CAMERA CAPTURE] Camera properties upon initialisation:")
+            print("CV_CAP_PROP_FRAME_HEIGHT : '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+            print("CV_CAP_PROP_FRAME_WIDTH :  '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_WIDTH)))
+            print("CAP_PROP_FPS :             '{}'".format(self.cam.get(cv2.CAP_PROP_FPS)))
+            print("CAP_PROP_FOCUS :           '{}'".format(self.cam.get(cv2.CAP_PROP_FOCUS)))
+            print("CAP_PROP_AUTOFOCUS :       '{}'".format(self.cam.get(cv2.CAP_PROP_AUTOFOCUS)))
+            print("CAP_PROP_BRIGHTNESS :      '{}'".format(self.cam.get(cv2.CAP_PROP_BRIGHTNESS)))
+            print("CAP_PROP_CONTRAST :        '{}'".format(self.cam.get(cv2.CAP_PROP_CONTRAST)))
+            print("CAP_PROP_SATURATION :      '{}'".format(self.cam.get(cv2.CAP_PROP_SATURATION)))
+            #print("CAP_PROP_HUE :             '{}'".format(self.cam.get(cv2.CAP_PROP_HUE)))
+            #print("CAP_PROP_CONVERT_RGB :     '{}'".format(self.cam.get(cv2.CAP_PROP_CONVERT_RGB)))
+            #print("CAP_PROP_POS_MSEC :        '{}'".format(self.cam.get(cv2.CAP_PROP_POS_MSEC)))
+            #print("CAP_PROP_FRAME_COUNT  :    '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_COUNT)))
+            print("CAP_PROP_BUFFERSIZE :      '{}'".format(self.cam.get(cv2.CAP_PROP_BUFFERSIZE)))
 
         # Set the camera properties to the desired values
         # > Frame height and  width, in [pixels]
@@ -160,20 +207,21 @@ class CameraCapture:
         self.cam.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
         # Display the properties of the camera after setting the desired values
-        print("\n[CAMERA CAPTURE] Camera properties upon initialisation:")
-        print("CV_CAP_PROP_FRAME_HEIGHT : '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_HEIGHT)))
-        print("CV_CAP_PROP_FRAME_WIDTH :  '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_WIDTH)))
-        print("CAP_PROP_FPS :             '{}'".format(self.cam.get(cv2.CAP_PROP_FPS)))
-        print("CAP_PROP_FOCUS :           '{}'".format(self.cam.get(cv2.CAP_PROP_FOCUS)))
-        print("CAP_PROP_AUTOFOCUS :       '{}'".format(self.cam.get(cv2.CAP_PROP_AUTOFOCUS)))
-        print("CAP_PROP_BRIGHTNESS :      '{}'".format(self.cam.get(cv2.CAP_PROP_BRIGHTNESS)))
-        print("CAP_PROP_CONTRAST :        '{}'".format(self.cam.get(cv2.CAP_PROP_CONTRAST)))
-        print("CAP_PROP_SATURATION :      '{}'".format(self.cam.get(cv2.CAP_PROP_SATURATION)))
-        #print("CAP_PROP_HUE :             '{}'".format(self.cam.get(cv2.CAP_PROP_HUE)))
-        #print("CAP_PROP_CONVERT_RGB :     '{}'".format(self.cam.get(cv2.CAP_PROP_CONVERT_RGB)))
-        #print("CAP_PROP_POS_MSEC :        '{}'".format(self.cam.get(cv2.CAP_PROP_POS_MSEC)))
-        #print("CAP_PROP_FRAME_COUNT  :    '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_COUNT)))
-        print("CAP_PROP_BUFFERSIZE :      '{}'".format(self.cam.get(cv2.CAP_PROP_BUFFERSIZE)))
+        if (CAMERA_CAPTURE_VERBOSITY >= 1):
+            print("\n[CAMERA CAPTURE] Camera properties upon initialisation:")
+            print("CV_CAP_PROP_FRAME_HEIGHT : '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+            print("CV_CAP_PROP_FRAME_WIDTH :  '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_WIDTH)))
+            print("CAP_PROP_FPS :             '{}'".format(self.cam.get(cv2.CAP_PROP_FPS)))
+            print("CAP_PROP_FOCUS :           '{}'".format(self.cam.get(cv2.CAP_PROP_FOCUS)))
+            print("CAP_PROP_AUTOFOCUS :       '{}'".format(self.cam.get(cv2.CAP_PROP_AUTOFOCUS)))
+            print("CAP_PROP_BRIGHTNESS :      '{}'".format(self.cam.get(cv2.CAP_PROP_BRIGHTNESS)))
+            print("CAP_PROP_CONTRAST :        '{}'".format(self.cam.get(cv2.CAP_PROP_CONTRAST)))
+            print("CAP_PROP_SATURATION :      '{}'".format(self.cam.get(cv2.CAP_PROP_SATURATION)))
+            #print("CAP_PROP_HUE :             '{}'".format(self.cam.get(cv2.CAP_PROP_HUE)))
+            #print("CAP_PROP_CONVERT_RGB :     '{}'".format(self.cam.get(cv2.CAP_PROP_CONVERT_RGB)))
+            #print("CAP_PROP_POS_MSEC :        '{}'".format(self.cam.get(cv2.CAP_PROP_POS_MSEC)))
+            #print("CAP_PROP_FRAME_COUNT  :    '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_COUNT)))
+            print("CAP_PROP_BUFFERSIZE :      '{}'".format(self.cam.get(cv2.CAP_PROP_BUFFERSIZE)))
 
         # The frame per second (fps) property cannot take any value,
         # hence compare the actural value and display any discrepancy
@@ -193,7 +241,8 @@ class CameraCapture:
         # > Get the dimensions of the frame
         dimensions = current_frame.shape
         # > Display the dimensions
-        rospy.loginfo("[CAMERA CAPTURE] As a double check of the camera properties set, a frame captured just now has dimensions = " + str(dimensions))
+        if (CAMERA_CAPTURE_VERBOSITY >= 1):
+            rospy.loginfo("[CAMERA CAPTURE] As a double check of the camera properties set, a frame captured just now has dimensions = " + str(dimensions))
         # > Also check the values
         if (not(dimensions[0]==self.camera_frame_height) or not(dimensions[1]==self.camera_frame_width)):
             rospy.logwarn("[CAMERA CAPTURE] ERROR: frame dimensions do NOT match the desired values.")
@@ -202,7 +251,8 @@ class CameraCapture:
             self.camera_frame_width  = dimensions[1]
 
         # Display the status
-        rospy.loginfo("[CAMERA CAPTURE] Initialisation complete")
+        if (CAMERA_CAPTURE_VERBOSITY >= 1):
+            rospy.loginfo("[CAMERA CAPTURE] Node initialisation complete")
 
         # Initialise a timer for capturing the camera frames
         rospy.Timer(rospy.Duration(1/self.camera_fps), self.timerCallbackForCameraRead)
@@ -224,14 +274,8 @@ class CameraCapture:
 
         # Check if the camera frame was successfully read
         if (return_flag == True):
-            # Publish the camera frame
-            rospy.loginfo("[CAMERA CAPTURE] Now publishing camera frame")
-            try:
-                self.image_publisher.publish(self.cv_bridge.cv2_to_imgmsg(current_frame, "bgr8"))
-            except CvBridgeError as cv_bridge_err:
-                print(cv_bridge_err)
-
-            if (SHOULD_SAVE_CHESSBOARD_IMAGES):
+            # Save camera images for which a chessboard is detected
+            if (SHOULD_SAVE_ALL_CHESSBOARD_IMAGES):
                 # Check if the camera frame contains a calibration
                 # chessboard that can be detected by OpenCV
                 # > Convert the image to gray scale
@@ -250,11 +294,20 @@ class CameraCapture:
                 internal_corner_grid_size = (CHESSBOARD_SIZE_HEIGHT,CHESSBOARD_SIZE_WIDTH)
                 chessboard_found, chessboard_corners = cv2.findChessboardCorners(current_frame_as_gray, internal_corner_grid_size, flags=find_flags)
                 # If found, then set the save image flag to true
-                if chessboard_found == True:
-                    rospy.loginfo("[CAMERA CAPTURE] Chessboard FOUND, this image will be saved")
+                if (chessboard_found == True):
+                    if (CAMERA_CAPTURE_VERBOSITY >= 2):
+                        rospy.loginfo("[CAMERA CAPTURE] Chessboard FOUND, this image will be saved")
                     self.should_save_image = True
                 #else:
                 #    rospy.loginfo("[CAMERA CAPTURE] Chessboard NOT found")
+
+            # Publish the camera frame
+            if (SHOULD_PUBLISH_CAMERA_IMAGES):
+                #rospy.loginfo("[CAMERA CAPTURE] Now publishing camera frame")
+                try:
+                    self.image_publisher.publish(self.cv_bridge.cv2_to_imgmsg(current_frame, "bgr8"))
+                except CvBridgeError as cv_bridge_err:
+                    print(cv_bridge_err)
 
             # Save the camera frame if requested
             if (self.should_save_image):
@@ -264,7 +317,8 @@ class CameraCapture:
                 temp_filename = SAVE_IMAGE_PATH + "image" + str(self.save_image_counter) + ".jpg"
                 cv2.imwrite(temp_filename,current_frame)
                 # Display the path to where the image was saved
-                rospy.loginfo("[CAMERA CAPTURE] Saved camera frame to: " + temp_filename)
+                if (CAMERA_CAPTURE_VERBOSITY >= 2):
+                    rospy.loginfo("[CAMERA CAPTURE] Saved camera frame to: " + temp_filename)
                 # Reset the flag to false
                 self.should_save_image = False
 
@@ -274,13 +328,14 @@ class CameraCapture:
                 cv2.imshow("[CAMERA CAPTURE]", current_frame)
         else:
             # Display an error message
-            rospy.loginfo("[CAMERA CAPTURE] ERROR occurred during \"self.cam.read()\"")
+            rospy.logwarn("[CAMERA CAPTURE] ERROR occurred during \"self.cam.read()\"")
 
 
 
     # Respond to subscriber receiving a message
     def requestSaveImageSubscriberCallback(self, msg):
-        rospy.loginfo("[CAMERA CAPTURE] Request received to save the next image")
+        if (CAMERA_CAPTURE_VERBOSITY >= 1):
+            rospy.loginfo("[CAMERA CAPTURE] Request received to save the next image")
         # Set the flag for saving an image
         self.should_save_image = True
 
@@ -291,7 +346,14 @@ if __name__ == '__main__':
     global node_name
     node_name = "camera_capture"
     rospy.init_node(node_name)
+
+    # Get the namespace of the node
+    global node_namespace
+    node_namespace = rospy.get_namespace()
+
+    # Initialise an object of the camera capture class
     camera_capture_object = CameraCapture()
+
     # Spin as a single-threaded node
     rospy.spin()
 
