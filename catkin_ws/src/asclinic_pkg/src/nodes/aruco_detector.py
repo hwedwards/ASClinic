@@ -57,6 +57,10 @@ import rospy
 from std_msgs.msg import UInt32
 from sensor_msgs.msg import Image
 
+# Import asclinic_pkg message types
+from asclinic_pkg.msg import FiducialMarker
+from asclinic_pkg.msg import FiducialMarkerArray
+
 # Import numpy
 import numpy as np
 
@@ -64,7 +68,7 @@ import numpy as np
 import cv2
 
 # Import aruco
-import cv2.aruco as aruco
+#import cv2.aruco as aruco
 
 # Package to convert between ROS and OpenCV Images
 from cv_bridge import CvBridge, CvBridgeError
@@ -72,6 +76,13 @@ from cv_bridge import CvBridge, CvBridgeError
 
 
 # DEFINE THE PARAMETERS
+# > For the verbosity level of displaying info
+ARUCO_DETECTOR_VERBOSITY = 1
+# Note: the levels of increasing verbosity are defined as:
+# 0 : Info is not displayed. Warnings and errors are still displayed
+# 1 : Startup info is displayed
+# 2 : Info about detected Aruco markers is displayed
+
 # > For the number of the USB camera device
 #   i.e., for /dev/video0, this parameter should be 0
 USB_CAMERA_DEVICE_NUMBER = 0
@@ -81,20 +92,26 @@ DESIRED_CAMERA_FRAME_HEIGHT = 1080
 DESIRED_CAMERA_FRAME_WIDTH = 1920
 DESIRED_CAMERA_FPS = 5
 
-# > For the size of the aruco marker, in meters
+# > For the size of the aruco marker
 MARKER_SIZE = 0.250
+# NOTE: the unit are arbitary and the units of "tvec" match
+#       the units of the marker size.
 
 # > For where to save images captured by the camera
 #   Note: ensure that this path already exists
-#   Note: images are only saved when a message is received
+#   Note: one image is saved each time a message is received
 #         on the "request_save_image" topic.
-SAVE_IMAGE_PATH = "~/saved_camera_images/"
+SAVE_IMAGE_PATH = "/home/asc/saved_camera_images/"
 
-# > A flag for whether to display the images captured
-SHOULD_SHOW_IMAGES = False
+# > A flag for whether to save all images that contain
+#   an aruco marker
+SHOULD_SAVE_ALL_ARUCO_IMAGES = False
 
 # > A flag for whether to publish the images captured
-SHOULD_PUBLISH_CAMERA_IMAGES = True
+SHOULD_PUBLISH_CAMERA_IMAGES = False
+
+# > A flag for whether to display the images captured
+SHOULD_SHOW_CAMERA_IMAGES = False
 
 
 
@@ -102,11 +119,47 @@ class ArucoDetector:
 
     def __init__(self):
         
+        # Get the parameters:
+        # > For the verbosity level of displaying info
+        ARUCO_DETECTOR_VERBOSITY = rospy.get_param(node_namespace + node_name + "/" + "aruco_detector_verbosity")
+
+        # > For the number of the USB camera device
+        USB_CAMERA_DEVICE_NUMBER = rospy.get_param(node_namespace + node_name + "/" + "aruco_detector_usb_camera_device_number")
+
+        # > For the camera frame height
+        DESIRED_CAMERA_FRAME_HEIGHT = rospy.get_param(node_namespace + node_name + "/" + "aruco_detector_desired_camera_frame_height")
+
+        # > For the camera frame width
+        DESIRED_CAMERA_FRAME_WIDTH = rospy.get_param(node_namespace + node_name + "/" + "aruco_detector_desired_camera_frame_width")
+
+        # > For the camera fps
+        DESIRED_CAMERA_FPS = rospy.get_param(node_namespace + node_name + "/" + "aruco_detector_desired_camera_fps")
+
+        # > For the size of the aruco marker
+        MARKER_SIZE = rospy.get_param(node_namespace + node_name + "/" + "aruco_detector_marker_size")
+
+        # > For where to save images captured by the camera
+        SAVE_IMAGE_PATH = rospy.get_param(node_namespace + node_name + "/" + "aruco_detector_save_image_path")
+
+        # > For whether to save any images that contain an aruco marker
+        SHOULD_SAVE_ALL_ARUCO_IMAGES = rospy.get_param(node_namespace + node_name + "/" + "aruco_detector_should_save_all_aruco_images")
+
+        # > For whether to publish the images captured
+        SHOULD_PUBLISH_CAMERA_IMAGES = rospy.get_param(node_namespace + node_name + "/" + "aruco_detector_should_publish_camera_images")
+
+        # > For whether to display the images captured
+        SHOULD_SHOW_CAMERA_IMAGES = rospy.get_param(node_namespace + node_name + "/" + "aruco_detector_should_show_camera_images")
+
+
+
+        # Initialise a publisher for the details of detected markers
+        self.marker_detections_publisher = rospy.Publisher(node_namespace+"aruco_detections", FiducialMarkerArray, queue_size=10)
+
         # Initialise a publisher for the images
-        self.image_publisher = rospy.Publisher("/asc"+"/camera_image", Image, queue_size=10)
+        self.image_publisher = rospy.Publisher(node_namespace+"camera_image", Image, queue_size=10)
 
         # Initialise a subscriber for flagging when to save an image
-        rospy.Subscriber("/asc"+"/request_save_image", UInt32, self.requestSaveImageSubscriberCallback)
+        rospy.Subscriber(node_namespace+"request_save_image", UInt32, self.requestSaveImageSubscriberCallback)
         # > For convenience, the command line can be used to trigger this subscriber
         #   by publishing a message to the "request_save_image" as follows:
         #
@@ -142,20 +195,21 @@ class ArucoDetector:
         # Display the properties of the camera upon initialisation
         # > A list of all the properties available can be found here:
         #   https://docs.opencv.org/4.x/d4/d15/group__videoio__flags__base.html#gaeb8dd9c89c10a5c63c139bf7c4f5704d
-        print("\n[ARUCO DETECTOR] Camera properties upon initialisation:")
-        print("CV_CAP_PROP_FRAME_HEIGHT : '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_HEIGHT)))
-        print("CV_CAP_PROP_FRAME_WIDTH :  '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_WIDTH)))
-        print("CAP_PROP_FPS :             '{}'".format(self.cam.get(cv2.CAP_PROP_FPS)))
-        print("CAP_PROP_FOCUS :           '{}'".format(self.cam.get(cv2.CAP_PROP_FOCUS)))
-        print("CAP_PROP_AUTOFOCUS :       '{}'".format(self.cam.get(cv2.CAP_PROP_AUTOFOCUS)))
-        print("CAP_PROP_BRIGHTNESS :      '{}'".format(self.cam.get(cv2.CAP_PROP_BRIGHTNESS)))
-        print("CAP_PROP_CONTRAST :        '{}'".format(self.cam.get(cv2.CAP_PROP_CONTRAST)))
-        print("CAP_PROP_SATURATION :      '{}'".format(self.cam.get(cv2.CAP_PROP_SATURATION)))
-        #print("CAP_PROP_HUE :             '{}'".format(self.cam.get(cv2.CAP_PROP_HUE)))
-        #print("CAP_PROP_CONVERT_RGB :     '{}'".format(self.cam.get(cv2.CAP_PROP_CONVERT_RGB)))
-        #print("CAP_PROP_POS_MSEC :        '{}'".format(self.cam.get(cv2.CAP_PROP_POS_MSEC)))
-        #print("CAP_PROP_FRAME_COUNT :     '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_COUNT)))
-        print("CAP_PROP_BUFFERSIZE :      '{}'".format(self.cam.get(cv2.CAP_PROP_BUFFERSIZE)))
+        if (ARUCO_DETECTOR_VERBOSITY >= 1):
+            print("\n[ARUCO DETECTOR] Camera properties upon initialisation:")
+            print("CV_CAP_PROP_FRAME_HEIGHT : '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+            print("CV_CAP_PROP_FRAME_WIDTH :  '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_WIDTH)))
+            print("CAP_PROP_FPS :             '{}'".format(self.cam.get(cv2.CAP_PROP_FPS)))
+            print("CAP_PROP_FOCUS :           '{}'".format(self.cam.get(cv2.CAP_PROP_FOCUS)))
+            print("CAP_PROP_AUTOFOCUS :       '{}'".format(self.cam.get(cv2.CAP_PROP_AUTOFOCUS)))
+            print("CAP_PROP_BRIGHTNESS :      '{}'".format(self.cam.get(cv2.CAP_PROP_BRIGHTNESS)))
+            print("CAP_PROP_CONTRAST :        '{}'".format(self.cam.get(cv2.CAP_PROP_CONTRAST)))
+            print("CAP_PROP_SATURATION :      '{}'".format(self.cam.get(cv2.CAP_PROP_SATURATION)))
+            #print("CAP_PROP_HUE :             '{}'".format(self.cam.get(cv2.CAP_PROP_HUE)))
+            #print("CAP_PROP_CONVERT_RGB :     '{}'".format(self.cam.get(cv2.CAP_PROP_CONVERT_RGB)))
+            #print("CAP_PROP_POS_MSEC :        '{}'".format(self.cam.get(cv2.CAP_PROP_POS_MSEC)))
+            #print("CAP_PROP_FRAME_COUNT :     '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_COUNT)))
+            print("CAP_PROP_BUFFERSIZE :      '{}'".format(self.cam.get(cv2.CAP_PROP_BUFFERSIZE)))
 
         # Set the camera properties to the desired values
         # > Frame height and  width, in [pixels]
@@ -175,20 +229,21 @@ class ArucoDetector:
         self.cam.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
         # Display the properties of the camera after setting the desired values
-        print("\n[ARUCO DETECTOR] Camera properties upon initialisation:")
-        print("CV_CAP_PROP_FRAME_HEIGHT : '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_HEIGHT)))
-        print("CV_CAP_PROP_FRAME_WIDTH :  '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_WIDTH)))
-        print("CAP_PROP_FPS :             '{}'".format(self.cam.get(cv2.CAP_PROP_FPS)))
-        print("CAP_PROP_FOCUS :           '{}'".format(self.cam.get(cv2.CAP_PROP_FOCUS)))
-        print("CAP_PROP_AUTOFOCUS :       '{}'".format(self.cam.get(cv2.CAP_PROP_AUTOFOCUS)))
-        print("CAP_PROP_BRIGHTNESS :      '{}'".format(self.cam.get(cv2.CAP_PROP_BRIGHTNESS)))
-        print("CAP_PROP_CONTRAST :        '{}'".format(self.cam.get(cv2.CAP_PROP_CONTRAST)))
-        print("CAP_PROP_SATURATION :      '{}'".format(self.cam.get(cv2.CAP_PROP_SATURATION)))
-        #print("CAP_PROP_HUE :             '{}'".format(self.cam.get(cv2.CAP_PROP_HUE)))
-        #print("CAP_PROP_CONVERT_RGB :     '{}'".format(self.cam.get(cv2.CAP_PROP_CONVERT_RGB)))
-        #print("CAP_PROP_POS_MSEC :        '{}'".format(self.cam.get(cv2.CAP_PROP_POS_MSEC)))
-        #print("CAP_PROP_FRAME_COUNT  :    '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_COUNT)))
-        print("CAP_PROP_BUFFERSIZE :      '{}'".format(self.cam.get(cv2.CAP_PROP_BUFFERSIZE)))
+        if (ARUCO_DETECTOR_VERBOSITY >= 1):
+            print("\n[ARUCO DETECTOR] Camera properties upon initialisation:")
+            print("CV_CAP_PROP_FRAME_HEIGHT : '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+            print("CV_CAP_PROP_FRAME_WIDTH :  '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_WIDTH)))
+            print("CAP_PROP_FPS :             '{}'".format(self.cam.get(cv2.CAP_PROP_FPS)))
+            print("CAP_PROP_FOCUS :           '{}'".format(self.cam.get(cv2.CAP_PROP_FOCUS)))
+            print("CAP_PROP_AUTOFOCUS :       '{}'".format(self.cam.get(cv2.CAP_PROP_AUTOFOCUS)))
+            print("CAP_PROP_BRIGHTNESS :      '{}'".format(self.cam.get(cv2.CAP_PROP_BRIGHTNESS)))
+            print("CAP_PROP_CONTRAST :        '{}'".format(self.cam.get(cv2.CAP_PROP_CONTRAST)))
+            print("CAP_PROP_SATURATION :      '{}'".format(self.cam.get(cv2.CAP_PROP_SATURATION)))
+            #print("CAP_PROP_HUE :             '{}'".format(self.cam.get(cv2.CAP_PROP_HUE)))
+            #print("CAP_PROP_CONVERT_RGB :     '{}'".format(self.cam.get(cv2.CAP_PROP_CONVERT_RGB)))
+            #print("CAP_PROP_POS_MSEC :        '{}'".format(self.cam.get(cv2.CAP_PROP_POS_MSEC)))
+            #print("CAP_PROP_FRAME_COUNT  :    '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_COUNT)))
+            print("CAP_PROP_BUFFERSIZE :      '{}'".format(self.cam.get(cv2.CAP_PROP_BUFFERSIZE)))
 
         # The frame per second (fps) property cannot take any value,
         # hence compare the actural value and display any discrepancy
@@ -203,20 +258,20 @@ class ArucoDetector:
         self.cv_bridge = CvBridge()
 
         # Get the ArUco dictionary to use
-        self.aruco_dict = aruco.getPredefinedDictionary(aruco.DICT_4X4_50)
+        self.aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
 
         # Create an parameter structure needed for the ArUco detection
-        self.aruco_parameters = aruco.DetectorParameters()
+        self.aruco_parameters = cv2.aruco.DetectorParameters()
         # > Specify the parameter for: corner refinement
-        self.aruco_parameters.cornerRefinementMethod = aruco.CORNER_REFINE_SUBPIX
+        self.aruco_parameters.cornerRefinementMethod = cv2.aruco.CORNER_REFINE_SUBPIX
 
         # Create an Aruco detector object
-        self.aruco_detector = aruco.ArucoDetector(self.aruco_dict, self.aruco_parameters)
+        self.aruco_detector = cv2.aruco.ArucoDetector(self.aruco_dict, self.aruco_parameters)
 
         # Note: For OpenCV versions <=4.6, the above functions were:
-        #self.aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_50)
-        #self.aruco_parameters = aruco.DetectorParameters_create()
-        #results = aruco.detectMarkers(current_frame_gray, self.aruco_dict, parameters=self.aruco_parameters)
+        #self.aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
+        #self.aruco_parameters = cv2.aruco.DetectorParameters_create()
+        #results = cv2.aruco.detectMarkers(current_frame_gray, self.aruco_dict, parameters=self.aruco_parameters)
 
         # Define the marker corner point in the marker frame
         marker_size_half = 0.5 * MARKER_SIZE
@@ -242,16 +297,21 @@ class ArucoDetector:
         # > Get the dimensions of the frame
         dimensions = current_frame.shape
         # > Display the dimensions
-        rospy.loginfo("[ARUCO DETECTOR] As a double check of the camera properties set, a frame captured just now has dimensions = " + str(dimensions))
+        if (ARUCO_DETECTOR_VERBOSITY >= 1):
+            rospy.loginfo("[ARUCO DETECTOR] As a double check of the camera properties set, a frame captured just now has dimensions = " + str(dimensions))
         # > Also check the values
         if (not(dimensions[0]==self.camera_frame_height) or not(dimensions[1]==self.camera_frame_width)):
-            rospy.logerr("[ARUCO DETECTOR] ERROR: frame dimensions do NOT match the desired values.")
+            rospy.logwarn("[ARUCO DETECTOR] ERROR: frame dimensions do NOT match the desired values.")
             # Update the variables
             self.camera_frame_height = dimensions[0]
             self.camera_frame_width  = dimensions[1]
 
+        # Initialize a sequence number for each camera frame that is read
+        self.camera_frame_sequence_number = 0
+
         # Display the status
-        rospy.loginfo("[ARUCO DETECTOR] Initialisation complete")
+        if (ARUCO_DETECTOR_VERBOSITY >= 1):
+            rospy.loginfo("[ARUCO DETECTOR] Node initialisation complete")
 
         # Initialise a timer for capturing the camera frames
         rospy.Timer(rospy.Duration(1/self.camera_fps), self.timerCallbackForCameraRead)
@@ -273,6 +333,9 @@ class ArucoDetector:
 
         # Check if the camera frame was successfully read
         if (return_flag == True):
+            # Increment the sequence number
+            self.camera_frame_sequence_number = self.camera_frame_sequence_number + 1
+
             # Convert the image to gray scale
             current_frame_gray = cv2.cvtColor(current_frame, cv2.COLOR_BGR2GRAY)
 
@@ -282,17 +345,32 @@ class ArucoDetector:
             # Process any ArUco markers that were detected
             if aruco_ids is not None:
                 # Display the number of markers found
-                if (len(aruco_ids)==1):
-                    rospy.loginfo("[ARUCO DETECTOR] Found " + "{:3}".format(len(aruco_ids)) + " marker  with id  = " + str(aruco_ids[:,0]))
-                else:
-                    rospy.loginfo("[ARUCO DETECTOR] Found " + "{:3}".format(len(aruco_ids)) + " markers with ids = " + str(aruco_ids[:,0]))
+                if (ARUCO_DETECTOR_VERBOSITY >= 2):
+                    if (len(aruco_ids)==1):
+                        rospy.loginfo("[ARUCO DETECTOR] Found " + "{:3}".format(len(aruco_ids)) + " marker  with id  = " + str(aruco_ids[:,0]))
+                    else:
+                        rospy.loginfo("[ARUCO DETECTOR] Found " + "{:3}".format(len(aruco_ids)) + " markers with ids = " + str(aruco_ids[:,0]))
+
+                # Set the save image flag as appropriate
+                if (SHOULD_SAVE_ALL_ARUCO_IMAGES):
+                    self.should_save_image = True
+
                 # Outline all of the markers detected found in the image
-                current_frame_with_marker_outlines = aruco.drawDetectedMarkers(current_frame.copy(), aruco_corners_of_all_markers, aruco_ids, borderColor=(0, 220, 0))
+                # > Only if this image will be used
+                if (SHOULD_PUBLISH_CAMERA_IMAGES or self.should_save_image or SHOULD_SHOW_CAMERA_IMAGES):
+                    current_frame_with_marker_outlines = cv2.aruco.drawDetectedMarkers(current_frame.copy(), aruco_corners_of_all_markers, aruco_ids, borderColor=(0, 220, 0))
+
+                # Initialize the message for publishing the markers
+                msg_of_marker_detections = FiducialMarkerArray()
+
+                # Fill in the "header" details of the message
+                msg_of_marker_detections.num_markers = len(aruco_ids)
+                msg_of_marker_detections.seq_num = self.camera_frame_sequence_number
 
                 # Iterate over the markers detected
                 for i_marker_id in range(len(aruco_ids)):
                     # Get the ID for this marker
-                    this_id = aruco_ids[i_marker_id]
+                    this_id = aruco_ids[i_marker_id][0]
                     # Get the corners for this marker
                     corners_of_this_marker = np.asarray(aruco_corners_of_all_markers[i_marker_id][0], dtype=np.float32)
                     # Estimate the pose of this marker
@@ -311,14 +389,16 @@ class ArucoDetector:
                     solvepnp_method = cv2.SOLVEPNP_IPPE_SQUARE
                     success_flag, rvec, tvec = cv2.solvePnP(self.single_marker_object_points, corners_of_this_marker, self.intrinic_camera_matrix, self.intrinic_camera_distortion, flags=solvepnp_method)
 
-                    # Note: the aruco.estimatePoseSingleMarkers" function was deprecated in OpenCV version 4.7
+                    # Note: the cv2.aruco.estimatePoseSingleMarkers" function was deprecated in OpenCV version 4.7
                     # > The recommended alternative "cv2.solvePnP" is used above.
-                    #this_rvec_estimate, this_tvec_estimate, _objPoints = aruco.estimatePoseSingleMarkers(corners_of_this_marker, MARKER_SIZE, self.intrinic_camera_matrix, self.intrinic_camera_distortion)
+                    #this_rvec_estimate, this_tvec_estimate, _objPoints = cv2.aruco.estimatePoseSingleMarkers(corners_of_this_marker, MARKER_SIZE, self.intrinic_camera_matrix, self.intrinic_camera_distortion)
                     #rvec = this_rvec_estimate[0]
                     #tvec = this_tvec_estimate[0]
 
                     # Draw the marker's axes onto the image
-                    current_frame_with_marker_outlines = cv2.drawFrameAxes(current_frame_with_marker_outlines, self.intrinic_camera_matrix, self.intrinic_camera_distortion, rvec, tvec, 0.5*MARKER_SIZE)
+                    # > Only if this image will be used
+                    if (SHOULD_PUBLISH_CAMERA_IMAGES or self.should_save_image or SHOULD_SHOW_CAMERA_IMAGES):
+                        current_frame_with_marker_outlines = cv2.drawFrameAxes(current_frame_with_marker_outlines, self.intrinic_camera_matrix, self.intrinic_camera_distortion, rvec, tvec, 0.5*MARKER_SIZE)
                     
                     # At this stage, the variable "rvec" and "tvec" respectively
                     # describe the rotation and translation of the marker frame
@@ -329,11 +409,9 @@ class ArucoDetector:
                     #        frame relative to the frame of the camera.
                     #        This vector is an "axis angle" representation of the rotation.
 
-                    # Compute the rotation matrix from the rvec using the Rodrigues
-                    Rmat = cv2.Rodrigues(rvec)
-
                     # A vector expressed in the maker frame coordinates can now be
                     # rotated to the camera frame coordinates as:
+                    # Rmat = cv2.Rodrigues(rvec)
                     # [x,y,z]_{in camera frame} = tvec + Rmat * [x,y,z]_{in marker frame}
 
                     # Note: the camera frame convention is:
@@ -342,25 +420,25 @@ class ArucoDetector:
                     # > y-axis points to the down  when looking out of the lens along the z-axis
 
                     # Display the rvec and tvec
-                    rospy.loginfo("[ARUCO DETECTOR] for id = " + str(this_id) + ", tvec = [ " + str(tvec[0]) + " , " + str(tvec[1]) + " , " + str(tvec[2]) + " ]" )
-                    #rospy.loginfo("[ARUCO DETECTOR] for id = " + str(this_id) + ", rvec = [ " + str(rvec[0]) + " , " + str(rvec[1]) + " , " + str(rvec[2]) + " ]" )
+                    if (ARUCO_DETECTOR_VERBOSITY >= 2):
+                        rospy.loginfo("[ARUCO DETECTOR] for id = " + str(this_id) + ", tvec = [ " + str(tvec[0]) + " , " + str(tvec[1]) + " , " + str(tvec[2]) + " ]" )
+                        #rospy.loginfo("[ARUCO DETECTOR] for id = " + str(this_id) + ", rvec = [ " + str(rvec[0]) + " , " + str(rvec[1]) + " , " + str(rvec[2]) + " ]" )
 
-                    # ============================================
-                    # TO BE FILLED IN FOR WORLD FRAME LOCALISATION
-                    # ============================================
-                    # Based on the known location and rotation of
-                    # marker relative to the world frame, compute
-                    # an estimate of the camera's location within
-                    # the world frame, and hence an estimate of
-                    # robot's pose on which the camera is mounted. 
-                    #
-                    # ADD YOUR CODE HERE
-                    #
-                    # PUBLISH THE ESTIMATE OF THE ROBOT'S POSE
-                    # FOR USE BY OTHER ROS NODES
-                    #
-                    # ============================================
+                    # Create a message with the details of this marker
+                    msg_for_this_marker = FiducialMarker()
+                    msg_for_this_marker.id = this_id
+                    msg_for_this_marker.tvec[0] = tvec[0]
+                    msg_for_this_marker.tvec[1] = tvec[1]
+                    msg_for_this_marker.tvec[2] = tvec[2]
+                    msg_for_this_marker.rvec[0] = rvec[0]
+                    msg_for_this_marker.rvec[1] = rvec[1]
+                    msg_for_this_marker.rvec[2] = rvec[2]
 
+                    # Append to the message list of all marker detections
+                    msg_of_marker_detections.markers.append(msg_for_this_marker)
+
+                # Publish the message with details of the detected markers
+                self.marker_detections_publisher.publish(msg_of_marker_detections)
 
             else:
                 # Display that no aruco markers were found
@@ -384,24 +462,26 @@ class ArucoDetector:
                 temp_filename = SAVE_IMAGE_PATH + "aruco_image" + str(self.save_image_counter) + ".jpg"
                 cv2.imwrite(temp_filename,current_frame_with_marker_outlines)
                 # Display the path to where the image was saved
-                rospy.loginfo("[ARUCO DETECTOR] Save camera frame to: " + temp_filename)
+                if (ARUCO_DETECTOR_VERBOSITY >= 2):
+                    rospy.loginfo("[ARUCO DETECTOR] Saved camera frame to: " + temp_filename)
                 # Reset the flag to false
                 self.should_save_image = False
 
             # Display the camera frame if requested
-            if (SHOULD_SHOW_IMAGES):
+            if (SHOULD_SHOW_CAMERA_IMAGES):
                 #rospy.loginfo("[ARUCO DETECTOR] Now displaying camera frame")
                 cv2.imshow("[ARUCO DETECTOR]", current_frame_with_marker_outlines)
 
         else:
             # Display an error message
-            rospy.loginfo("[ARUCO DETECTOR] ERROR occurred during \"self.cam.read()\"")
+            rospy.logwarn("[ARUCO DETECTOR] ERROR occurred during \"self.cam.read()\"")
 
 
 
     # Respond to subscriber receiving a message
     def requestSaveImageSubscriberCallback(self, msg):
-        rospy.loginfo("[ARUCO DETECTOR] Request received to save the next image")
+        if (ARUCO_DETECTOR_VERBOSITY >= 1):
+            rospy.loginfo("[ARUCO DETECTOR] Request received to save the next image")
         # Set the flag for saving an image to true
         self.should_save_image = True
 
@@ -412,7 +492,14 @@ if __name__ == '__main__':
     global node_name
     node_name = "aruco_detector"
     rospy.init_node(node_name)
+
+    # Get the namespace of the node
+    global node_namespace
+    node_namespace = rospy.get_namespace()
+
+    # Initialise an object of the aruco detector class
     aruco_detector_object = ArucoDetector()
+
     # Spin as a single-threaded node
     rospy.spin()
 
