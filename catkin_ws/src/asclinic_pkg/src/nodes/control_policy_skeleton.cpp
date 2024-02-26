@@ -12,6 +12,9 @@
 //
 // DESCRIPTION:
 // C++ node as a skeleton from implementing a control policy
+// This node is provided to exemplify bringing together the
+// encoder counts and ArUco detection measurements into one node,
+// and using those measurement to set a motor duty cycle action.
 //
 // ----------------------------------------------------------------------------
 
@@ -75,6 +78,10 @@ float m_phiW2R_estimate = 0.0;
 // > For the rotation of the wheel per encoder count
 float m_wheel_rotation_per_count = (2.0 * 3.14159265 / static_cast<float>(m_encoder_counts_per_wheel_revolution)) * m_robot_wheel_radius;
 
+// > For the current direction of motor drive
+float m_motor_left_drive_direction  = 0.0;
+float m_motor_right_drive_direction = 0.0;
+
 // > Publisher for the motor duty cycle requests
 ros::Publisher m_motor_duty_cycle_request_publisher;
 
@@ -104,6 +111,33 @@ void execute_control_policy()
 
 
 
+// Current motor duty cycle subscriber callback
+void currentMotorDutyCycleSubscriberCallback(const asclinic_pkg::LeftRightFloat32& msg)
+{
+	// Display the values from the message received
+	if (m_control_policy_verbosity >= 2)
+		ROS_INFO_STREAM("[CONTROL POLICY SKELETON] Received current motor duty cycle (left,right,seq_num) = ( " << msg.left << " , " << msg.right << " , " << msg.seq_num << " )" );
+
+	// Update the member variables to match the direction
+	// of the current motor duty cycle.
+	// > For the left wheel
+	if (msg.left < -0.1)
+		m_motor_left_drive_direction = -1.0;
+	else if(msg.left > 0.1)
+		m_motor_left_drive_direction = 1.0;
+	else
+		m_motor_left_drive_direction = 0.0;
+	// > For the right wheel
+	if (msg.right < -0.1)
+		m_motor_right_drive_direction = -1.0;
+	else if(msg.right > 0.1)
+		m_motor_right_drive_direction = 1.0;
+	else
+		m_motor_right_drive_direction = 0.0;
+}
+
+
+
 // Encoder counts subscriber callback
 // NOTE: this skeleton lets the receiving of the encoder counts
 //       messages determine the frequency at which the control
@@ -115,8 +149,8 @@ void encoderCountsSubscriberCallback(const asclinic_pkg::LeftRightInt32& msg)
 		ROS_INFO_STREAM("[CONTROL POLICY SKELETON] Received encoder counts (left,right,seq_num) = ( " << msg.left << " , " << msg.right << " , " << msg.seq_num << " )" );
 
 	// Compute the angular change of the wheels
-	float delta_theta_left  = static_cast<float>(msg.left)  * m_wheel_rotation_per_count;
-	float delta_theta_right = static_cast<float>(msg.right) * m_wheel_rotation_per_count;
+	float delta_theta_left  = static_cast<float>(msg.left)  * m_motor_left_drive_direction  * m_wheel_rotation_per_count;
+	float delta_theta_right = static_cast<float>(msg.right) * m_motor_right_drive_direction * m_wheel_rotation_per_count;
 
 	// Compute the change in displacement (delta s) and change in rotation (delta phi) resulting from the wheel rotations
 	float delta_s   = (delta_theta_right + delta_theta_left) * 0.5 * m_robot_wheel_radius;
@@ -146,6 +180,25 @@ void encoderCountsSubscriberCallback(const asclinic_pkg::LeftRightInt32& msg)
 
 
 // ArUco Detections subscriber callback
+// Details about the ArUco detection data:
+// > The properties "rvec" and "tvec" respectively
+//   describe the rotation and translation of the
+//   marker frame relative to the camera frame, i.e.:
+//   tvec - is a vector of length 3 expressing the
+//          (x,y,z)-coordinates of the marker's center
+//          in the coordinate frame of the camera.
+//   rvec - is a vector of length 3 expressing the
+//          rotation of the marker's frame relative to
+//          the frame of the camera. This vector is an
+//          "axis angle" representation of the rotation.
+// > Hence, a vector expressed in maker-frame coordinates
+//   can be transformed to camera-frame coordinates as:
+//   - Rmat = cv2.Rodrigues(rvec)
+//   - [x,y,z]_{in camera frame} = tvec + Rmat * [x,y,z]_{in marker frame}
+// > Note: the camera frame convention is:
+//   - z-axis points along the optical axis, i.e., straight out of the lens
+//   - x-axis points to the right when looking out of the lens along the z-axis
+//   - y-axis points to the down  when looking out of the lens along the z-axis
 void arucoDetectionsSubscriberCallback(const asclinic_pkg::FiducialMarkerArray& msg)
 {
 	// Display the data received
@@ -210,6 +263,9 @@ int main(int argc, char* argv[])
 	// PUBLISHERS AND SUBSCRIBERS:
 	// > Initialise a publisher for the motor duty cycle requests
 	m_motor_duty_cycle_request_publisher = nh_for_group.advertise<asclinic_pkg::LeftRightFloat32>("set_motor_duty_cycle", 1, true);
+
+	// > Initialise a subscriber for the current motor duty cycle
+	ros::Subscriber current_motor_duty_cycle_subscriber = nh_for_group.subscribe("current_motor_duty_cycle", 1, currentMotorDutyCycleSubscriberCallback);
 
 	// > Initialise a subscriber for the encoder counts sensor measurements
 	ros::Subscriber encoder_counts_subscriber = nh_for_group.subscribe("encoder_counts", 10, encoderCountsSubscriberCallback);

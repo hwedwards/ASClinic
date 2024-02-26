@@ -14,7 +14,10 @@
 #                                                 |___/                       
 #
 # DESCRIPTION:
-# Python node as a skeleton from implementing a control policy
+# Python node as a skeleton from implementing a control policy.
+# This node is provided to exemplify bringing together the
+# encoder counts and ArUco detection measurements into one node,
+# and using those measurement to set a motor duty cycle action.
 #
 # ----------------------------------------------------------------------------
 
@@ -37,20 +40,20 @@ from asclinic_pkg.msg import FiducialMarkerArray
 
 # DEFINE THE PARAMETERS
 # > For the verbosity level of displaying info
-CONTROL_POLICY_VERBOSITY = 1
+DEFAULT_CONTROL_POLICY_VERBOSITY = 1
 # Note: the levels of increasing verbosity are defined as:
 # 0 : Info is not displayed. Warnings and errors are still displayed.
 # 1 : Startup info is displayed.
 # 2 : Info each control action and state estimate update is displayed.
 
 # > For the wheel base of the robot [in meters]
-ROBOT_WHEEL_BASE = 0.22
+DEFAULT_ROBOT_WHEEL_BASE = 0.22
 
 # > For the wheel radius of the robot [in meters]
-ROBOT_WHEEL_RADIUS = 0.072
+DEFAULT_ROBOT_WHEEL_RADIUS = 0.072
 
 # > For the number of encoder counts per revolution of a wheel
-ENCODER_COUNTS_PER_WHEEL_REVOLUTION = 1680
+DEFAULT_ENCODER_COUNTS_PER_WHEEL_REVOLUTION = 1680
 
 
 
@@ -60,22 +63,41 @@ class ControlPolicySkeleton:
 
         # GET THE PARAMETERS VALUES:
         # > For the verbosity level of displaying info
-        CONTROL_POLICY_VERBOSITY = rospy.get_param(node_namespace + node_name + "/" + "control_policy_verbosity")
+        if (rospy.has_param(node_namespace + node_name + "/" + "control_policy_verbosity")):
+            self.control_policy_verbosity = rospy.get_param(node_namespace + node_name + "/" + "control_policy_verbosity")
+        else:
+            rospy.logwarn("[CONTROL POLICY SKELETON] FAILED to get \"control_policy_verbosity\" parameter. Using default value instead.")
+            self.control_policy_verbosity = DEFAULT_CONTROL_POLICY_VERBOSITY
 
         # > For the wheel base dimension of the robot
-        ROBOT_WHEEL_BASE = rospy.get_param(node_namespace + node_name + "/" + "robot_wheel_base")
+        if (rospy.has_param(node_namespace + node_name + "/" + "robot_wheel_base")):
+            self.robot_wheel_base = rospy.get_param(node_namespace + node_name + "/" + "robot_wheel_base")
+        else:
+            rospy.logwarn("[CONTROL POLICY SKELETON] FAILED to get \"robot_wheel_base\" parameter. Using default value instead.")
+            self.robot_wheel_base = DEFAULT_ROBOT_WHEEL_BASE
 
         # > For the wheel radius dimension of the robot
-        ROBOT_WHEEL_RADIUS = rospy.get_param(node_namespace + node_name + "/" + "robot_wheel_radius")
+        if (rospy.has_param(node_namespace + node_name + "/" + "robot_wheel_radius")):
+            self.robot_wheel_radius = rospy.get_param(node_namespace + node_name + "/" + "robot_wheel_radius")
+        else:
+            rospy.logwarn("[CONTROL POLICY SKELETON] FAILED to get \"robot_wheel_radius\" parameter. Using default value instead.")
+            self.robot_wheel_radius = DEFAULT_ROBOT_WHEEL_RADIUS
 
         # > For the number of encoder counts per revolution of a wheel
-        ENCODER_COUNTS_PER_WHEEL_REVOLUTION = rospy.get_param(node_namespace + node_name + "/" + "encoder_counts_per_wheel_revolution")
+        if (rospy.has_param(node_namespace + node_name + "/" + "encoder_counts_per_wheel_revolution")):
+            self.encoder_counts_per_wheel_revolution = rospy.get_param(node_namespace + node_name + "/" + "encoder_counts_per_wheel_revolution")
+        else:
+            rospy.logwarn("[CONTROL POLICY SKELETON] FAILED to get \"encoder_counts_per_wheel_revolution\" parameter. Using default value instead.")
+            self.encoder_counts_per_wheel_revolution = DEFAULT_ENCODER_COUNTS_PER_WHEEL_REVOLUTION
 
 
 
         # PUBLISHERS AND SUBSCRIBERS:
         # > Initialise a publisher for the motor duty cycle requests
         self.motor_duty_cycle_request_publisher = rospy.Publisher(node_namespace+"set_motor_duty_cycle", LeftRightFloat32, queue_size=1)
+
+        # > Initialise a subscriber for the current motor duty cycle
+        rospy.Subscriber(node_namespace+"current_motor_duty_cycle", LeftRightFloat32, self.currentMotorDutyCycleSubscriberCallback, queue_size=1)
 
         # > Initialise a subscriber for the encoder counts sensor measurements
         rospy.Subscriber(node_namespace+"encoder_counts", LeftRightInt32, self.encoderCountsSubscriberCallback, queue_size=10)
@@ -92,15 +114,19 @@ class ControlPolicySkeleton:
         self.phiW2R_estimate = 0.0
 
         # > Compute the rotation of the wheel per encoder count
-        self.wheel_rotation_per_count = (2 * np.pi / ENCODER_COUNTS_PER_WHEEL_REVOLUTION) * ROBOT_WHEEL_RADIUS
+        self.wheel_rotation_per_count = (2.0 * np.pi / self.encoder_counts_per_wheel_revolution) * self.robot_wheel_radius
 
         # > Initialize a sequence number for the motor duty cycle request actions
         self.motor_action_sequence_number = 1
 
+        # > For the current direction of motor drive
+        self.motor_left_drive_direction  = 0
+        self.motor_right_drive_direction = 0
+
 
 
         # Display the status
-        if (CONTROL_POLICY_VERBOSITY >= 1):
+        if (self.control_policy_verbosity >= 1):
             rospy.loginfo("[CONTROL POLICY SKELETON] Node initialisation complete." )
 
 
@@ -124,6 +150,30 @@ class ControlPolicySkeleton:
         # Increment the sequence number
         self.motor_action_sequence_number = self.motor_action_sequence_number + 1
 
+    # Current motor duty cycle subscriber callback
+    def currentMotorDutyCycleSubscriberCallback(self, msg):
+
+        # Display the data received
+        if (self.control_policy_verbosity >= 2):
+            rospy.loginfo("[CONTROL POLICY SKELETON] Received current motor duty cycle (left,right,seq_num) = ( " + "{:6.1}".format(msg.left) + " , " + "{:6.1}".format(msg.right) + " , " + msg.seq_num + " )" )
+
+        # Update the member variables to match the direction
+        # of the current motor duty cycle.
+        # > For the left wheel
+        if (msg.left < -0.1):
+            self.motor_left_drive_direction = -1.0
+        elif(msg.left > 0.1):
+            self.motor_left_drive_direction = 1.0
+        else:
+            self.motor_left_drive_direction = 0.0
+        # > For the right wheel
+        if (msg.right < -0.1):
+            self.motor_right_drive_direction = -1.0
+        elif(msg.right > 0.1):
+            self.motor_right_drive_direction = 1.0
+        else:
+            self.motor_right_drive_direction = 0.0
+
 
     # Encoder counts subscriber callback
     # NOTE: this skeleton lets the receiving of the encoder counts
@@ -132,16 +182,16 @@ class ControlPolicySkeleton:
     def encoderCountsSubscriberCallback(self, msg):
 
         # Display the data received
-        if (CONTROL_POLICY_VERBOSITY >= 2):
+        if (self.control_policy_verbosity >= 2):
             rospy.loginfo("[CONTROL POLICY SKELETON] Received encoder counts (left,right,seq_num) = ( " + "{:6}".format(msg.left) + " , " + "{:6}".format(msg.right) + " , " + msg.seq_num + " )" )
 
         # Compute the angular change of the wheels
-        delta_theta_left  = msg.left  * self.wheel_rotation_per_count
-        delta_theta_right = msg.right * self.wheel_rotation_per_count
+        delta_theta_left  = msg.left  * self.motor_left_drive_direction  * self.wheel_rotation_per_count
+        delta_theta_right = msg.right * self.motor_right_drive_direction * self.wheel_rotation_per_count
 
         # Compute the change in displacement (delta s) and change in rotation (delta phi) resulting from the wheel rotations
-        delta_s   = (delta_theta_right + delta_theta_left) * 0.5 * ROBOT_WHEEL_RADIUS
-        delta_phi = (delta_theta_right - delta_theta_left) * 0.5 * ROBOT_WHEEL_RADIUS / ROBOT_WHEEL_BASE
+        delta_s   = (delta_theta_right + delta_theta_left) * 0.5 * self.robot_wheel_radius
+        delta_phi = (delta_theta_right - delta_theta_left) * 0.5 * self.robot_wheel_radius / self.robot_wheel_base
 
         # Get the current state estimate in local variables to avoid errors/misinterpretation related to the sequence of updates
         xW_current = self.xW_estimate
@@ -166,10 +216,29 @@ class ControlPolicySkeleton:
 
 
     # ArUco Detections subscriber callback
+    # Details about the ArUco detection data:
+    # > The properties "rvec" and "tvec" respectively
+    #   describe the rotation and translation of the
+    #   marker frame relative to the camera frame, i.e.:
+    #   tvec - is a vector of length 3 expressing the
+    #          (x,y,z)-coordinates of the marker's center
+    #          in the coordinate frame of the camera.
+    #   rvec - is a vector of length 3 expressing the
+    #          rotation of the marker's frame relative to
+    #          the frame of the camera. This vector is an
+    #          "axis angle" representation of the rotation.
+    # > Hence, a vector expressed in maker-frame coordinates
+    #   can be transformed to camera-frame coordinates as:
+    #   - Rmat = cv2.Rodrigues(rvec)
+    #   - [x,y,z]_{in camera frame} = tvec + Rmat * [x,y,z]_{in marker frame}
+    # > Note: the camera frame convention is:
+    #   - z-axis points along the optical axis, i.e., straight out of the lens
+    #   - x-axis points to the right when looking out of the lens along the z-axis
+    #   - y-axis points to the down  when looking out of the lens along the z-axis
     def arucoDetectionsSubscriberCallback(self, msg):
 
         # Display the data received
-        if (CONTROL_POLICY_VERBOSITY >= 2):
+        if (self.control_policy_verbosity >= 2):
             rospy.loginfo("[CONTROL POLICY SKELETON] Received aruco detections data for " + str(msg.num_markers) + " markers." )
 
         # Iterate through the array of detected markers

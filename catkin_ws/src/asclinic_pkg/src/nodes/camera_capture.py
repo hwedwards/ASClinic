@@ -56,7 +56,7 @@ from cv_bridge import CvBridge, CvBridgeError
 
 # DEFINE THE PARAMETERS
 # > For the verbosity level of displaying info
-CAMERA_CAPTURE_VERBOSITY = 1
+DEFAULT_CAMERA_CAPTURE_VERBOSITY = 1
 # Note: the levels of increasing verbosity are defined as:
 # 0 : Info is not displayed. Warnings and errors are still displayed
 # 1 : Startup info is displayed
@@ -64,32 +64,32 @@ CAMERA_CAPTURE_VERBOSITY = 1
 
 # > For the number of the USB camera device
 #   i.e., for /dev/video0, this parameter should be 0
-USB_CAMERA_DEVICE_NUMBER = 0
+DEFAULT_USB_CAMERA_DEVICE_NUMBER = 0
 
 # > Properties of the camera images captured
-DESIRED_CAMERA_FRAME_HEIGHT = 1080
-DESIRED_CAMERA_FRAME_WIDTH = 1920
-DESIRED_CAMERA_FPS = 5
+DEFAULT_DESIRED_CAMERA_FRAME_HEIGHT = 1080
+DEFAULT_DESIRED_CAMERA_FRAME_WIDTH = 1920
+DEFAULT_DESIRED_CAMERA_FPS = 5
 
 # > For the size of the chessboard grid
-CHESSBOARD_SIZE_HEIGHT = 9
-CHESSBOARD_SIZE_WIDTH  = 6
+DEFAULT_CHESSBOARD_SIZE_HEIGHT = 9
+DEFAULT_CHESSBOARD_SIZE_WIDTH  = 6
 
 # > For where to save images captured by the camera
 #   Note: ensure that this path already exists
 #   Note: one image is saved each time a message is received
 #         on the "request_save_image" topic.
-SAVE_IMAGE_PATH = "/home/asc/saved_camera_images/"
+DEFAULT_SAVE_IMAGE_PATH = "/home/asc/saved_camera_images/"
 
 # > A flag for whether to save any images that contains
 #   a camera calibration chessboard
-SHOULD_SAVE_ALL_CHESSBOARD_IMAGES = True
+DEFAULT_SHOULD_SAVE_ALL_CHESSBOARD_IMAGES = True
 
 # > A flag for whether to publish the images captured
-SHOULD_PUBLISH_CAMERA_IMAGES = False
+DEFAULT_SHOULD_PUBLISH_CAMERA_IMAGES = False
 
 # > A flag for whether to display the images captured
-SHOULD_SHOW_IMAGES = False
+DEFAULT_SHOULD_SHOW_IMAGES = False
 
 
 
@@ -99,37 +99,81 @@ class CameraCapture:
         
         # Get the parameters:
         # > For the verbosity level of displaying info
-        CAMERA_CAPTURE_VERBOSITY = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_verbosity")
+        if (rospy.has_param(node_namespace + node_name + "/" + "camera_capture_verbosity")):
+            self.camera_capture_verbosity = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_verbosity")
+        else:
+            rospy.logwarn("[CAMERA CAPTURE] FAILED to get \"camera_capture_verbosity\" parameter. Using default value instead.")
+            self.camera_capture_verbosity = DEFAULT_CAMERA_CAPTURE_VERBOSITY
 
         # > For the number of the USB camera device
-        USB_CAMERA_DEVICE_NUMBER = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_usb_camera_device_number")
+        if (rospy.has_param(node_namespace + node_name + "/" + "camera_capture_usb_camera_device_number")):
+            usb_camera_device_number = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_usb_camera_device_number")
+        else:
+            rospy.logwarn("[CAMERA CAPTURE] FAILED to get \"camera_capture_usb_camera_device_number\" parameter. Using default value instead.")
+            usb_camera_device_number = DEFAULT_USB_CAMERA_DEVICE_NUMBER
 
         # > For the camera frame height
-        DESIRED_CAMERA_FRAME_HEIGHT = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_desired_camera_frame_height")
+        if (rospy.has_param(node_namespace + node_name + "/" + "camera_capture_desired_camera_frame_height")):
+            desired_camera_frame_height = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_desired_camera_frame_height")
+        else:
+            rospy.logwarn("[CAMERA CAPTURE] FAILED to get \"camera_capture_desired_camera_frame_height\" parameter. Using default value instead.")
+            desired_camera_frame_height = DEFAULT_DESIRED_CAMERA_FRAME_HEIGHT
 
         # > For the camera frame width
-        DESIRED_CAMERA_FRAME_WIDTH = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_desired_camera_frame_width")
+        if (rospy.has_param(node_namespace + node_name + "/" + "camera_capture_desired_camera_frame_width")):
+            desired_camera_frame_width = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_desired_camera_frame_width")
+        else:
+            rospy.logwarn("[CAMERA CAPTURE] FAILED to get \"camera_capture_desired_camera_frame_width\" parameter. Using default value instead.")
+            desired_camera_frame_width = DEFAULT_DESIRED_CAMERA_FRAME_WIDTH
 
         # > For the camera fps
-        DESIRED_CAMERA_FPS = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_desired_camera_fps")
+        if (rospy.has_param(node_namespace + node_name + "/" + "camera_capture_desired_camera_fps")):
+            desired_camera_fps = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_desired_camera_fps")
+        else:
+            rospy.logwarn("[CAMERA CAPTURE] FAILED to get \"camera_capture_desired_camera_fps\" parameter. Using default value instead.")
+            desired_camera_fps = DEFAULT_DESIRED_CAMERA_FPS
 
         # > For the height of the chessboard grid
-        CHESSBOARD_SIZE_HEIGHT = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_chessboard_size_height")
+        if (rospy.has_param(node_namespace + node_name + "/" + "camera_capture_chessboard_size_height")):
+            self.chessboard_size_height = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_chessboard_size_height")
+        else:
+            rospy.logwarn("[CAMERA CAPTURE] FAILED to get \"camera_capture_chessboard_size_height\" parameter. Using default value instead.")
+            self.chessboard_size_height = DEFAULT_CHESSBOARD_SIZE_HEIGHT
 
         # > For the width of the chessboard grid
-        CHESSBOARD_SIZE_WIDTH  = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_chessboard_size_width")
+        if (rospy.has_param(node_namespace + node_name + "/" + "camera_capture_chessboard_size_width")):
+            self.chessboard_size_width  = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_chessboard_size_width")
+        else:
+            rospy.logwarn("[CAMERA CAPTURE] FAILED to get \"camera_capture_chessboard_size_width\" parameter. Using default value instead.")
+            self.chessboard_size_width = DEFAULT_CHESSBOARD_SIZE_WIDTH
 
         # > For where to save images captured by the camera
-        SAVE_IMAGE_PATH = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_save_image_path")
+        if (rospy.has_param(node_namespace + node_name + "/" + "camera_capture_save_image_path")):
+            self.save_image_path = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_save_image_path")
+        else:
+            rospy.logwarn("[CAMERA CAPTURE] FAILED to get \"camera_capture_save_image_path\" parameter. Using default value instead.")
+            self.save_image_path = DEFAULT_SAVE_IMAGE_PATH
 
         # > For whether to save any images that contain a chessboard
-        SHOULD_SAVE_ALL_CHESSBOARD_IMAGES = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_should_save_all_chessboard_images")
+        if (rospy.has_param(node_namespace + node_name + "/" + "camera_capture_should_save_all_chessboard_images")):
+            self.should_save_all_chessboard_images = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_should_save_all_chessboard_images")
+        else:
+            rospy.logwarn("[CAMERA CAPTURE] FAILED to get \"camera_capture_should_save_all_chessboard_images\" parameter. Using default value instead.")
+            self.should_save_all_chessboard_images = DEFAULT_SHOULD_SAVE_ALL_CHESSBOARD_IMAGES
 
         # > For whether to publish the images captured
-        SHOULD_PUBLISH_CAMERA_IMAGES = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_should_publish_camera_images")
+        if (rospy.has_param(node_namespace + node_name + "/" + "camera_capture_should_publish_camera_images")):
+            self.should_publish_camera_images = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_should_publish_camera_images")
+        else:
+            rospy.logwarn("[CAMERA CAPTURE] FAILED to get \"camera_capture_should_publish_camera_images\" parameter. Using default value instead.")
+            self.should_publish_camera_images = DEFAULT_SHOULD_PUBLISH_CAMERA_IMAGES
 
         # > For whether to display the images captured
-        SHOULD_SHOW_IMAGES = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_should_show_camera_images")
+        if (rospy.has_param(node_namespace + node_name + "/" + "camera_capture_should_show_camera_images")):
+            self.should_show_images = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_should_show_camera_images")
+        else:
+            rospy.logwarn("[CAMERA CAPTURE] FAILED to get \"camera_capture_should_show_camera_images\" parameter. Using default value instead.")
+            self.should_show_images = DEFAULT_SHOULD_SHOW_IMAGES
 
 
 
@@ -150,16 +194,16 @@ class CameraCapture:
         # Specify the details for camera to capture from
 
         # > Put the desired video capture properties into local variables
-        self.camera_frame_width  = DESIRED_CAMERA_FRAME_WIDTH
-        self.camera_frame_height = DESIRED_CAMERA_FRAME_HEIGHT
-        self.camera_fps = DESIRED_CAMERA_FPS
+        self.camera_frame_width  = desired_camera_frame_width
+        self.camera_frame_height = desired_camera_frame_height
+        self.camera_fps = desired_camera_fps
         
         # > For capturing from a USB camera:
         #   > List the contents of /dev/video* to determine
         #     the number of the USB camera
         #   > If "v4l2-ctl" command line tool is installed then list video devices with:
         #     v4l2-ctl --list-devices
-        self.camera_setup = USB_CAMERA_DEVICE_NUMBER
+        self.camera_setup = usb_camera_device_number
         
                 # > For capture from a camera connected via the MIPI CSI cable connectors
         #   > This specifies the gstreamer pipeline for video capture
@@ -173,7 +217,7 @@ class CameraCapture:
         # Display the properties of the camera upon initialisation
         # > A list of all the properties available can be found here:
         #   https://docs.opencv.org/4.x/d4/d15/group__videoio__flags__base.html#gaeb8dd9c89c10a5c63c139bf7c4f5704d
-        if (CAMERA_CAPTURE_VERBOSITY >= 1):
+        if (self.camera_capture_verbosity >= 1):
             print("\n[CAMERA CAPTURE] Camera properties upon initialisation:")
             print("CV_CAP_PROP_FRAME_HEIGHT : '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_HEIGHT)))
             print("CV_CAP_PROP_FRAME_WIDTH :  '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_WIDTH)))
@@ -207,7 +251,7 @@ class CameraCapture:
         self.cam.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
         # Display the properties of the camera after setting the desired values
-        if (CAMERA_CAPTURE_VERBOSITY >= 1):
+        if (self.camera_capture_verbosity >= 1):
             print("\n[CAMERA CAPTURE] Camera properties upon initialisation:")
             print("CV_CAP_PROP_FRAME_HEIGHT : '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_HEIGHT)))
             print("CV_CAP_PROP_FRAME_WIDTH :  '{}'".format(self.cam.get(cv2.CAP_PROP_FRAME_WIDTH)))
@@ -241,7 +285,7 @@ class CameraCapture:
         # > Get the dimensions of the frame
         dimensions = current_frame.shape
         # > Display the dimensions
-        if (CAMERA_CAPTURE_VERBOSITY >= 1):
+        if (self.camera_capture_verbosity >= 1):
             rospy.loginfo("[CAMERA CAPTURE] As a double check of the camera properties set, a frame captured just now has dimensions = " + str(dimensions))
         # > Also check the values
         if (not(dimensions[0]==self.camera_frame_height) or not(dimensions[1]==self.camera_frame_width)):
@@ -251,7 +295,7 @@ class CameraCapture:
             self.camera_frame_width  = dimensions[1]
 
         # Display the status
-        if (CAMERA_CAPTURE_VERBOSITY >= 1):
+        if (self.camera_capture_verbosity >= 1):
             rospy.loginfo("[CAMERA CAPTURE] Node initialisation complete")
 
         # Initialise a timer for capturing the camera frames
@@ -275,7 +319,7 @@ class CameraCapture:
         # Check if the camera frame was successfully read
         if (return_flag == True):
             # Save camera images for which a chessboard is detected
-            if (SHOULD_SAVE_ALL_CHESSBOARD_IMAGES):
+            if (self.should_save_all_chessboard_images):
                 # Check if the camera frame contains a calibration
                 # chessboard that can be detected by OpenCV
                 # > Convert the image to gray scale
@@ -291,18 +335,18 @@ class CameraCapture:
                 #   > The second argument is the grid size of internal
                 #     corner points that the function should search for
                 #   > This function can be quite slow when a chessboard is not visible in the image
-                internal_corner_grid_size = (CHESSBOARD_SIZE_HEIGHT,CHESSBOARD_SIZE_WIDTH)
+                internal_corner_grid_size = (self.self.chessboard_size_height,self.self.chessboard_size_width)
                 chessboard_found, chessboard_corners = cv2.findChessboardCorners(current_frame_as_gray, internal_corner_grid_size, flags=find_flags)
                 # If found, then set the save image flag to true
                 if (chessboard_found == True):
-                    if (CAMERA_CAPTURE_VERBOSITY >= 2):
+                    if (self.camera_capture_verbosity >= 2):
                         rospy.loginfo("[CAMERA CAPTURE] Chessboard FOUND, this image will be saved")
                     self.should_save_image = True
                 #else:
                 #    rospy.loginfo("[CAMERA CAPTURE] Chessboard NOT found")
 
             # Publish the camera frame
-            if (SHOULD_PUBLISH_CAMERA_IMAGES):
+            if (self.should_publish_camera_images):
                 #rospy.loginfo("[CAMERA CAPTURE] Now publishing camera frame")
                 try:
                     self.image_publisher.publish(self.cv_bridge.cv2_to_imgmsg(current_frame, "bgr8"))
@@ -314,16 +358,16 @@ class CameraCapture:
                 # Increment the image counter
                 self.save_image_counter += 1
                 # Write the image to file
-                temp_filename = SAVE_IMAGE_PATH + "image" + str(self.save_image_counter) + ".jpg"
+                temp_filename = self.save_image_path + "image" + str(self.save_image_counter) + ".jpg"
                 cv2.imwrite(temp_filename,current_frame)
                 # Display the path to where the image was saved
-                if (CAMERA_CAPTURE_VERBOSITY >= 2):
+                if (self.camera_capture_verbosity >= 2):
                     rospy.loginfo("[CAMERA CAPTURE] Saved camera frame to: " + temp_filename)
                 # Reset the flag to false
                 self.should_save_image = False
 
             # Display the camera frame
-            if (SHOULD_SHOW_IMAGES):
+            if (self.should_show_images):
                 #rospy.loginfo("[CAMERA CAPTURE] Now displaying camera frame")
                 cv2.imshow("[CAMERA CAPTURE]", current_frame)
         else:
@@ -334,7 +378,7 @@ class CameraCapture:
 
     # Respond to subscriber receiving a message
     def requestSaveImageSubscriberCallback(self, msg):
-        if (CAMERA_CAPTURE_VERBOSITY >= 1):
+        if (self.camera_capture_verbosity >= 1):
             rospy.loginfo("[CAMERA CAPTURE] Request received to save the next image")
         # Set the flag for saving an image
         self.should_save_image = True

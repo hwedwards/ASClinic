@@ -16,7 +16,7 @@
 			/>
 			<param
 				name   = "camera_capture_usb_camera_device_number"
-				value  = "0"
+				value  = "2"
 			/>
 			<param
 				name   = "camera_capture_desired_camera_frame_height"
