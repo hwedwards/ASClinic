@@ -349,6 +349,11 @@ class ArucoDetector:
         # Initialize a sequence number for each camera frame that is read
         self.camera_frame_sequence_number = 0
 
+        # Display command line command for publishing a
+        # request to save a camera image
+        if (self.aruco_detector_verbosity >= 1):
+            rospy.loginfo("[ARUCO DETECTOR] publish request from command line to save a single camera image using: rostopic pub --once " + node_namespace + "request_save_image std_msgs/UInt32 1")
+
         # Display the status
         if (self.aruco_detector_verbosity >= 1):
             rospy.loginfo("[ARUCO DETECTOR] Node initialisation complete")
