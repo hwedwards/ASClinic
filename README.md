@@ -12,3 +12,4 @@ Alisha added this line
 This software was written by the Fejoa group
 
 
+Updating this readme to check permissions of git repo.
