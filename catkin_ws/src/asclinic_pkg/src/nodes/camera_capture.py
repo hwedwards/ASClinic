@@ -294,6 +294,11 @@ class CameraCapture:
             self.camera_frame_height = dimensions[0]
             self.camera_frame_width  = dimensions[1]
 
+        # Display command line command for publishing a
+        # request to save a camera image
+        if (self.camera_capture_verbosity >= 1):
+            rospy.loginfo("[CAMERA CAPTURE] publish request from command line to save a single camera image using: rostopic pub --once " + node_namespace + "request_save_image std_msgs/UInt32 1")
+
         # Display the status
         if (self.camera_capture_verbosity >= 1):
             rospy.loginfo("[CAMERA CAPTURE] Node initialisation complete")
@@ -335,7 +340,7 @@ class CameraCapture:
                 #   > The second argument is the grid size of internal
                 #     corner points that the function should search for
                 #   > This function can be quite slow when a chessboard is not visible in the image
-                internal_corner_grid_size = (self.self.chessboard_size_height,self.self.chessboard_size_width)
+                internal_corner_grid_size = (self.chessboard_size_height,self.chessboard_size_width)
                 chessboard_found, chessboard_corners = cv2.findChessboardCorners(current_frame_as_gray, internal_corner_grid_size, flags=find_flags)
                 # If found, then set the save image flag to true
                 if (chessboard_found == True):
