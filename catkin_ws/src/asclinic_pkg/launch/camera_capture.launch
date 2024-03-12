@@ -16,7 +16,7 @@
 			/>
 			<param
 				name   = "camera_capture_usb_camera_device_number"
-				value  = "2"
+				value  = "0"
 			/>
 			<param
 				name   = "camera_capture_desired_camera_frame_height"
@@ -40,11 +40,11 @@
 			/>
 			<param
 				name   = "camera_capture_save_image_path"
-				value  = "1"
+				value  = "/home/asc/saved_camera_images/"
 			/>
 			<param
 				name   = "camera_capture_should_save_all_chessboard_images"
-				value  = "False"
+				value  = "True"
 			/>
 			<param
 				name   = "camera_capture_should_publish_camera_images"
