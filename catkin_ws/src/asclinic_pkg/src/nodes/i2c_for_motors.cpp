@@ -16,7 +16,7 @@
 // Node for I2C bus with Pololu SMC devices connected
 //
 // ----------------------------------------------------------------------------
-
+// alisha wants to try and edit the code and see if it works
 
 
 
