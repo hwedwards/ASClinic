@@ -1,1 +1,2 @@
 alisha is just trying to remember how to create files and use basic git commands
+I'm also trying to remember how everything works :)
