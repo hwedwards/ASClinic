@@ -199,6 +199,9 @@ add_executable(emulate_i2c_for_motors                src/nodes/emulate_i2c_for_m
 add_executable(web_interface_connector               src/nodes/web_interface_connector.cpp)
 add_executable(control_policy_skeleton               src/nodes/control_policy_skeleton.cpp)
 
+# lines for node publishing pwm duty cycle
+add_executable(motor_pwm_control src/nodes/motor_pwm_control.cpp)
+
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -224,6 +227,8 @@ add_dependencies(emulate_i2c_for_motors                asclinic_pkg_generate_mes
 add_dependencies(web_interface_connector               asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(control_policy_skeleton               asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 
+# for node to control motor pwm duty cycle
+add_dependencies(motor_pwm_control asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
@@ -244,6 +249,7 @@ target_link_libraries(emulate_i2c_for_motors                ${catkin_LIBRARIES})
 target_link_libraries(web_interface_connector               ${catkin_LIBRARIES})
 target_link_libraries(control_policy_skeleton               ${catkin_LIBRARIES})
 
+target_link_libraries(motor_pwm_control ${catkin_LIBRARIES})
 
 #############
 ## Install ##
