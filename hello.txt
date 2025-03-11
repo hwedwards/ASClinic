@@ -1,0 +1,14 @@
+# Beginner Tutorial for C++
+
+## Introduction
+C++ is a powerful general-purpose programming language. It can be used to create small programs or large applications. This tutorial will help you get started with C++.
+
+## Setting Up Your Environment
+1. **Install a C++ Compiler**: You need a compiler to convert your C++ code into an executable program. Popular choices include GCC (GNU Compiler Collection) and Microsoft Visual C++.
+2. **Choose an IDE**: An Integrated Development Environment (IDE) can make coding easier. Popular IDEs for C++ include Visual Studio, Code::Blocks, and CLion.
+
+## Writing Your First Program
+Let's write a simple program that prints "Hello, World!" to the console.
+
+1. **Create a new file**: Create a new file named `hello.cpp`.
+2. **Write the code**: Open the file and write the following code:
