@@ -14,3 +14,5 @@ What about if I dont want to write a fucking hello world program. Give me someth
 
 1. **Create a new file**: Create a new file named `hello.cpp`.
 2. **Write the code**: Open the file and write the following code:
+
+Attempt duos hell yeah
