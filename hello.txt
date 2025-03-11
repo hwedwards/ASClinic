@@ -10,5 +10,7 @@ C++ is a powerful general-purpose programming language. It can be used to create
 ## Writing Your First Program
 Let's write a simple program that prints "Hello, World!" to the console.
 
+What about if I dont want to write a fucking hello world program. Give me something useful to do.
+
 1. **Create a new file**: Create a new file named `hello.cpp`.
 2. **Write the code**: Open the file and write the following code:
