@@ -11,7 +11,7 @@ C++ is a powerful general-purpose programming language. It can be used to create
 Let's write a simple program that prints "Hello, World!" to the console.
 
  What about if I dont want to write a fucking hello world program. Give me something useful to do.
+e**: Create a n
 
-1. **Create a new file**: Create a n
 
-Attempt duos hell yeah
+WOOOOOOOOOO
