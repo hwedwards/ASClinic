@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                // The double-asterisk (**) tells VS Code to search subfolders recursively.
+                "${workspaceFolder}/**",
+                // Alternatively, use absolute paths:
+                "/home/asc/ASClinic/catkin_ws/src",
+                "/home/asc/ASClinic/catkin_ws/devel/include",
+                "/opt/ros/noetic/include"
+            ],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
