@@ -93,7 +93,7 @@ DEFAULT_DESIRED_CAMERA_FRAME_WIDTH = 1920
 DEFAULT_DESIRED_CAMERA_FPS = 5
 
 # > For the size of the aruco marker
-DEFAULT_MARKER_SIZE = 0.250
+DEFAULT_MARKER_SIZE = 250
 # NOTE: the unit are arbitary and the units of "tvec" match
 #       the units of the marker size.
 
@@ -328,8 +328,8 @@ class ArucoDetector:
         #   saved during the calibration procedure.
         # > Note the that values hardcoded here may give
         #   meaningless results for your camera
-        self.intrinic_camera_matrix = np.array( [[1726,0,1107] , [0,1726,788] , [0,0,1]], dtype=float)
-        self.intrinic_camera_distortion  = np.array( [[ 5.5252e-02, -2.3523e-01, -1.0507e-04, -8.9834e-04, 2.4028e-01]], dtype=float)
+        self.intrinic_camera_matrix = np.array( [[1.46442149e+03, 0, 1.00102649e+03] , [0, 1.46519453e+03, 4.97256217e+02] , [0,0,1]], dtype=float)
+        self.intrinic_camera_distortion  = np.array( [[ 2.56174868e-03, 3.13356773e-01, -5.43594912e-03, -7.48667040e-05, -5.88175481e-01]], dtype=float)
 
         # Read the a camera frame as a double check of the properties
         # > Read the frame
