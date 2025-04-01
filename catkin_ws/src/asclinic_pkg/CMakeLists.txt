@@ -200,10 +200,10 @@ add_executable(web_interface_connector               src/nodes/web_interface_con
 add_executable(control_policy_skeleton               src/nodes/control_policy_skeleton.cpp)
 add_executable(motor_publisher                      src/drivers/scripts/motor_publisher.cpp)
 add_executable(take_photo                           src/drivers/scripts/take_photo.cpp)
-add_executable(testpublisher                         src/drivers/scripts/testpublisher.cpp)
-add_executable(testsubscriber                        src/drivers/scripts/testsubscriber.cpp)
 
-## Rename C++ executable without prefix
+
+add_executable(fun_publisher src/nodes/fun_publisher.cpp)
+## Rename C++ executable with##out prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
 ## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
@@ -228,9 +228,7 @@ add_dependencies(web_interface_connector               asclinic_pkg_generate_mes
 add_dependencies(control_policy_skeleton               asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(take_photo                            asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})  
 add_dependencies(motor_publisher                            asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})   
-add_dependencies(testpublisher                         asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
-add_dependencies(testsubscriber                         asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
-
+add_dependencies(fun_publisher                        asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
@@ -252,9 +250,7 @@ target_link_libraries(web_interface_connector               ${catkin_LIBRARIES})
 target_link_libraries(control_policy_skeleton               ${catkin_LIBRARIES})
 target_link_libraries(take_photo                            ${catkin_LIBRARIES})
 target_link_libraries(motor_publisher                       ${catkin_LIBRARIES})
-target_link_libraries(testpublisher                         ${catkin_LIBRARIES})
-target_link_libraries(testsubscriber                        ${catkin_LIBRARIES})
-
+target_link_libraries(fun_publisher                         ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############

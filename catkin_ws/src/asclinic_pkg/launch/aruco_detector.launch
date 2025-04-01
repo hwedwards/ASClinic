@@ -44,7 +44,7 @@
 			/>
 			<param
 				name   = "aruco_detector_should_publish_camera_images"
-				value  = "True"
+				value  = "False"
 			/>
 			<param
 				name   = "aruco_detector_should_show_camera_images"

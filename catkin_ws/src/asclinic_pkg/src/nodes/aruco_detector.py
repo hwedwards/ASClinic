@@ -62,7 +62,7 @@ from asclinic_pkg.msg import FiducialMarker
 from asclinic_pkg.msg import FiducialMarkerArray
 
 # Import numpy
-import numpy as np
+import numpy as np # type: ignore
 
 # Import opencv
 import cv2
