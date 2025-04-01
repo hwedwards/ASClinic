@@ -200,7 +200,8 @@ add_executable(web_interface_connector               src/nodes/web_interface_con
 add_executable(control_policy_skeleton               src/nodes/control_policy_skeleton.cpp)
 add_executable(motor_publisher                      src/drivers/scripts/motor_publisher.cpp)
 add_executable(take_photo                           src/drivers/scripts/take_photo.cpp)
-
+add_executable(testpublisher                         src/drivers/scripts/testpublisher.cpp)
+add_executable(testsubscriber                        src/drivers/scripts/testsubscriber.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -227,7 +228,8 @@ add_dependencies(web_interface_connector               asclinic_pkg_generate_mes
 add_dependencies(control_policy_skeleton               asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(take_photo                            asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})  
 add_dependencies(motor_publisher                            asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})   
-
+add_dependencies(testpublisher                         asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(testsubscriber                         asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 
 
 ## Specify libraries to link a library or executable target against
@@ -249,8 +251,9 @@ target_link_libraries(emulate_i2c_for_motors                ${catkin_LIBRARIES})
 target_link_libraries(web_interface_connector               ${catkin_LIBRARIES})
 target_link_libraries(control_policy_skeleton               ${catkin_LIBRARIES})
 target_link_libraries(take_photo                            ${catkin_LIBRARIES})
-target_link_libraries(motor_publisher                            ${catkin_LIBRARIES})
-
+target_link_libraries(motor_publisher                       ${catkin_LIBRARIES})
+target_link_libraries(testpublisher                         ${catkin_LIBRARIES})
+target_link_libraries(testsubscriber                        ${catkin_LIBRARIES})
 
 #############
 ## Install ##
@@ -265,6 +268,10 @@ target_link_libraries(motor_publisher                            ${catkin_LIBRAR
 #   scripts/my_python_script
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
+
+catkin_install_python(PROGRAMS src/drivers/scripts/encoder_subscriber.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 ## Mark executables for installation
 ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_executables.html
