@@ -10,6 +10,7 @@
 // use global variables, static means scope is limited to this script
 static float d = 0, pose_x = 0, pose_y = 0;
 static bool first_message = true; // Flag to handle first message separately
+static int leftcount = 0, rightcount = 0;
 
 // whenever a message comes to the '/asc/encoder_counts' topic, this callback is executed
 void calculate_distance(const asclinic_pkg::PoseSeqs &msg)
@@ -30,11 +31,19 @@ void calculate_distance(const asclinic_pkg::PoseSeqs &msg)
     pose_y = msg.y;
 }
 
+void countticks(const asclinic_pkg::LeftRightInt32 &msg)
+{
+    leftcount += msg.left;
+    rightcount += msg.right;
+}
+
 int main(int argc, char *argv[])
 {
     d = 0;
     pose_x = 0;
     pose_y = 0;
+    leftcount = 0;
+    rightcount = 0;
 
     // Initialise the node
     ros::init(argc, argv, "odomtester");
@@ -45,20 +54,23 @@ int main(int argc, char *argv[])
 
     ros::Rate loop_rate(10);
 
-    // Subscribe to /asc/encoder_counts
+    // Subscribe to /Pose
     ros::Subscriber pose_subscriber = nh_for_group.subscribe("Pose", 10, calculate_distance);
+    // Subscribe to /asc/encoder_counts
+    ros::Subscriber encodersubscriber = nh_for_group.subscribe("/asc/encoder_counts", 1, countticks);
 
     // Initialise a publisher
     ros::Publisher m_publisher = nh_for_group.advertise<asclinic_pkg::LeftRightFloat32>("/asc/set_motor_duty_cycle", 10);
     asclinic_pkg::LeftRightFloat32 dutycycle;
 
     ros::Duration(1).sleep();
-    dutycycle.left = 100;
-    dutycycle.right = 100;
+    dutycycle.left = 20;
+    dutycycle.right = 20;
     dutycycle.seq_num = 0;
 
     m_publisher.publish(dutycycle);
     ROS_INFO("Duty cycle = %f, %f, Distance travelled = %f", dutycycle.left, dutycycle.right, d);
+    ROS_INFO("To begin, ticks counted left: %d, right: %d", leftcount, rightcount);
     /* Alternatively if you want to run it for a certain time, get rid of the while loop and do this:
         // Wait 1 seconds
         ros::Duration(1).sleep();
@@ -83,6 +95,7 @@ int main(int argc, char *argv[])
             m_publisher.publish(dutycycle);
             ROS_INFO("Duty cycle = %f, %f, Distance travelled = %f", dutycycle.left, dutycycle.right, d);
             ROS_INFO("Final pose at: (%f, %f)", pose_x, pose_y);
+            ROS_INFO("Total ticks counted left: %d, right: %d", leftcount, rightcount);
             break;
         }
         loop_rate.sleep();
