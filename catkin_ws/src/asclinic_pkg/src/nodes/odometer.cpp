@@ -1,13 +1,48 @@
 #include "ros/ros.h"
 #include <ros/package.h>
+#include <math.h>
 #include "asclinic_pkg/PoseSeqs.h"
 #include "asclinic_pkg/LeftRightInt32.h"
+#include "asclinic_pkg/LeftRightFloat32.h"
 
-// whenever a message comes to the 'testtopic' topic, this callback is executed
-void callbackFn(const asclinic_pkg::LeftRightInt32 &msg)
+#define WHEELRADIUS 72
+#define WHEELBASETWO 215 // 2b = 215
+
+// use global variables, static means scope is limited to this script
+static int left_encoder_count = 0;
+static int right_encoder_count = 0;
+static float delta_theta_l = 0, delta_theta_r = 0, delta_s = 0, delta_phi = 0;
+
+static int dir_l = 1; // track the direction of the left wheel, positive if forwards
+static int dir_r = 1; // track the direction of the right wheel, negative if backwards
+
+// whenever a message comes to the '/asc/encoder_counts' topic, this callback is executed
+void setencodercounts(const asclinic_pkg::LeftRightInt32 &msg)
 {
-    // Respond to the message received
-    ROS_INFO_STREAM("Message received with data: " << msg.left);
+    left_encoder_count = msg.left;
+    right_encoder_count = msg.right;
+    // ROS_INFO_STREAM("Message received with data: " << left_encoder_count);
+}
+
+void setdirection(const asclinic_pkg::LeftRightFloat32 &msg)
+{
+    if (msg.left >= 0)
+    {
+        dir_l = 1;
+    }
+    else
+    {
+        dir_l = -1;
+    }
+    if (msg.right >= 0)
+    {
+        dir_r = 1;
+    }
+    else
+    {
+        dir_r = -1;
+    }
+    // ROS_INFO_STREAM("Message received with data: " << left_encoder_count);
 }
 
 int main(int argc, char *argv[])
@@ -20,17 +55,20 @@ int main(int argc, char *argv[])
     // ROS_INFO("Namespace: %s", ns.c_str());
     ros::NodeHandle nh_for_group(ns_for_group);
 
-    ros::Rate loop_rate(2);
+    ros::Rate loop_rate(10);
 
-    // Subscribe to encoder_counts
-    ros::Subscriber subscriber = nh_for_group.subscribe("/asc/encoder_counts", 1, callbackFn);
+    // Subscribe to /asc/encoder_counts
+    ros::Subscriber encodersubscriber = nh_for_group.subscribe("/asc/encoder_counts", 1, setencodercounts);
+
+    // Subscribe to /asc/set_motor_duty_cycle
+    ros::Subscriber dutycyclesubscriber = nh_for_group.subscribe("/asc/set_motor_duty_cycle", 1, setdirection);
 
     // Initialise a publisher
     ros::Publisher m_publisher = nh_for_group.advertise<asclinic_pkg::PoseSeqs>("Pose", 10);
     asclinic_pkg::PoseSeqs pose;
-    pose.x = 3.141592;
-    pose.y = 2.71828;
-    pose.phi = 1.618;
+    pose.x = 0;
+    pose.y = 0;
+    pose.phi = 0;
     pose.seq_k = 0;
     pose.seq_aruco = 0;
     m_publisher.publish(pose);
@@ -43,6 +81,19 @@ int main(int argc, char *argv[])
     while (ros::ok())
     {
         // ROS_INFO("Node is running, message is %d", msg.data);
+        delta_theta_l = dir_l * M_PI * left_encoder_count / 560;
+        delta_theta_r = dir_r * M_PI * right_encoder_count / 560;
+        delta_s = (delta_theta_r + delta_theta_l) * WHEELRADIUS / 2;
+        delta_phi = (delta_theta_r - delta_theta_l) * WHEELRADIUS / WHEELBASETWO;
+        pose.x = pose.x + delta_s * cos(pose.phi + 0.5 * delta_phi);
+        pose.y = pose.y + delta_s * sin(pose.phi + 0.5 * delta_phi);
+        pose.phi = fmod(pose.phi + delta_phi, 2 * M_PI); // std::fmod() if <cmath> is used instead
+        if (pose.phi < 0)
+        {
+            pose.phi += 2 * M_PI;
+        }
+        pose.seq_k += 1;
+
         m_publisher.publish(pose);
         ros::spinOnce();
         loop_rate.sleep();
