@@ -6,7 +6,8 @@
 #include "asclinic_pkg/LeftRightFloat32.h"
 
 #define THRESHOLD_DISTANCE 900 // in mm
-#define SPEED 20               // in % for PWM duty cycle
+#define THRESHOLD_TICKS 1080   // in ticks
+#define SPEED 10               // in % for PWM duty cycle
 
 // use global variables, static means scope is limited to this script
 static float d = 0, pose_x = 0, pose_y = 0, pose_phi = 0, final_phi = 0;
@@ -68,7 +69,7 @@ int main(int argc, char *argv[])
     asclinic_pkg::LeftRightFloat32 dutycycle;
 
     ros::Duration(1).sleep();
-    dutycycle.left = SPEED;
+    dutycycle.left = 0;
     dutycycle.right = SPEED;
     dutycycle.seq_num = 0;
 
@@ -91,8 +92,9 @@ int main(int argc, char *argv[])
     while (ros::ok())
     {
         ros::spinOnce();
-        ROS_INFO("Node is running, Distance travelled: %f", d);
-        if (d > THRESHOLD_DISTANCE)
+        ROS_INFO("Node is running, Distance travelled: %f, L: %d, R: %d", d, leftcount, rightcount);
+        // if (leftcount > THRESHOLD_TICKS)
+        if (rightcount > THRESHOLD_TICKS)
         {
             dutycycle.left = 0;
             dutycycle.right = 0;

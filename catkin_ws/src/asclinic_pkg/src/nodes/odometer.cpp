@@ -19,8 +19,8 @@ static int dir_r = 1; // track the direction of the right wheel, negative if bac
 // whenever a message comes to the '/asc/encoder_counts' topic, this callback is executed
 void setencodercounts(const asclinic_pkg::LeftRightInt32 &msg)
 {
-    left_encoder_count = msg.left;
-    right_encoder_count = msg.right;
+    left_encoder_count = msg.right; // if the right wheel turns, the left encoder count increases, and vice versa
+    right_encoder_count = msg.left;
     // ROS_INFO_STREAM("Message received with data: " << left_encoder_count);
 }
 
@@ -65,10 +65,10 @@ int main(int argc, char *argv[])
 
     // Initialise a publisher
     ros::Publisher m_publisher = nh_for_group.advertise<asclinic_pkg::PoseSeqs>("Pose", 10);
-    
+
     // Initialise a publisher for wheel_velocty_rpm
     ros::Publisher m_publisher_wheel_velocity_rpm = nh_for_group.advertise<asclinic_pkg::LeftRightFloat32>("wheel_velocity_rpm", 10);
-    
+
     asclinic_pkg::PoseSeqs pose;
     pose.x = 0;
     pose.y = 0;
@@ -85,8 +85,8 @@ int main(int argc, char *argv[])
     while (ros::ok())
     {
         // ROS_INFO("Node is running, message is %d", msg.data);
-        delta_theta_l = dir_l * M_PI * left_encoder_count / 560;
-        delta_theta_r = dir_r * M_PI * right_encoder_count / 560;
+        delta_theta_l = dir_l * M_PI * left_encoder_count / 545;
+        delta_theta_r = dir_r * M_PI * right_encoder_count / 545;
         delta_s = (delta_theta_r + delta_theta_l) * WHEELRADIUS / 2;
         delta_phi = (delta_theta_r - delta_theta_l) * WHEELRADIUS / WHEELBASETWO;
         pose.x = pose.x + delta_s * cos(pose.phi + 0.5 * delta_phi);
