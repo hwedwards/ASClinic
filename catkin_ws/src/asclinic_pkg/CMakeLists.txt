@@ -205,6 +205,7 @@ add_executable(take_photo                           src/drivers/scripts/take_pho
 
 add_executable(fun_publisher src/nodes/fun_publisher.cpp)
 add_executable(odometer src/nodes/odometer.cpp)
+add_executable(odomtester src/nodes/odomtester.cpp)
 ## Rename C++ executable with##out prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -229,9 +230,10 @@ add_dependencies(emulate_i2c_for_motors                asclinic_pkg_generate_mes
 add_dependencies(web_interface_connector               asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(control_policy_skeleton               asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(take_photo                            asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})  
-add_dependencies(motor_publisher                            asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})   
-add_dependencies(fun_publisher                        asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
-add_dependencies(odometer                        asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(motor_publisher                       asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})   
+add_dependencies(fun_publisher                         asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(odometer                              asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(odomtester                            asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
@@ -254,6 +256,7 @@ target_link_libraries(take_photo                            ${catkin_LIBRARIES})
 target_link_libraries(motor_publisher                       ${catkin_LIBRARIES})
 target_link_libraries(fun_publisher                         ${catkin_LIBRARIES})
 target_link_libraries(odometer                              ${catkin_LIBRARIES})
+target_link_libraries(odomtester                              ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############

@@ -65,6 +65,10 @@ int main(int argc, char *argv[])
 
     // Initialise a publisher
     ros::Publisher m_publisher = nh_for_group.advertise<asclinic_pkg::PoseSeqs>("Pose", 10);
+    
+    // Initialise a publisher for wheel_velocty_rpm
+    ros::Publisher m_publisher_wheel_velocity_rpm = nh_for_group.advertise<asclinic_pkg::LeftRightFloat32>("wheel_velocity_rpm", 10);
+    
     asclinic_pkg::PoseSeqs pose;
     pose.x = 0;
     pose.y = 0;
@@ -95,6 +99,10 @@ int main(int argc, char *argv[])
         pose.seq_k += 1;
 
         m_publisher.publish(pose);
+        asclinic_pkg::LeftRightFloat32 wheel_velocity_rpm_msg;
+        wheel_velocity_rpm_msg.left = delta_theta_l;
+        wheel_velocity_rpm_msg.right = delta_theta_r;
+        m_publisher_wheel_velocity_rpm.publish(wheel_velocity_rpm_msg);
         ros::spinOnce();
         loop_rate.sleep();
     }

@@ -22,8 +22,11 @@ def callback(data):
             tvec_np = np.array(tvec).reshape(3, 1)
             # Calculate the robot position and pose in the world frame
             camera_position = -R_inv @ tvec_np
-            yaw = np.arctan2(R_inv[1, 0], R_inv[0, 0])
             
+            # We only care about pitch angle as it is about the y-axis
+            pitch = np.arcsin(-R_inv[2, 0])
+            pitch_degree = np.degrees(pitch)
+
             # Compute the front of the robot's position by transforming a fixed offset in the camera frame
             # Here, the camera is treated as a separate inertial frame with a -150 mm offset along the z-axis (pointing out of the camera)
             # The offset vector in the camera frame (in meters) is:
@@ -35,12 +38,10 @@ def callback(data):
             # The front position in the marker frame is the camera position plus the transformed offset
             front_position = camera_position - offset_marker
 
-            yaw_degree = np.degrees(yaw)
-
             # Log the information
             rospy.loginfo("Marker ID: %d", marker_id)
             rospy.loginfo("Camera Position in Marker Frame: [%f, %f, %f]", camera_position[0][0], camera_position[1][0], camera_position[2][0])
-            rospy.loginfo("Robot Yaw in Marker Frame: %f", yaw_degree)
+            rospy.loginfo("Robot Pitch in Marker Frame: %f", pitch_degree)
             rospy.loginfo("Front of Robot Position in Marker Frame: [%f, %f, %f]", front_position[0][0], front_position[1][0], front_position[2][0])
             rospy.loginfo("---------------------------------------------------")
 
