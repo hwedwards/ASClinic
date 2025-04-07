@@ -11,7 +11,7 @@ measurement_limit = 50
 
 # Set the current test conditions:
 # Choose one of the following distances (in metres): 1, 4, or 6
-CURRENT_DISTANCE = 6 
+CURRENT_DISTANCE = 1
 # Choose the expected pitch angle (in degrees) from the options: 0, 45, 75
 CURRENT_EXPECTED_PITCH = 75  
 
