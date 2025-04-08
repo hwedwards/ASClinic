@@ -11,7 +11,7 @@
 // use global variables, static means scope is limited to this script
 static float d = 0, pose_x = 0, pose_y = 0, pose_phi = 0, final_phi = 0;
 static bool first_message = true; // Flag to handle first message separately
-static int leftcount = 0, rightcount = 0;
+static int leftcount = 0, rightcount = 0, seq_k = 0;
 
 // whenever a message comes to the '/asc/encoder_counts' topic, this callback is executed
 void calculate_distance(const asclinic_pkg::PoseSeqs &msg)
@@ -31,6 +31,7 @@ void calculate_distance(const asclinic_pkg::PoseSeqs &msg)
     pose_x = msg.x;
     pose_y = msg.y;
     final_phi = msg.phi;
+    seq_k = msg.seq_k;
 }
 
 void countticks(const asclinic_pkg::LeftRightInt32 &msg)
@@ -91,7 +92,9 @@ int main(int argc, char *argv[])
     while (ros::ok())
     {
         ros::spinOnce();
-        ROS_INFO("Node is running, Distance travelled: %.2f", d);
+
+        ROS_INFO("Node is running, Distance travelled: %.2f, L: %d, R: %d", d, leftcount, rightcount);
+
         if (d > THRESHOLD_DISTANCE)
         {
             dutycycle.left = 0;

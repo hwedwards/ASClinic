@@ -6,13 +6,13 @@
 #include "asclinic_pkg/LeftRightFloat32.h"
 
 #define THRESHOLD_DISTANCE 900 // in mm
-#define THRESHOLD_TICKS 1080   // in ticks
-#define SPEED 10               // in % for PWM duty cycle
+#define THRESHOLD_TICKS 3260   // 1620   // in ticks
+#define SPEED 40               // in % for PWM duty cycle
 
 // use global variables, static means scope is limited to this script
 static float d = 0, pose_x = 0, pose_y = 0, pose_phi = 0, final_phi = 0;
 static bool first_message = true; // Flag to handle first message separately
-static int leftcount = 0, rightcount = 0;
+static int leftcount = 0, rightcount = 0, seq_k = 0;
 
 // whenever a message comes to the '/asc/encoder_counts' topic, this callback is executed
 void calculate_distance(const asclinic_pkg::PoseSeqs &msg)
@@ -32,6 +32,7 @@ void calculate_distance(const asclinic_pkg::PoseSeqs &msg)
     pose_x = msg.x;
     pose_y = msg.y;
     final_phi = msg.phi;
+    seq_k = msg.seq_k;
 }
 
 void countticks(const asclinic_pkg::LeftRightInt32 &msg)
@@ -68,7 +69,6 @@ int main(int argc, char *argv[])
     ros::Publisher m_publisher = nh_for_group.advertise<asclinic_pkg::LeftRightFloat32>("/asc/set_motor_duty_cycle", 10);
     asclinic_pkg::LeftRightFloat32 dutycycle;
 
-    /*
     ros::Duration(1).sleep();
     dutycycle.left = 0;
     dutycycle.right = SPEED;
@@ -78,30 +78,32 @@ int main(int argc, char *argv[])
     ROS_INFO("Duty cycle = %.2f, %.2f, Distance travelled = %.2f", dutycycle.left, dutycycle.right, d);
     ROS_INFO("To begin, ticks counted left: %d, right: %d", leftcount, rightcount);
     // Alternatively if you want to run it for a certain time, get rid of the while loop and do this:
-        // Wait 1 seconds
-        // ros::Duration(1).sleep();
-        //dutycycle.left = 0;
-        //dutycycle.right = 0;
+    // Wait 1 seconds
+    // ros::Duration(1).sleep();
+    // dutycycle.left = 0;
+    // dutycycle.right = 0;
 
-        // Then publish final message
+    // Then publish final message
 
-        //m_publisher.publish(dutycycle);
-        //ROS_INFO("Message = %f, %f, %d", dutycycle.left, dutycycle.right, dutycycle.seq_num);
+    // m_publisher.publish(dutycycle);
+    // ROS_INFO("Message = %f, %f, %d", dutycycle.left, dutycycle.right, dutycycle.seq_num);
 
     // Spin at a specific rate, 10Hz here
     while (ros::ok())
     {
         ros::spinOnce();
+
         ROS_INFO("Node is running, Distance travelled: %.2f, L: %d, R: %d", d, leftcount, rightcount);
+
         // if (leftcount > THRESHOLD_TICKS)
         if (rightcount > THRESHOLD_TICKS)
         {
             dutycycle.left = 0;
             dutycycle.right = 0;
             m_publisher.publish(dutycycle);
-            ros::Duration(5).sleep();
-            pose_phi = final_phi - pose_phi;
             ros::Duration(1).sleep();
+            pose_phi = final_phi - pose_phi;
+            ros::Duration(0).sleep();
             ROS_INFO("Duty cycle = %.2f, %.2f, Distance travelled = %.2f", dutycycle.left, dutycycle.right, d);
             ROS_INFO("Final pose at: (%f, %f, phi: %f)", pose_x, pose_y, pose_phi);
             ROS_INFO("Total ticks counted left: %d, right: %d", leftcount, rightcount);
@@ -109,17 +111,17 @@ int main(int argc, char *argv[])
         }
         loop_rate.sleep();
     }
-    */
+    /*
     ROS_INFO("Phase 1: Robot moves itself...");
 
     // Phase 1: Move with motors for 1 second
+    ros::Duration(1).sleep();
     dutycycle.left = 0;
     dutycycle.right = SPEED;
     dutycycle.seq_num = 0;
     m_publisher.publish(dutycycle);
 
-    ros::Time move_start = ros::Time::now();
-    while (ros::ok() && ros::Time::now() - move_start < ros::Duration(1.0))
+    while (ros::ok() && rightcount > THRESHOLD_TICKS)
     {
         ros::spinOnce();
         loop_rate.sleep();
@@ -147,6 +149,6 @@ int main(int argc, char *argv[])
     ROS_INFO("Total distance travelled: %.2f mm", d);
     ROS_INFO("Final pose: (%.2f, %.2f), phi: %.2f", pose_x, pose_y, pose_phi);
     ROS_INFO("Total encoder ticks: Left = %d, Right = %d", leftcount, rightcount);
-
+    */
     return 0;
 }

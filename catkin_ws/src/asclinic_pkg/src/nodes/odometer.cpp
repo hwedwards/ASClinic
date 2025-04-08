@@ -13,8 +13,8 @@
 static int left_encoder_count = 0;
 static int right_encoder_count = 0;
 static float delta_theta_l = 0, delta_theta_r = 0, delta_s = 0, delta_phi = 0;
-static float theta_dot_l = 0; 
-static float theta_dot_r = 0; 
+static float theta_dot_l = 0;
+static float theta_dot_r = 0;
 
 static int dir_l = 1; // track the direction of the left wheel, positive if forwards
 static int dir_r = 1; // track the direction of the right wheel, negative if backwards
@@ -31,19 +31,19 @@ void setdirection(const asclinic_pkg::LeftRightFloat32 &msg)
 {
     if (msg.left >= 0)
     {
-        dir_l = 1;
-    }
-    else
-    {
-        dir_l = -1;
-    }
-    if (msg.right >= 0)
-    {
         dir_r = 1;
     }
     else
     {
         dir_r = -1;
+    }
+    if (msg.right >= 0)
+    {
+        dir_l = 1;
+    }
+    else
+    {
+        dir_l = -1;
     }
     // ROS_INFO_STREAM("Message received with data: " << left_encoder_count);
 }
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     // ROS_INFO("Namespace: %s", ns.c_str());
     ros::NodeHandle nh_for_group(ns_for_group);
 
-    ros::Rate loop_rate(100); 
+    ros::Rate loop_rate(10);
 
     // Subscribe to /asc/encoder_counts
     ros::Subscriber encodersubscriber = nh_for_group.subscribe("/asc/encoder_counts", 1, setencodercounts);
@@ -69,18 +69,8 @@ int main(int argc, char *argv[])
     // Initialise a publisher
     ros::Publisher m_publisher = nh_for_group.advertise<asclinic_pkg::PoseSeqs>("Pose", 10);
 
-    // Initialise a publisher for wheel_velocty_rpm
+    // Initialise a publisher for wheel_velocity_rpm
     ros::Publisher m_publisher_wheel_velocity_rpm = nh_for_group.advertise<asclinic_pkg::LeftRightFloat32>("wheel_velocity_rpm", 10);
-
-    float delta_t = 0.0;
-    // Retrieve the parameter value
-    if(!nh_for_group.getParam("delta_t_for_publishing_encoder_counts", delta_t))
-    {
-        ROS_WARN("[ODOMETER] Failed to get 'delta_t' parameter. Using default value of 0.1.");
-        delta_t = 0.1; // Default value
-    }
-
-    ROS_INFO("[ODOMETER] delta_t parameter: %f", delta_t);
 
     asclinic_pkg::PoseSeqs pose;
     pose.x = 0;
@@ -97,9 +87,9 @@ int main(int argc, char *argv[])
     // Spin at a specific rate, 2Hz here
     while (ros::ok())
     {
-        //For Velocity control 
-        theta_dot_l = dir_l*left_encoder_count/(COUNTS_PER_REV*delta_t); 
-        theta_dot_r = dir_r*right_encoder_count/(COUNTS_PER_REV)*delta_t; 
+        // For Velocity control
+        theta_dot_l = dir_l * left_encoder_count / (COUNTS_PER_REV * delta_t);
+        theta_dot_r = dir_r * right_encoder_count / (COUNTS_PER_REV * delta_t);
         // ROS_INFO("Node is running, message is %d", msg.data);
         delta_theta_l = dir_l * M_PI * left_encoder_count / 545;
         delta_theta_r = dir_r * M_PI * right_encoder_count / 545;
