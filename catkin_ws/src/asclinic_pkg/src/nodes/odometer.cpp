@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     // ROS_INFO("Namespace: %s", ns.c_str());
     ros::NodeHandle nh_for_group(ns_for_group);
 
-    ros::Rate loop_rate(10);
+    ros::Rate loop_rate(100);
 
     // Subscribe to /asc/encoder_counts
     ros::Subscriber encodersubscriber = nh_for_group.subscribe("/asc/encoder_counts", 1, setencodercounts);

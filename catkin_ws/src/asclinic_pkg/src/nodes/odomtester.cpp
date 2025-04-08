@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
     dutycycle.seq_num = 0;
 
     m_publisher.publish(dutycycle);
-    ROS_INFO("Duty cycle = %f, %f, Distance travelled = %f", dutycycle.left, dutycycle.right, d);
+    ROS_INFO("Duty cycle = %.2f, %.2f, Distance travelled = %.2f", dutycycle.left, dutycycle.right, d);
     ROS_INFO("To begin, ticks counted left: %d, right: %d", leftcount, rightcount);
     /* Alternatively if you want to run it for a certain time, get rid of the while loop and do this:
         // Wait 1 seconds
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
     while (ros::ok())
     {
         ros::spinOnce();
-        ROS_INFO("Node is running, Distance travelled: %f", d);
+        ROS_INFO("Node is running, Distance travelled: %.2f", d);
         if (d > THRESHOLD_DISTANCE)
         {
             dutycycle.left = 0;
@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
             m_publisher.publish(dutycycle);
             pose_phi = final_phi - pose_phi;
             ros::Duration(1).sleep(); // give the robot time to come to a stop before displaying final values
-            ROS_INFO("Duty cycle = %f, %f, Distance travelled = %f", dutycycle.left, dutycycle.right, d);
+            ROS_INFO("Duty cycle = %.2f, %.2f, Distance travelled = %.2f", dutycycle.left, dutycycle.right, d);
             ROS_INFO("Final pose at: (%f, %f, phi: %f)", pose_x, pose_y, pose_phi);
             ROS_INFO("Total ticks counted left: %d, right: %d", leftcount, rightcount);
             break;

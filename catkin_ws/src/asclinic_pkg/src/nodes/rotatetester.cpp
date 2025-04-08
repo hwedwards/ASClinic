@@ -68,46 +68,85 @@ int main(int argc, char *argv[])
     ros::Publisher m_publisher = nh_for_group.advertise<asclinic_pkg::LeftRightFloat32>("/asc/set_motor_duty_cycle", 10);
     asclinic_pkg::LeftRightFloat32 dutycycle;
 
+    /*
     ros::Duration(1).sleep();
     dutycycle.left = 0;
     dutycycle.right = SPEED;
     dutycycle.seq_num = 0;
 
     m_publisher.publish(dutycycle);
-    ROS_INFO("Duty cycle = %f, %f, Distance travelled = %f", dutycycle.left, dutycycle.right, d);
+    ROS_INFO("Duty cycle = %.2f, %.2f, Distance travelled = %.2f", dutycycle.left, dutycycle.right, d);
     ROS_INFO("To begin, ticks counted left: %d, right: %d", leftcount, rightcount);
-    /* Alternatively if you want to run it for a certain time, get rid of the while loop and do this:
+    // Alternatively if you want to run it for a certain time, get rid of the while loop and do this:
         // Wait 1 seconds
-        ros::Duration(1).sleep();
-        dutycycle.left = 0;
-        dutycycle.right = 0;
+        // ros::Duration(1).sleep();
+        //dutycycle.left = 0;
+        //dutycycle.right = 0;
 
         // Then publish final message
 
-        m_publisher.publish(dutycycle);
-        ROS_INFO("Message = %f, %f, %d", dutycycle.left, dutycycle.right, dutycycle.seq_num);
-    */
+        //m_publisher.publish(dutycycle);
+        //ROS_INFO("Message = %f, %f, %d", dutycycle.left, dutycycle.right, dutycycle.seq_num);
 
     // Spin at a specific rate, 10Hz here
     while (ros::ok())
     {
         ros::spinOnce();
-        ROS_INFO("Node is running, Distance travelled: %f, L: %d, R: %d", d, leftcount, rightcount);
+        ROS_INFO("Node is running, Distance travelled: %.2f, L: %d, R: %d", d, leftcount, rightcount);
         // if (leftcount > THRESHOLD_TICKS)
         if (rightcount > THRESHOLD_TICKS)
         {
             dutycycle.left = 0;
             dutycycle.right = 0;
             m_publisher.publish(dutycycle);
+            ros::Duration(5).sleep();
             pose_phi = final_phi - pose_phi;
-            ros::Duration(1).sleep(); // give the robot time to come to a stop before displaying final values
-            ROS_INFO("Duty cycle = %f, %f, Distance travelled = %f", dutycycle.left, dutycycle.right, d);
+            ros::Duration(1).sleep();
+            ROS_INFO("Duty cycle = %.2f, %.2f, Distance travelled = %.2f", dutycycle.left, dutycycle.right, d);
             ROS_INFO("Final pose at: (%f, %f, phi: %f)", pose_x, pose_y, pose_phi);
             ROS_INFO("Total ticks counted left: %d, right: %d", leftcount, rightcount);
             break;
         }
         loop_rate.sleep();
     }
+    */
+    ROS_INFO("Phase 1: Robot moves itself...");
+
+    // Phase 1: Move with motors for 1 second
+    dutycycle.left = 0;
+    dutycycle.right = SPEED;
+    dutycycle.seq_num = 0;
+    m_publisher.publish(dutycycle);
+
+    ros::Time move_start = ros::Time::now();
+    while (ros::ok() && ros::Time::now() - move_start < ros::Duration(1.0))
+    {
+        ros::spinOnce();
+        loop_rate.sleep();
+    }
+
+    // Stop motors after auto move
+    dutycycle.left = 0;
+    dutycycle.right = 0;
+    m_publisher.publish(dutycycle);
+
+    ROS_INFO("Phase 2: Move robot manually for 5 seconds...");
+
+    // Phase 2: Passive listening
+    ros::Time manual_start = ros::Time::now();
+    while (ros::ok() && ros::Time::now() - manual_start < ros::Duration(5.0))
+    {
+        ros::spinOnce();
+        loop_rate.sleep();
+    }
+
+    // Final reporting
+    pose_phi = final_phi - pose_phi;
+
+    ROS_INFO("=== Movement Summary ===");
+    ROS_INFO("Total distance travelled: %.2f mm", d);
+    ROS_INFO("Final pose: (%.2f, %.2f), phi: %.2f", pose_x, pose_y, pose_phi);
+    ROS_INFO("Total encoder ticks: Left = %d, Right = %d", leftcount, rightcount);
 
     return 0;
 }
