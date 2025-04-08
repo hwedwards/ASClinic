@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     // ROS_INFO("Namespace: %s", ns.c_str());
     ros::NodeHandle nh_for_group(ns_for_group);
 
-    ros::Rate loop_rate(10);
+    ros::Rate loop_rate(100);
 
     // Subscribe to /asc/encoder_counts
     ros::Subscriber encodersubscriber = nh_for_group.subscribe("/asc/encoder_counts", 1, setencodercounts);
@@ -68,9 +68,6 @@ int main(int argc, char *argv[])
 
     // Initialise a publisher
     ros::Publisher m_publisher = nh_for_group.advertise<asclinic_pkg::PoseSeqs>("Pose", 10);
-
-    // Initialise a publisher for wheel_velocity_rpm
-    ros::Publisher m_publisher_wheel_velocity_rpm = nh_for_group.advertise<asclinic_pkg::LeftRightFloat32>("wheel_velocity_rpm", 10);
 
     asclinic_pkg::PoseSeqs pose;
     pose.x = 0;
@@ -87,9 +84,7 @@ int main(int argc, char *argv[])
     // Spin at a specific rate, 2Hz here
     while (ros::ok())
     {
-        // For Velocity control
-        theta_dot_l = dir_l * left_encoder_count / (COUNTS_PER_REV * delta_t);
-        theta_dot_r = dir_r * right_encoder_count / (COUNTS_PER_REV * delta_t);
+
         // ROS_INFO("Node is running, message is %d", msg.data);
         delta_theta_l = dir_l * M_PI * left_encoder_count / 545;
         delta_theta_r = dir_r * M_PI * right_encoder_count / 545;
@@ -108,7 +103,6 @@ int main(int argc, char *argv[])
         asclinic_pkg::LeftRightFloat32 wheel_velocity_rpm_msg;
         wheel_velocity_rpm_msg.left = delta_theta_l;
         wheel_velocity_rpm_msg.right = delta_theta_r;
-        m_publisher_wheel_velocity_rpm.publish(wheel_velocity_rpm_msg);
         ros::spinOnce();
         loop_rate.sleep();
     }
