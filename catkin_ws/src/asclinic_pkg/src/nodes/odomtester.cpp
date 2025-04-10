@@ -5,8 +5,8 @@
 #include "asclinic_pkg/LeftRightInt32.h"
 #include "asclinic_pkg/LeftRightFloat32.h"
 
-#define THRESHOLD_DISTANCE 900 // in mm
-#define SPEED 20               // in % for PWM duty cycle
+#define THRESHOLD_DISTANCE 3000 // in mm
+#define SPEED 20                // in % for PWM duty cycle
 
 // use global variables, static means scope is limited to this script
 static float d = 0, pose_x = 0, pose_y = 0, pose_phi = 0, final_phi = 0;
@@ -96,6 +96,7 @@ int main(int argc, char *argv[])
         ROS_INFO("Node is running, Distance travelled: %.2f, L: %d, R: %d", d, leftcount, rightcount);
 
         if (d > THRESHOLD_DISTANCE)
+        // if (rightcount > THRESHOLD_TICKS)
         {
             dutycycle.left = 0;
             dutycycle.right = 0;

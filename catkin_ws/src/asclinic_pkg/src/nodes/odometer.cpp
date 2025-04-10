@@ -8,6 +8,8 @@
 #define WHEELRADIUS 72
 #define WHEELBASETWO 215 // 2b = 215
 #define COUNTS_PER_REV 16
+#define LEFTCOUNTSPERREV 1127.6
+#define RIGHTCOUNTSPERREV 1150.2
 
 // use global variables, static means scope is limited to this script
 static int left_encoder_count = 0;
@@ -31,19 +33,19 @@ void setdirection(const asclinic_pkg::LeftRightFloat32 &msg)
 {
     if (msg.left >= 0)
     {
-        dir_r = 1;
-    }
-    else
-    {
-        dir_r = -1;
-    }
-    if (msg.right >= 0)
-    {
         dir_l = 1;
     }
     else
     {
         dir_l = -1;
+    }
+    if (msg.right >= 0)
+    {
+        dir_r = 1;
+    }
+    else
+    {
+        dir_r = -1;
     }
     // ROS_INFO_STREAM("Message received with data: " << left_encoder_count);
 }
@@ -58,7 +60,7 @@ int main(int argc, char *argv[])
     // ROS_INFO("Namespace: %s", ns.c_str());
     ros::NodeHandle nh_for_group(ns_for_group);
 
-    ros::Rate loop_rate(100);
+    ros::Rate loop_rate(10);
 
     // Subscribe to /asc/encoder_counts
     ros::Subscriber encodersubscriber = nh_for_group.subscribe("/asc/encoder_counts", 1, setencodercounts);
@@ -84,10 +86,9 @@ int main(int argc, char *argv[])
     // Spin at a specific rate, 2Hz here
     while (ros::ok())
     {
-
         // ROS_INFO("Node is running, message is %d", msg.data);
-        delta_theta_l = dir_l * M_PI * left_encoder_count / 545;
-        delta_theta_r = dir_r * M_PI * right_encoder_count / 545;
+        delta_theta_l = 2 * dir_l * M_PI * left_encoder_count / LEFTCOUNTSPERREV;
+        delta_theta_r = 2 * dir_r * M_PI * right_encoder_count / RIGHTCOUNTSPERREV;
         delta_s = (delta_theta_r + delta_theta_l) * WHEELRADIUS / 2;
         delta_phi = (delta_theta_r - delta_theta_l) * WHEELRADIUS / WHEELBASETWO;
         pose.x = pose.x + delta_s * cos(pose.phi + 0.5 * delta_phi);

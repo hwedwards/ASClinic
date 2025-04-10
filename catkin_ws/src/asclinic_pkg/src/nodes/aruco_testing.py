@@ -9,10 +9,7 @@ from asclinic_pkg.msg import FiducialMarkerArray
 
 measurement_limit = 50
 
-# TO DO: 
-# - TEST ANGLE VARIATION AT DIFFERENT DISTANCES.
-# - TEST VARIATION WITH ANGULAR MOTION.
-# - TEST VARIATION WITH LINEAR MOTION.
+
 def get_true_position(position_id):
     true_positions = {
         1: {'front': [0, 0, 1]},
@@ -44,7 +41,7 @@ def get_true_position(position_id):
     return true_positions.get(position_id, None)
 
 # Set the current position id for this stationary test
-CURRENT_POSITION_ID = 25
+CURRENT_POSITION_ID = 2
 
 # Global list to store measurement data
 data_collection = []
