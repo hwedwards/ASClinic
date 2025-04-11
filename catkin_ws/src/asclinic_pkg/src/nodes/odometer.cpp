@@ -8,8 +8,8 @@
 #define WHEELRADIUS 72
 #define WHEELBASETWO 215 // 2b = 215
 #define COUNTS_PER_REV 16
-#define LEFTCOUNTSPERREV 1127.6
-#define RIGHTCOUNTSPERREV 1150.2
+#define LEFTCOUNTSPERREV 1123.1
+#define RIGHTCOUNTSPERREV 1129.4
 
 // use global variables, static means scope is limited to this script
 static int left_encoder_count = 0;
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
     // ROS_INFO("Namespace: %s", ns.c_str());
     ros::NodeHandle nh_for_group(ns_for_group);
 
-    ros::Rate loop_rate(10);
+    ros::Rate loop_rate(50); // encoder_counts published at fs = 50 Hz
 
     // Subscribe to /asc/encoder_counts
     ros::Subscriber encodersubscriber = nh_for_group.subscribe("/asc/encoder_counts", 1, setencodercounts);

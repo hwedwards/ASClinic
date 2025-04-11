@@ -6,8 +6,8 @@
 #include "asclinic_pkg/LeftRightFloat32.h"
 
 #define THRESHOLD_DISTANCE 900 // in mm
-#define THRESHOLD_TICKS 34400  // 1620   // in ticks
-#define SPEED 80               // in % for PWM duty cycle
+#define THRESHOLD_TICKS 800    // 1620   // in ticks
+#define SPEED 20               // in % for PWM duty cycle
 
 // use global variables, static means scope is limited to this script
 static float d = 0, pose_x = 0, pose_y = 0, pose_phi = 0, final_phi = 0;
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     std::string ns_for_group = ros::this_node::getNamespace();
     ros::NodeHandle nh_for_group(ns_for_group);
 
-    ros::Rate loop_rate(10);
+    ros::Rate loop_rate(50); // encoder_counts published at fs = 50 Hz
 
     // Subscribe to /Pose
     ros::Subscriber pose_subscriber = nh_for_group.subscribe("Pose", 10, calculate_distance);
