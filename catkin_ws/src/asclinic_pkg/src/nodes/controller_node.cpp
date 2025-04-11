@@ -38,7 +38,7 @@ void encoderCountsCallback(const asclinic_pkg::LeftRightInt32& msg)
     // Compute the current state (e.g., velocity or position)
     float current_state_left = static_cast<float>(msg.left) * ENCODER_FREQUENCY_HZ / ENCODER_COUNTS_PER_REVOLUTION_LEFT;
     float current_state_right = static_cast<float>(msg.right) * ENCODER_FREQUENCY_HZ / ENCODER_COUNTS_PER_REVOLUTION_RIGHT;
-
+    ROS_INFO("current state - Left: %d, Right: %d", current_state_left, current_state_right);
     // Compute the error
     float error_left = ControllerParameters::reference_left - current_state_left; 
     float error_right = ControllerParameters::reference_right - current_state_right;
@@ -46,11 +46,16 @@ void encoderCountsCallback(const asclinic_pkg::LeftRightInt32& msg)
     // Update the integrator
     ControllerParameters::integrator_left += error_left * DELTA_T;
     ControllerParameters::integrator_right += error_right * DELTA_T;
+    
+    float integrator_control_left = ControllerParameters::integrator_left * ControllerParameters::Ki;
+    float integrator_control_right = ControllerParameters::integrator_right * ControllerParameters::Ki;
 
+    ROS_INFO("integrator term - Left: %d, Right: %d", integrator_control_left, integrator_control_right);
     // Compute the control action
-    float control_action_left = ControllerParameters::Kp * current_state_left + ControllerParameters::Ki * ControllerParameters::integrator_left;
-    float control_action_right = ControllerParameters::Kp * current_state_right + ControllerParameters::Ki * ControllerParameters::integrator_right;
+    float control_action_left = -(ControllerParameters::Kp * current_state_left) + integrator_control_left;
+    float control_action_right = -(ControllerParameters::Kp * current_state_right) + integrator_control_right;
 
+    
     // I need to convert the control action into a duty cycle
 
     control_action_left = control_action_left*100/MOTOR_MAX_VOLTAGE; 
