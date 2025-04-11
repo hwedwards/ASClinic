@@ -4,6 +4,7 @@
 #include "asclinic_pkg/LeftRightFloat32.h"
 #include "asclinic_pkg/LeftRightInt32.h"
 #include "std_msgs/Float32.h"
+#include <ros/console.h>
 
 namespace ControllerParameters
 {
@@ -31,6 +32,9 @@ ros::Publisher motor_duty_cycle_publisher;
 // Callback for encoder counts
 void encoderCountsCallback(const asclinic_pkg::LeftRightInt32& msg)
 {
+    // Log received encoder counts
+    ROS_INFO("Received encoder counts - Left: %d, Right: %d", msg.left, msg.right);
+
     // Compute the current state (e.g., velocity or position)
     float current_state_left = static_cast<float>(msg.left) * ENCODER_FREQUENCY_HZ / ENCODER_COUNTS_PER_REVOLUTION_LEFT;
     float current_state_right = static_cast<float>(msg.right) * ENCODER_FREQUENCY_HZ / ENCODER_COUNTS_PER_REVOLUTION_RIGHT;
@@ -58,11 +62,17 @@ void encoderCountsCallback(const asclinic_pkg::LeftRightInt32& msg)
     duty_cycle_msg.left = control_action_left;
     duty_cycle_msg.right = control_action_right;
     motor_duty_cycle_publisher.publish(duty_cycle_msg);
+
+    // Log computed duty cycles
+    ROS_INFO("Computed duty cycles - Left: %.2f, Right: %.2f", duty_cycle_msg.left, duty_cycle_msg.right);
 }
 
 // Callback for reference values for both wheels
 void referenceCallback(const asclinic_pkg::LeftRightFloat32& msg)
 {
+    // Log received reference values
+    ROS_INFO("Received reference velocities - Left: %.2f RPM, Right: %.2f RPM", msg.left, msg.right);
+
     ControllerParameters::reference_left = msg.left;
     ControllerParameters::reference_right = msg.right;
 }
