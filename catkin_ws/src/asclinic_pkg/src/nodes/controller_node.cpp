@@ -84,10 +84,10 @@ int main(int argc, char** argv)
     ros::NodeHandle nh;
 
     // Initialize the publisher
-    motor_duty_cycle_publisher = nh.advertise<asclinic_pkg::LeftRightFloat32>("set_motor_duty_cycle", 10);
+    motor_duty_cycle_publisher = nh.advertise<asclinic_pkg::LeftRightFloat32>("/asc/set_motor_duty_cycle", 10);
 
     // Initialize the subscribers
-    ros::Subscriber encoder_subscriber = nh.subscribe("encoder_counts", 10, encoderCountsCallback);
+    ros::Subscriber encoder_subscriber = nh.subscribe("/asc/encoder_counts", 10, encoderCountsCallback);
     ros::Subscriber reference_subscriber = nh.subscribe("set_reference", 10, referenceCallback);
 
     // Spin the node
