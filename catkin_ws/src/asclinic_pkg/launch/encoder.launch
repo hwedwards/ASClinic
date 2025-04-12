@@ -61,7 +61,7 @@
 			/>
 			<param
 				name   = "delta_t_for_publishing_encoder_counts"
-				value  = "0.02"
+				value  = "0.1"
 			/>
 		</node>
 

@@ -211,6 +211,9 @@ add_executable(rotatetester src/nodes/rotatetester.cpp)
 # Add the new controller_node executable
 add_executable(controller_node src/nodes/controller_node.cpp)
 
+# Add the new velocity_PI_control node
+add_executable(velocity_PI_control src/nodes/velocity_PI_control.cpp)
+
 ## Rename C++ executable with##out prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -241,7 +244,7 @@ add_dependencies(odometer                              asclinic_pkg_generate_mes
 add_dependencies(odomtester                            asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(rotatetester                          asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(controller_node                       asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
-
+add_dependencies(velocity_PI_control                   asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
@@ -267,6 +270,7 @@ target_link_libraries(odometer                              ${catkin_LIBRARIES})
 target_link_libraries(odomtester                              ${catkin_LIBRARIES})
 target_link_libraries(rotatetester                              ${catkin_LIBRARIES})
 target_link_libraries(controller_node                       ${catkin_LIBRARIES})
+target_link_libraries(velocity_PI_control                   ${catkin_LIBRARIES})
 
 #############
 ## Install ##

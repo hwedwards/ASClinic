@@ -1,17 +1,13 @@
-// Include necessary libraries
 #include <ros/ros.h>
-#include <math.h>
 #include "asclinic_pkg/LeftRightFloat32.h"
 #include "asclinic_pkg/LeftRightInt32.h"
-#include "std_msgs/Float32.h"
-#include <ros/console.h>
 
 // to run this node, rostopic pub --once /set_reference asclinic_pkg/LeftRightFloat32 "{left: 2000.0, right: 2000.0}"
 namespace ControllerParameters
 {
     // Controller parameters
-    float Kp = 0.19; // Proportional gain for velocity control
-    float Ki = 0.0491; // Integrator gain for velocity control
+    float Kp = 0.001; // Proportional gain for velocity control
+    float Ki = 0.0015; // Integrator gain for velocity control
     float reference_left = 0.0; // Desired reference value
     float reference_right = 0.0; // Desired reference value
     float integrator_left = 0.0; // Integrator state
@@ -45,7 +41,13 @@ void encoderCountsCallback(const asclinic_pkg::LeftRightInt32& msg)
     float error_left = ControllerParameters::reference_left - current_state_left; 
     float error_right = ControllerParameters::reference_right - current_state_right;
     ROS_INFO("error_term - Left: %f, Right: %f", error_left, error_right);
-    // Update the integrator
+
+    // the state feedback is multiplying the FUCKING ERROR!!!!!!
+    float state_feedback_control_left = ControllerParameters::Kp * error_left;
+    float state_feedback_control_right = ControllerParameters::Kp * error_right;
+    
+    ROS_INFO("state feedback term - Left: %f, Right: %f", state_feedback_control_left, state_feedback_control_right);
+    
     ControllerParameters::integrator_left += error_left * DELTA_T;
     ControllerParameters::integrator_right += error_right * DELTA_T;
     
@@ -55,13 +57,9 @@ void encoderCountsCallback(const asclinic_pkg::LeftRightInt32& msg)
     ROS_INFO("integrator term - Left: %f, Right: %f", integrator_control_left, integrator_control_right);
      // It's definitely the integrator term thats screwing things up a bit
     
-    // the state feedback is multiplying the FUCKING ERROR!!!!!!
-    float state_feedback_control_left = ControllerParameters::Kp * current_state_left;
-    float state_feedback_control_right = ControllerParameters::Kp * current_state_right;
-    ROS_INFO("state feedback term - Left: %f, Right: %f", state_feedback_control_left, state_feedback_control_right);
     // Compute the control action
-    float control_action_left = -state_feedback_control_left + integrator_control_left;
-    float control_action_right = -state_feedback_control_right + integrator_control_right;
+    float control_action_left = state_feedback_control_left + integrator_control_left;
+    float control_action_right = state_feedback_control_right + integrator_control_right;
 
     
     // I need to convert the control action into a duty cycle
@@ -93,7 +91,7 @@ void referenceCallback(const asclinic_pkg::LeftRightFloat32& msg)
 int main(int argc, char** argv)
 {
     // Initialize the ROS node
-    ros::init(argc, argv, "controller_node");
+    ros::init(argc, argv, "velocity_PI_control_node");
     ros::NodeHandle nh;
 
     // Initialize the publisher
