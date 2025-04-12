@@ -6,8 +6,10 @@
 namespace ControllerParameters
 {
     // Controller parameters
-    float Kp = 0.001; // Proportional gain for velocity control
-    float Ki = 0.0015; // Integrator gain for velocity control
+    float Kp_left = 0.001; // Proportional gain for velocity control
+    float Ki_left = 0.001; // Integrator gain for velocity control
+    float Kp_right = 0.0; 
+    float Ki_right = 0.0; // Integrator gain for velocity control
     float reference_left = 0.0; // Desired reference value
     float reference_right = 0.0; // Desired reference value
     float integrator_left = 0.0; // Integrator state
@@ -44,16 +46,16 @@ void encoderCountsCallback(const asclinic_pkg::LeftRightInt32& msg)
     ROS_INFO("error_term - Left: %f, Right: %f", error_left, error_right);
 
     // the state feedback is multiplying the FUCKING ERROR!!!!!!
-    float state_feedback_control_left = ControllerParameters::Kp * error_left;
-    float state_feedback_control_right = ControllerParameters::Kp * error_right;
+    float state_feedback_control_left = ControllerParameters::Kp_left * error_left;
+    float state_feedback_control_right = ControllerParameters::Kp_right * error_right;
     
     ROS_INFO("state feedback term - Left: %f, Right: %f", state_feedback_control_left, state_feedback_control_right);
     
     ControllerParameters::integrator_left += error_left * DELTA_T;
     // ControllerParameters::integrator_right += error_right * DELTA_T;
     
-    float integrator_control_left = ControllerParameters::integrator_left * ControllerParameters::Ki;
-    // float integrator_control_right = ControllerParameters::integrator_right * ControllerParameters::Ki;
+    float integrator_control_left = ControllerParameters::integrator_left * ControllerParameters::Ki_left;
+    // float integrator_control_right = ControllerParameters::integrator_right * ControllerParameters::Ki_right;
 
     //ROS_INFO("integrator term - Left: %f, Right: %f", integrator_control_left, integrator_control_right);
     //  // It's definitely the integrator term thats screwing things up a bit
