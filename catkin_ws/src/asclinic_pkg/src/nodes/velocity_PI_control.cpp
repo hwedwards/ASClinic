@@ -32,9 +32,10 @@ void encoderCountsCallback(const asclinic_pkg::LeftRightInt32& msg)
     // Log received encoder counts
     ROS_INFO("Received encoder counts - Left: %d, Right: %d", msg.left, msg.right);
 
+    // NOTE: the left and right encoder counts are swapped in the message!!!!
     // Compute the current state velocity in terms of RPM (How the controller was designed)
-    float current_state_left = (static_cast<float>(msg.left) * ENCODER_FREQUENCY_HZ*60) / ENCODER_COUNTS_PER_REVOLUTION_LEFT;
-    float current_state_right = (static_cast<float>(msg.right) * ENCODER_FREQUENCY_HZ*60) / ENCODER_COUNTS_PER_REVOLUTION_RIGHT;
+    float current_state_left = (static_cast<float>(msg.right) * ENCODER_FREQUENCY_HZ*60) / ENCODER_COUNTS_PER_REVOLUTION_LEFT;
+    float current_state_right = (static_cast<float>(msg.left) * ENCODER_FREQUENCY_HZ*60) / ENCODER_COUNTS_PER_REVOLUTION_RIGHT;
     
     ROS_INFO("current state - Left: %f, Right: %f", current_state_left, current_state_right);
     // Compute the error
@@ -49,17 +50,17 @@ void encoderCountsCallback(const asclinic_pkg::LeftRightInt32& msg)
     ROS_INFO("state feedback term - Left: %f, Right: %f", state_feedback_control_left, state_feedback_control_right);
     
     ControllerParameters::integrator_left += error_left * DELTA_T;
-    ControllerParameters::integrator_right += error_right * DELTA_T;
+    // ControllerParameters::integrator_right += error_right * DELTA_T;
     
     float integrator_control_left = ControllerParameters::integrator_left * ControllerParameters::Ki;
-    float integrator_control_right = ControllerParameters::integrator_right * ControllerParameters::Ki;
+    // float integrator_control_right = ControllerParameters::integrator_right * ControllerParameters::Ki;
 
-    ROS_INFO("integrator term - Left: %f, Right: %f", integrator_control_left, integrator_control_right);
-     // It's definitely the integrator term thats screwing things up a bit
+    //ROS_INFO("integrator term - Left: %f, Right: %f", integrator_control_left, integrator_control_right);
+    //  // It's definitely the integrator term thats screwing things up a bit
     
     // Compute the control action
-    float control_action_left = state_feedback_control_left + integrator_control_left;
-    float control_action_right = state_feedback_control_right + integrator_control_right;
+    float control_action_left = state_feedback_control_left+ integrator_control_left;
+    float control_action_right = state_feedback_control_right ;//+ integrator_control_right;
 
     
     // I need to convert the control action into a duty cycle
