@@ -1,0 +1,1204 @@
+left: 0
+right: 0
+seq_num: 9630
+---
+left: 0
+right: 0
+seq_num: 9631
+---
+left: 0
+right: 0
+seq_num: 9632
+---
+left: 0
+right: 0
+seq_num: 9633
+---
+left: 0
+right: 0
+seq_num: 9634
+---
+left: 0
+right: 0
+seq_num: 9635
+---
+left: 0
+right: 0
+seq_num: 9636
+---
+left: 0
+right: 0
+seq_num: 9637
+---
+left: 0
+right: 0
+seq_num: 9638
+---
+left: 0
+right: 0
+seq_num: 9639
+---
+left: 0
+right: 0
+seq_num: 9640
+---
+left: 0
+right: 0
+seq_num: 9641
+---
+left: 0
+right: 0
+seq_num: 9642
+---
+left: 0
+right: 0
+seq_num: 9643
+---
+left: 0
+right: 0
+seq_num: 9644
+---
+left: 0
+right: 0
+seq_num: 9645
+---
+left: 0
+right: 0
+seq_num: 9646
+---
+left: 0
+right: 0
+seq_num: 9647
+---
+left: 0
+right: 0
+seq_num: 9648
+---
+left: 0
+right: 0
+seq_num: 9649
+---
+left: 0
+right: 0
+seq_num: 9650
+---
+left: 0
+right: 0
+seq_num: 9651
+---
+left: 0
+right: 0
+seq_num: 9652
+---
+left: 0
+right: 0
+seq_num: 9653
+---
+left: 0
+right: 0
+seq_num: 9654
+---
+left: 0
+right: 0
+seq_num: 9655
+---
+left: 0
+right: 0
+seq_num: 9656
+---
+left: 0
+right: 0
+seq_num: 9657
+---
+left: 0
+right: 0
+seq_num: 9658
+---
+left: 0
+right: 0
+seq_num: 9659
+---
+left: 0
+right: 0
+seq_num: 9660
+---
+left: 0
+right: 0
+seq_num: 9661
+---
+left: 0
+right: 0
+seq_num: 9662
+---
+left: 0
+right: 0
+seq_num: 9663
+---
+left: 0
+right: 0
+seq_num: 9664
+---
+left: 0
+right: 0
+seq_num: 9665
+---
+left: 0
+right: 0
+seq_num: 9666
+---
+left: 0
+right: 0
+seq_num: 9667
+---
+left: 0
+right: 0
+seq_num: 9668
+---
+left: 0
+right: 0
+seq_num: 9669
+---
+left: 0
+right: 0
+seq_num: 9670
+---
+left: 0
+right: 0
+seq_num: 9671
+---
+left: 0
+right: 0
+seq_num: 9672
+---
+left: 0
+right: 0
+seq_num: 9673
+---
+left: 0
+right: 0
+seq_num: 9674
+---
+left: 0
+right: 0
+seq_num: 9675
+---
+left: 0
+right: 0
+seq_num: 9676
+---
+left: 0
+right: 0
+seq_num: 9677
+---
+left: 0
+right: 0
+seq_num: 9678
+---
+left: 0
+right: 0
+seq_num: 9679
+---
+left: 0
+right: 0
+seq_num: 9680
+---
+left: 0
+right: 0
+seq_num: 9681
+---
+left: 0
+right: 0
+seq_num: 9682
+---
+left: 0
+right: 0
+seq_num: 9683
+---
+left: 0
+right: 0
+seq_num: 9684
+---
+left: 0
+right: 0
+seq_num: 9685
+---
+left: 0
+right: 0
+seq_num: 9686
+---
+left: 0
+right: 0
+seq_num: 9687
+---
+left: 0
+right: 0
+seq_num: 9688
+---
+left: 0
+right: 0
+seq_num: 9689
+---
+left: 0
+right: 0
+seq_num: 9690
+---
+left: 0
+right: 0
+seq_num: 9691
+---
+left: 0
+right: 0
+seq_num: 9692
+---
+left: 0
+right: 0
+seq_num: 9693
+---
+left: 0
+right: 0
+seq_num: 9694
+---
+left: 0
+right: 0
+seq_num: 9695
+---
+left: 0
+right: 0
+seq_num: 9696
+---
+left: 0
+right: 0
+seq_num: 9697
+---
+left: 0
+right: 0
+seq_num: 9698
+---
+left: 0
+right: 0
+seq_num: 9699
+---
+left: 0
+right: 0
+seq_num: 9700
+---
+left: 0
+right: 0
+seq_num: 9701
+---
+left: 0
+right: 0
+seq_num: 9702
+---
+left: 0
+right: 0
+seq_num: 9703
+---
+left: 0
+right: 0
+seq_num: 9704
+---
+left: 0
+right: 0
+seq_num: 9705
+---
+left: 0
+right: 0
+seq_num: 9706
+---
+left: 0
+right: 0
+seq_num: 9707
+---
+left: 0
+right: 0
+seq_num: 9708
+---
+left: 0
+right: 0
+seq_num: 9709
+---
+left: 0
+right: 0
+seq_num: 9710
+---
+left: 0
+right: 0
+seq_num: 9711
+---
+left: 0
+right: 0
+seq_num: 9712
+---
+left: 0
+right: 0
+seq_num: 9713
+---
+left: 0
+right: 0
+seq_num: 9714
+---
+left: 0
+right: 0
+seq_num: 9715
+---
+left: 4
+right: 2
+seq_num: 9716
+---
+left: 15
+right: 15
+seq_num: 9717
+---
+left: 26
+right: 25
+seq_num: 9718
+---
+left: 35
+right: 35
+seq_num: 9719
+---
+left: 44
+right: 44
+seq_num: 9720
+---
+left: 55
+right: 55
+seq_num: 9721
+---
+left: 63
+right: 64
+seq_num: 9722
+---
+left: 75
+right: 74
+seq_num: 9723
+---
+left: 83
+right: 83
+seq_num: 9724
+---
+left: 96
+right: 96
+seq_num: 9725
+---
+left: 104
+right: 107
+seq_num: 9726
+---
+left: 116
+right: 115
+seq_num: 9727
+---
+left: 124
+right: 126
+seq_num: 9728
+---
+left: 137
+right: 132
+seq_num: 9729
+---
+left: 146
+right: 141
+seq_num: 9730
+---
+left: 155
+right: 155
+seq_num: 9731
+---
+left: 169
+right: 165
+seq_num: 9732
+---
+left: 173
+right: 174
+seq_num: 9733
+---
+left: 183
+right: 185
+seq_num: 9734
+---
+left: 191
+right: 190
+seq_num: 9735
+---
+left: 205
+right: 205
+seq_num: 9736
+---
+left: 203
+right: 198
+seq_num: 9737
+---
+left: 193
+right: 197
+seq_num: 9738
+---
+left: 192
+right: 193
+seq_num: 9739
+---
+left: 194
+right: 192
+seq_num: 9740
+---
+left: 188
+right: 187
+seq_num: 9741
+---
+left: 187
+right: 189
+seq_num: 9742
+---
+left: 186
+right: 184
+seq_num: 9743
+---
+left: 184
+right: 180
+seq_num: 9744
+---
+left: 181
+right: 185
+seq_num: 9745
+---
+left: 181
+right: 179
+seq_num: 9746
+---
+left: 178
+right: 178
+seq_num: 9747
+---
+left: 178
+right: 182
+seq_num: 9748
+---
+left: 176
+right: 172
+seq_num: 9749
+---
+left: 176
+right: 173
+seq_num: 9750
+---
+left: 174
+right: 179
+seq_num: 9751
+---
+left: 171
+right: 171
+seq_num: 9752
+---
+left: 175
+right: 170
+seq_num: 9753
+---
+left: 172
+right: 172
+seq_num: 9754
+---
+left: 167
+right: 170
+seq_num: 9755
+---
+left: 169
+right: 170
+seq_num: 9756
+---
+left: 172
+right: 171
+seq_num: 9757
+---
+left: 166
+right: 165
+seq_num: 9758
+---
+left: 166
+right: 165
+seq_num: 9759
+---
+left: 170
+right: 169
+seq_num: 9760
+---
+left: 166
+right: 166
+seq_num: 9761
+---
+left: 165
+right: 168
+seq_num: 9762
+---
+left: 167
+right: 165
+seq_num: 9763
+---
+left: 164
+right: 164
+seq_num: 9764
+---
+left: 164
+right: 166
+seq_num: 9765
+---
+left: 165
+right: 166
+seq_num: 9766
+---
+left: 165
+right: 163
+seq_num: 9767
+---
+left: 164
+right: 163
+seq_num: 9768
+---
+left: 163
+right: 170
+seq_num: 9769
+---
+left: 163
+right: 160
+seq_num: 9770
+---
+left: 165
+right: 157
+seq_num: 9771
+---
+left: 165
+right: 168
+seq_num: 9772
+---
+left: 159
+right: 162
+seq_num: 9773
+---
+left: 161
+right: 159
+seq_num: 9774
+---
+left: 165
+right: 169
+seq_num: 9775
+---
+left: 161
+right: 160
+seq_num: 9776
+---
+left: 161
+right: 156
+seq_num: 9777
+---
+left: 165
+right: 165
+seq_num: 9778
+---
+left: 160
+right: 162
+seq_num: 9779
+---
+left: 161
+right: 164
+seq_num: 9780
+---
+left: 161
+right: 161
+seq_num: 9781
+---
+left: 164
+right: 159
+seq_num: 9782
+---
+left: 160
+right: 163
+seq_num: 9783
+---
+left: 158
+right: 163
+seq_num: 9784
+---
+left: 157
+right: 163
+seq_num: 9785
+---
+left: 163
+right: 161
+seq_num: 9786
+---
+left: 162
+right: 161
+seq_num: 9787
+---
+left: 160
+right: 162
+seq_num: 9788
+---
+left: 162
+right: 163
+seq_num: 9789
+---
+left: 160
+right: 159
+seq_num: 9790
+---
+left: 161
+right: 160
+seq_num: 9791
+---
+left: 162
+right: 163
+seq_num: 9792
+---
+left: 159
+right: 160
+seq_num: 9793
+---
+left: 160
+right: 160
+seq_num: 9794
+---
+left: 162
+right: 161
+seq_num: 9795
+---
+left: 161
+right: 161
+seq_num: 9796
+---
+left: 159
+right: 160
+seq_num: 9797
+---
+left: 160
+right: 160
+seq_num: 9798
+---
+left: 163
+right: 162
+seq_num: 9799
+---
+left: 159
+right: 158
+seq_num: 9800
+---
+left: 160
+right: 161
+seq_num: 9801
+---
+left: 161
+right: 160
+seq_num: 9802
+---
+left: 160
+right: 158
+seq_num: 9803
+---
+left: 161
+right: 166
+seq_num: 9804
+---
+left: 160
+right: 156
+seq_num: 9805
+---
+left: 160
+right: 156
+seq_num: 9806
+---
+left: 161
+right: 165
+seq_num: 9807
+---
+left: 161
+right: 160
+seq_num: 9808
+---
+left: 157
+right: 152
+seq_num: 9809
+---
+left: 159
+right: 154
+seq_num: 9810
+---
+left: 151
+right: 154
+seq_num: 9811
+---
+left: 151
+right: 160
+seq_num: 9812
+---
+left: 158
+right: 151
+seq_num: 9813
+---
+left: 159
+right: 149
+seq_num: 9814
+---
+left: 157
+right: 159
+seq_num: 9815
+---
+left: 153
+right: 157
+seq_num: 9816
+---
+left: 157
+right: 152
+seq_num: 9817
+---
+left: 159
+right: 152
+seq_num: 9818
+---
+left: 155
+right: 157
+seq_num: 9819
+---
+left: 157
+right: 155
+seq_num: 9820
+---
+left: 160
+right: 153
+seq_num: 9821
+---
+left: 156
+right: 156
+seq_num: 9822
+---
+left: 156
+right: 157
+seq_num: 9823
+---
+left: 157
+right: 155
+seq_num: 9824
+---
+left: 160
+right: 156
+seq_num: 9825
+---
+left: 157
+right: 159
+seq_num: 9826
+---
+left: 154
+right: 153
+seq_num: 9827
+---
+left: 162
+right: 156
+seq_num: 9828
+---
+left: 158
+right: 158
+seq_num: 9829
+---
+left: 156
+right: 157
+seq_num: 9830
+---
+left: 158
+right: 160
+seq_num: 9831
+---
+left: 159
+right: 154
+seq_num: 9832
+---
+left: 157
+right: 159
+seq_num: 9833
+---
+left: 162
+right: 162
+seq_num: 9834
+---
+left: 157
+right: 152
+seq_num: 9835
+---
+left: 161
+right: 155
+seq_num: 9836
+---
+left: 159
+right: 161
+seq_num: 9837
+---
+left: 156
+right: 159
+seq_num: 9838
+---
+left: 165
+right: 163
+seq_num: 9839
+---
+left: 163
+right: 160
+seq_num: 9840
+---
+left: 157
+right: 160
+seq_num: 9841
+---
+left: 162
+right: 164
+seq_num: 9842
+---
+left: 160
+right: 159
+seq_num: 9843
+---
+left: 160
+right: 162
+seq_num: 9844
+---
+left: 159
+right: 160
+seq_num: 9845
+---
+left: 160
+right: 157
+seq_num: 9846
+---
+left: 166
+right: 165
+seq_num: 9847
+---
+left: 153
+right: 159
+seq_num: 9848
+---
+left: 153
+right: 160
+seq_num: 9849
+---
+left: 164
+right: 158
+seq_num: 9850
+---
+left: 166
+right: 164
+seq_num: 9851
+---
+left: 158
+right: 167
+seq_num: 9852
+---
+left: 157
+right: 153
+seq_num: 9853
+---
+left: 168
+right: 161
+seq_num: 9854
+---
+left: 165
+right: 168
+seq_num: 9855
+---
+left: 156
+right: 159
+seq_num: 9856
+---
+left: 156
+right: 154
+seq_num: 9857
+---
+left: 160
+right: 154
+seq_num: 9858
+---
+left: 163
+right: 161
+seq_num: 9859
+---
+left: 159
+right: 166
+seq_num: 9860
+---
+left: 155
+right: 152
+seq_num: 9861
+---
+left: 159
+right: 152
+seq_num: 9862
+---
+left: 161
+right: 160
+seq_num: 9863
+---
+left: 166
+right: 176
+seq_num: 9864
+---
+left: 167
+right: 170
+seq_num: 9865
+---
+left: 164
+right: 161
+seq_num: 9866
+---
+left: 165
+right: 165
+seq_num: 9867
+---
+left: 164
+right: 169
+seq_num: 9868
+---
+left: 162
+right: 164
+seq_num: 9869
+---
+left: 166
+right: 165
+seq_num: 9870
+---
+left: 162
+right: 166
+seq_num: 9871
+---
+left: 163
+right: 165
+seq_num: 9872
+---
+left: 162
+right: 163
+seq_num: 9873
+---
+left: 165
+right: 167
+seq_num: 9874
+---
+left: 161
+right: 163
+seq_num: 9875
+---
+left: 161
+right: 162
+seq_num: 9876
+---
+left: 164
+right: 164
+seq_num: 9877
+---
+left: 162
+right: 163
+seq_num: 9878
+---
+left: 160
+right: 162
+seq_num: 9879
+---
+left: 163
+right: 164
+seq_num: 9880
+---
+left: 161
+right: 161
+seq_num: 9881
+---
+left: 162
+right: 163
+seq_num: 9882
+---
+left: 161
+right: 162
+seq_num: 9883
+---
+left: 163
+right: 161
+seq_num: 9884
+---
+left: 160
+right: 163
+seq_num: 9885
+---
+left: 160
+right: 161
+seq_num: 9886
+---
+left: 162
+right: 161
+seq_num: 9887
+---
+left: 161
+right: 162
+seq_num: 9888
+---
+left: 161
+right: 162
+seq_num: 9889
+---
+left: 161
+right: 162
+seq_num: 9890
+---
+left: 161
+right: 160
+seq_num: 9891
+---
+left: 163
+right: 162
+seq_num: 9892
+---
+left: 159
+right: 160
+seq_num: 9893
+---
+left: 165
+right: 165
+seq_num: 9894
+---
+left: 158
+right: 159
+seq_num: 9895
+---
+left: 157
+right: 157
+seq_num: 9896
+---
+left: 165
+right: 168
+seq_num: 9897
+---
+left: 162
+right: 159
+seq_num: 9898
+---
+left: 158
+right: 154
+seq_num: 9899
+---
+left: 161
+right: 163
+seq_num: 9900
+---
+left: 162
+right: 162
+seq_num: 9901
+---
+left: 158
+right: 159
+seq_num: 9902
+---
+left: 164
+right: 162
+seq_num: 9903
+---
+left: 157
+right: 161
+seq_num: 9904
+---
+left: 163
+right: 161
+seq_num: 9905
+---
+left: 162
+right: 160
+seq_num: 9906
+---
+left: 161
+right: 163
+seq_num: 9907
+---
+left: 162
+right: 161
+seq_num: 9908
+---
+left: 159
+right: 157
+seq_num: 9909
+---
+left: 161
+right: 162
+seq_num: 9910
+---
+left: 162
+right: 159
+seq_num: 9911
+---
+left: 159
+right: 161
+seq_num: 9912
+---
+left: 159
+right: 159
+seq_num: 9913
+---
+left: 168
+right: 163
+seq_num: 9914
+---
+left: 156
+right: 159
+seq_num: 9915
+---
+left: 153
+right: 164
+seq_num: 9916
+---
+left: 155
+right: 158
+seq_num: 9917
+---
+left: 165
+right: 158
+seq_num: 9918
+---
+left: 162
+right: 163
+seq_num: 9919
+---
+left: 156
+right: 161
+seq_num: 9920
+---
+left: 157
+right: 158
+seq_num: 9921
+---
+left: 164
+right: 163
+seq_num: 9922
+---
+left: 160
+right: 158
+seq_num: 9923
+---
+left: 158
+right: 160
+seq_num: 9924
+---
+left: 160
+right: 163
+seq_num: 9925
+---
+left: 161
+right: 157
+seq_num: 9926
+---
+left: 159
+right: 158
+seq_num: 9927
+---
+left: 160
+right: 166
+seq_num: 9928
+---
+left: 160
+right: 159
+seq_num: 9929
+---
+left: 161
+right: 159
+seq_num: 9930
+---

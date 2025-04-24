@@ -32,7 +32,7 @@ ros::Publisher motor_duty_cycle_publisher;
 void encoderCountsCallback(const asclinic_pkg::LeftRightInt32& msg)
 {
     // Log received encoder counts
-    ROS_INFO("Received encoder counts - Left: %d, Right: %d", msg.left, msg.right);
+    ROS_INFO("Received encoder counts - Left: %d, Right: %d", msg.right, msg.left);
 
     // NOTE: the left and right encoder counts are swapped in the message!!!!
     // Compute the current state velocity in terms of RPM (How the controller was designed)
@@ -57,7 +57,7 @@ void encoderCountsCallback(const asclinic_pkg::LeftRightInt32& msg)
     float integrator_control_left = ControllerParameters::integrator_left * ControllerParameters::Ki_left;
     float integrator_control_right = ControllerParameters::integrator_right * ControllerParameters::Ki_right;
 
-    //ROS_INFO("integrator term - Left: %f, Right: %f", integrator_control_left, integrator_control_right);
+    ROS_INFO("integrator term - Left: %f, Right: %f", integrator_control_left, integrator_control_right);
     //  // It's definitely the integrator term thats screwing things up a bit
     
     // Compute the control action
