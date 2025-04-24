@@ -1,7 +1,7 @@
 #include "ros/ros.h"
 #include <ros/package.h>
 #include <math.h>
-#include "asclinic_pkg/PoseSeqs.h"
+#include "asclinic_pkg/PoseCovar.h"
 #include "asclinic_pkg/LeftRightInt32.h"
 #include "asclinic_pkg/LeftRightFloat32.h"
 
@@ -15,7 +15,7 @@ static bool first_message = true; // Flag to handle first message separately
 static int leftcount = 0, rightcount = 0, seq_k = 0;
 
 // whenever a message comes to the '/asc/encoder_counts' topic, this callback is executed
-void calculate_distance(const asclinic_pkg::PoseSeqs &msg)
+void calculate_distance(const asclinic_pkg::PoseCovar &msg)
 {
     // Skip distance calculation for the first message
     if (first_message)
@@ -32,7 +32,6 @@ void calculate_distance(const asclinic_pkg::PoseSeqs &msg)
     pose_x = msg.x;
     pose_y = msg.y;
     final_phi = msg.phi;
-    seq_k = msg.seq_k;
 }
 
 void countticks(const asclinic_pkg::LeftRightInt32 &msg)
@@ -51,7 +50,7 @@ int main(int argc, char *argv[])
     pose_phi = 0;
 
     // Initialise the node
-    ros::init(argc, argv, "odomtester");
+    ros::init(argc, argv, "rotatetester");
 
     // Initialise a node handle to the group namespace
     std::string ns_for_group = ros::this_node::getNamespace();
@@ -121,7 +120,7 @@ int main(int argc, char *argv[])
     dutycycle.seq_num = 0;
     m_publisher.publish(dutycycle);
 
-    while (ros::ok() && rightcount < THRESHOLD_TICKS)
+    while (ros::ok() && d < THRESHOLD_DISTANCE)
     {
         ros::spinOnce();
         loop_rate.sleep();
