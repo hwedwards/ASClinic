@@ -1,0 +1,22 @@
+<launch>
+  <!-- Launch I2C motor controller -->
+  <include file="$(find asclinic_pkg)/launch/i2c_for_motors.launch"/>
+
+  <!-- Launch encoder driver -->
+  <include file="$(find asclinic_pkg)/launch/encoder.launch"/>
+
+  <!-- Launch odometry node -->
+  <node pkg="asclinic_pkg" type="odometer" name="odometer" output="screen"/>
+
+  <!-- Launch ArUco detector -->
+  <include file="$(find asclinic_pkg)/launch/aruco_detector.launch"/>
+
+  <!-- Run ArUco positioning node -->
+  <node pkg="asclinic_pkg" type="aruco_positioning.py" name="aruco_positioning" output="log"/>
+
+  <!-- Run Kalman filter fusion node -->
+  <node pkg="asclinic_pkg" type="KF.py" name="kf_fusion_node" output="screen"/>
+
+  <!-- Run Tester node -->
+  <node pkg="asclinic_pkg" type="rotatetester" name="rotatetester" output="screen"/>
+</launch>

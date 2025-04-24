@@ -68,6 +68,8 @@ add_message_files(
   FiducialMarker.msg
   FiducialMarkerArray.msg
   PoseSeqs.msg
+  PoseCovar.msg
+  Covar.msg
 )
 
 ## Generate services in the 'srv' folder
