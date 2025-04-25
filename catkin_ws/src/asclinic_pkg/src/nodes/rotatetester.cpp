@@ -7,7 +7,7 @@
 
 #define THRESHOLD_DISTANCE 2900 // in mm
 #define THRESHOLD_TICKS 800     // 1620   // in ticks
-#define SPEED 20                // in % for PWM duty cycle
+#define SPEED -20               // in % for PWM duty cycle
 
 // use global variables, static means scope is limited to this script
 static float d = 0, pose_x = 0, pose_y = 0, pose_phi = 0, final_phi = 0;
