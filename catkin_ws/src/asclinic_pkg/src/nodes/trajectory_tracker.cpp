@@ -8,19 +8,21 @@ const float LINEAR_SPEED = 0.5;    // in m/s
 const float ANGULAR_SPEED = 30.0;  // in degrees/s
 const float POSITION_TOLERANCE = 0.1; // in meters
 const float ANGLE_TOLERANCE = 5.0;    // in degrees
-
+const float WHEEL_RADIUS = 0.072; // in meters
+const float WHEEL_BASE = 0.215/2; // in meters
+const int RPM_TO_DEG = 6; // conversion factor 
 // Variables
-ros::Publisher motor_duty_cycle_publisher;
+ros::Publisher velocity_reference_publisher;
 float current_x = 0.0;
 float current_y = 0.0;
 float current_phi = 0.0;
-
-// Helper function to publish motor commands
+// Function to publish motor commands
 void publishMotorCommand(float left_speed, float right_speed) {
-    asclinic_pkg::LeftRightFloat32 duty_cycle_msg;
-    duty_cycle_msg.left = left_speed;
-    duty_cycle_msg.right = right_speed;
-    motor_duty_cycle_publisher.publish(duty_cycle_msg);
+    asclinic_pkg::LeftRightFloat32 motor_command;
+    // NOTE: May need to convert from degrees to RPM
+    motor_command.left = left_speed/RPM_TO_DEG;
+    motor_command.right = right_speed/RPM_TO_DEG;
+    velocity_reference_publisher.publish(motor_command);
 }
 
 // Callback for reference trajectory
@@ -45,12 +47,12 @@ void referenceCallback(const asclinic_pkg::PoseCovar& msg) {
     }
 
     // Simple proportional control for linear and angular velocity
-    float linear_velocity = LINEAR_SPEED * sqrt(error_x * error_x + error_y * error_y);
-    float angular_velocity = ANGULAR_SPEED * error_phi / 180.0;
+    float linear_velocity = 0; // LINEAR_SPEED * sqrt(error_x * error_x + error_y * error_y);
+    float angular_velocity[2] = {WHEEL_BASE / WHEEL_RADIUS, -WHEEL_BASE / WHEEL_RADIUS}; // Array for angular velocity
 
     // Convert to left and right wheel speeds
-    float left_speed = linear_velocity - angular_velocity;
-    float right_speed = linear_velocity + angular_velocity;
+    float left_speed = linear_velocity + angular_velocity[1] * error_phi;
+    float right_speed = linear_velocity + angular_velocity[0] * error_phi;
 
     publishMotorCommand(left_speed, right_speed);
 }
@@ -58,10 +60,8 @@ void referenceCallback(const asclinic_pkg::PoseCovar& msg) {
 int main(int argc, char** argv) {
     ros::init(argc, argv, "trajectory_tracker");
     ros::NodeHandle nh;
-
-    motor_duty_cycle_publisher = nh.advertise<asclinic_pkg::LeftRightFloat32>("/asc/set_motor_duty_cycle", 10);
+    velocity_reference_publisher = nh.advertise<asclinic_pkg::LeftRightFloat32>("/set_reference", 10);
     ros::Subscriber reference_subscriber = nh.subscribe("/reference_trajectory", 10, referenceCallback);
-
     ros::spin();
 
     return 0;

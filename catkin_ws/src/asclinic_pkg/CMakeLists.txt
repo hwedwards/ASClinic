@@ -210,6 +210,7 @@ add_executable(odometer src/nodes/odometer.cpp)
 add_executable(odomdelta src/nodes/odomdelta.cpp)
 add_executable(odomtester src/nodes/odomtester.cpp)
 add_executable(rotatetester src/nodes/rotatetester.cpp)
+add_executable(rotatetesterdelta src/nodes/rotatetesterdelta.cpp)
 
 # Add the new controller_node executable
 add_executable(controller_node src/nodes/controller_node.cpp)
@@ -247,6 +248,7 @@ add_dependencies(odometer                              asclinic_pkg_generate_mes
 add_dependencies(odomdelta                             asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(odomtester                            asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(rotatetester                          asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(rotatetesterdelta                     asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(controller_node                       asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(velocity_PI_control                   asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 ## Specify libraries to link a library or executable target against
@@ -274,6 +276,7 @@ target_link_libraries(odometer                              ${catkin_LIBRARIES})
 target_link_libraries(odomdelta                             ${catkin_LIBRARIES})
 target_link_libraries(odomtester                            ${catkin_LIBRARIES})
 target_link_libraries(rotatetester                          ${catkin_LIBRARIES})
+target_link_libraries(rotatetesterdelta                          ${catkin_LIBRARIES})
 target_link_libraries(controller_node                       ${catkin_LIBRARIES})
 target_link_libraries(velocity_PI_control                   ${catkin_LIBRARIES})
 
