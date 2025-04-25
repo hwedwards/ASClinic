@@ -130,6 +130,7 @@ int main(int argc, char *argv[])
         delta_theta_r = 2 * dir_r * M_PI * right_encoder_count / RIGHTCOUNTSPERREV;
         delta_s = (delta_theta_r + delta_theta_l) * WHEELRADIUS / 2;
         delta_phi = (delta_theta_r - delta_theta_l) * WHEELRADIUS / WHEELBASETWO;
+
         pose.x = pose.x + delta_s * cos(posephi + 0.5 * delta_phi);
         pose.y = pose.y + delta_s * sin(posephi + 0.5 * delta_phi);
         posephi = fmod(posephi + delta_phi, 2 * M_PI); // std::fmod() if <cmath> is used instead of <math.h>
@@ -169,7 +170,7 @@ int main(int argc, char *argv[])
         rbssin = -WHEELRADIUS / (2 * WHEELBASETWO) * ssin;
         rbscos = WHEELRADIUS / (2 * WHEELBASETWO) * scos;
         j = rcos + rbssin;
-        k = rcos + rbssin;
+        k = rcos - rbssin;
         l = rsin - rbscos;
         m = rsin + rbscos;
 
