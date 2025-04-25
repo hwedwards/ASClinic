@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import rospy
-import numpy as np
+import numpy as np # type: ignore
 import csv
 from asclinic_pkg.msg import PoseCovar
 

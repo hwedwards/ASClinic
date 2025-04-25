@@ -15,6 +15,8 @@ namespace ControllerParameters
     float integrator_left = 0.0; // Integrator state
     float integrator_right = 0.0; // Integrator state
     float previous_error = 0.0; // Previous error for integration
+    int right_wheel_direction = 1; // Direction of the right wheel
+    int left_wheel_direction = 1; // Direction of the left wheel
 }
 
 // Encoder frequency assumption
@@ -36,8 +38,8 @@ void encoderCountsCallback(const asclinic_pkg::LeftRightInt32& msg)
 
     // NOTE: the left and right encoder counts are swapped in the message!!!!
     // Compute the current state velocity in terms of RPM (How the controller was designed)
-    float current_state_left = (static_cast<float>(msg.right) * ENCODER_FREQUENCY_HZ*60) / ENCODER_COUNTS_PER_REVOLUTION_LEFT;
-    float current_state_right = (static_cast<float>(msg.left) * ENCODER_FREQUENCY_HZ*60) / ENCODER_COUNTS_PER_REVOLUTION_RIGHT;
+    float current_state_left = ControllerParameters::left_wheel_direction*(static_cast<float>(msg.right) * ENCODER_FREQUENCY_HZ*60) / ENCODER_COUNTS_PER_REVOLUTION_LEFT;
+    float current_state_right = ControllerParameters::right_wheel_direction*(static_cast<float>(msg.left) * ENCODER_FREQUENCY_HZ*60) / ENCODER_COUNTS_PER_REVOLUTION_RIGHT;
     
     ROS_INFO("current state - Left: %f, Right: %f", current_state_left, current_state_right);
     // Compute the error
@@ -80,7 +82,16 @@ void encoderCountsCallback(const asclinic_pkg::LeftRightInt32& msg)
     // Log computed duty cycles
     ROS_INFO("Computed duty cycles - Left: %f, Right: %f", duty_cycle_msg.left, duty_cycle_msg.right);
 }
+void currentDutyCycleCallback(const asclinic_pkg::LeftRightFloat32& msg)
+    {
+        ROS_INFO("Received current motor duty cycles - Left: %f, Right: %f", msg.left, msg.right);
 
+        // Update wheel directions based on the sign of the duty cycle
+        ControllerParameters::left_wheel_direction = (msg.left >= 0) ? 1 : -1;
+        ControllerParameters::right_wheel_direction = (msg.right >= 0) ? 1 : -1;
+
+        ROS_INFO("Wheel directions - Left: %d, Right: %d", ControllerParameters::left_wheel_direction, ControllerParameters::right_wheel_direction);
+    }
 // Callback for reference values for both wheels
 void referenceCallback(const asclinic_pkg::LeftRightFloat32& msg)
 {
@@ -103,7 +114,11 @@ int main(int argc, char** argv)
     // Initialize the subscribers
     ros::Subscriber encoder_subscriber = nh.subscribe("/asc/encoder_counts", 10, encoderCountsCallback);
     ros::Subscriber reference_subscriber = nh.subscribe("set_reference", 10, referenceCallback);
+    // Initialize the subscriber for current motor duty cycle
+    // Callback function for current motor duty cycle
 
+
+    ros::Subscriber current_duty_cycle_subscriber = nh.subscribe("/asc/current_motor_duty_cycle", 10, currentDutyCycleCallback);
     // Spin the node
     ros::spin();
 

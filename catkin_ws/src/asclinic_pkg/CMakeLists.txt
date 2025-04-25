@@ -207,6 +207,7 @@ add_executable(take_photo                           src/drivers/scripts/take_pho
 
 add_executable(fun_publisher src/nodes/fun_publisher.cpp)
 add_executable(odometer src/nodes/odometer.cpp)
+add_executable(odomdelta src/nodes/odomdelta.cpp)
 add_executable(odomtester src/nodes/odomtester.cpp)
 add_executable(rotatetester src/nodes/rotatetester.cpp)
 
@@ -243,6 +244,7 @@ add_dependencies(take_photo                            asclinic_pkg_generate_mes
 add_dependencies(motor_publisher                       asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})   
 add_dependencies(fun_publisher                         asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(odometer                              asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+add_dependencies(odomdelta                             asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(odomtester                            asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(rotatetester                          asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 add_dependencies(controller_node                       asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
@@ -269,8 +271,9 @@ target_link_libraries(take_photo                            ${catkin_LIBRARIES})
 target_link_libraries(motor_publisher                       ${catkin_LIBRARIES})
 target_link_libraries(fun_publisher                         ${catkin_LIBRARIES})
 target_link_libraries(odometer                              ${catkin_LIBRARIES})
-target_link_libraries(odomtester                              ${catkin_LIBRARIES})
-target_link_libraries(rotatetester                              ${catkin_LIBRARIES})
+target_link_libraries(odomdelta                             ${catkin_LIBRARIES})
+target_link_libraries(odomtester                            ${catkin_LIBRARIES})
+target_link_libraries(rotatetester                          ${catkin_LIBRARIES})
 target_link_libraries(controller_node                       ${catkin_LIBRARIES})
 target_link_libraries(velocity_PI_control                   ${catkin_LIBRARIES})
 
