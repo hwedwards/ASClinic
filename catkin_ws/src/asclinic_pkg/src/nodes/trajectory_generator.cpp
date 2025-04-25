@@ -2,30 +2,19 @@
 #include "asclinic_pkg/LeftRightFloat32.h"
 
 // Constants
-const float TARGET_DISTANCE = 11.9; // in meters
-const float LINEAR_SPEED = 0.5;    // in m/s
-const float ANGULAR_SPEED = 30.0;  // in degrees/s
-
-// FSM States
-enum State {
-    FORWARD,
-    TURN,
-    BACKWARD,
-    STOP
-};
+const float ANGULAR_SPEED = 45.0;  // in degrees/s
+const float TURN_DURATION = 4.0;  // in seconds for 180 degrees
 
 // Variables
-State current_state = FORWARD;
-float current_position = 0.0; // in meters
-float current_angle = 0.0;    // in degrees
 ros::Publisher motor_duty_cycle_publisher;
+ros::Time start_time;
 
 // Helper function to publish motor commands
 void publishMotorCommand(float left_speed, float right_speed) {
-    asclinic_pkg::LeftRightFloat32 duty_cycle_msg;
-    duty_cycle_msg.left = left_speed;
-    duty_cycle_msg.right = right_speed;
-    motor_duty_cycle_publisher.publish(duty_cycle_msg);
+    asclinic_pkg::LeftRightFloat32 motor_command;
+    motor_command.left = left_speed;
+    motor_command.right = right_speed;
+    motor_duty_cycle_publisher.publish(motor_command);
 }
 
 int main(int argc, char** argv) {
@@ -34,42 +23,21 @@ int main(int argc, char** argv) {
 
     motor_duty_cycle_publisher = nh.advertise<asclinic_pkg::LeftRightFloat32>("/asc/set_motor_duty_cycle", 10);
 
+    start_time = ros::Time::now();
     ros::Rate loop_rate(10); // 10 Hz
 
     while (ros::ok()) {
-        switch (current_state) {
-            case FORWARD:
-                if (current_position < TARGET_DISTANCE) {
-                    publishMotorCommand(LINEAR_SPEED, LINEAR_SPEED);
-                    current_position += LINEAR_SPEED / 10.0; // Update position (10 Hz loop)
-                } else {
-                    current_state = TURN;
-                }
-                break;
+        ros::Time current_time = ros::Time::now();
+        float elapsed_time = (current_time - start_time).toSec();
 
-            case TURN:
-                if (current_angle < 180.0) {
-                    publishMotorCommand(-ANGULAR_SPEED, ANGULAR_SPEED);
-                    current_angle += ANGULAR_SPEED / 10.0; // Update angle (10 Hz loop)
-                } else {
-                    current_state = BACKWARD;
-                }
-                break;
-
-            case BACKWARD:
-                if (current_position > 0.0) {
-                    publishMotorCommand(-LINEAR_SPEED, -LINEAR_SPEED);
-                    current_position -= LINEAR_SPEED / 10.0; // Update position (10 Hz loop)
-                } else {
-                    current_state = STOP;
-                }
-                break;
-
-            case STOP:
-                publishMotorCommand(0.0, 0.0);
-                ROS_INFO("Trajectory complete.");
-                ros::shutdown();
-                break;
+        if (elapsed_time <= TURN_DURATION) {
+            // Turn right to reach 180 degrees in 4 seconds
+            publishMotorCommand(-ANGULAR_SPEED, ANGULAR_SPEED);
+        } else {
+            // Stop
+            publishMotorCommand(0.0, 0.0);
+            ROS_INFO("Trajectory complete.");
+            break;
         }
 
         ros::spinOnce();

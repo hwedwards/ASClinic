@@ -36,9 +36,6 @@ void referenceCallback(const asclinic_pkg::PoseCovar& msg) {
     float error_y = target_y - current_y;
     float error_phi = target_phi - current_phi;
 
-    // Normalize angle error to [-180, 180]
-    error_phi = fmod(error_phi + 180.0, 360.0) - 180.0;
-
     // Check if within tolerance
     if (std::abs(error_x) < POSITION_TOLERANCE && std::abs(error_y) < POSITION_TOLERANCE && std::abs(error_phi) < ANGLE_TOLERANCE) {
         publishMotorCommand(0.0, 0.0);
