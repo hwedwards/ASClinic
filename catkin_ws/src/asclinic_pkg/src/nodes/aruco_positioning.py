@@ -37,6 +37,7 @@ marker_positions = {
    12: (9.943,  1.500, -90),
    13: (0.030, -0.600,   0),
    14: (0.030,  1.200,   0),
+   28: (3,     0,        180)
 }
 
 def get_marker_pose(marker_id):
@@ -53,11 +54,16 @@ def callback(data):
     if data.num_markers >0:
         global log_counter
         log_counter += 1
-        should_log = (log_counter % 10 == 0)
+        should_log = (log_counter % 1 == 0)
         if should_log:
             rospy.loginfo("--- Received ArUco Marker ---")
         for marker in data.markers:
             marker_id = marker.id
+
+            # Skip processing for markers not in dictionary
+            pose = get_marker_pose(marker_id)
+            if pose is None:
+                continue
 
             rvec = marker.rvec
             tvec = marker.tvec
@@ -89,32 +95,30 @@ def callback(data):
             # Log the information
             if should_log:
                 rospy.loginfo("Marker ID: %d", marker_id)
-            """    rospy.loginfo("Camera Position in Marker Frame: [%f, %f, %f]", camera_position[0][0], camera_position[1][0], camera_position[2][0])
+            """   rospy.loginfo("Camera Position in Marker Frame: [%f, %f, %f]", camera_position[0][0], camera_position[1][0], camera_position[2][0])
                 rospy.loginfo("Robot Pitch in Marker Frame: %f", pitch_degree)
                 rospy.loginfo("Front of Robot Position in Marker Frame: [%f, %f, %f]", front_position[0][0], front_position[1][0], front_position[2][0])
             """
-            # Compute front position in world frame
-            pose = get_marker_pose(marker_id)
-            if pose is not None:
-                x_world, y_world, phi_deg = pose
-                # Convert marker heading to radians
-                phi_rad = math.radians(phi_deg)
-                # Relative front position in marker frame (ignoring vertical axis)
-                # Marker frame Z axis (depth) = forward; marker frame X axis (lateral) = sideways
-                forward_rel = front_position[2][0]  # forward offset (marker Z)
-                lateral_rel = front_position[0][0]  # lateral offset (marker X)
-                # Rotate and translate into world frame (X forward, Y lateral)
-                x_front_world = x_world + forward_rel*math.cos(phi_rad) + lateral_rel*math.sin(phi_rad)
-                y_front_world = y_world + forward_rel*math.sin(phi_rad) - lateral_rel*math.cos(phi_rad)
-                # Compute camera yaw around vertical axis (Y) from rotation matrix:
-                # Camera forward vector in marker frame is R_inv[:,2]; extract ground-plane components:
-                yaw_rad = math.atan2(R_inv[0,2], R_inv[2,2])
-                yaw_deg = math.degrees(yaw_rad)
-                phi_front = phi_deg - yaw_deg
-                # Log world pose of front of robot
-                if should_log:
-                    rospy.loginfo("Front of Robot in World Frame: x=%.3f, y=%.3f, phi=%.1f°",
-                                  x_front_world, y_front_world, phi_front)
+            # Use pose obtained earlier
+            x_world, y_world, phi_deg = pose
+            # Convert marker heading to radians
+            phi_rad = math.radians(phi_deg)
+            # Relative front position in marker frame (ignoring vertical axis)
+            # Marker frame Z axis (depth) = forward; marker frame X axis (lateral) = sideways
+            forward_rel = front_position[2][0]  # forward offset (marker Z)
+            lateral_rel = front_position[0][0]  # lateral offset (marker X)
+            # Rotate and translate into world frame (X forward, Y lateral)
+            x_front_world = x_world + forward_rel*math.cos(phi_rad) + lateral_rel*math.sin(phi_rad)
+            y_front_world = y_world + forward_rel*math.sin(phi_rad) - lateral_rel*math.cos(phi_rad)
+            # Compute camera yaw around vertical axis (Y) from rotation matrix:
+            # Camera forward vector in marker frame is R_inv[:,2]; extract ground-plane components:
+            yaw_rad = math.atan2(R_inv[0,2], R_inv[2,2])
+            yaw_deg = math.degrees(yaw_rad)
+            phi_front = phi_deg - yaw_deg
+            # Log world pose of front of robot
+            if should_log:
+                rospy.loginfo("Front of Robot in World Frame: x=%.3f, y=%.3f, phi=%.1f°",
+                              x_front_world, y_front_world, phi_front)
             # Compute distance from robot front to marker
             distance = math.hypot(lateral_rel, forward_rel)
 

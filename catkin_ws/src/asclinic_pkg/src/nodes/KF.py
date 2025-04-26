@@ -1,134 +1,152 @@
 #!/usr/bin/env python3
 import rospy
-import numpy as np # type: ignore
-import csv
+import numpy as np
 from asclinic_pkg.msg import PoseCovar
+import csv
 
-class KFNode:
-    def __init__(self):
-        # State vector [x, y, phi]
-        self.x = np.zeros((3, 1))
-        # State covariance
-        self.P = np.eye(3) * 1.0
-        # Process noise covariance (tune as needed)
-        q_pos = 0.01
-        q_ang = 0.01
-        self.Q = np.diag([q_pos, q_pos, q_ang])
+# Variance traces for logging
+last_odom_var = float('nan')
+last_aruco_var = float('nan')
 
-        # Publisher for fused pose+covariance
-        self.fused_pub = rospy.Publisher('/pose_estimate_fused', PoseCovar, queue_size=10)
-        rospy.Subscriber('/Pose', PoseCovar, self.odom_callback)
-        rospy.Subscriber('/aruco_pose', PoseCovar, self.aruco_callback)
+# Global state and covariance
+x_est = np.zeros((3, 1))  # [x, y, theta]
+P_est = np.eye(3) * 0.01
 
-        self.initialized = False
+# Process noise covariance
+Q = np.diag([0.05, 5, 0.05])  # tune as needed
 
-        # Open single CSV for logging all data
-        self.all_csv = open('/home/asc/ASClinic/all_data_log.csv', 'w', newline='')
-        self.all_writer = csv.writer(self.all_csv)
-        self.all_writer.writerow([
-            'type','time','x','y','phi',
-            'xvar','yvar','phivar','xycovar','xphicovar','yphicovar'
-        ])
+# Measurement noise covariance
+R = np.diag([0.05, 0.5, 0.02])  # tune as needed
 
-        # Ensure files are closed on shutdown
-        rospy.on_shutdown(self.close_files)
+pose_pub = None
 
-    def odom_callback(self, msg):
-        z = np.array([[msg.x], [msg.y], [msg.phi]])
-        R = np.array([[msg.xvar, msg.xycovar, msg.xphicovar],
-                      [msg.xycovar, msg.yvar, msg.yphicovar],
-                      [msg.xphicovar, msg.yphicovar, msg.phivar]])
-        # If first measurement, initialize state
-        if not self.initialized:
-            self.x = z
-            self.P = R.copy()
-            self.initialized = True
-        else:
-            # Predict step (identity dynamics)
-            self.P = self.P + self.Q
-            # Update step
-            S = self.P + R
-            K = np.dot(self.P, np.linalg.inv(S))
-            y = z - self.x
-            self.x = self.x + np.dot(K, y)
-            self.P = np.dot(np.eye(3) - K, self.P)
+# CSV logging
+csv_filename = '/home/asc/ASClinic/all_data_log.csv'
+csv_header_written = False
 
-        # Log odometry data
-        t = rospy.get_time()
-        self.all_writer.writerow([
-            'odom', t,
-            msg.x, msg.y, msg.phi,
-            msg.xvar, msg.yvar, msg.phivar,
-            msg.xycovar, msg.xphicovar, msg.yphicovar
-        ])
+def normalize_angle(angle):
+    return (angle + np.pi) % (2 * np.pi) - np.pi
 
-        self.publish_state()
-
-    def aruco_callback(self, msg):
-        if not self.initialized:
-            return
-        # Save prior state for displacement check
-        x_prior = self.x.copy()
-        z = np.array([[msg.x], [msg.y], [msg.phi]])
-        R = np.array([[msg.xvar, msg.xycovar, msg.xphicovar],
-                      [msg.xycovar, msg.yvar, msg.yphicovar],
-                      [msg.xphicovar, msg.yphicovar, msg.phivar]])
-        # Predict step
-        self.P = self.P + self.Q
-        # Update step
-        S = self.P + R
-        K = np.dot(self.P, np.linalg.inv(S))
-        y = z - self.x
-        self.x = self.x + np.dot(K, y)
-        # Compute Euclidean shift from prior
-        dx = self.x[0,0] - x_prior[0,0]
-        dy = self.x[1,0] - x_prior[1,0]
-        shift = np.hypot(dx, dy)
-        if shift > 50:
-            rospy.loginfo("Aruco update shifted pose by %.3f m", shift)
-        self.P = np.dot(np.eye(3) - K, self.P)
-
-        # Log aruco measurement
-        t = rospy.get_time()
-        self.all_writer.writerow([
-            'aruco', t,
-            msg.x, msg.y, msg.phi,
-            msg.xvar, msg.yvar, msg.phivar,
-            msg.xycovar, msg.xphicovar, msg.yphicovar
-        ])
-
-        self.publish_state()
-
-    def publish_state(self):
-        msg = PoseCovar()
-        msg.x = float(self.x[0, 0])
-        msg.y = float(self.x[1, 0])
-        msg.phi = float(self.x[2, 0])
-        msg.xvar = float(self.P[0, 0])
-        msg.yvar = float(self.P[1, 1])
-        msg.phivar = float(self.P[2, 2])
-        msg.xycovar = float(self.P[0, 1])
-        msg.xphicovar = float(self.P[0, 2])
-        msg.yphicovar = float(self.P[1, 2])
-        self.fused_pub.publish(msg)
+def odom_callback(msg):
+    global x_est, P_est, Q
 
 
-        # Log fused KF output
-        t = rospy.get_time()
-        self.all_writer.writerow([
-            'fused', t,
-            msg.x, msg.y, msg.phi,
-            msg.xvar, msg.yvar, msg.phivar,
-            msg.xycovar, msg.xphicovar, msg.yphicovar
-        ])
+    # Extract velocities and dt
+    dx = msg.x
+    dy = msg.y  # usually zero for differential drive
+    dphi = msg.phi
 
-    def close_files(self):
-        self.all_csv.close()
-        
+    theta = x_est[2, 0]
+
+    # State prediction using motion model
+    x_pred = np.zeros((3,1))
+    x_pred[0,0] = x_est[0,0] + dx # dx already rotated from odom node
+    x_pred[1,0] = x_est[1,0] + dy
+    x_pred[2,0] = normalize_angle(theta + dphi)
+
+    # Jacobian F (motion model linearized)
+    F = np.array([
+        [1, 0, -dy],
+        [0, 1,  dx],
+        [0, 0, 1]
+    ])
+
+    # Covariance prediction
+    P_pred = F.dot(P_est).dot(F.T) + Q
+
+    x_est = x_pred
+    P_est = P_pred
+
+    publish_pose()
+
+def aruco_callback(msg):
+    global x_est, P_est
+
+    # Measurement vector from ArUco detection
+    z = np.array([[msg.x], [msg.y], [msg.phi]])
+    # Construct measurement covariance matrix from message fields
+    R_meas = np.array([
+        [msg.xvar,   msg.xycovar, msg.xphicovar],
+        [msg.xycovar, msg.yvar,   msg.yphicovar],
+        [msg.xphicovar, msg.yphicovar, msg.phivar]
+    ])
+    # Measurement model (direct observation)
+    H = np.eye(3)
+    # Innovation (measurement residual)
+    y = z - H.dot(x_est)
+    # Normalize angle residual
+    y[2, 0] = normalize_angle(y[2, 0])
+    # Innovation covariance
+    S = H.dot(P_est).dot(H.T) + R_meas
+    # Kalman gain
+    K = P_est.dot(H.T).dot(np.linalg.inv(S))
+    # State update
+    x_est = x_est + K.dot(y)
+    # Normalize updated angle
+    x_est[2, 0] = normalize_angle(x_est[2, 0])
+    # Covariance update
+    P_est = (np.eye(3) - K.dot(H)).dot(P_est)
+    # Publish and log updated estimate
+    publish_pose()
+
+def publish_pose():
+    global x_est, pose_pub
+    global csv_header_written, csv_filename
+    global last_odom_var, last_aruco_var
+
+    pose_msg = PoseCovar()
+    pose_msg.x = float(x_est[0,0])
+    pose_msg.y = float(x_est[1,0])
+    pose_msg.phi = float(x_est[2,0])
+    pose_msg.xvar = float(P_est[0,0])
+    pose_msg.yvar = float(P_est[1,1])
+    pose_msg.phivar = float(P_est[2,2])
+    pose_msg.xycovar = float(P_est[0,1])
+    pose_msg.xphicovar = float(P_est[0,2])
+    pose_msg.yphicovar = float(P_est[1,2])
+
+    pose_pub.publish(pose_msg)
+
+    try:
+        with open(csv_filename, 'a', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+
+            if not csv_header_written:
+                writer.writerow([
+                    'time', 'x', 'y', 'phi',
+                    'xvar', 'yvar', 'phivar',
+                    'xycovar', 'xphicovar', 'yphicovar'
+                ])
+                csv_header_written = True
+
+            writer.writerow([
+                rospy.Time.now().to_sec(),
+                pose_msg.x,
+                pose_msg.y,
+                pose_msg.phi,
+                pose_msg.xvar,
+                pose_msg.yvar,
+                pose_msg.phivar,
+                pose_msg.xycovar,
+                pose_msg.xphicovar,
+                pose_msg.yphicovar
+            ])
+    except Exception as e:
+        rospy.logwarn(f"Failed to write to CSV: {e}")
 
 def main():
-    rospy.init_node('kf_fusion_node')
-    node = KFNode()
+    global pose_pub
+    global csv_header_written
+    # Overwrite CSV file on each run
+    with open(csv_filename, 'w', newline='') as csvfile:
+        pass
+    csv_header_written = False
+    rospy.init_node('ekf_fusion_node')
+
+    pose_pub = rospy.Publisher('/pose_estimate_fused', PoseCovar, queue_size=10)
+    rospy.Subscriber('/Pose', PoseCovar, odom_callback)
+    rospy.Subscriber('/aruco_pose', PoseCovar, aruco_callback)
+
     rospy.spin()
 
 if __name__ == '__main__':
