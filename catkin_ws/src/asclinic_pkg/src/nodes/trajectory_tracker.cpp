@@ -14,8 +14,9 @@ const float WHEEL_BASE = 0.215/2; // in meters
 const int RPM_TO_DEG = 6; // conversion factor 
 const float K_angular = 60; // Proportional gain for angular velocity control
 const float Kd_angular = 25; // Derivative gain for angular velocity control
-// Variables
-const float K_line_progress = 10; // Proportional gain for linear velocity control
+const float K_line_progress = 25; // Proportional gain for line progress control
+const float K_line_deviation = 0.05; // Proportional gain for line deviation control
+
 ros::Publisher velocity_reference_publisher;
 
 namespace RobotState {
@@ -48,7 +49,6 @@ void referenceCallback(const asclinic_pkg::PoseCovar& msg) {
     ReferenceTrajectory::target_x = msg.x;
     ReferenceTrajectory::target_y = msg.y;
     ReferenceTrajectory::target_phi = msg.phi;
- 
 }
 double signedAngleDiffDeg(double ref_deg, double meas_deg) {
     // raw difference
@@ -59,36 +59,55 @@ double signedAngleDiffDeg(double ref_deg, double meas_deg) {
         diff += 360.0;
     return diff - 180.0;
 }
+double pureRotationController(){
+    float error_phi = signedAngleDiffDeg(ReferenceTrajectory::target_phi, RobotState::current_phi);
+    float dphi = (error_phi - Error::error_phi) / 0.1;
+    Error::error_phi = error_phi;
+    return (error_phi * K_angular + Kd_angular * dphi);
+}
+double lineDeviationController(){
+    float error_y = ReferenceTrajectory::target_y - RobotState::current_y;
+    ROS_INFO("error_y: %f", error_y);
+    float desired_phi = K_line_deviation * error_y; // Proportional control for phi;
+    return desired_phi;
+}
 // Callback to update the robot's current state
 void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
     RobotState::current_x = msg.x;
     RobotState::current_y = msg.y;
     RobotState::current_phi = msg.phi;
+
     // Compute errors
     float error_x = ReferenceTrajectory::target_x - RobotState::current_x;
     float error_y = ReferenceTrajectory::target_y - RobotState::current_y;
-    float error_phi = signedAngleDiffDeg(ReferenceTrajectory::target_phi, RobotState::current_phi);
+    // Line Deviation Controller: Adjust reference phi based on error_y
+    //float desired_phi = -K_line_progress * error_y; // Proportional control for phi
+    //float error_phi = signedAngleDiffDeg(desired_phi, RobotState::current_phi);
+
     ROS_INFO("Target - x: %f, y: %f, phi: %f", ReferenceTrajectory::target_x, ReferenceTrajectory::target_y, ReferenceTrajectory::target_phi);
     ROS_INFO("Current - x: %f, y: %f, phi: %f", RobotState::current_x, RobotState::current_y, RobotState::current_phi);
-    ROS_INFO("Error - x: %f, y: %f, phi: %f", error_x, error_y, error_phi);
+    
 
     // Check if within tolerance
-    if (std::abs(error_x) < POSITION_TOLERANCE && std::abs(error_y) < POSITION_TOLERANCE && std::abs(error_phi) < ANGLE_TOLERANCE) {
+    if (std::abs(error_x) < POSITION_TOLERANCE && std::abs(error_y) < POSITION_TOLERANCE ){
         publishMotorCommand(0.0, 0.0);
         ROS_INFO("Target reached: x=%.2f, y=%.2f, phi=%.2f", ReferenceTrajectory::target_x, ReferenceTrajectory::target_y, ReferenceTrajectory::target_phi);
         return;
     }
 
-    // Simple proportional control for linear and angular velocity
-    // will need to change dx depending on if we want to go forward or backward
-    float linear_velocity = 0; // LINEAR_SPEED * sqrt(error_x * error_x + error_y * error_y);
+    // Line Progression Controller: Control forward velocity based on error_x
+    float linear_velocity = K_line_progress * error_x;
+
+    // Angular velocity based on error_phi
     float angular_velocity[2] = {WHEEL_BASE / WHEEL_RADIUS, -WHEEL_BASE / WHEEL_RADIUS}; // Array for angular velocity
 
-    float dphi = (error_phi - Error::error_phi)/0.1; // Assuming a fixed time step of 0.1 seconds
-    Error::error_phi = error_phi;
+    
+    float w = lineDeviationController();
+    ROS_INFO("w: %f", w);
     // Convert to left and right wheel speeds
-    float left_speed = linear_velocity + angular_velocity[1] * (error_phi*K_angular + Kd_angular*dphi);
-    float right_speed = linear_velocity + angular_velocity[0] * (error_phi*K_angular+ Kd_angular*dphi);
+    float left_speed = linear_velocity + angular_velocity[1] * w;
+    float right_speed = linear_velocity + angular_velocity[0] * w;
+
 
     publishMotorCommand(left_speed, right_speed);
 }
@@ -99,7 +118,7 @@ int main(int argc, char** argv) {
 
     velocity_reference_publisher = nh.advertise<asclinic_pkg::LeftRightFloat32>("/set_reference", 10);
     ros::Subscriber reference_subscriber = nh.subscribe("/reference_trajectory", 10, referenceCallback);
-    ros::Subscriber state_subscriber = nh.subscribe("/Pose", 10, stateUpdateCallback);
+    ros::Subscriber state_subscriber = nh.subscribe("/pose_estimate_fused", 10, stateUpdateCallback);
 
     ros::spin();
 

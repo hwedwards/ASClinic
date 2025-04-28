@@ -19,11 +19,14 @@ from asclinic_pkg.msg import PoseCovar
 pose_pub = None
 
 # Counter to throttle logging: only log every 10 callbacks
-log_counter = 0
+log_counter = 10000
 
 # Mapping from ArUco marker ID to its measured world-frame position (x, y) and heading phi (degrees)
 marker_positions = {
-    1: (1.973, -0.600, 180),
+    22: (1.5, 0, 180)
+   }
+
+"""    1: (1.973, -0.600, 180),
     2: (2.033, -0.600,   0),
     3: (3.952,  1.200, 180),
     4: (4.012,  1.200,   0),
@@ -36,9 +39,8 @@ marker_positions = {
    11: (11.900, 0.000, 180),
    12: (9.943,  1.500, -90),
    13: (0.030, -0.600,   0),
-   14: (0.030,  1.200,   0),
-   28: (3,     0,        180)
-}
+   14: (0.030,  1.200,   0)"""
+
 
 def get_marker_pose(marker_id):
     """

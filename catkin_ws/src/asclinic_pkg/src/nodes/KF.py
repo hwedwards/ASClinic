@@ -3,6 +3,7 @@ import rospy
 import numpy as np
 from asclinic_pkg.msg import PoseCovar
 import csv
+from datetime import datetime
 
 # Variance traces for logging
 last_odom_var = float('nan')
@@ -16,16 +17,17 @@ P_est = np.eye(3) * 0.01
 Q = np.diag([0.05, 5, 0.05])  # tune as needed
 
 # Measurement noise covariance
-R = np.diag([0.05, 0.5, 0.02])  # tune as needed
+R = np.diag([0.5, 0.5, 0.2])  # tune as needed
 
 pose_pub = None
 
-# CSV logging
-csv_filename = '/home/asc/ASClinic/all_data_log.csv'
+# CSV logging: unique file per run
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+csv_filename = f'/home/asc/KF_testing/KF_testing_{timestamp}.csv'
 csv_header_written = False
 
 def normalize_angle(angle):
-    return (angle + 180) % 360 - 180
+    return angle % 360 
 
 def odom_callback(msg):
     global x_est, P_est, Q

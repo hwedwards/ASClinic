@@ -6,7 +6,7 @@
   <include file="$(find asclinic_pkg)/launch/encoder.launch"/>
 
   <!-- Launch odometry node -->
-  <node pkg="asclinic_pkg" type="odometer" name="odometer" output="screen"/>
+  <node pkg="asclinic_pkg" type="odomdelta" name="odomdelta" output="screen"/>
 
   <!-- Launch ArUco detector -->
   <include file="$(find asclinic_pkg)/launch/aruco_detector.launch"/>
