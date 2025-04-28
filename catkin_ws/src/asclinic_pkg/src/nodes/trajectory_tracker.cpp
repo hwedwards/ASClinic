@@ -3,6 +3,7 @@
 #include "asclinic_pkg/LeftRightFloat32.h"
 #include <cmath>
 
+// rostopic pub /reference_trajectory asclinic_pkg/PoseCovar "{x: 0, y: 0, phi: 90.0}"
 // Constants
 const float LINEAR_SPEED = 0.5;    // in m/s
 const float ANGULAR_SPEED = 30.0;  // in degrees/s
