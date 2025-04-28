@@ -13,9 +13,13 @@ const float WHEEL_BASE = 0.215/2; // in meters
 const int RPM_TO_DEG = 6; // conversion factor 
 // Variables
 ros::Publisher velocity_reference_publisher;
-float current_x = 0.0;
-float current_y = 0.0;
-float current_phi = 0.0;
+
+namespace RobotState {
+    float current_x = 0.0;
+    float current_y = 0.0;
+    float current_phi = 0.0;
+}
+
 // Function to publish motor commands
 void publishMotorCommand(float left_speed, float right_speed) {
     asclinic_pkg::LeftRightFloat32 motor_command;
@@ -32,9 +36,9 @@ void referenceCallback(const asclinic_pkg::PoseCovar& msg) {
     float target_phi = msg.phi;
 
     // Compute errors
-    float error_x = target_x - current_x;
-    float error_y = target_y - current_y;
-    float error_phi = target_phi - current_phi;
+    float error_x = target_x - RobotState::current_x;
+    float error_y = target_y - RobotState::current_y;
+    float error_phi = target_phi - RobotState::current_phi;
 
     // Check if within tolerance
     if (std::abs(error_x) < POSITION_TOLERANCE && std::abs(error_y) < POSITION_TOLERANCE && std::abs(error_phi) < ANGLE_TOLERANCE) {
@@ -54,16 +58,21 @@ void referenceCallback(const asclinic_pkg::PoseCovar& msg) {
     publishMotorCommand(left_speed, right_speed);
 }
 
+// Callback to update the robot's current state
+void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
+    RobotState::current_x = msg.x;
+    RobotState::current_y = msg.y;
+    RobotState::current_phi = msg.phi;
+}
+
 int main(int argc, char** argv) {
     ros::init(argc, argv, "trajectory_tracker");
     ros::NodeHandle nh;
+
     velocity_reference_publisher = nh.advertise<asclinic_pkg::LeftRightFloat32>("/set_reference", 10);
     ros::Subscriber reference_subscriber = nh.subscribe("/reference_trajectory", 10, referenceCallback);
-    ros::Subscriber pose_subscriber = nh.subscribe("/asc/pose", 10, [](const asclinic_pkg::PoseCovar& msg) {
-        current_x = msg.x;
-        current_y = msg.y;
-        current_phi = msg.phi;
-    });
+    ros::Subscriber state_subscriber = nh.subscribe("/current_state", 10, stateUpdateCallback);
+
     ros::spin();
 
     return 0;

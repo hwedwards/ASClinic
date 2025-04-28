@@ -30,16 +30,6 @@ int main(int argc, char** argv) {
         ros::Time current_time = ros::Time::now();
         float elapsed_time = (current_time - start_time).toSec();
 
-        if (elapsed_time <= TURN_DURATION) {
-            // Turn right to reach 180 degrees in 4 seconds
-            publishMotorCommand(-ANGULAR_SPEED, ANGULAR_SPEED);
-        } else {
-            // Stop
-            publishMotorCommand(0.0, 0.0);
-            ROS_INFO("Trajectory complete.");
-            break;
-        }
-
         ros::spinOnce();
         loop_rate.sleep();
     }
