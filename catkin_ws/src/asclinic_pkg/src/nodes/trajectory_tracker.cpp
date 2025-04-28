@@ -59,6 +59,11 @@ int main(int argc, char** argv) {
     ros::NodeHandle nh;
     velocity_reference_publisher = nh.advertise<asclinic_pkg::LeftRightFloat32>("/set_reference", 10);
     ros::Subscriber reference_subscriber = nh.subscribe("/reference_trajectory", 10, referenceCallback);
+    ros::Subscriber pose_subscriber = nh.subscribe("/asc/pose", 10, [](const asclinic_pkg::PoseCovar& msg) {
+        current_x = msg.x;
+        current_y = msg.y;
+        current_phi = msg.phi;
+    });
     ros::spin();
 
     return 0;

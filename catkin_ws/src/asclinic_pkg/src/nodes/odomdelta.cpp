@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
         delta_phi = (delta_theta_r - delta_theta_l) * WHEELRADIUS / WHEELBASETWO;
 
         pose.x = delta_s * cos(posephi + 0.5 * delta_phi);
-        pose.y = +delta_s * sin(posephi + 0.5 * delta_phi);
+        pose.y = delta_s * sin(posephi + 0.5 * delta_phi);
         posephi = fmod(delta_phi, 2 * M_PI); // std::fmod() if <cmath> is used instead of <math.h>
         if (posephi < 0)
         {

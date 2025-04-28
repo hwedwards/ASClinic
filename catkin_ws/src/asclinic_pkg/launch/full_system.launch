@@ -14,9 +14,14 @@
   <!-- Run ArUco positioning node -->
   <node pkg="asclinic_pkg" type="aruco_positioning.py" name="aruco_positioning" output="screen"/>
 
-  <!-- Run Kalman filter fusion node -->
-  <node pkg="asclinic_pkg" type="KF.py" name="kf_fusion_node" output="screen"/>
+  <!-- Run Trajectory Tracker node -->
+  <node pkg="asclinic_pkg" type="trajectory_tracker" name="trajectory_tracker" output="screen"/>
 
-  <!-- Run Tester node -->
-  <node pkg="asclinic_pkg" type="rotatetesterdelta" name="rotatetesterdelta" output="screen"/>
+  <!-- Run Trajectory Generator node -->
+  <node pkg="asclinic_pkg" type="trajectory_generator" name="trajectory_generator" output="screen"/>
+
+  <!-- Run Velocity PI Control node -->
+  <node pkg="asclinic_pkg" type="velocity_PI_control" name="velocity_PI_control" output="screen"/>
+   <!-- Run Kalman filter fusion node -->
+  <node pkg="asclinic_pkg" type="KF.py" name="kf_fusion_node" output="screen"/>
 </launch>

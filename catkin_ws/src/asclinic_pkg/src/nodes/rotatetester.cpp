@@ -5,9 +5,9 @@
 #include "asclinic_pkg/LeftRightInt32.h"
 #include "asclinic_pkg/LeftRightFloat32.h"
 
-#define THRESHOLD_DISTANCE 900 // in mm
-#define THRESHOLD_TICKS 800    // 1620   // in ticks
-#define SPEED 20               // in % for PWM duty cycle
+#define THRESHOLD_DISTANCE 4900 // in mm
+#define THRESHOLD_TICKS 800     // 1620   // in ticks
+#define SPEED 20                // in % for PWM duty cycle
 
 // use global variables, static means scope is limited to this script
 static float d = 0, pose_x = 0, pose_y = 0, pose_phi = 0, final_phi = 0;
@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
 
     // Phase 1: Move with motors after 1 second
     ros::Duration(1).sleep();
-    dutycycle.left = SPEED;
+    dutycycle.left = SPEED + .85;
     dutycycle.right = SPEED;
     dutycycle.seq_num = 0;
     m_publisher.publish(dutycycle);
