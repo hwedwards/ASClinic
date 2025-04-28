@@ -6,7 +6,7 @@
 #include "asclinic_pkg/LeftRightFloat32.h"
 
 #define THRESHOLD_DISTANCE 1900 // in mm
-#define THRESHOLD_TICKS 800     // 1620   // in ticks
+#define THRESHOLD_TICKS 900     // 1620   // in ticks
 #define SPEED 20                // in % for PWM duty cycle
 
 // use global variables, static means scope is limited to this script
@@ -111,12 +111,12 @@ int main(int argc, char *argv[])
 
     // Phase 1: Move with motors after 1 second
     ros::Duration(1).sleep();
-    dutycycle.left = SPEED + 0.85; // + 0.85 makes path of robot travel more straight
+    dutycycle.left = 0; // SPEED + 0.85; // + 0.85 makes path of robot travel more straight
     dutycycle.right = SPEED;
     dutycycle.seq_num = 0;
     m_publisher.publish(dutycycle);
 
-    while (ros::ok() && d < THRESHOLD_DISTANCE)
+    while (ros::ok() && rightcount < THRESHOLD_TICKS)
     {
         ros::spinOnce();
         loop_rate.sleep();

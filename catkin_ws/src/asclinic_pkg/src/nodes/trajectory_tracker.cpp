@@ -14,6 +14,7 @@ const float WHEEL_BASE = 0.215/2; // in meters
 const int RPM_TO_DEG = 6; // conversion factor 
 const float K_angular = 100; // Proportional gain for angular velocity control
 // Variables
+const float K_line_progress = 0.5; // Proportional gain for linear velocity control
 ros::Publisher velocity_reference_publisher;
 
 namespace RobotState {
@@ -44,7 +45,15 @@ void referenceCallback(const asclinic_pkg::PoseCovar& msg) {
     ReferenceTrajectory::target_phi = msg.phi;
  
 }
-
+double signedAngleDiffDeg(double ref_deg, double meas_deg) {
+    // raw difference
+    double diff = ref_deg - meas_deg;
+    // wrap to (−180, +180]
+    diff = std::fmod(diff + 180.0, 360.0);
+    if (diff < 0.0)
+        diff += 360.0;
+    return diff - 180.0;
+}
 // Callback to update the robot's current state
 void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
     RobotState::current_x = msg.x;
@@ -53,8 +62,8 @@ void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
     // Compute errors
     float error_x = ReferenceTrajectory::target_x - RobotState::current_x;
     float error_y = ReferenceTrajectory::target_y - RobotState::current_y;
-    float error_phi = ReferenceTrajectory::target_phi - RobotState::current_phi;
-    ROS_INFO("Targert - x: %f, y: %f, phi: %f", ReferenceTrajectory::target_x, ReferenceTrajectory::target_y, ReferenceTrajectory::target_phi);
+    float error_phi = signedAngleDiffDeg(ReferenceTrajectory::target_phi, RobotState::current_phi);
+    ROS_INFO("Target - x: %f, y: %f, phi: %f", ReferenceTrajectory::target_x, ReferenceTrajectory::target_y, ReferenceTrajectory::target_phi);
     ROS_INFO("Current - x: %f, y: %f, phi: %f", RobotState::current_x, RobotState::current_y, RobotState::current_phi);
     ROS_INFO("Error - x: %f, y: %f, phi: %f", error_x, error_y, error_phi);
 
@@ -66,7 +75,7 @@ void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
     }
 
     // Simple proportional control for linear and angular velocity
-    float linear_velocity = 0; // LINEAR_SPEED * sqrt(error_x * error_x + error_y * error_y);
+    float linear_velocity = K_line_progress*error_x; // LINEAR_SPEED * sqrt(error_x * error_x + error_y * error_y);
     float angular_velocity[2] = {WHEEL_BASE / WHEEL_RADIUS, -WHEEL_BASE / WHEEL_RADIUS}; // Array for angular velocity
 
     // Convert to left and right wheel speeds
