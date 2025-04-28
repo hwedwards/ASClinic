@@ -34,24 +34,24 @@ ros::Publisher motor_duty_cycle_publisher;
 void encoderCountsCallback(const asclinic_pkg::LeftRightInt32& msg)
 {
     // Log received encoder counts
-    ROS_INFO("Received encoder counts - Left: %d, Right: %d", msg.right, msg.left);
+    //ROS_INFO("Received encoder counts - Left: %d, Right: %d", msg.right, msg.left);
 
     // NOTE: the left and right encoder counts are swapped in the message!!!!
     // Compute the current state velocity in terms of RPM (How the controller was designed)
     float current_state_left = ControllerParameters::left_wheel_direction*(static_cast<float>(msg.right) * ENCODER_FREQUENCY_HZ*60) / ENCODER_COUNTS_PER_REVOLUTION_LEFT;
     float current_state_right = ControllerParameters::right_wheel_direction*(static_cast<float>(msg.left) * ENCODER_FREQUENCY_HZ*60) / ENCODER_COUNTS_PER_REVOLUTION_RIGHT;
     
-    ROS_INFO("current state - Left: %f, Right: %f", current_state_left, current_state_right);
+    //ROS_INFO("current state - Left: %f, Right: %f", current_state_left, current_state_right);
     // Compute the error
     float error_left = ControllerParameters::reference_left - current_state_left; 
     float error_right = ControllerParameters::reference_right - current_state_right;
-    ROS_INFO("error_term - Left: %f, Right: %f", error_left, error_right);
+    
 
     // the state feedback is multiplying the FUCKING ERROR!!!!!!
     float state_feedback_control_left = ControllerParameters::Kp_left * error_left;
     float state_feedback_control_right = ControllerParameters::Kp_right * error_right;
     
-    ROS_INFO("state feedback term - Left: %f, Right: %f", state_feedback_control_left, state_feedback_control_right);
+    //ROS_INFO("state feedback term - Left: %f, Right: %f", state_feedback_control_left, state_feedback_control_right);
     
     ControllerParameters::integrator_left += error_left * DELTA_T;
     ControllerParameters::integrator_right += error_right * DELTA_T;
@@ -59,7 +59,7 @@ void encoderCountsCallback(const asclinic_pkg::LeftRightInt32& msg)
     float integrator_control_left = ControllerParameters::integrator_left * ControllerParameters::Ki_left;
     float integrator_control_right = ControllerParameters::integrator_right * ControllerParameters::Ki_right;
 
-    ROS_INFO("integrator term - Left: %f, Right: %f", integrator_control_left, integrator_control_right);
+    //ROS_INFO("integrator term - Left: %f, Right: %f", integrator_control_left, integrator_control_right);
     //  // It's definitely the integrator term thats screwing things up a bit
     
     // Compute the control action
@@ -80,23 +80,23 @@ void encoderCountsCallback(const asclinic_pkg::LeftRightInt32& msg)
     motor_duty_cycle_publisher.publish(duty_cycle_msg);
 
     // Log computed duty cycles
-    ROS_INFO("Computed duty cycles - Left: %f, Right: %f", duty_cycle_msg.left, duty_cycle_msg.right);
+    //ROS_INFO("Computed duty cycles - Left: %f, Right: %f", duty_cycle_msg.left, duty_cycle_msg.right);
 }
 void currentDutyCycleCallback(const asclinic_pkg::LeftRightFloat32& msg)
     {
-        ROS_INFO("Received current motor duty cycles - Left: %f, Right: %f", msg.left, msg.right);
+        //ROS_INFO("Received current motor duty cycles - Left: %f, Right: %f", msg.left, msg.right);
 
         // Update wheel directions based on the sign of the duty cycle
         ControllerParameters::left_wheel_direction = (msg.left >= 0) ? 1 : -1;
         ControllerParameters::right_wheel_direction = (msg.right >= 0) ? 1 : -1;
 
-        ROS_INFO("Wheel directions - Left: %d, Right: %d", ControllerParameters::left_wheel_direction, ControllerParameters::right_wheel_direction);
+        //ROS_INFO("Wheel directions - Left: %d, Right: %d", ControllerParameters::left_wheel_direction, ControllerParameters::right_wheel_direction);
     }
 // Callback for reference values for both wheels
 void referenceCallback(const asclinic_pkg::LeftRightFloat32& msg)
 {
     // Log received reference values
-    ROS_INFO("Received reference velocities - Left: %f RPM, Right: %f RPM", msg.left, msg.right);
+   // ROS_INFO("Received reference velocities - Left: %f RPM, Right: %f RPM", msg.left, msg.right);
 
     ControllerParameters::reference_left = msg.left;
     ControllerParameters::reference_right = msg.right;

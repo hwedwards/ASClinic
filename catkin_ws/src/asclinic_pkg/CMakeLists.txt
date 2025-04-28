@@ -228,14 +228,7 @@ add_executable(trajectory_generator src/nodes/trajectory_generator.cpp)
 add_dependencies(trajectory_generator asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 target_link_libraries(trajectory_generator ${catkin_LIBRARIES})
 
-# Add the new aruco_positioning node
-add_executable(aruco_positioning src/nodes/aruco_positioning.cpp)
-add_dependencies(aruco_positioning asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
-target_link_libraries(aruco_positioning ${catkin_LIBRARIES})
 
-add_executable(KF src/nodes/KF.py)
-add_dependencies(KF asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
-target_link_libraries(KF ${catkin_LIBRARIES})
 ## Rename C++ executable with##out prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
