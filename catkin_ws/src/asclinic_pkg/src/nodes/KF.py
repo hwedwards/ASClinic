@@ -13,6 +13,9 @@ last_aruco_var = float('nan')
 x_est = np.zeros((3, 1))  # [x, y, theta]
 P_est = np.eye(3) * 0.01
 
+# Time of last accepted ArUco update
+last_aruco_accept_time = 0.0
+
 # Process noise covariance
 Q = np.diag([0.05, 5, 0.05])  # tune as needed
 
@@ -26,8 +29,11 @@ timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 csv_filename = f'/home/asc/KF_testing/KF_testing_{timestamp}.csv'
 csv_header_written = False
 
+aruco_accepted = False
+
 def normalize_angle(angle):
-    return angle % 360 
+    # normalize radians to [-pi, pi)
+    return (angle + np.pi) % (2*np.pi) - np.pi
 
 def odom_callback(msg):
     global x_est, P_est, Q
@@ -36,7 +42,8 @@ def odom_callback(msg):
     # Extract velocities and dt
     dx = msg.x
     dy = msg.y  # usually zero for differential drive
-    dphi = msg.phi
+    # convert delta angle from degrees to radians
+    dphi = np.deg2rad(msg.phi)
 
     theta = x_est[2, 0]
 
@@ -62,10 +69,10 @@ def odom_callback(msg):
     publish_pose()
 
 def aruco_callback(msg):
-    global x_est, P_est
+    global x_est, P_est, last_aruco_accept_time, aruco_accepted
 
-    # Measurement vector from ArUco detection
-    z = np.array([[msg.x], [msg.y], [msg.phi]])
+    # convert orientation measurement from degrees to radians
+    z = np.array([[msg.x], [msg.y], [np.deg2rad(msg.phi)]])
     # Construct measurement covariance matrix from message fields
     R_meas = np.array([
         [msg.xvar,   msg.xycovar, msg.xphicovar],
@@ -76,30 +83,43 @@ def aruco_callback(msg):
     H = np.eye(3)
     # Innovation (measurement residual)
     y = z - H.dot(x_est)
-    # Normalize angle residual
-    y[2, 0] = normalize_angle(y[2, 0])
+    y[2,0] = normalize_angle(y[2,0])
     # Innovation covariance
     S = H.dot(P_est).dot(H.T) + R_meas
-    # Kalman gain
-    K = P_est.dot(H.T).dot(np.linalg.inv(S))
-    # State update
-    x_est = x_est + K.dot(y)
-    # Normalize updated angle
-    x_est[2, 0] = normalize_angle(x_est[2, 0])
-    # Covariance update
-    P_est = (np.eye(3) - K.dot(H)).dot(P_est)
-    # Publish and log updated estimate
+    # Mahalanobis distance gating for [x,y,phi] at 95%
+    current_time = rospy.Time.now().to_sec()
+    # full residual (3×1) and covariance S (3×3)
+    d2 = float(y.T.dot(np.linalg.inv(S)).dot(y))
+    gamma = 7.82  # chi²(3 DOF, 95%) ≈ 7.815
+    
+    rospy.loginfo(f"residual  x={y[0,0]:.1f} mm, y={y[1,0]:.1f} mm, φ={y[2,0]:.1f} radians")
+    rospy.loginfo(f"diag(S)  = [{S[0,0]:.3f}, {S[1,1]:.3f}, {S[2,2]:.3f}]  (units²)")
+
+    if d2 <= gamma or (current_time - last_aruco_accept_time) >= 2.0:
+        # accept this measurement
+        K = P_est.dot(H.T).dot(np.linalg.inv(S))
+        x_est = x_est + K.dot(y)
+        x_est[2, 0] = normalize_angle(x_est[2, 0])
+        P_est = (np.eye(3) - K.dot(H)).dot(P_est)
+        last_aruco_accept_time = current_time
+        aruco_accepted = True
+    else:
+        rospy.logwarn(f"Aruco measurement rejected (d²={d2:.2f} > {gamma})")
+        aruco_accepted = False
+    # publish after gating
     publish_pose()
 
 def publish_pose():
     global x_est, pose_pub
     global csv_header_written, csv_filename
     global last_odom_var, last_aruco_var
+    global aruco_accepted
 
     pose_msg = PoseCovar()
     pose_msg.x = float(x_est[0,0])
     pose_msg.y = float(x_est[1,0])
-    pose_msg.phi = float(x_est[2,0])
+    # convert internal radians back to degrees for publishing
+    pose_msg.phi = float(np.rad2deg(x_est[2,0]))
     pose_msg.xvar = float(P_est[0,0])
     pose_msg.yvar = float(P_est[1,1])
     pose_msg.phivar = float(P_est[2,2])
@@ -117,7 +137,8 @@ def publish_pose():
                 writer.writerow([
                     'time', 'x', 'y', 'phi',
                     'xvar', 'yvar', 'phivar',
-                    'xycovar', 'xphicovar', 'yphicovar'
+                    'xycovar', 'xphicovar', 'yphicovar',
+                    'aruco_accepted'
                 ])
                 csv_header_written = True
 
@@ -131,7 +152,8 @@ def publish_pose():
                 pose_msg.phivar,
                 pose_msg.xycovar,
                 pose_msg.xphicovar,
-                pose_msg.yphicovar
+                pose_msg.yphicovar,
+                int(aruco_accepted)
             ])
     except Exception as e:
         rospy.logwarn(f"Failed to write to CSV: {e}")

@@ -14,8 +14,8 @@ const float WHEEL_BASE = 0.215/2; // in meters
 const int RPM_TO_DEG = 6; // conversion factor 
 const float K_angular = 60; // Proportional gain for angular velocity control
 const float Kd_angular = 25; // Derivative gain for angular velocity control
-const float K_line_progress = 25; // Proportional gain for line progress control
-const float K_line_deviation = 0.05; // Proportional gain for line deviation control
+const float K_line_progress = 50; // Proportional gain for line progress control
+const float K_line_deviation =0.2; // Proportional gain for line deviation control
 
 ros::Publisher velocity_reference_publisher;
 
@@ -86,7 +86,7 @@ void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
 
     ROS_INFO("Target - x: %f, y: %f, phi: %f", ReferenceTrajectory::target_x, ReferenceTrajectory::target_y, ReferenceTrajectory::target_phi);
     ROS_INFO("Current - x: %f, y: %f, phi: %f", RobotState::current_x, RobotState::current_y, RobotState::current_phi);
-    
+    ROS_INFO("Error - x: %f, y: %f", error_x, error_y);
 
     // Check if within tolerance
     if (std::abs(error_x) < POSITION_TOLERANCE && std::abs(error_y) < POSITION_TOLERANCE ){
