@@ -12,9 +12,10 @@ const float ANGLE_TOLERANCE = 5.0;    // in degrees
 const float WHEEL_RADIUS = 0.072; // in meters
 const float WHEEL_BASE = 0.215/2; // in meters
 const int RPM_TO_DEG = 6; // conversion factor 
-const float K_angular = 100; // Proportional gain for angular velocity control
+const float K_angular = 60; // Proportional gain for angular velocity control
+const float Kd_angular = 25; // Derivative gain for angular velocity control
 // Variables
-const float K_line_progress = 0.5; // Proportional gain for linear velocity control
+const float K_line_progress = 10; // Proportional gain for linear velocity control
 ros::Publisher velocity_reference_publisher;
 
 namespace RobotState {
@@ -27,7 +28,11 @@ namespace ReferenceTrajectory {
     float target_y = 0.0;
     float target_phi = 0.0;
 }
-
+namespace Error {
+    float error_x = 0.0;
+    float error_y = 0.0;
+    float error_phi = 0.0;
+}
 // Function to publish motor commands
 void publishMotorCommand(float left_speed, float right_speed) {
     asclinic_pkg::LeftRightFloat32 motor_command;
@@ -76,12 +81,14 @@ void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
 
     // Simple proportional control for linear and angular velocity
     // will need to change dx depending on if we want to go forward or backward
-    float linear_velocity = K_line_progress*error_x; // LINEAR_SPEED * sqrt(error_x * error_x + error_y * error_y);
+    float linear_velocity = 0; // LINEAR_SPEED * sqrt(error_x * error_x + error_y * error_y);
     float angular_velocity[2] = {WHEEL_BASE / WHEEL_RADIUS, -WHEEL_BASE / WHEEL_RADIUS}; // Array for angular velocity
 
+    float dphi = (error_phi - Error::error_phi)/0.1; // Assuming a fixed time step of 0.1 seconds
+    Error::error_phi = error_phi;
     // Convert to left and right wheel speeds
-    float left_speed = linear_velocity + angular_velocity[1] * error_phi*K_angular;
-    float right_speed = linear_velocity + angular_velocity[0] * error_phi*K_angular;
+    float left_speed = linear_velocity + angular_velocity[1] * (error_phi*K_angular + Kd_angular*dphi);
+    float right_speed = linear_velocity + angular_velocity[0] * (error_phi*K_angular+ Kd_angular*dphi);
 
     publishMotorCommand(left_speed, right_speed);
 }

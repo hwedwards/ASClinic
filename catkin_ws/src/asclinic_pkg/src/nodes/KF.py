@@ -25,7 +25,7 @@ csv_filename = '/home/asc/ASClinic/all_data_log.csv'
 csv_header_written = False
 
 def normalize_angle(angle):
-    return (angle + np.pi) % (2 * np.pi) - np.pi
+    return (angle + 180) % 360 - 180
 
 def odom_callback(msg):
     global x_est, P_est, Q
