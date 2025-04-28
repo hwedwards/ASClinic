@@ -75,6 +75,7 @@ void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
     }
 
     // Simple proportional control for linear and angular velocity
+    // will need to change dx depending on if we want to go forward or backward
     float linear_velocity = K_line_progress*error_x; // LINEAR_SPEED * sqrt(error_x * error_x + error_y * error_y);
     float angular_velocity[2] = {WHEEL_BASE / WHEEL_RADIUS, -WHEEL_BASE / WHEEL_RADIUS}; // Array for angular velocity
 
