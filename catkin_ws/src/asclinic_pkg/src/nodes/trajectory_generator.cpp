@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
     ros::Rate loop_rate(10); // 10 Hz
 
     float current_x = 0.0;
-    const float target_x = 10000;
+    const float target_x = 8000;
 
     while (ros::ok() && current_x < target_x) {
         ros::Time current_time = ros::Time::now();

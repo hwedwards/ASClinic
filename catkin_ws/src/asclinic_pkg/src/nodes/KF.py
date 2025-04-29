@@ -95,7 +95,7 @@ def aruco_callback(msg):
     rospy.loginfo(f"residual  x={y[0,0]:.1f} mm, y={y[1,0]:.1f} mm, φ={y[2,0]:.1f} radians")
     rospy.loginfo(f"diag(S)  = [{S[0,0]:.3f}, {S[1,1]:.3f}, {S[2,2]:.3f}]  (units²)")
 
-    if d2 <= gamma or (current_time - last_aruco_accept_time) >= 2.0:
+    if d2 <= gamma or (current_time - last_aruco_accept_time) >= 10.0:
         # accept this measurement
         K = P_est.dot(H.T).dot(np.linalg.inv(S))
         x_est = x_est + K.dot(y)

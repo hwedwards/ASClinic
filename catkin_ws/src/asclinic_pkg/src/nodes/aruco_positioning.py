@@ -37,6 +37,7 @@ marker_positions = {
    12: (9.943,  1.500, -90),
    13: (0.030, -0.600,   0),
    14: (0.030,  1.200,   0)
+
    }
 
 """    1: (1.973, -0.600, 180),
@@ -61,9 +62,9 @@ def get_marker_pose(marker_id):
     If the ID is not in the table, logs a warning and returns None.
     """
     pose = marker_positions.get(marker_id)
-    if pose is None:
+    """if pose is None:
         rospy.logwarn(f"Unknown marker ID: {marker_id}")
-    return pose
+    return pose"""
 
 def callback(data):
     if data.num_markers >0:
@@ -109,8 +110,8 @@ def callback(data):
 
             # Log the information
             if should_log:
-                rospy.loginfo("Marker ID: %d", marker_id)
-            """   rospy.loginfo("Camera Position in Marker Frame: [%f, %f, %f]", camera_position[0][0], camera_position[1][0], camera_position[2][0])
+             """  rospy.loginfo("Marker ID: %d", marker_id)
+               rospy.loginfo("Camera Position in Marker Frame: [%f, %f, %f]", camera_position[0][0], camera_position[1][0], camera_position[2][0])
                 rospy.loginfo("Robot Pitch in Marker Frame: %f", pitch_degree)
                 rospy.loginfo("Front of Robot Position in Marker Frame: [%f, %f, %f]", front_position[0][0], front_position[1][0], front_position[2][0])
             """

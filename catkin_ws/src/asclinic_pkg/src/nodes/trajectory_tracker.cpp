@@ -15,8 +15,8 @@ const int RPM_TO_DEG = 6; // conversion factor
 const float K_angular = 60; // Proportional gain for angular velocity control
 const float Kd_angular = 25; // Derivative gain for angular velocity control
 const float K_line_progress = 50; // Proportional gain for line progress control
-const float K_line_deviation =0.2; // Proportional gain for line deviation control
-
+const float Kp_line_deviation =0.0005; // Proportional gain for line deviation control
+const float Kd_line_deviation = 0.0021; // Integral gain for line deviation control
 ros::Publisher velocity_reference_publisher;
 
 namespace RobotState {
@@ -68,8 +68,10 @@ double pureRotationController(){
 double lineDeviationController(){
     float error_y = ReferenceTrajectory::target_y - RobotState::current_y;
     ROS_INFO("error_y: %f", error_y);
-    float desired_phi = K_line_deviation * error_y; // Proportional control for phi;
-    return desired_phi;
+    float dy = (error_y - Error::error_y) / 0.1;
+    Error::error_y = error_y;
+    float w = Kp_line_deviation * error_y + Kd_line_deviation*dy; // Proportional control for phi;
+    return w;
 }
 // Callback to update the robot's current state
 void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
@@ -100,8 +102,6 @@ void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
 
     // Angular velocity based on error_phi
     float angular_velocity[2] = {WHEEL_BASE / WHEEL_RADIUS, -WHEEL_BASE / WHEEL_RADIUS}; // Array for angular velocity
-
-    
     float w = lineDeviationController();
     ROS_INFO("w: %f", w);
     // Convert to left and right wheel speeds
