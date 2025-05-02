@@ -10,10 +10,10 @@
 #define WHEELRADIUS 72
 #define WHEELBASETWO 215 // 2b = 215
 #define COUNTS_PER_REV 16
-#define LEFTCOUNTSPERREV 1123.1
-#define RIGHTCOUNTSPERREV 1129.4
-#define KL 0.0003862 // proportionality constant between total angular displacement and variance of angular displacement for the left wheel
-#define KR 0.0006456 // same for the right wheel
+#define LEFTCOUNTSPERREV 1123.1  // 1123.1
+#define RIGHTCOUNTSPERREV 1129.4 // 1129.4
+#define KL 0.0003862             // proportionality constant between total angular displacement and variance of angular displacement for the left wheel
+#define KR 0.0006456             // same for the right wheel
 
 // use global variables, static means scope is limited to this script
 static int left_encoder_count = 0, right_encoder_count = 0; // Number of ticks counted in the last time step
@@ -56,6 +56,12 @@ void setdirection(const asclinic_pkg::LeftRightFloat32 &msg)
     // ROS_INFO_STREAM("Message received with data: " << left_encoder_count);
 }
 
+void setphi(const asclinic_pkg::PoseCovar &msg)
+{
+    posephi = msg.phi * M_PI / 180; // convert to radians
+    // ROS_INFO_STREAM("Message received with posephi: " << posephi);
+}
+
 int main(int argc, char *argv[])
 {
     // Initialise the node
@@ -69,6 +75,9 @@ int main(int argc, char *argv[])
 
     // Subscribe to /asc/encoder_counts
     ros::Subscriber encodersubscriber = nh_for_group.subscribe("/asc/encoder_counts", 1, setencodercounts);
+
+    // Subscribe to /pose_estimate_fused
+    ros::Subscriber posesubscriber = nh_for_group.subscribe("/pose_estimate_fused", 1, setphi);
 
     // Subscribe to /asc/set_motor_duty_cycle
     ros::Subscriber dutycyclesubscriber = nh_for_group.subscribe("/asc/set_motor_duty_cycle", 1, setdirection);
@@ -102,20 +111,18 @@ int main(int argc, char *argv[])
         delta_phi = (delta_theta_r - delta_theta_l) * WHEELRADIUS / WHEELBASETWO;
 
         pose.x = delta_s * cos(posephi + 0.5 * delta_phi);
+        // ROS_INFO("delta.x = %f", pose.x);
+        // ROS_INFO("posephi as known by odomdelta= %f", posephi * 180 / M_PI);
+        // ROS_INFO("delta_phi = %f", delta_phi);
         pose.y = delta_s * sin(posephi + 0.5 * delta_phi);
-        posephi = fmod(delta_phi, 2 * M_PI); // std::fmod() if <cmath> is used instead of <math.h>
-        if (posephi < 0)
-        {
-            posephi += 2 * M_PI;
-        }
 
         lvar = KL * abs(delta_theta_l);
         rvar = KR * abs(delta_theta_r);
 
-        ssin = -delta_s * sin(posephi - 0.5 * delta_phi); // posephi is from current timestep
-        scos = delta_s * cos(posephi - 0.5 * delta_phi);  // previous timestep phi plus half the step is the same as current timestep minus half the step
-        rcos = WHEELRADIUS / 2 * cos(posephi - 0.5 * delta_phi);
-        rsin = WHEELRADIUS / 2 * sin(posephi - 0.5 * delta_phi);
+        ssin = -delta_s * sin(posephi + 0.5 * delta_phi); // posephi is from current timestep
+        scos = delta_s * cos(posephi + 0.5 * delta_phi);  // previous timestep phi plus half the step is the same as current timestep minus half the step
+        rcos = WHEELRADIUS / 2 * cos(posephi + 0.5 * delta_phi);
+        rsin = WHEELRADIUS / 2 * sin(posephi + 0.5 * delta_phi);
         rbssin = -WHEELRADIUS / (2 * WHEELBASETWO) * ssin;
         rbscos = WHEELRADIUS / (2 * WHEELBASETWO) * scos;
         j = rcos + rbssin;
@@ -131,7 +138,7 @@ int main(int argc, char *argv[])
         poseyphicovar = (-lvar * l + rvar * m) * WHEELRADIUS / WHEELBASETWO;
 
         // Publish phi and covariances involving phi all with phi in degrees instead of radians
-        pose.phi = posephi * 180 / M_PI;
+        pose.phi = delta_phi * 180 / M_PI;
         pose.phivar = posephivar * 180 * 180 / M_PI / M_PI;
         pose.xphicovar = posexphicovar * 180 / M_PI;
         pose.yphicovar = poseyphicovar * 180 / M_PI;

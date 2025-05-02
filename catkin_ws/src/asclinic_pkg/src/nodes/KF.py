@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 import rospy
-import numpy as np
+import numpy as np # type: ignore
 from asclinic_pkg.msg import PoseCovar
 import csv
 from datetime import datetime
+from std_msgs.msg import String
 
 # Variance traces for logging
 last_odom_var = float('nan')
@@ -12,6 +13,8 @@ last_aruco_var = float('nan')
 # Global state and covariance
 x_est = np.zeros((3, 1))  # [x, y, theta]
 P_est = np.eye(3) * 0.01
+
+driving_direction = "FORWARD"
 
 # Time of last accepted ArUco update
 last_aruco_accept_time = 0.0
@@ -26,14 +29,51 @@ pose_pub = None
 
 # CSV logging: unique file per run
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-csv_filename = f'/home/asc/KF_testing/KF_testing_{timestamp}.csv'
+csv_filename = f'/home/asc/KF_testing_2/KF_testing_{timestamp}.csv'
 csv_header_written = False
+
+def log_to_csv(source, x, y, phi, xvar, yvar, phivar):
+    global csv_filename
+    global csv_header_written
+    if not csv_header_written:
+        with open(csv_filename, 'a', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([
+                'time',
+                'source',
+                'x',
+                'y',
+                'phi',
+                'xvar',
+                'yvar',
+                'phivar'
+            ])
+        csv_header_written = True
+    try:
+        with open(csv_filename, 'a', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([
+                rospy.Time.now().to_sec(),
+                source,
+                x,
+                y,
+                phi,
+                xvar,
+                yvar,
+                phivar
+            ])
+    except Exception as e:
+        rospy.logwarn(f"Failed to write to CSV in log_to_csv: {e}")
 
 aruco_accepted = False
 
 def normalize_angle(angle):
     # normalize radians to [-pi, pi)
-    return (angle + np.pi) % (2*np.pi) - np.pi
+    return (angle + np.pi) % (2 * np.pi) - np.pi
+
+def driving_state_callback(msg):
+    global driving_direction
+    driving_direction = msg.data.upper()  # make it case-insensitive
 
 def odom_callback(msg):
     global x_est, P_est, Q
@@ -49,8 +89,11 @@ def odom_callback(msg):
 
     # State prediction using motion model
     x_pred = np.zeros((3,1))
-    x_pred[0,0] = x_est[0,0] + dx # dx already rotated from odom node
-    x_pred[1,0] = x_est[1,0] + dy
+
+    #dx_world = np.cos(theta)*dx - np.sin(theta)*dy
+    #dy_world = np.sin(theta)*dx + np.cos(theta)*dy
+    x_pred[0,0] = x_est[0,0] + dx #dx_world
+    x_pred[1,0] = x_est[1,0] + dy #dy_world
     x_pred[2,0] = normalize_angle(theta + dphi)
 
     # Jacobian F (motion model linearized)
@@ -65,6 +108,17 @@ def odom_callback(msg):
 
     x_est = x_pred
     P_est = P_pred
+
+    # Log odometry-based estimate
+    log_to_csv(
+        'odom',
+        float(x_est[0,0]),
+        float(x_est[1,0]),
+        float(np.rad2deg(x_est[2,0])),
+        float(P_est[0,0]),
+        float(P_est[1,1]),
+        float(P_est[2,2])
+    )
 
     publish_pose()
 
@@ -95,7 +149,7 @@ def aruco_callback(msg):
     rospy.loginfo(f"residual  x={y[0,0]:.1f} mm, y={y[1,0]:.1f} mm, φ={y[2,0]:.1f} radians")
     rospy.loginfo(f"diag(S)  = [{S[0,0]:.3f}, {S[1,1]:.3f}, {S[2,2]:.3f}]  (units²)")
 
-    if d2 <= gamma or (current_time - last_aruco_accept_time) >= 10.0:
+    if d2 <= gamma or (current_time - last_aruco_accept_time) >= 1.0:
         # accept this measurement
         K = P_est.dot(H.T).dot(np.linalg.inv(S))
         x_est = x_est + K.dot(y)
@@ -103,6 +157,17 @@ def aruco_callback(msg):
         P_est = (np.eye(3) - K.dot(H)).dot(P_est)
         last_aruco_accept_time = current_time
         aruco_accepted = True
+
+        # Log aruco-based estimate
+        log_to_csv(
+            'aruco',
+            float(x_est[0,0]),
+            float(x_est[1,0]),
+            float(np.rad2deg(x_est[2,0])),
+            float(P_est[0,0]),
+            float(P_est[1,1]),
+            float(P_est[2,2])
+        )
     else:
         rospy.logwarn(f"Aruco measurement rejected (d²={d2:.2f} > {gamma})")
         aruco_accepted = False
@@ -127,49 +192,31 @@ def publish_pose():
     pose_msg.xphicovar = float(P_est[0,2])
     pose_msg.yphicovar = float(P_est[1,2])
 
+    #rospy.loginfo(f"Pose Estimate: x={pose_msg.x:.2f}, y={pose_msg.y:.2f}, phi={pose_msg.phi:.2f}°")
     pose_pub.publish(pose_msg)
-
-    try:
-        with open(csv_filename, 'a', newline='') as csvfile:
-            writer = csv.writer(csvfile)
-
-            if not csv_header_written:
-                writer.writerow([
-                    'time', 'x', 'y', 'phi',
-                    'xvar', 'yvar', 'phivar',
-                    'xycovar', 'xphicovar', 'yphicovar',
-                    'aruco_accepted'
-                ])
-                csv_header_written = True
-
-            writer.writerow([
-                rospy.Time.now().to_sec(),
-                pose_msg.x,
-                pose_msg.y,
-                pose_msg.phi,
-                pose_msg.xvar,
-                pose_msg.yvar,
-                pose_msg.phivar,
-                pose_msg.xycovar,
-                pose_msg.xphicovar,
-                pose_msg.yphicovar,
-                int(aruco_accepted)
-            ])
-    except Exception as e:
-        rospy.logwarn(f"Failed to write to CSV: {e}")
 
 def main():
     global pose_pub
     global csv_header_written
-    # Overwrite CSV file on each run
-    with open(csv_filename, 'w', newline='') as csvfile:
-        pass
-    csv_header_written = False
+    # Create CSV file and write header
+    # with open(csv_filename, 'w', newline='') as csvfile:
+    #     writer = csv.writer(csvfile)
+    #     writer.writerow([
+    #         'time',
+    #         'source',
+    #         'x',
+    #         'y',
+    #         'phi',
+    #         'xvar',
+    #         'yvar',
+    #         'phivar'
+    #     ])
     rospy.init_node('ekf_fusion_node')
 
     pose_pub = rospy.Publisher('/pose_estimate_fused', PoseCovar, queue_size=10)
     rospy.Subscriber('/Pose', PoseCovar, odom_callback)
     rospy.Subscriber('/aruco_pose', PoseCovar, aruco_callback)
+    rospy.Subscriber('/driving_state', String, driving_state_callback)
 
     rospy.spin()
 

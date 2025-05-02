@@ -5,7 +5,7 @@
 #include "asclinic_pkg/LeftRightInt32.h"
 #include "asclinic_pkg/LeftRightFloat32.h"
 
-#define THRESHOLD_DISTANCE 3000 // in mm
+#define THRESHOLD_DISTANCE 2000 // in mm
 #define THRESHOLD_TICKS 5000    // 1620   // in ticks
 #define SPEED 20                // in % for PWM duty cycle
 
@@ -28,6 +28,7 @@ void calculate_distance(const asclinic_pkg::PoseCovar &msg)
     pose_xycovar += msg.xycovar; // total covariances
     pose_xphicovar += msg.xphicovar;
     pose_yphicovar += msg.yphicovar;
+    ROS_INFO("xyphi = %.2f, %.2f, %.2f", pose_x, pose_y, pose_phi);
 }
 
 void countticks(const asclinic_pkg::LeftRightInt32 &msg)
@@ -55,7 +56,7 @@ int main(int argc, char *argv[])
     ros::Rate loop_rate(10); // encoder_counts published at fs = 10 Hz
 
     // Subscribe to /Pose
-    ros::Subscriber pose_subscriber = nh_for_group.subscribe("Pose", 10, calculate_distance);
+    ros::Subscriber pose_subscriber = nh_for_group.subscribe("/Pose", 10, calculate_distance);
     // Subscribe to /asc/encoder_counts
     ros::Subscriber encodersubscriber = nh_for_group.subscribe("/asc/encoder_counts", 1, countticks);
 
@@ -63,6 +64,20 @@ int main(int argc, char *argv[])
     ROS_INFO("Initial pose at: (%f, %f, phi: %f)", pose_x, pose_y, pose_phi);
     ros::Publisher m_publisher = nh_for_group.advertise<asclinic_pkg::LeftRightFloat32>("/asc/set_motor_duty_cycle", 10);
     asclinic_pkg::LeftRightFloat32 dutycycle;
+
+    ros::Publisher phi_publisher = nh_for_group.advertise<asclinic_pkg::PoseCovar>("/pose_estimate_fused", 10);
+    asclinic_pkg::PoseCovar pose;
+    pose.x = 0;
+    pose.y = 0;
+    pose.phi = pose_phi;
+    pose.xvar = 0;
+    pose.yvar = 0;
+    pose.phivar = 0;
+    pose.xycovar = 0;
+    pose.xphicovar = 0;
+    pose.yphicovar = 0;
+    phi_publisher.publish(pose);
+
     /*
         ros::Duration(1).sleep();
         dutycycle.left = SPEED;
@@ -111,14 +126,17 @@ int main(int argc, char *argv[])
 
     // Phase 1: Move with motors after 1 second
     ros::Duration(1).sleep();
-    dutycycle.left = SPEED + 0.85; // + 0.85 makes path of robot travel more straight
+    dutycycle.left = SPEED + 1.5; // + 0.85 makes path of robot travel more straight
     dutycycle.right = SPEED;
     dutycycle.seq_num = 0;
     m_publisher.publish(dutycycle);
 
     while (ros::ok() && d < THRESHOLD_DISTANCE)
     {
+        // ROS_INFO("posephi as known by rotatetesterdelta: %.2f", pose_phi);
+        pose.phi = pose_phi;
         ros::spinOnce();
+        // phi_publisher.publish(pose); // publish phi if KF.py isn't running
         loop_rate.sleep();
     }
 
@@ -131,9 +149,11 @@ int main(int argc, char *argv[])
 
     // Phase 2: Passive listening
     ros::Time manual_start = ros::Time::now();
-    while (ros::ok() && ros::Time::now() - manual_start < ros::Duration(5.0))
+    while (ros::ok() && ros::Time::now() - manual_start < ros::Duration(1.0))
     {
+        pose.phi = pose_phi;
         ros::spinOnce();
+        // phi_publisher.publish(pose); // publish phi if KF.py isn't running
         loop_rate.sleep();
     }
 

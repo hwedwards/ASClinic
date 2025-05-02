@@ -1,0 +1,359 @@
+[0m[ INFO] [1745888315.882764665]: Current x: 30.000000[0m
+[0m[ INFO] [1745888315.982706124]: Current x: 60.000000[0m
+[0m[ INFO] [1745888316.088874311]: Current x: 90.000000[0m
+[0m[ INFO] [1745888316.182716723]: Current x: 120.000000[0m
+[0m[ INFO] [1745888316.282750374]: Current x: 150.000000[0m
+[0m[ INFO] [1745888316.382736057]: Current x: 180.000000[0m
+[0m[ INFO] [1745888316.482751564]: Current x: 210.000000[0m
+[0m[ INFO] [1745888316.582731327]: Current x: 240.000000[0m
+[0m[ INFO] [1745888316.682721810]: Current x: 270.000000[0m
+[0m[ INFO] [1745888316.782708261]: Current x: 300.000000[0m
+[0m[ INFO] [1745888316.882710681]: Current x: 330.000000[0m
+[0m[ INFO] [1745888316.982713100]: Current x: 360.000000[0m
+[0m[ INFO] [1745888317.082690143]: Current x: 390.000000[0m
+[0m[ INFO] [1745888317.182724690]: Current x: 420.000000[0m
+[0m[ INFO] [1745888317.282701637]: Current x: 450.000000[0m
+[0m[ INFO] [1745888317.382705144]: Current x: 480.000000[0m
+[0m[ INFO] [1745888317.482711499]: Current x: 510.000000[0m
+[0m[ INFO] [1745888317.582732703]: Current x: 540.000000[0m
+[0m[ INFO] [1745888317.682758546]: Current x: 570.000000[0m
+[0m[ INFO] [1745888317.782732293]: Current x: 600.000000[0m
+[0m[ INFO] [1745888317.882709368]: Current x: 630.000000[0m
+[0m[ INFO] [1745888317.982727083]: Current x: 660.000000[0m
+[0m[ INFO] [1745888318.082739454]: Current x: 690.000000[0m
+[0m[ INFO] [1745888318.182715537]: Current x: 720.000000[0m
+[0m[ INFO] [1745888318.283248362]: Current x: 750.000000[0m
+[0m[ INFO] [1745888318.382787864]: Current x: 780.000000[0m
+[0m[ INFO] [1745888318.482715306]: Current x: 810.000000[0m
+[0m[ INFO] [1745888318.583120962]: Current x: 840.000000[0m
+[0m[ INFO] [1745888318.682789265]: Current x: 870.000000[0m
+[0m[ INFO] [1745888318.783615630]: Current x: 900.000000[0m
+[0m[ INFO] [1745888318.882754775]: Current x: 930.000000[0m
+[0m[ INFO] [1745888318.982739305]: Current x: 960.000000[0m
+[0m[ INFO] [1745888319.082756541]: Current x: 990.000000[0m
+[0m[ INFO] [1745888319.183222165]: Current x: 1020.000000[0m
+[0m[ INFO] [1745888319.283322409]: Current x: 1050.000000[0m
+[0m[ INFO] [1745888319.382731477]: Current x: 1080.000000[0m
+[0m[ INFO] [1745888319.482721896]: Current x: 1110.000000[0m
+[0m[ INFO] [1745888319.582824636]: Current x: 1140.000000[0m
+[0m[ INFO] [1745888319.683030961]: Current x: 1170.000000[0m
+[0m[ INFO] [1745888319.782689024]: Current x: 1200.000000[0m
+[0m[ INFO] [1745888319.882679827]: Current x: 1230.000000[0m
+[0m[ INFO] [1745888319.982690342]: Current x: 1260.000000[0m
+[0m[ INFO] [1745888320.082685273]: Current x: 1290.000000[0m
+[0m[ INFO] [1745888320.183326227]: Current x: 1320.000000[0m
+[0m[ INFO] [1745888320.282703327]: Current x: 1350.000000[0m
+[0m[ INFO] [1745888320.383631709]: Current x: 1380.000000[0m
+[0m[ INFO] [1745888320.482747781]: Current x: 1410.000000[0m
+[0m[ INFO] [1745888320.583232158]: Current x: 1440.000000[0m
+[0m[ INFO] [1745888320.682709771]: Current x: 1470.000000[0m
+[0m[ INFO] [1745888320.783165635]: Current x: 1500.000000[0m
+[0m[ INFO] [1745888320.882753777]: Current x: 1530.000000[0m
+[0m[ INFO] [1745888320.983340875]: Current x: 1560.000000[0m
+[0m[ INFO] [1745888321.082731638]: Current x: 1590.000000[0m
+[0m[ INFO] [1745888321.183193870]: Current x: 1620.000000[0m
+[0m[ INFO] [1745888321.282694395]: Current x: 1650.000000[0m
+[0m[ INFO] [1745888321.383211156]: Current x: 1680.000000[0m
+[0m[ INFO] [1745888321.482761506]: Current x: 1710.000000[0m
+[0m[ INFO] [1745888321.583222938]: Current x: 1740.000000[0m
+[0m[ INFO] [1745888321.682712999]: Current x: 1770.000000[0m
+[0m[ INFO] [1745888321.783747558]: Current x: 1800.000000[0m
+[0m[ INFO] [1745888321.882722956]: Current x: 1830.000000[0m
+[0m[ INFO] [1745888321.982742015]: Current x: 1860.000000[0m
+[0m[ INFO] [1745888322.082689010]: Current x: 1890.000000[0m
+[0m[ INFO] [1745888322.183241163]: Current x: 1920.000000[0m
+[0m[ INFO] [1745888322.282715607]: Current x: 1950.000000[0m
+[0m[ INFO] [1745888322.382697194]: Current x: 1980.000000[0m
+[0m[ INFO] [1745888322.482671484]: Current x: 2010.000000[0m
+[0m[ INFO] [1745888322.583139060]: Current x: 2040.000000[0m
+[0m[ INFO] [1745888322.682731042]: Current x: 2070.000000[0m
+[0m[ INFO] [1745888322.783151130]: Current x: 2100.000000[0m
+[0m[ INFO] [1745888322.882724456]: Current x: 2130.000000[0m
+[0m[ INFO] [1745888322.982696250]: Current x: 2160.000000[0m
+[0m[ INFO] [1745888323.082819534]: Current x: 2190.000000[0m
+[0m[ INFO] [1745888323.183224869]: Current x: 2220.000000[0m
+[0m[ INFO] [1745888323.282719282]: Current x: 2250.000000[0m
+[0m[ INFO] [1745888323.382713125]: Current x: 2280.000000[0m
+[0m[ INFO] [1745888323.482732216]: Current x: 2310.000000[0m
+[0m[ INFO] [1745888323.584287772]: Current x: 2340.000000[0m
+[0m[ INFO] [1745888323.682692444]: Current x: 2370.000000[0m
+[0m[ INFO] [1745888323.783428216]: Current x: 2400.000000[0m
+[0m[ INFO] [1745888323.882775523]: Current x: 2430.000000[0m
+[0m[ INFO] [1745888323.983362716]: Current x: 2460.000000[0m
+[0m[ INFO] [1745888324.082716359]: Current x: 2490.000000[0m
+[0m[ INFO] [1745888324.183333505]: Current x: 2520.000000[0m
+[0m[ INFO] [1745888324.282869966]: Current x: 2550.000000[0m
+[0m[ INFO] [1745888324.383488424]: Current x: 2580.000000[0m
+[0m[ INFO] [1745888324.482704593]: Current x: 2610.000000[0m
+[0m[ INFO] [1745888324.582688356]: Current x: 2640.000000[0m
+[0m[ INFO] [1745888324.682760631]: Current x: 2670.000000[0m
+[0m[ INFO] [1745888324.783228207]: Current x: 2700.000000[0m
+[0m[ INFO] [1745888324.882706812]: Current x: 2730.000000[0m
+[0m[ INFO] [1745888324.983529688]: Current x: 2760.000000[0m
+[0m[ INFO] [1745888325.082751809]: Current x: 2790.000000[0m
+[0m[ INFO] [1745888325.183201401]: Current x: 2820.000000[0m
+[0m[ INFO] [1745888325.282723462]: Current x: 2850.000000[0m
+[0m[ INFO] [1745888325.383247166]: Current x: 2880.000000[0m
+[0m[ INFO] [1745888325.482729835]: Current x: 2910.000000[0m
+[0m[ INFO] [1745888325.583164674]: Current x: 2940.000000[0m
+[0m[ INFO] [1745888325.682781840]: Current x: 2970.000000[0m
+[0m[ INFO] [1745888325.783202632]: Current x: 3000.000000[0m
+[0m[ INFO] [1745888325.882721877]: Current x: 3030.000000[0m
+[0m[ INFO] [1745888325.983221005]: Current x: 3060.000000[0m
+[0m[ INFO] [1745888326.082749338]: Current x: 3090.000000[0m
+[0m[ INFO] [1745888326.182722252]: Current x: 3120.000000[0m
+[0m[ INFO] [1745888326.282717214]: Current x: 3150.000000[0m
+[0m[ INFO] [1745888326.383203606]: Current x: 3180.000000[0m
+[0m[ INFO] [1745888326.482740067]: Current x: 3210.000000[0m
+[0m[ INFO] [1745888326.583162331]: Current x: 3240.000000[0m
+[0m[ INFO] [1745888326.682735080]: Current x: 3270.000000[0m
+[0m[ INFO] [1745888326.783220416]: Current x: 3300.000000[0m
+[0m[ INFO] [1745888326.882704429]: Current x: 3330.000000[0m
+[0m[ INFO] [1745888326.983158372]: Current x: 3360.000000[0m
+[0m[ INFO] [1745888327.083807518]: Current x: 3390.000000[0m
+[0m[ INFO] [1745888327.183207082]: Current x: 3420.000000[0m
+[0m[ INFO] [1745888327.282728726]: Current x: 3450.000000[0m
+[0m[ INFO] [1745888327.382702888]: Current x: 3480.000000[0m
+[0m[ INFO] [1745888327.482690651]: Current x: 3510.000000[0m
+[0m[ INFO] [1745888327.582746541]: Current x: 3540.000000[0m
+[0m[ INFO] [1745888327.682681919]: Current x: 3570.000000[0m
+[0m[ INFO] [1745888327.783169079]: Current x: 3600.000000[0m
+[0m[ INFO] [1745888327.882746020]: Current x: 3630.000000[0m
+[0m[ INFO] [1745888327.983203932]: Current x: 3660.000000[0m
+[0m[ INFO] [1745888328.082701225]: Current x: 3690.000000[0m
+[0m[ INFO] [1745888328.183091263]: Current x: 3720.000000[0m
+[0m[ INFO] [1745888328.282743054]: Current x: 3750.000000[0m
+[0m[ INFO] [1745888328.382677215]: Current x: 3780.000000[0m
+[0m[ INFO] [1745888328.482683761]: Current x: 3810.000000[0m
+[0m[ INFO] [1745888328.582700388]: Current x: 3840.000000[0m
+[0m[ INFO] [1745888328.682705974]: Current x: 3870.000000[0m
+[0m[ INFO] [1745888328.783098413]: Current x: 3900.000000[0m
+[0m[ INFO] [1745888328.882710715]: Current x: 3930.000000[0m
+[0m[ INFO] [1745888328.983908731]: Current x: 3960.000000[0m
+[0m[ INFO] [1745888329.082710975]: Current x: 3990.000000[0m
+[0m[ INFO] [1745888329.183165591]: Current x: 4020.000000[0m
+[0m[ INFO] [1745888329.282742116]: Current x: 4050.000000[0m
+[0m[ INFO] [1745888329.382696022]: Current x: 4080.000000[0m
+[0m[ INFO] [1745888329.482686248]: Current x: 4110.000000[0m
+[0m[ INFO] [1745888329.583165759]: Current x: 4140.000000[0m
+[0m[ INFO] [1745888329.682706636]: Current x: 4170.000000[0m
+[0m[ INFO] [1745888329.783267045]: Current x: 4200.000000[0m
+[0m[ INFO] [1745888329.882687952]: Current x: 4230.000000[0m
+[0m[ INFO] [1745888329.983196744]: Current x: 4260.000000[0m
+[0m[ INFO] [1745888330.082714261]: Current x: 4290.000000[0m
+[0m[ INFO] [1745888330.182665158]: Current x: 4320.000000[0m
+[0m[ INFO] [1745888330.282678905]: Current x: 4350.000000[0m
+[0m[ INFO] [1745888330.383078704]: Current x: 4380.000000[0m
+[0m[ INFO] [1745888330.482689693]: Current x: 4410.000000[0m
+[0m[ INFO] [1745888330.583071892]: Current x: 4440.000000[0m
+[0m[ INFO] [1745888330.682697665]: Current x: 4470.000000[0m
+[0m[ INFO] [1745888330.783159289]: Current x: 4500.000000[0m
+[0m[ INFO] [1745888330.882686725]: Current x: 4530.000000[0m
+[0m[ INFO] [1745888330.983040060]: Current x: 4560.000000[0m
+[0m[ INFO] [1745888331.082696490]: Current x: 4590.000000[0m
+[0m[ INFO] [1745888331.183107841]: Current x: 4620.000000[0m
+[0m[ INFO] [1745888331.282702606]: Current x: 4650.000000[0m
+[0m[ INFO] [1745888331.383198758]: Current x: 4680.000000[0m
+[0m[ INFO] [1745888331.482690706]: Current x: 4710.000000[0m
+[0m[ INFO] [1745888331.583505069]: Current x: 4740.000000[0m
+[0m[ INFO] [1745888331.682754999]: Current x: 4770.000000[0m
+[0m[ INFO] [1745888331.783346287]: Current x: 4800.000000[0m
+[0m[ INFO] [1745888331.882727002]: Current x: 4830.000000[0m
+[0m[ INFO] [1745888331.983183986]: Current x: 4860.000000[0m
+[0m[ INFO] [1745888332.082718750]: Current x: 4890.000000[0m
+[0m[ INFO] [1745888332.182752881]: Current x: 4920.000000[0m
+[0m[ INFO] [1745888332.282688514]: Current x: 4950.000000[0m
+[0m[ INFO] [1745888332.382679508]: Current x: 4980.000000[0m
+[0m[ INFO] [1745888332.482727974]: Current x: 5010.000000[0m
+[0m[ INFO] [1745888332.582672695]: Current x: 5040.000000[0m
+[0m[ INFO] [1745888332.682758922]: Current x: 5070.000000[0m
+[0m[ INFO] [1745888332.783214306]: Current x: 5100.000000[0m
+[0m[ INFO] [1745888332.882754766]: Current x: 5130.000000[0m
+[0m[ INFO] [1745888332.983124453]: Current x: 5160.000000[0m
+[0m[ INFO] [1745888333.082728306]: Current x: 5190.000000[0m
+[0m[ INFO] [1745888333.183153929]: Current x: 5220.000000[0m
+[0m[ INFO] [1745888333.282710421]: Current x: 5250.000000[0m
+[0m[ INFO] [1745888333.383103788]: Current x: 5280.000000[0m
+[0m[ INFO] [1745888333.482707833]: Current x: 5310.000000[0m
+[0m[ INFO] [1745888333.583087439]: Current x: 5340.000000[0m
+[0m[ INFO] [1745888333.682709469]: Current x: 5370.000000[0m
+[0m[ INFO] [1745888333.783175796]: Current x: 5400.000000[0m
+[0m[ INFO] [1745888333.882702977]: Current x: 5430.000000[0m
+[0m[ INFO] [1745888333.983106263]: Current x: 5460.000000[0m
+[0m[ INFO] [1745888334.082734341]: Current x: 5490.000000[0m
+[0m[ INFO] [1745888334.185110898]: Current x: 5520.000000[0m
+[0m[ INFO] [1745888334.282716264]: Current x: 5550.000000[0m
+[0m[ INFO] [1745888334.383225440]: Current x: 5580.000000[0m
+[0m[ INFO] [1745888334.482717708]: Current x: 5610.000000[0m
+[0m[ INFO] [1745888334.583830410]: Current x: 5640.000000[0m
+[0m[ INFO] [1745888334.682714575]: Current x: 5670.000000[0m
+[0m[ INFO] [1745888334.783230343]: Current x: 5700.000000[0m
+[0m[ INFO] [1745888334.882752307]: Current x: 5730.000000[0m
+[0m[ INFO] [1745888334.983193642]: Current x: 5760.000000[0m
+[0m[ INFO] [1745888335.082746519]: Current x: 5790.000000[0m
+[0m[ INFO] [1745888335.183194318]: Current x: 5820.000000[0m
+[0m[ INFO] [1745888335.282713210]: Current x: 5850.000000[0m
+[0m[ INFO] [1745888335.383123056]: Cur[0m[ INFO] [1745888315.539557350]: [I2C FOR MOTORS] Now launching this node in namespace: /asc[0m
+[0m[ INFO] [1745888315.594042052]: [I2C FOR MOTORS] publish motor duty cycle requests from command line with: rostopic pub --once /asc/set_motor_duty_cycle asclinic_pkg/LeftRightFloat32 "{left: 10.1, right: 10.1}"[0m
+[0m[ INFO] [1745888315.594224006]: [I2C FOR MOTORS] Successfully opened named /dev/i2c-1, with file descriptor = 10[0m
+[0m[ INFO] [1745888315.594340775]: [I2C FOR MOTORS] Actual acceleration limit = 0.0003125%/ms (after conversation to "internal units")[0m
+[0m[ INFO] [1745888315.594393128]: [I2C FOR MOTORS] Actual deceleration limit = 0.0015625%/ms (after conversation to "internal units")[0m
+[0m[ INFO] [1745888315.594435336]: [I2C FOR MOTORS] Now initialising SMC with I2C address 13[0m
+[0m[ INFO] [1745888315.611642034]: [I2C FOR MOTORS] Now initialising SMC with I2C address 14[0m
+[0m[ INFO] [1745888315.631970208]: [I2C FOR MOTORS] Node initialisation complete[0m
+rent x: 5880.000000[0m
+[0m[ INFO] [1745888335.482757630]: Current x: 5910.000000[0m
+[0m[ INFO] [1745888335.583149012]: Current x: 5940.000000[0m
+[0m[ INFO] [1745888335.682735649]: Current x: 5970.000000[0m
+[0m[ INFO] [1745888335.782690962]: Current x: 6000.000000[0m
+[0m[ INFO] [1745888335.882703684]: Current x: 6030.000000[0m
+[0m[ INFO] [1745888335.983137467]: Current x: 6060.000000[0m
+[0m[ INFO] [1745888336.082721320]: Current x: 6090.000000[0m
+[0m[ INFO] [1745888336.184106825]: Current x: 6120.000000[0m
+[0m[ INFO] [1745888336.282723723]: Current x: 6150.000000[0m
+[0m[ INFO] [1745888336.383168770]: Current x: 6180.000000[0m
+[0m[ INFO] [1745888336.482726894]: Current x: 6210.000000[0m
+[0m[ INFO] [1745888336.582685855]: Current x: 6240.000000[0m
+[0m[ INFO] [1745888336.682677041]: Current x: 6270.000000[0m
+[0m[ INFO] [1745888336.783156456]: Current x: 6300.000000[0m
+[0m[ INFO] [1745888336.882727285]: Current x: 6330.000000[0m
+[0m[ INFO] [1745888336.983153932]: Current x: 6360.000000[0m
+[0m[ INFO] [1745888337.082737496]: Current x: 6390.000000[0m
+[0m[ INFO] [1745888337.183274608]: Current x: 6420.000000[0m
+[0m[ INFO] [1745888337.282742684]: Current x: 6450.000000[0m
+[0m[ INFO] [1745888337.382746413]: Current x: 6480.000000[0m
+[0m[ INFO] [1745888337.482716638]: Current x: 6510.000000[0m
+[0m[ INFO] [1745888337.583188437]: Current x: 6540.000000[0m
+[0m[ INFO] [1745888337.682749282]: Current x: 6570.000000[0m
+[0m[ INFO] [1745888337.783194329]: Current x: 6600.000000[0m
+[0m[ INFO] [1745888337.882738021]: Current x: 6630.000000[0m
+[0m[ INFO] [1745888337.983211580]: Current x: 6660.000000[0m
+[0m[ INFO] [1745888338.082708680]: Current x: 6690.000000[0m
+[0m[ INFO] [1745888338.183096094]: Current x: 6720.000000[0m
+[0m[ INFO] [1745888338.282699755]: Current x: 6750.000000[0m
+[0m[ INFO] [1745888338.383094273]: Current x: 6780.000000[0m
+[0m[ INFO] [1745888338.482701390]: Current x: 6810.000000[0m
+[0m[ INFO] [1745888338.582670239]: Current x: 6840.000000[0m
+[0m[ INFO] [1745888338.682721937]: Current x: 6870.000000[0m
+[0m[ INFO] [1745888338.783202536]: Current x: 6900.000000[0m
+[0m[ INFO] [1745888338.882699700]: Current x: 6930.000000[0m
+[0m[ INFO] [1745888338.983439118]: Current x: 6960.000000[0m
+[0m[ INFO] [1745888339.082860504]: Current x: 6990.000000[0m
+[INFO] [1745888319.673510]: --- Received ArUco Marker ---
+[INFO] [1745888319.847424]: --- Received ArUco Marker ---
+[INFO] [1745888320.078112]: --- Received ArUco Marker ---
+[INFO] [1745888320.262437]: --- Received ArUco Marker ---
+[INFO] [1745888320.466242]: --- Received ArUco Marker ---
+[INFO] [1745888320.657576]: --- Received ArUco Marker ---
+[INFO] [1745888320.856115]: --- Received ArUco Marker ---
+[INFO] [1745888321.059287]: --- Received ArUco Marker ---
+[INFO] [1745888321.262382]: --- Received ArUco Marker ---
+[INFO] [1745888321.468197]: --- Received ArUco Marker ---
+[INFO] [1745888321.657624]: --- Received ArUco Marker ---
+[INFO] [1745888321.859658]: --- Received ArUco Marker ---
+[INFO] [1745888322.060312]: --- Received ArUco Marker ---
+[INFO] [1745888322.259447]: --- Received ArUco Marker ---
+[INFO] [1745888338.064221]: --- Received ArUco Marker ---
+
+[ARUCO DETECTOR] Camera properties upon initialisation:
+CV_CAP_PROP_FRAME_HEIGHT : '480.0'
+CV_CAP_PROP_FRAME_WIDTH :  '640.0'
+CAP_PROP_FPS :             '30.0'
+CAP_PROP_FOCUS :           '0.0'
+CAP_PROP_AUTOFOCUS :       '0.0'
+CAP_PROP_BRIGHTNESS :      '128.0'
+CAP_PROP_CONTRAST :        '128.0'
+CAP_PROP_SATURATION :      '128.0'
+CAP_PROP_BUFFERSIZE :      '4.0'
+
+[ARUCO DETECTOR] Camera properties upon initialisation:
+CV_CAP_PROP_FRAME_HEIGHT : '1080.0'
+CV_CAP_PROP_FRAME_WIDTH :  '1920.0'
+CAP_PROP_FPS :             '5.0'
+CAP_PROP_FOCUS :           '0.0'
+CAP_PROP_AUTOFOCUS :       '0.0'
+CAP_PROP_BRIGHTNESS :      '128.0'
+CAP_PROP_CONTRAST :        '128.0'
+CAP_PROP_SATURATION :      '128.0'
+CAP_PROP_BUFFERSIZE :      '1.0'
+[INFO] [1745888318.614252]: [ARUCO DETECTOR] As a double check of the camera properties set, a frame captured just now has dimensions = (1080, 1920, 3)
+[INFO] [1745888318.619384]: [ARUCO DETECTOR] publish request from command line to save a single camera image using: rostopic pub --once /asc/request_save_image std_msgs/UInt32 1
+[INFO] [1745888318.623685]: [ARUCO DETECTOR] Node initialisation complete
+... logging to /home/asc/.ros/log/0d907136-2495-11f0-b950-d8c0a650f677/roslaunch-asc12-jetson-9266.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/launch/trajectory.launch
+[1mstarted roslaunch server http://asc12-jetson:38483/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /asc/aruco_detector/aruco_detector_desired_camera_fps: 5
+ * /asc/aruco_detector/aruco_detector_desired_camera_frame_height: 1080
+ * /asc/aruco_detector/aruco_detector_desired_camera_frame_width: 1920
+ * /asc/aruco_detector/aruco_detector_marker_size: 0.25
+ * /asc/aruco_detector/aruco_detector_save_image_path: /home/asc/saved_c...
+ * /asc/aruco_detector/aruco_detector_should_publish_camera_images: False
+ * /asc/aruco_detector/aruco_detector_should_save_all_aruco_images: False
+ * /asc/aruco_detector/aruco_detector_should_show_camera_images: False
+ * /asc/aruco_detector/aruco_detector_usb_camera_device_number: 0
+ * /asc/aruco_detector/aruco_detector_verbosity: 1
+ * /asc/encoder_read_multi_threaded/delta_t_for_publishing_encoder_counts: 0.1
+ * /asc/encoder_read_multi_threaded/encoder_events_to_monitor: rising
+ * /asc/encoder_read_multi_threaded/encoder_read_verbosity: 1
+ * /asc/encoder_read_multi_threaded/gpio_chip_number_for_encoder_lines: 1
+ * /asc/encoder_read_multi_threaded/line_number_for_left_side_encoder_channel_a: 105
+ * /asc/encoder_read_multi_threaded/line_number_for_left_side_encoder_channel_b: 106
+ * /asc/encoder_read_multi_threaded/line_number_for_right_side_encoder_channel_a: 84
+ * /asc/encoder_read_multi_threaded/line_number_for_right_side_encoder_channel_b: 130
+ * /asc/encoder_read_multi_threaded/should_monitor_left_side_encoder_channel_a: True
+ * /asc/encoder_read_multi_threaded/should_monitor_left_side_encoder_channel_b: False
+ * /asc/encoder_read_multi_threaded/should_monitor_right_side_encoder_channel_a: True
+ * /asc/encoder_read_multi_threaded/should_monitor_right_side_encoder_channel_b: False
+ * /asc/i2c_for_motors/motor_driver_current_limit_in_milliamps: 5000
+ * /asc/i2c_for_motors/motor_driver_left_side_multiplier: 1
+ * /asc/i2c_for_motors/motor_driver_max_accel_limit_in_percent_per_millisecond: 0.04
+ * /asc/i2c_for_motors/motor_driver_max_decel_limit_in_percent_per_millisecond: 0.16
+ * /asc/i2c_for_motors/motor_driver_max_duty_cycle_limit_in_percent: 100.0
+ * /asc/i2c_for_motors/motor_driver_right_side_multiplier: 1
+ * /asc/i2c_for_motors/motor_driver_verbosity: 1
+ * /rosdistro: noetic
+ * /rosversion: 1.17.0
+
+NODES
+  /
+    aruco_positioning (asclinic_pkg/aruco_positioning.py)
+    kf_fusion_node (asclinic_pkg/KF.py)
+    odomdelta (asclinic_pkg/odomdelta)
+    trajectory_generator (asclinic_pkg/trajectory_generator)
+    trajectory_tracker (asclinic_pkg/trajectory_tracker)
+    velocity_PI_control (asclinic_pkg/velocity_PI_control)
+  /asc/
+    aruco_detector (asclinic_pkg/aruco_detector.py)
+    encoder_read_multi_threaded (asclinic_pkg/encoder_read_multi_threaded)
+    i2c_for_motors (asclinic_pkg/i2c_for_motors)
+
+[1mROS_MASTER_URI=http://localhost:11311[0m
+]2;/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/launch/trajectory.launch http://localhost:11311
+[1mprocess[asc/i2c_for_motors-1]: started with pid [9303][0m
+[1mprocess[asc/encoder_read_multi_threaded-2]: started with pid [9304][0m
+[1mprocess[odomdelta-3]: started with pid [9310][0m
+[1mprocess[asc/aruco_detector-4]: started with pid [9316][0m
+[1mprocess[aruco_positioning-5]: started with pid [9325][0m
+[1mprocess[trajectory_tracker-6]: started with pid [9327][0m
+[1mprocess[trajectory_generator-7]: started with pid [9328][0m
+[1mprocess[velocity_PI_control-8]: started with pid [9334][0m
+[1mprocess[kf_fusion_node-9]: started with pid [9339][0m
+[velocity_PI_control-8] killing on exit
+[trajectory_generator-7] killing on exit
+[trajectory_tracker-6] killing on exit
+[aruco_positioning-5] killing on exit
+[asc/aruco_detector-4] killing on exit
+[odomdelta-3] killing on exit
+[asc/encoder_read_multi_threaded-2] killing on exit
+[asc/i2c_for_motors-1] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m

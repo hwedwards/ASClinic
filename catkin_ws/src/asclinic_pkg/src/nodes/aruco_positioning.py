@@ -19,25 +19,11 @@ from asclinic_pkg.msg import PoseCovar
 pose_pub = None
 
 # Counter to throttle logging: only log every 10 callbacks
-log_counter = 10000
+log_counter = 1
 
 # Mapping from ArUco marker ID to its measured world-frame position (x, y) and heading phi (degrees)
 marker_positions = {
-    1: (1.973, -0.600, 180),
-    2: (2.033, -0.600,   0),
-    3: (3.952,  1.200, 180),
-    4: (4.012,  1.200,   0),
-    5: (5.953, -0.600, 180),
-    6: (6.013, -0.600,   0),
-    7: (7.926,  1.200, 180),
-    8: (7.986,  1.200,   0),
-    9: (9.913, -0.600, 180),
-   10: (9.973, -0.600,   0),
-   11: (11.900, 0.000, 180),
-   12: (9.943,  1.500, -90),
-   13: (0.030, -0.600,   0),
-   14: (0.030,  1.200,   0)
-
+    3: (7.5, 0, 180)
    }
 
 """    1: (1.973, -0.600, 180),
@@ -62,9 +48,9 @@ def get_marker_pose(marker_id):
     If the ID is not in the table, logs a warning and returns None.
     """
     pose = marker_positions.get(marker_id)
-    """if pose is None:
+    if pose is None:
         rospy.logwarn(f"Unknown marker ID: {marker_id}")
-    return pose"""
+    return pose
 
 def callback(data):
     if data.num_markers >0:
@@ -75,6 +61,8 @@ def callback(data):
             rospy.loginfo("--- Received ArUco Marker ---")
         for marker in data.markers:
             marker_id = marker.id
+        
+            rospy.loginfo("Marker ID: %d", marker_id)
 
             # Skip processing for markers not in dictionary
             pose = get_marker_pose(marker_id)
@@ -92,6 +80,9 @@ def callback(data):
             tvec_np = np.array(tvec).reshape(3, 1)
             # Calculate the robot position and pose in the world frame
             camera_position = -R_inv @ tvec_np
+
+            
+
             
             # We only care about pitch angle as it is about the y-axis
             pitch = np.arcsin(-R_inv[2, 0])
@@ -109,11 +100,8 @@ def callback(data):
             front_position = camera_position - offset_marker
 
             # Log the information
-            if should_log:
-             """  rospy.loginfo("Marker ID: %d", marker_id)
-               rospy.loginfo("Camera Position in Marker Frame: [%f, %f, %f]", camera_position[0][0], camera_position[1][0], camera_position[2][0])
-                rospy.loginfo("Robot Pitch in Marker Frame: %f", pitch_degree)
-                rospy.loginfo("Front of Robot Position in Marker Frame: [%f, %f, %f]", front_position[0][0], front_position[1][0], front_position[2][0])
+            """rospy.loginfo("Robot Pitch in Marker Frame: %f", pitch_degree)
+            rospy.loginfo("Front of Robot Position in Marker Frame: [%f, %f, %f]", front_position[0][0], front_position[1][0], front_position[2][0])
             """
             # Use pose obtained earlier
             x_world, y_world, phi_deg = pose
@@ -164,9 +152,9 @@ def callback(data):
 
             # Assemble full 3×3 covariance matrix with proper unit conversions
             R = np.array([
-                [r11 * MM2, r01 * MM2, r12 * MM],  # var_y, cov(y,x), cov(y,phi)
-                [r01 * MM2, r00 * MM2, r02 * MM],  # cov(x,y), var_x, cov(x,phi)
-                [r12 * MM, r02 * MM, r22]  # cov(phi,y), cov(phi,x), var_phi
+                [r00 * MM2, r01 * MM2, r02 * MM],  # var_y, cov(y,x), cov(y,phi)
+                [r01 * MM2, r11 * MM2, r12 * MM],  # cov(x,y), var_x, cov(x,phi)
+                [r02 * MM, r12 * MM, r22]  # cov(phi,y), cov(phi,x), var_phi
             ])
 
             # Log the covariance
