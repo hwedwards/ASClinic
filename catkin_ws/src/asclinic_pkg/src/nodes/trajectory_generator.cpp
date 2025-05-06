@@ -5,7 +5,7 @@
 
 // Constants
 const float LINEAR_SPEED = 300;    // in mm/s
-const float Y_SPEED = 50; 
+//const float Y_SPEED = 50; 
 // Variables
 ros::Publisher motor_reference_position;
 ros::Publisher driving_state_publisher;
@@ -42,8 +42,8 @@ int main(int argc, char** argv) {
     ros::Rate loop_rate(10); // 10 Hz
 
     float current_x = 0.0;
-    float current_y = 0.0;
-    const float target_x = 10000; // Target position in mm
+    //float current_y = 0.0;
+    const float target_x = 1000; // Target position in mm
     State current_state = FORWARD;
 
     while (ros::ok()) {
@@ -51,8 +51,9 @@ int main(int argc, char** argv) {
             case FORWARD:
                 if (current_x < target_x) {
                     current_x += LINEAR_SPEED / 10.0; // Increment x based on speed and loop rate
-                    current_y += Y_SPEED / 10.0; // Increment y based on speed and loop rate
-                    publishPositionCommand(current_x, current_y , 0.0);
+                    
+                   //current_y  = 0; //+= Y_SPEED / 10.0; // Increment y based on speed and loop rate
+                    publishPositionCommand(current_x, 0.0 , 0.0);
                 } else {
                     ROS_INFO("Reached 5 meters, transitioning to TURNING state.");
                     current_state = TURNING;
