@@ -13,7 +13,7 @@ last_aruco_var = float('nan')
 # Global state and covariance
 x_est = np.zeros((3, 1))  # [x, y, theta]
 P_est = np.eye(3) * 0.01
-x_est[2,0] = np.pi/4 # initial heading
+#x_est[2,0] = np.pi/2 # initial heading
 
 driving_direction = "FORWARD"
 

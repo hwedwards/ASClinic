@@ -12,7 +12,7 @@
   <include file="$(find asclinic_pkg)/launch/aruco_detector.launch"/>
 
   <!-- Run ArUco positioning node -->
-  <!--<node pkg="asclinic_pkg" type="aruco_positioning.py" name="aruco_positioning" output="screen"/>-->
+  <node pkg="asclinic_pkg" type="aruco_positioning.py" name="aruco_positioning" output="screen"/>
 
   <!-- Run Trajectory Tracker node -->
   <node pkg="asclinic_pkg" type="trajectory_tracker" name="trajectory_tracker" output="screen"/>

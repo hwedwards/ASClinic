@@ -15,8 +15,8 @@ const int RPM_TO_DEG = 6; // conversion factor
 const float K_angular = 60; // Proportional gain for angular velocity control
 const float Kd_angular = 25; // Derivative gain for angular velocity control
 const float K_line_progress = 50; // Proportional gain for line progress control
-const float Kp_line_deviation =1; //0.2 // Proportional gain for line deviation control
-const float Kd_line_deviation = 0.25; 
+const float Kp_line_deviation =5; //0.2 // Proportional gain for line deviation control
+const float Kd_line_deviation = 20; 
 const float Ki = 0.1; // Integral gain for line deviation control
 ros::Publisher velocity_reference_publisher;
 ros::Subscriber driving_state_subscriber;

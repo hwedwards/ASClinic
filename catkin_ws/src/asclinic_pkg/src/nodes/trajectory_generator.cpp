@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
 
     float current_x = 0.0;
     //float current_y = 0.0;
-    const float target_x = 1000; // Target position in mm
+    const float target_x = 5000; // Target position in mm
     State current_state = FORWARD;
 
     while (ros::ok()) {
