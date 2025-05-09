@@ -5,7 +5,7 @@
 #include "asclinic_pkg/LeftRightInt32.h"
 #include "asclinic_pkg/LeftRightFloat32.h"
 
-#define THRESHOLD_DISTANCE 2000 // in mm
+#define THRESHOLD_DISTANCE 7000 // in mm
 #define THRESHOLD_TICKS 5000    // 1620   // in ticks
 #define SPEED 20                // in % for PWM duty cycle
 

@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import csv
+from datetime import datetime
+
+csv_filename = f"/home/asc/KF_testing_2/aruco_positions_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+csv_header_written = False
+
 
 import rospy
 import numpy as np # type: ignore
@@ -14,6 +20,10 @@ RAD2DEG2 = RAD2DEG ** 2
 # World frame axes: X is longitudinal (forward), Y is lateral (sideways).
 # Therefore marker frame Z maps to world X, and marker frame X maps to world Y.
 
+
+ARUCO_DISTANCE_THRESHOLD = 100.0  # meters
+
+
 from asclinic_pkg.msg import FiducialMarkerArray
 from asclinic_pkg.msg import PoseCovar
 pose_pub = None
@@ -23,20 +33,9 @@ log_counter = 1
 
 # Mapping from ArUco marker ID to its measured world-frame position (x, y) and heading phi (degrees)
 marker_positions = {
-    1: (1.973, -0.600, 180),
-    2: (2.033, -0.600,   0),
-    3: (3.952,  1.200, 180),
-    4: (4.012,  1.200,   0),
-    5: (5.953, -0.600, 180),
-    6: (6.013, -0.600,   0),
-    7: (7.926,  1.200, 180),
-    8: (7.986,  1.200,   0),
-    9: (9.913, -0.600, 180),
-   10: (9.973, -0.600,   0),
-   11: (11.900, 0.000, 180),
-   12: (9.943,  1.500, -90),
-   13: (0.030, -0.600,   0),
-   14: (0.030,  1.200,   0)
+    20: (3.5, 0.9, 180),  # Marker 20
+    16: (5.5, -0.9, 180),
+    24: (7.5, 0, 180  )
    }
 
 """    1: (1.973, -0.600, 180),
@@ -69,13 +68,15 @@ def callback(data):
     if data.num_markers >0:
         global log_counter
         log_counter += 1
-        should_log = (log_counter % 1 == 0)
+        should_log = (log_counter % 10 == 0)
         if should_log:
             rospy.loginfo("--- Received ArUco Marker ---")
         for marker in data.markers:
             marker_id = marker.id
+            timestamp = rospy.Time.now().to_sec()
         
-            rospy.loginfo("Marker ID: %d", marker_id)
+            if should_log:
+                rospy.loginfo("Marker ID: %d", marker_id)
 
             # Skip processing for markers not in dictionary
             pose = get_marker_pose(marker_id)
@@ -163,12 +164,33 @@ def callback(data):
             r12 = quad_val(c12, distance)
             r22 = quad_val(c22, distance)
 
-            # Assemble full 3×3 covariance matrix with proper unit conversions
+            # Assemble full 3×3 covariance matrix with proper unit conversions 
+            # X and Y swapped to account for change of aruco to world frame
             R = np.array([
-                [r00 * MM2, r01 * MM2, r02 * MM],  # var_y, cov(y,x), cov(y,phi)
-                [r01 * MM2, r11 * MM2, r12 * MM],  # cov(x,y), var_x, cov(x,phi)
-                [r02 * MM, r12 * MM, r22]  # cov(phi,y), cov(phi,x), var_phi
+                [r11 * MM2, r12 * MM2, r02 * MM],  # var_y, cov(y,x), cov(y,phi)
+                [r12 * MM2, r00 * MM2, r01 * MM],  # cov(x,y), var_x, cov(x,phi)
+                [r02 * MM, r01 * MM, r22]  # cov(phi,y), cov(phi,x), var_phi
             ])
+
+            # ------------------------------------------------------------------
+            # 1. Force symmetry
+            R = 0.5*(R + R.T)
+
+            # 2a. Zero the cross terms for now (keeps R diagonal-dominant)
+            R[0,1] = R[1,0] = 0
+            R[0,2] = R[2,0] = 0
+            R[1,2] = R[2,1] = 0
+
+            # 2b. Floor each variance to a realistic minimum (1 mm², (2°)² )
+            R[0,0] = max(R[0,0], 1.0)
+            R[1,1] = max(R[1,1], 1.0)
+            R[2,2] = max(R[2,2], np.deg2rad(2)**2)
+
+            # 3. Final eigen-clip to be absolutely safe
+            eigvals, eigvecs = np.linalg.eigh(R)
+            eigvals = np.maximum(eigvals, 1e-6)
+            R = eigvecs @ np.diag(eigvals) @ eigvecs.T
+            # ------------------------------------------------------------------
 
             # Log the covariance
             if should_log:
@@ -189,10 +211,16 @@ def callback(data):
             msg.xphicovar = float(R[1, 2])
             msg.yphicovar = float(R[0, 2])
 
-            pose_pub.publish(msg)
+            if distance < ARUCO_DISTANCE_THRESHOLD:
+                pose_pub.publish(msg)
 
-            
-                
+            global csv_header_written
+            with open(csv_filename, mode='a', newline='') as file:
+                writer = csv.writer(file)
+                if not csv_header_written:
+                    writer.writerow(['timestamp', 'marker_id', 'x_mm', 'y_mm', 'phi_deg'])
+                    csv_header_written = True
+                writer.writerow([timestamp, marker_id, msg.x, msg.y, msg.phi])
 
 def listener():
     global pose_pub
