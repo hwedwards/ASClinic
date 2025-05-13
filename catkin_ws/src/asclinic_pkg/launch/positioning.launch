@@ -18,5 +18,5 @@
   <node pkg="asclinic_pkg" type="KF.py" name="kf_fusion_node" output="screen"/>
 
   <!-- Run Tester node -->
-  <node pkg="asclinic_pkg" type="rotatetesterdelta" name="rotatetesterdelta" output="screen"/>
+  <!--node pkg="asclinic_pkg" type="rotatetesterdelta" name="rotatetesterdelta" output="screen"/-->
 </launch>

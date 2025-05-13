@@ -228,6 +228,10 @@ add_executable(trajectory_generator src/nodes/trajectory_generator.cpp)
 add_dependencies(trajectory_generator asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 target_link_libraries(trajectory_generator ${catkin_LIBRARIES})
 
+# Add the new trajectory_generator node
+add_executable(obstacledetect src/nodes/obstacledetect.cpp)
+add_dependencies(obstacledetect asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+target_link_libraries(obstacledetect ${catkin_LIBRARIES})
 
 ## Rename C++ executable with##out prefix
 ## The above recommended prefix causes long target names, the following renames the

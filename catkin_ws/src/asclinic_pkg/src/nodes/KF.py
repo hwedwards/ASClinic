@@ -10,25 +10,17 @@ from std_msgs.msg import String
 x_odom = 0.0
 y_odom = 0.0
 
-# Variance traces for logging
-last_odom_var = float('nan')
-last_aruco_var = float('nan')
 
 # Global state and covariance
 x_est = np.zeros((3, 1))  # [x, y, theta]
 P_est = np.eye(3) * 0.01
 #x_est[2,0] = np.pi/4 # initial heading
 
-driving_direction = "FORWARD"
-
-# Time of last accepted ArUco update
-last_aruco_accept_time = 0.0
-
 # Process noise covariance
-Q = np.diag([20, 100, 20])  # tune as needed
+Q = np.diag([100, 5000, 100])  # tune as needed
 
 # Measurement noise covariance (increase R to decrease influence of ArUco and increase low pass characteristics of KF)
-R = np.diag([0.5, 0.5, 0.2])  # tune as needed
+R = np.diag([10, 10, 1])  # tune as needed
 
 pose_pub = None
 
@@ -164,6 +156,7 @@ def aruco_callback(msg):
         [msg.xycovar, msg.yvar,   msg.yphicovar],
         [msg.xphicovar, msg.yphicovar, msg.phivar]
     ])
+    distance = msg.dist*1000  # convert to mm
 
     eig = np.linalg.eigvals(R_meas)
     if np.any(eig <= 0):
@@ -180,22 +173,32 @@ def aruco_callback(msg):
     # Innovation covariance
     S = H.dot(P_est).dot(H.T) + R_meas
 
-    md2 = float(y.T @ np.linalg.inv(S) @ y)
-    if md2 > 11.3:   # 99 % gate for 3 DOF
-        rospy.logwarn(f"ArUco rejected (Mahalanobis²={md2:.1f})")
+    # Euclidean distance gate
+    if distance > 3000:  
+        rospy.logwarn(f"ArUco rejected (Distance={distance:.1f})")
         return
+    else: 
+        rospy.logwarn(f"ArUco ACCEPTED (Distance={distance:.1f})")
+        log_to_csv(
+        'PURE_ARUCO',
+        float(msg.x),
+        float(msg.y),
+        float(msg.phi),
+        float(R_meas[0,0]),
+        float(R_meas[1,1]),
+        float(R_meas[2,2])
+    )
 
     # Regularise S if it is near-singular
     cond = np.linalg.cond(S)
     if cond > 1e8 or np.any(np.isnan(S)):
         rospy.logwarn(f"S ill-conditioned (cond={cond:.2e}); adding jitter.")
-        S += np.eye(3) * 1e-3
+        S += np.eye(3) * 1e-2
     K = P_est.dot(H.T).dot(np.linalg.inv(S))
     
     """rospy.loginfo(f"residual  x={y[0,0]:.1f} mm, y={y[1,0]:.1f} mm, φ={y[2,0]:.1f} radians")
     rospy.loginfo(f"diag(S)  = [{S[0,0]:.3f}, {S[1,1]:.3f}, {S[2,2]:.3f}]  (units²)")"""
     
-    rospy.loginfo(f"Kalman Gain:\n{K}")
     log_to_csv(
         'KF_K',
         float(K[0,0]),
@@ -221,7 +224,11 @@ def aruco_callback(msg):
     # Apply saturated update
     x_est = x_est + dx
     x_est[2,0] = normalize_angle(x_est[2,0])
-    P_est = (np.eye(3) - K.dot(H)).dot(P_est)
+    # Joseph-form covariance update to maintain positive semidefiniteness
+    I = np.eye(3)
+    P_est = (I - K.dot(H)).dot(P_est).dot((I - K.dot(H)).T) + K.dot(R_meas).dot(K.T)
+    # enforce symmetry to remove numerical asymmetry
+    P_est = 0.5 * (P_est + P_est.T)
     aruco_accepted = True
 
     # publish after gating

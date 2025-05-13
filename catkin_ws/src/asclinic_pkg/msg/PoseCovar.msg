@@ -8,3 +8,5 @@ float32 phivar
 float32 xycovar
 float32 xphicovar
 float32 yphicovar
+
+float32 dist

@@ -21,7 +21,6 @@ RAD2DEG2 = RAD2DEG ** 2
 # Therefore marker frame Z maps to world X, and marker frame X maps to world Y.
 
 
-ARUCO_DISTANCE_THRESHOLD = 100.0  # meters
 
 
 from asclinic_pkg.msg import FiducialMarkerArray
@@ -33,9 +32,11 @@ log_counter = 1
 
 # Mapping from ArUco marker ID to its measured world-frame position (x, y) and heading phi (degrees)
 marker_positions = {
-    26: (10, 0, 180),  # Marker 20
-    28: (5.5, 0.9, 180),
-    29: (7.5, 0.9, 180)
+    20: (10, 0, 180),
+    29: (7.5, -0.9, 180),
+    26: (5.5, 0.9, 180),
+    19: (3.5, -0.9, 180),
+    25: (7.5, 0.9, -90)
    }
 
 """    1: (1.973, -0.600, 180),
@@ -68,7 +69,7 @@ def callback(data):
     if data.num_markers >0:
         global log_counter
         log_counter += 1
-        should_log = (log_counter % 10 == 0)
+        should_log = (log_counter % 100000000000 == 0)
         if should_log:
             rospy.loginfo("--- Received ArUco Marker ---")
         for marker in data.markers:
@@ -197,6 +198,7 @@ def callback(data):
                 rospy.loginfo("Covariance R(d=%.2f): %s", distance, R.tolist())
                 rospy.loginfo("---------------------------------------------------")
 
+    
             # Publish PoseCovar message
             msg = PoseCovar()
             msg.x = x_front_world*1000
@@ -211,8 +213,13 @@ def callback(data):
             msg.xphicovar = float(R[1, 2])
             msg.yphicovar = float(R[0, 2])
 
-            if distance < ARUCO_DISTANCE_THRESHOLD:
-                pose_pub.publish(msg)
+            
+            if not np.isfinite(distance) or distance > 10:
+                msg.dist = 10
+            else:   
+                msg.dist = distance
+
+            pose_pub.publish(msg)
 
             global csv_header_written
             with open(csv_filename, mode='a', newline='') as file:

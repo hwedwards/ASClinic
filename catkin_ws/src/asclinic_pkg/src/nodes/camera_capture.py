@@ -79,7 +79,7 @@ DEFAULT_CHESSBOARD_SIZE_WIDTH  = 6
 #   Note: ensure that this path already exists
 #   Note: one image is saved each time a message is received
 #         on the "request_save_image" topic.
-DEFAULT_SAVE_IMAGE_PATH = "/home/asc/saved_camera_images/"
+DEFAULT_SAVE_IMAGE_PATH = "/home/asc/saved_camera_images/plant_images/"
 
 # > A flag for whether to save any images that contains
 #   a camera calibration chessboard
