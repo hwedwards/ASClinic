@@ -33,9 +33,9 @@ log_counter = 1
 
 # Mapping from ArUco marker ID to its measured world-frame position (x, y) and heading phi (degrees)
 marker_positions = {
-    20: (3.5, 0.9, 180),  # Marker 20
-    16: (5.5, -0.9, 180),
-    24: (7.5, 0, 180  )
+    26: (10, 0, 180),  # Marker 20
+    28: (5.5, 0.9, 180),
+    29: (7.5, 0.9, 180)
    }
 
 """    1: (1.973, -0.600, 180),
