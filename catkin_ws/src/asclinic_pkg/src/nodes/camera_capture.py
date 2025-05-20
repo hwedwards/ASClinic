@@ -86,7 +86,7 @@ DEFAULT_SAVE_IMAGE_PATH = "/home/asc/saved_camera_images/plant_images/"
 DEFAULT_SHOULD_SAVE_ALL_CHESSBOARD_IMAGES = True
 
 # > A flag for whether to publish the images captured
-DEFAULT_SHOULD_PUBLISH_CAMERA_IMAGES = False
+DEFAULT_SHOULD_PUBLISH_CAMERA_IMAGES = True
 
 # > A flag for whether to display the images captured
 DEFAULT_SHOULD_SHOW_IMAGES = False
