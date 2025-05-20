@@ -70,6 +70,7 @@ add_message_files(
   PoseSeqs.msg
   PoseCovar.msg
   Covar.msg
+  PlantDetection.msg
 )
 
 ## Generate services in the 'srv' folder

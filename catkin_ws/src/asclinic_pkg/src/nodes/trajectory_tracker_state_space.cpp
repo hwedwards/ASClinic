@@ -1,0 +1,146 @@
+#include <ros/ros.h>
+#include "asclinic_pkg/PoseCovar.h"
+#include "asclinic_pkg/LeftRightFloat32.h"
+#include <cmath>
+#include "std_msgs/String.h"
+// Constants
+const float POSITION_TOLERANCE = 0.1; // in meters
+const float ANGLE_TOLERANCE = 5.0;    // in degrees
+const float WHEEL_RADIUS = 0.072; // in meters
+const float WHEEL_BASE = 0.215/2; // in meters
+const float GEAR_RATIO = 70.0; // Gear ratio
+const int RADS_TO_RPM = 9.549; // conversion factor 
+const float K_angular = 60; // Proportional gain for angular velocity control
+const float Kd_angular = 25; // Derivative gain for angular velocity control
+float K_p[2][2] = {
+    {3.1623, 0},
+    {0, 3.1623}
+ };  // proportional integral gain matrix
+ float K_x[2][3] = {
+    {4.0404, 0, 0},
+    {0, 4.526, 6.908}
+ }; // state feedback gain matrix assume phi = 0 and v = 4.167 
+ros::Publisher velocity_reference_publisher;
+ros::Subscriber driving_state_subscriber;
+namespace DrivingState {
+    std::string current_state = "FORWARD"; // Default state
+}
+void drivingStateCallback(const std_msgs::String& msg) {
+    DrivingState::current_state = msg.data;
+}
+namespace RobotState {
+    float current_x = 0.0;
+    float current_y = 0.0;
+    float current_phi = 0.0;
+}
+namespace ReferenceTrajectory {
+    float target_x = 0.0;
+    float target_y = 0.0;
+    float target_phi = 0.0;
+    float target_v = 0.0; // Target linear velocity
+    float target_w = 0.0; // Target angular velocity
+}
+namespace Error {
+    float error_x = 0.0;
+    float error_y = 0.0;
+    float error_phi = 0.0; 
+    float integral_error_y = 0.0; // Integral of the lateral error
+    float integral_error_x = 0.0; // Integral of the longitudinal error
+    const float INTEGRAL_MAX = 100.0; // Maximum limit for integral term
+    const float INTEGRAL_MIN = -100.0; // Minimum limit for integral term
+}
+// Function to publish motor commands
+void publishMotorCommand(float left_speed, float right_speed) {
+    //Turn radians/s of the wheel into RPM of the motor shaft
+    left_speed = left_speed * GEAR_RATIO;
+    right_speed = right_speed * GEAR_RATIO;
+    // Convert to RPM
+    asclinic_pkg::LeftRightFloat32 motor_command;
+    motor_command.left = left_speed*RADS_TO_RPM;
+    motor_command.right = right_speed*RADS_TO_RPM;
+    ROS_INFO("Publishing motor command - Left: %f, Right: %f", motor_command.left, motor_command.right);
+    velocity_reference_publisher.publish(motor_command);
+}
+// Function to calculate wheel speeds from v and w and publish the command
+void calculateAndPublishWheelSpeeds(float v, float w) {
+    // Differential drive kinematics
+    float left_speed = (v - WHEEL_BASE*w) / WHEEL_RADIUS;
+    float right_speed = (v + WHEEL_BASE*w) / WHEEL_RADIUS;
+    publishMotorCommand(left_speed, right_speed);
+}
+// Callback for reference trajectory
+void referenceCallback(const asclinic_pkg::PoseCovar& msg) {
+    ReferenceTrajectory::target_x = msg.x/100.0f; // Convert to meters
+    ReferenceTrajectory::target_y = msg.y/100.0f;
+    ReferenceTrajectory::target_phi = msg.phi*M_PI/180.0f; // Convert to radians
+    // Note to self, good to get the reference v and w here. Will probably also need the respective gains. 
+}
+double signedAngleDiffDeg(double ref_deg, double meas_deg) {
+    double diff = ref_deg - meas_deg;
+    diff = std::fmod(diff + M_PI, 2.0 * M_PI);
+    if (diff < 0.0)
+        diff += 2.0 * M_PI;
+    return diff - M_PI;
+}
+double pureRotationController(){
+    float error_phi = signedAngleDiffDeg(ReferenceTrajectory::target_phi, RobotState::current_phi);
+    float dphi = (error_phi - Error::error_phi) / 0.1;
+    Error::error_phi = error_phi;
+    return (error_phi * K_angular + Kd_angular * dphi);
+}
+// LQR-based line following controller
+void lineFollowingControllerLQR(float *v, float *w) {
+    float del_v = 0.0f;
+    float del_w = 0.0f;
+    float v_int = 0.0f;
+    float w_int = 0.0f;
+
+    // Full-state feedback control 
+    del_v = K_x[0][0] * Error::error_x + K_x[0][1] * Error::error_y + K_x[0][2] * Error::error_phi;
+    del_w = K_x[1][0] * Error::error_x + K_x[1][1] * Error::error_y + K_x[1][2] * Error::error_phi;
+    // Augmented integrator component
+    v_int = K_p[0][0] * Error::integral_error_x + K_p[0][1] * Error::integral_error_y;
+    w_int = K_p[1][0] * Error::integral_error_x + K_p[1][1] * Error::integral_error_y;
+    *v = ReferenceTrajectory::target_v + del_v + v_int;
+    *w = ReferenceTrajectory::target_w + del_w + w_int;
+}
+// Callback to update the robot's current state
+void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
+    RobotState::current_x = msg.x/100.0f; // Convert to meters
+    RobotState::current_y = msg.y/100.0f;
+    RobotState::current_phi = msg.phi *M_PI/180.0f; // Convert to radians
+
+    Error::error_x = ReferenceTrajectory::target_x - RobotState::current_x;
+    Error::error_y = ReferenceTrajectory::target_y - RobotState::current_y;
+    Error::error_phi = signedAngleDiffDeg(ReferenceTrajectory::target_phi, RobotState::current_phi);
+    Error::integral_error_x += Error::error_x * 0.1; // Integral term for longitudinal error
+    Error::integral_error_y += Error::error_y * 0.1; // Integral term for lateral error
+    // Clamp integral error to prevent windup   
+    if (Error::integral_error_x > Error::INTEGRAL_MAX) {
+        Error::integral_error_x = Error::INTEGRAL_MAX;
+    } else if (Error::integral_error_x < Error::INTEGRAL_MIN) {
+        Error::integral_error_x = Error::INTEGRAL_MIN;
+    }
+    if (Error::integral_error_y > Error::INTEGRAL_MAX) {
+        Error::integral_error_y = Error::INTEGRAL_MAX;
+    } else if (Error::integral_error_y < Error::INTEGRAL_MIN) {
+        Error::integral_error_y = Error::INTEGRAL_MIN;
+    }
+    
+    // Calculate the desired linear and angular velocities
+    float v; 
+    float w; 
+    lineFollowingControllerLQR(&v, &w);
+    // Convert to wheel speeds
+    calculateAndPublishWheelSpeeds(v, w);
+}
+int main(int argc, char** argv) {
+    ros::init(argc, argv, "trajectory_tracker_state_space");
+    ros::NodeHandle nh;
+    velocity_reference_publisher = nh.advertise<asclinic_pkg::LeftRightFloat32>("/set_reference", 10);
+    ros::Subscriber reference_subscriber = nh.subscribe("/reference_trajectory", 10, referenceCallback);
+    ros::Subscriber state_subscriber = nh.subscribe("/pose_estimate_fused", 10, stateUpdateCallback);
+    driving_state_subscriber = nh.subscribe("/driving_state", 10, drivingStateCallback);
+    ros::spin();
+    return 0;
+}

@@ -1,25 +1,21 @@
 // Copyright (C) 2021, The University of Melbourne, Department of Electrical and Electronic Engineering (EEE)
 //
 // This file is part of ASClinic-System.
-//    
+//
 // See the root of the repository for license details.
 //
 // ----------------------------------------------------------------------------
-//     _    ____   ____ _ _       _          ____            _                 
-//    / \  / ___| / ___| (_)____ (_) ___    / ___| _   _ ___| |_ ___ ________  
+//     _    ____   ____ _ _       _          ____            _
+//    / \  / ___| / ___| (_)____ (_) ___    / ___| _   _ ___| |_ ___ ________
 //   / _ \ \___ \| |   | | |  _ \| |/ __|___\___ \| | | / __| __/ _ \  _   _ \ 
 //  / ___ \ ___) | |___| | | | | | | (_|_____|__) | |_| \__ \ ||  __/ | | | | |
 // /_/   \_\____/ \____|_|_|_| |_|_|\___|   |____/ \__, |___/\__\___|_| |_| |_|
-//                                                 |___/                       
+//                                                 |___/
 //
 // DESCRIPTION:
 // Node for I2C bus with only a servo driver device connect
 //
 // ----------------------------------------------------------------------------
-
-
-
-
 
 #include "ros/ros.h"
 #include <ros/package.h>
@@ -36,14 +32,10 @@
 #include "asclinic_pkg/ServoPulseWidth.h"
 
 // Include the asclinic constants
-//#include "nodes/constant.h"
+// #include "nodes/constant.h"
 
 // Namespacing the package
-//using namespace asclinic_pkg;
-
-
-
-
+// using namespace asclinic_pkg;
 
 // MEMBER VARIABLES THAT ARE PARAMETERS FOR THIS NODE:
 // > For the verbosity level of displaying info
@@ -58,20 +50,14 @@ float m_pwm_frequency_in_hz = 50.0;
 uint16_t m_min_pulse_width_in_us = 500;
 uint16_t m_max_pulse_width_in_us = 2500;
 
-
-
 // ALL OTHER MEMBER VARIABLES FOR THIS NODE:
 // > For the I2C driver
-const char * m_i2c_device_name = "/dev/i2c-8";
-I2C_Driver m_i2c_driver (m_i2c_device_name);
+const char *m_i2c_device_name = "/dev/i2c-8";
+I2C_Driver m_i2c_driver(m_i2c_device_name);
 
 // > For the PCA9685 PWM Servo Driver driver
 const uint8_t m_pca9685_address = 0x42;
-PCA9685 m_pca9685_servo_driver (&m_i2c_driver, m_pca9685_address);
-
-
-
-
+PCA9685 m_pca9685_servo_driver(&m_i2c_driver, m_pca9685_address);
 
 // Respond to subscriber receiving a message
 // > To test this out without creating an additional
@@ -85,7 +71,7 @@ PCA9685 m_pca9685_servo_driver (&m_i2c_driver, m_pca9685_address);
 //      where "<namespace>/set_servo_pulse_width" is the full
 //      name identified in step 1.
 //
-void servoSubscriberCallback(const asclinic_pkg::ServoPulseWidth& msg)
+void servoSubscriberCallback(const asclinic_pkg::ServoPulseWidth &msg)
 {
 	// Extract the channel and pulse width from the message
 	uint8_t channel = msg.channel;
@@ -93,7 +79,7 @@ void servoSubscriberCallback(const asclinic_pkg::ServoPulseWidth& msg)
 
 	// Display the values from the message received
 	if (m_servo_driver_verbosity >= 2)
-		ROS_INFO_STREAM("[I2C FOR SERVOS] Message received for servo with channel = " << static_cast<int>(channel) << ", and pulse width [us] = " << static_cast<int>(pulse_width_in_us) );
+		ROS_INFO_STREAM("[I2C FOR SERVOS] Message received for servo with channel = " << static_cast<int>(channel) << ", and pulse width [us] = " << static_cast<int>(pulse_width_in_us));
 
 	// Limit the pulse width to be either:
 	// > zero, or
@@ -111,12 +97,10 @@ void servoSubscriberCallback(const asclinic_pkg::ServoPulseWidth& msg)
 
 	// Display if an error occurred
 	if (!result)
-		ROS_WARN_STREAM("[I2C FOR SERVOS] FAILED to set pulse width for servo at channel " << static_cast<int>(channel) );
+		ROS_WARN_STREAM("[I2C FOR SERVOS] FAILED to set pulse width for servo at channel " << static_cast<int>(channel));
 }
 
-
-
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
 	// Initialise the node
 	ros::init(argc, argv, "i2c_for_servos");
@@ -131,19 +115,23 @@ int main(int argc, char* argv[])
 
 	// Get the parameter values:
 	// > For the verbosity
-	if ( !nodeHandle.getParam("servo_driver_verbosity", m_servo_driver_verbosity) ) {
+	if (!nodeHandle.getParam("servo_driver_verbosity", m_servo_driver_verbosity))
+	{
 		ROS_WARN("[I2C FOR SERVOS] FAILED to get \"servo_driver_verbosity\" parameter. Using default value instead.");
 	}
 	// > For the current limit parameter:
-	if ( !nodeHandle.getParam("servo_driver_pwm_frequency_in_hertz", m_pwm_frequency_in_hz) ) {
+	if (!nodeHandle.getParam("servo_driver_pwm_frequency_in_hertz", m_pwm_frequency_in_hz))
+	{
 		ROS_WARN("[I2C FOR SERVOS] FAILED to get \"pwm_frequency_in_hertz\" parameter. Using default value instead.");
 	}
 	// > For the min pulse width parameter:
 	int temp_min_pulse_width;
-	if ( !nodeHandle.getParam("servo_driver_min_pulse_width_in_microseconds", temp_min_pulse_width) ) {
+	if (!nodeHandle.getParam("servo_driver_min_pulse_width_in_microseconds", temp_min_pulse_width))
+	{
 		ROS_WARN("[I2C FOR SERVOS] FAILED to get \"min_pulse_width_in_microseconds\" parameter. Using default value instead.");
 	}
-	else {
+	else
+	{
 		if (0 <= temp_min_pulse_width && temp_min_pulse_width <= 65535)
 			m_min_pulse_width_in_us = static_cast<uint16_t>(temp_min_pulse_width);
 		else
@@ -151,10 +139,12 @@ int main(int argc, char* argv[])
 	}
 	// > For the max pulse width parameter:
 	int temp_max_pulse_width;
-	if ( !nodeHandle.getParam("servo_driver_max_pulse_width_in_microseconds", temp_max_pulse_width) ) {
+	if (!nodeHandle.getParam("servo_driver_max_pulse_width_in_microseconds", temp_max_pulse_width))
+	{
 		ROS_WARN("[I2C FOR SERVOS] FAILED to get \"max_pulse_width_in_microseconds\" parameter. Using default value instead.");
 	}
-	else {
+	else
+	{
 		if (0 <= temp_max_pulse_width && temp_max_pulse_width <= 65535)
 			m_max_pulse_width_in_us = static_cast<uint16_t>(temp_max_pulse_width);
 		else
@@ -177,18 +167,15 @@ int main(int argc, char* argv[])
 	// Display the status
 	if (!open_success)
 		ROS_WARN_STREAM("[I2C FOR SERVOS] FAILED to open I2C device named " << m_i2c_driver.get_device_name());
-	else {
+	else
+	{
 		if (m_servo_driver_verbosity >= 1)
 			ROS_INFO_STREAM("[I2C FOR SERVOS] Successfully opened named " << m_i2c_driver.get_device_name() << ", with file descriptor = " << m_i2c_driver.get_file_descriptor());
 	}
 
-
-
 	// NOTE:
 	// > The servo driver is already instantiated as
 	//   member variables of this node.
-
-
 
 	// SET THE CONFIGURATION OF THE SERVO DRIVER
 
@@ -206,12 +193,12 @@ int main(int argc, char* argv[])
 
 		// Display if an error occurred
 		if (!result_servo_init)
-			ROS_WARN_STREAM("[I2C FOR SERVOS] FAILED - while initialising servo driver with I2C address " << static_cast<int>(m_pca9685_servo_driver.get_i2c_address()) );
+			ROS_WARN_STREAM("[I2C FOR SERVOS] FAILED - while initialising servo driver with I2C address " << static_cast<int>(m_pca9685_servo_driver.get_i2c_address()));
 	}
 	else
 	{
 		// Display that the device is not connected
-		ROS_WARN_STREAM("[I2C FOR SERVOS] FAILED - Servo driver device NOT detected at I2C address " << static_cast<int>(m_pca9685_servo_driver.get_i2c_address()) );
+		ROS_WARN_STREAM("[I2C FOR SERVOS] FAILED - Servo driver device NOT detected at I2C address " << static_cast<int>(m_pca9685_servo_driver.get_i2c_address()));
 	}
 
 	if (m_servo_driver_verbosity >= 1)
@@ -222,7 +209,7 @@ int main(int argc, char* argv[])
 
 	// Close the I2C device
 	bool close_success = m_i2c_driver.close_i2c_device();
-	
+
 	// Display the status
 	if (!close_success)
 	{
