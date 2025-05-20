@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "/home/asc/ASClinic/catkin_ws/src/asclinic_pkg"
+    "cmake.sourceDirectory": "/home/asc/ASClinic/catkin_ws/src/asclinic_pkg",
+    "ros.distro": "noetic"
 }

@@ -26,3 +26,4 @@ catkin_ws/src/rplidar_ros/
 
 # Ignore swp files
 *.swp
+.vscode/settings.json
