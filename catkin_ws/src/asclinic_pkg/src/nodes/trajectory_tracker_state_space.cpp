@@ -76,10 +76,6 @@ void referenceCallback(const asclinic_pkg::referenceVelocityPose& msg) {
     ReferenceTrajectory::target_phi = msg.phi*M_PI/180.0f; // Convert to radians not sure what this is in
     ReferenceTrajectory::target_v = msg.v/1000.0f; // Convert mm/s to m/s
     ReferenceTrajectory::target_w = msg.w; // Already in rad/s not sure about this either
-    ROS_INFO("Reference trajectory - x: %f, y: %f, phi: %f, v: %f, w: %f", 
-             ReferenceTrajectory::target_x, ReferenceTrajectory::target_y, 
-             ReferenceTrajectory::target_phi, ReferenceTrajectory::target_v, 
-             ReferenceTrajectory::target_w);
 }
 double signedAngleDiffDeg(double ref_deg, double meas_deg) {
     double diff = ref_deg - meas_deg;
@@ -109,15 +105,22 @@ void lineFollowingControllerLQR(float *v, float *w) {
     w_int = K_p[1][0] * Error::integral_error_x + K_p[1][1] * Error::integral_error_y;
     *v = ReferenceTrajectory::target_v + del_v + v_int;
     *w = ReferenceTrajectory::target_w + del_w + w_int;
-    ROS_INFO("v: %f, w: %f", *v, *w);
+    ROS_INFO("[%.3f] v: %f, w: %f", ros::Time::now().toSec(), *v, *w);
 }
 // Callback to update the robot's current state
 void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
     RobotState::current_x = msg.x/1000.0f; // Convert to meters from mm
     RobotState::current_y = msg.y/1000.0f;
     RobotState::current_phi = msg.phi *M_PI/180.0f; // Convert to radians
-    ROS_INFO("Robot state - x: %f, y: %f, phi: %f", 
+    // Log control system information. 
+    ROS_INFO("[%.3f] Robot state - x: %f, y: %f, phi: %f", 
+             ros::Time::now().toSec(),
              RobotState::current_x, RobotState::current_y, RobotState::current_phi);
+    ROS_INFO("[%.3f] Reference trajectory - x: %f, y: %f, phi: %f, v: %f, w: %f", 
+             ros::Time::now().toSec(),
+             ReferenceTrajectory::target_x, ReferenceTrajectory::target_y, 
+             ReferenceTrajectory::target_phi, ReferenceTrajectory::target_v, 
+             ReferenceTrajectory::target_w);
     Error::error_x = ReferenceTrajectory::target_x - RobotState::current_x;
     Error::error_y = ReferenceTrajectory::target_y - RobotState::current_y;
     Error::error_phi = signedAngleDiffDeg(ReferenceTrajectory::target_phi, RobotState::current_phi);
