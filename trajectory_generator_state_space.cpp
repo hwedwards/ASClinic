@@ -1,42 +1,38 @@
 #include <ros/ros.h>
-#include "asclinic_pkg/referenceVelocityPose.h"
-#include "std_msgs/String.h"
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <cmath>
+#include "your_package/PositionCommand.h" // Adjust the include according to your package
 
-// Variables
-ros::Publisher motor_reference_position;
+// Function to evaluate cubic polynomial
+double evalCubic(const std::vector<double>& coeff, double t) {
+    return coeff[0] + coeff[1]*t + coeff[2]*t*t + coeff[3]*t*t*t;
+}
+
+// Function to evaluate derivative of cubic polynomial
+double evalCubicDot(const std::vector<double>& coeff, double t) {
+    return coeff[1] + 2*coeff[2]*t + 3*coeff[3]*t*t;
+}
+
+ros::Publisher position_pub;
 ros::Time start_time;
 
-// Helper function to publish position and velocity commands
-void publishPositionCommand(float x, float y, float phi, float v, float w) {
-    asclinic_pkg::referenceVelocityPose position_command;
-    position_command.x = x;
-    position_command.y = y;
-    position_command.phi = phi;
-    position_command.v = v;
-    position_command.w = w;
-    motor_reference_position.publish(position_command);
-}
-
-// Helper function to evaluate cubic polynomial and its derivative
-double evalCubic(const std::vector<double>& coeffs, double t) {
-    return coeffs[0] + coeffs[1]*t + coeffs[2]*t*t + coeffs[3]*t*t*t;
-}
-double evalCubicDot(const std::vector<double>& coeffs, double t) {
-    return coeffs[1] + 2*coeffs[2]*t + 3*coeffs[3]*t*t;
+void publishPositionCommand(double x, double y, double phi, double v, double w) {
+    your_package::PositionCommand cmd;
+    cmd.x = x;
+    cmd.y = y;
+    cmd.phi = phi;
+    cmd.v = v;
+    cmd.w = w;
+    position_pub.publish(cmd);
 }
 
 int main(int argc, char** argv) {
-    ros::init(argc, argv, "trajectory_generator_state_space");
+    ros::init(argc, argv, "trajectory_follower");
     ros::NodeHandle nh;
 
-    motor_reference_position = nh.advertise<asclinic_pkg::referenceVelocityPose>("/reference_trajectory", 10);
-
-    // Pause for 3 seconds at the start
-    ros::Duration(3.0).sleep();
-    ros::Rate loop_rate(10); // 10 Hz
+    position_pub = nh.advertise<your_package::PositionCommand>("position_command", 10);
 
     // Read coefficients from CSV
     std::vector<double> coeffx(4, 0.0), coeffy(4, 0.0);
@@ -70,6 +66,7 @@ int main(int argc, char** argv) {
     bool sent_final = false;
     double last_x = 0.0, last_y = 0.0, last_phi = 0.0;
     static double last_phi_sent = 0.0;
+    ros::Rate loop_rate(10);
     while (ros::ok()) {
         ros::Time now = ros::Time::now();
         double t = (now - start_time).toSec();
@@ -99,5 +96,6 @@ int main(int argc, char** argv) {
         ros::spinOnce();
         loop_rate.sleep();
     }
+
     return 0;
 }
