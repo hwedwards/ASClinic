@@ -63,10 +63,10 @@ def get_traj(coords, vels, tf):
 
 def main():
     # Example usage for a linear trajectory in mm and seconds
-
-    coords = [0, 0, 3000, 0]  # mm
+    # I have found from testing that an operating speed of 0.3 m/s is pretty good. 
+    coords = [0, 0, 9000, 0]  # mm
     vels = [0, 0, 0, 0]       # mm/s
-    tf = 10                    # seconds
+    tf = 30                    # seconds
     coeffx, coeffy = get_traj(coords, vels, tf)
     t_var = np.linspace(0, tf, 1000)
     x_traj = coeffx[0] + coeffx[1]*t_var + coeffx[2]*t_var**2 + coeffx[3]*t_var**3
