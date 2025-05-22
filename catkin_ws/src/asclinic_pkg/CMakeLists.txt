@@ -8,16 +8,12 @@ project(asclinic_pkg)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  message_generation
   roscpp
-  rospy
   std_msgs
-  geometry_msgs
-  sensor_msgs
-  cv_bridge
-  genmsg
-  roslib
+  message_generation
 )
+
+find_package(geometry_msgs REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -71,6 +67,8 @@ add_message_files(
   PoseCovar.msg
   Covar.msg
   PlantDetection.msg
+  PoseVelCovar.msg
+  referenceVelocityPose.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -136,14 +134,7 @@ generate_messages(
 # )
 
 catkin_package(
-  CATKIN_DEPENDS
-  roscpp
-  rospy
-  std_msgs
-  geometry_msgs
-  sensor_msgs
-  cv_bridge
-  roslib
+  CATKIN_DEPENDS message_runtime std_msgs
 )
 
 ###########

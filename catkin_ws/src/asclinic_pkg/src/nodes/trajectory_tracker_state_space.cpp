@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include "asclinic_pkg/PoseCovar.h"
 #include "asclinic_pkg/LeftRightFloat32.h"
+#include "asclinic_pkg/referenceVelocityPose.h"
 #include <cmath>
 #include "std_msgs/String.h"
 // Constants
@@ -69,11 +70,12 @@ void calculateAndPublishWheelSpeeds(float v, float w) {
     publishMotorCommand(left_speed, right_speed);
 }
 // Callback for reference trajectory
-void referenceCallback(const asclinic_pkg::PoseCovar& msg) {
+void referenceCallback(const asclinic_pkg::referenceVelocityPose& msg) {
     ReferenceTrajectory::target_x = msg.x/100.0f; // Convert to meters
     ReferenceTrajectory::target_y = msg.y/100.0f;
     ReferenceTrajectory::target_phi = msg.phi*M_PI/180.0f; // Convert to radians
-    // Note to self, good to get the reference v and w here. Will probably also need the respective gains. 
+    ReferenceTrajectory::target_v = msg.v/100.0f; // Convert mm/s to m/s
+    ReferenceTrajectory::target_w = msg.w; // Already in rad/s
 }
 double signedAngleDiffDeg(double ref_deg, double meas_deg) {
     double diff = ref_deg - meas_deg;
