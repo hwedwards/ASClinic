@@ -10,6 +10,7 @@ import os
 from datetime import datetime
 import glob
 import threading
+from std_msgs.msg import Bool
 
 plant_id = 0
 bridge = CvBridge()
@@ -18,7 +19,7 @@ save_dir_base = "/home/asc/saved_camera_images/saved_plant_images"
 
 BLURRINESS_THRESHOLD = 20  # Ignore frames with Laplacian variance below this threshold
 CONFIDENCE_THRESHOLD = 0.5  # Discard detections with confidence below this threshold
-AREA_THRESHOLD = 5000  # Minimum area for a valid detection
+AREA_THRESHOLD = 0  # Minimum area for a valid detection
 LAPLACIAN_WEIGHT = 10  # Weight for combining area and sharpness in best frame selection
 
 
@@ -32,6 +33,7 @@ class PlantCollector:
         self.characteristics = []  # to accumulate detection summaries across angles
         self.collecting = False
         self.collected = 0
+        self.done_pub = rospy.Publisher("/asc/plant_done", Bool, queue_size=1)
 
     def reset(self):
         with self.lock:
@@ -106,12 +108,14 @@ class PlantCollector:
             with open(csv_path, "a") as f:
                 plant_types_str = ";".join(sorted(plant_types)) if plant_types else "Unknown"
                 f.write(f"{plant_types_str},{bug_present},{flower_present},{avg_confidence:.2f}\n")
+            self.done_pub.publish(Bool(data=True))
 
 plant_collector = PlantCollector()
 
 def at_plant_callback(msg):
     global plant_id
     rospy.loginfo(f"[YOLO Stream] Received /asc/at_plant message for plant_id {plant_id}")
+    plant_collector.done_pub.publish(Bool(data=False))
     plant_collector.current_plant_id = plant_id
     plant_collector.reset()
     plant_collector.collecting = True
