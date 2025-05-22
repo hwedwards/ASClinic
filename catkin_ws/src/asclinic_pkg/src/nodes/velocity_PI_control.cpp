@@ -2,7 +2,7 @@
 #include "asclinic_pkg/LeftRightFloat32.h"
 #include "asclinic_pkg/LeftRightInt32.h"
 
-// to run this node, rostopic pub --once /set_reference asclinic_pkg/LeftRightFloat32 "{left: 2000.0, right: 2000.0}"
+// to run this node, rostopic pub --once /set_wheel_velocity_reference asclinic_pkg/LeftRightFloat32 "{left: 2000.0, right: 2000.0}"
 namespace ControllerParameters
 {
     // Controller parameters
@@ -113,7 +113,7 @@ int main(int argc, char** argv)
 
     // Initialize the subscribers
     ros::Subscriber encoder_subscriber = nh.subscribe("/asc/encoder_counts", 10, encoderCountsCallback);
-    ros::Subscriber reference_subscriber = nh.subscribe("set_reference", 10, referenceCallback);
+    ros::Subscriber reference_subscriber = nh.subscribe("set_wheel_velocity_reference", 10, referenceCallback);
     // Initialize the subscriber for current motor duty cycle
     // Callback function for current motor duty cycle
 

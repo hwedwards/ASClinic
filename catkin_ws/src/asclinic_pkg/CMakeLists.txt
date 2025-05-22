@@ -8,16 +8,13 @@ project(asclinic_pkg)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  message_generation
   roscpp
-  rospy
   std_msgs
-  geometry_msgs
+  message_generation
   sensor_msgs
-  cv_bridge
-  genmsg
-  roslib
 )
+
+find_package(geometry_msgs REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -70,6 +67,9 @@ add_message_files(
   PoseSeqs.msg
   PoseCovar.msg
   Covar.msg
+  PlantDetection.msg
+  PoseVelCovar.msg
+  referenceVelocityPose.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -135,14 +135,7 @@ generate_messages(
 # )
 
 catkin_package(
-  CATKIN_DEPENDS
-  roscpp
-  rospy
-  std_msgs
-  geometry_msgs
-  sensor_msgs
-  cv_bridge
-  roslib
+  CATKIN_DEPENDS message_runtime std_msgs sensor_msgs
 )
 
 ###########
@@ -203,15 +196,12 @@ add_executable(web_interface_connector               src/nodes/web_interface_con
 add_executable(control_policy_skeleton               src/nodes/control_policy_skeleton.cpp)
 add_executable(motor_publisher                      src/drivers/scripts/motor_publisher.cpp)
 add_executable(take_photo                           src/drivers/scripts/take_photo.cpp)
-
-
 add_executable(fun_publisher src/nodes/fun_publisher.cpp)
 add_executable(odometer src/nodes/odometer.cpp)
 add_executable(odomdelta src/nodes/odomdelta.cpp)
 add_executable(odomtester src/nodes/odomtester.cpp)
 add_executable(rotatetester src/nodes/rotatetester.cpp)
 add_executable(rotatetesterdelta src/nodes/rotatetesterdelta.cpp)
-
 # Add the new controller_node executable
 add_executable(controller_node src/nodes/controller_node.cpp)
 
@@ -228,11 +218,19 @@ add_executable(trajectory_generator src/nodes/trajectory_generator.cpp)
 add_dependencies(trajectory_generator asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 target_link_libraries(trajectory_generator ${catkin_LIBRARIES})
 
-# Add the new trajectory_generator node
+# Add the new obstacledetect node
 add_executable(obstacledetect src/nodes/obstacledetect.cpp)
 add_dependencies(obstacledetect asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 target_link_libraries(obstacledetect ${catkin_LIBRARIES})
 
+# Add the new trajectory_generator_state_space node
+add_executable(trajectory_generator_state_space src/nodes/trajectory_generator_state_space.cpp)
+add_dependencies(trajectory_generator_state_space asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+target_link_libraries(trajectory_generator_state_space ${catkin_LIBRARIES})
+# Add the new trajectory_tracker_state_space node
+add_executable(trajectory_tracker_state_space src/nodes/trajectory_tracker_state_space.cpp)
+add_dependencies(trajectory_tracker_state_space asclinic_pkg_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
+target_link_libraries(trajectory_tracker_state_space ${catkin_LIBRARIES})
 ## Rename C++ executable with##out prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use

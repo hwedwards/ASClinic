@@ -1,0 +1,442 @@
+[0m[ INFO] [1747889702.449939208]: Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1747889702.454325029]: v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1747889702.549159172]: Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1747889702.549246147]: v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1747889702.649801547]: Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1747889702.650001991]: v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1747889702.749295906]: Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1747889702.749383841]: v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1747889702.849096790]: Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1747889702.849214868]: v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1747889702.949213188]: Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1747889702.949298595]: v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1747889703.049369652]: Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1747889703.049493203]: v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1747889703.149441481]: Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1747889703.149553768]: v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1747889703.182767409]: Reference trajectory - x: 0.000000, y: 0.000000, phi: 0.000000, v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1747889703.249204707]: Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1747889703.249333569]: v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1747889703.283176864]: Reference trajectory - x: 0.003486, y: 0.000000, phi: 0.000000, v: 0.069909, w: 0.000000[0m
+[0m[ INFO] [1747889703.350931039]: Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1747889703.351020541]: v: 0.085096, w: 0.000000[0m
+[0m[ INFO] [1747889703.381822379]: Reference trajectory - x: 0.013882, y: 0.000000, phi: 0.000000, v: 0.137598, w: 0.000000[0m
+[0m[ INFO] [1747889703.449336013]: Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1747889703.449424203]: v: 0.199180, w: 0.000000[0m
+[0m[ INFO] [1747889703.481704355]: Reference trajectory - x: 0.030897, y: 0.000000, phi: 0.000000, v: 0.202394, w: 0.000000[0m
+[0m[ INFO] [1747889703.557112653]: Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1747889703.557648229]: v: 0.342495, w: 0.000000[0m
+[0m[ INFO] [1747889703.583619676]: Reference trajectory - x: 0.054278, y: 0.000000, phi: 0.000000, v: 0.264390, w: 0.000000[0m
+[0m[ INFO] [1747889703.649301369]: Robot state - x: 0.000394, y: -0.000000, phi: -0.000096[0m
+[0m[ INFO] [1747889703.649441399]: v: 0.514409, w: 0.000660[0m
+[0m[ INFO] [1747889703.681743822]: Reference trajectory - x: 0.083676, y: 0.000000, phi: 0.000000, v: 0.323424, w: 0.000000[0m
+[0m[ INFO] [1747889703.754983481]: Robot state - x: 0.001575, y: -0.000000, phi: -0.000382[0m
+[0m[ INFO] [1747889703.755091159]: v: 0.713414, w: 0.002641[0m
+[0m[ INFO] [1747889703.783814469]: Reference trajectory - x: 0.118873, y: 0.000000, phi: 0.000000, v: 0.379643, w: 0.000000[0m
+[0m[ INFO] [1747889703.853161995]: Robot state - x: 0.006682, y: 0.000006, phi: 0.002038[0m
+[0m[ INFO] [1747889703.853651491]: v: 0.926687, w: -0.014104[0m
+[0m[ INFO] [1747889703.884513936]: Reference trajectory - x: 0.159586, y: 0.000000, phi: 0.000000, v: 0.433021, w: 0.000000[0m
+[0m[ INFO] [1747889703.952591113]: Robot state - x: 0.015927, y: 0.000000, phi: 0.001624[0m
+[0m[ INFO] [1747889703.952737287]: v: 1.152632, w: -0.011220[0m
+[0m[ INFO] [1747889703.984925728]: Reference trajectory - x: 0.205389, y: 0.000000, phi: 0.000000, v: 0.483400, w: 0.000000[0m
+[0m[ INFO] [1747889704.053110298]: Robot state - x: 0.029099, y: 0.000042, phi: 0.003917[0m
+[0m[ INFO] [1747889704.053248792]: v: 1.390604, w: -0.027261[0m
+[0m[ INFO] [1747889704.082955384]: Reference trajectory - x: 0.256150, y: 0.000000, phi: 0.000000, v: 0.530962, w: 0.000000[0m
+[0m[ INFO] [1747889704.153311219]: Robot state - x: 0.045814, y: 0.000081, phi: 0.005349[0m
+[0m[ INFO] [1747889704.153662349]: v: 1.642239, w: -0.037362[0m
+[0m[ INFO] [1747889704.181817861]: Reference trajectory - x: 0.311428, y: 0.000000, phi: 0.000000, v: 0.575571, w: 0.000000[0m
+[0m[ INFO] [1747889704.249963265]: Robot state - x: 0.066667, y: 0.000148, phi: 0.003948[0m
+[0m[ INFO] [1747889704.250061055]: v: 1.903339, w: -0.028034[0m
+[0m[ INFO] [1747889704.281743297]: Reference trajectory - x: 0.371085, y: 0.000000, phi: 0.000000, v: 0.617350, w: 0.000000[0m
+[0m[ INFO] [1747889704.349296967]: Robot state - x: 0.091063, y: 0.000251, phi: 0.001688[0m
+[0m[ INFO] [1747889704.349390309]: v: 2.176138, w: -0.012962[0m
+[0m[ INFO] [1747889704.381768285]: Reference trajectory - x: 0.434780, y: 0.000000, phi: 0.000000, v: 0.656255, w: 0.000000[0m
+[0m[ INFO] [1747889704.449118213]: Robot state - x: 0.119193, y: 0.000343, phi: 0.000350[0m
+[0m[ INFO] [1747889704.449240835]: v: 2.458539, w: -0.004249[0m
+[0m[ INFO] [1747889704.481908950]: Reference trajectory - x: 0.502242, y: 0.000000, phi: 0.000000, v: 0.692290, w: 0.000000[0m
+[0m[ INFO] [1747889704.550190512]: Robot state - x: 0.151260, y: 0.000361, phi: -0.001942[0m
+[0m[ INFO] [1747889704.550329902]: v: 2.748575, w: 0.011396[0m
+[0m[ INFO] [1747889704.581711797]: Reference trajectory - x: 0.573141, y: 0.000000, phi: 0.000000, v: 0.725434, w: 0.000000[0m
+[0m[ INFO] [1747889704.651944242]: Robot state - x: 0.186870, y: 0.000317, phi: -0.005095[0m
+[0m[ INFO] [1747889704.652062832]: v: 3.046449, w: 0.033270[0m
+[0m[ INFO] [1747889704.682380167]: Reference trajectory - x: 0.647244, y: 0.000000, phi: 0.000000, v: 0.755712, w: 0.000000[0m
+[0m[ INFO] [1747889704.753290617]: Robot state - x: 0.226214, y: 0.000197, phi: -0.007324[0m
+[0m[ INFO] [1747889704.753417143]: v: 3.350309, w: 0.049150[0m
+[0m[ INFO] [1747889704.782378114]: Reference trajectory - x: 0.724187, y: 0.000000, phi: 0.000000, v: 0.783094, w: 0.000000[0m
+[0m[ INFO] [1747889704.864395885]: Robot state - x: 0.269696, y: -0.000135, phi: -0.012387[0m
+[0m[ INFO] [1747889704.864491468]: v: 3.656615, w: 0.085668[0m
+[0m[ INFO] [1747889704.881930309]: Reference trajectory - x: 0.803751, y: 0.000000, phi: 0.000000, v: 0.807604, w: 0.000000[0m
+[0m[ INFO] [1747889704.949430923]: Robot state - x: 0.316710, y: -0.000532, phi: -0.014647[0m
+[0m[ INFO] [1747889704.949534217]: v: 3.966656, w: 0.103252[0m
+[0m[ INFO] [1747889704.983410858]: Reference trajectory - x: 0.885676, y: 0.000000, phi: 0.000000, v: 0.829248, w: 0.000000[0m
+[0m[ INFO] [1747889705.059315604]: Robot state - x: 0.367071, y: -0.001280, phi: -0.019551[0m
+[0m[ INFO] [1747889705.059581264]: v: 4.279831, w: 0.140914[0m
+[0m[ INFO] [1747889705.082057311]: Reference trajectory - x: 0.969665, y: 0.000000, phi: 0.000000, v: 0.848017, w: 0.000000[0m
+[0m[ INFO] [1747889705.149941187]: Robot state - x: 0.421558, y: -0.002189, phi: -0.023627[0m
+[0m[ INFO] [1747889705.150068289]: v: 4.591127, w: 0.173877[0m
+[0m[ INFO] [1747889705.183089808]: Reference trajectory - x: 1.055150, y: 0.000000, phi: 0.000000, v: 0.863858, w: 0.000000[0m
+[0m[ INFO] [1747889705.270111573]: Robot state - x: 0.479582, y: -0.003467, phi: -0.028563[0m
+[0m[ INFO] [1747889705.270207091]: v: 4.899935, w: 0.214852[0m
+[0m[ INFO] [1747889705.282177376]: Reference trajectory - x: 1.142248, y: 0.000000, phi: 0.000000, v: 0.876852, w: 0.000000[0m
+[0m[ INFO] [1747889705.350086787]: Robot state - x: 0.541141, y: -0.005100, phi: -0.034358[0m
+[0m[ INFO] [1747889705.350280416]: v: 5.206202, w: 0.263890[0m
+[0m[ INFO] [1747889705.382002788]: Reference trajectory - x: 1.230388, y: 0.000000, phi: 0.000000, v: 0.886951, w: 0.000000[0m
+[0m[ INFO] [1747889705.453130359]: Robot state - x: 0.601124, y: -0.007086, phi: -0.043433[0m
+[0m[ INFO] [1747889705.453252021]: v: 5.529059, w: 0.337811[0m
+[0m[ INFO] [1747889705.481700394]: Reference trajectory - x: 1.319460, y: 0.000000, phi: 0.000000, v: 0.894180, w: 0.000000[0m
+[0m[ INFO] [1747889705.549388688]: Robot state - x: 0.670328, y: -0.009667, phi: -0.049260[0m
+[0m[ INFO] [1747889705.549476111]: v: 5.821839, w: 0.392801[0m
+[0m[ INFO] [1747889705.581988199]: Reference trajectory - x: 1.409133, y: 0.000000, phi: 0.000000, v: 0.898531, w: 0.000000[0m
+[0m[ INFO] [1747889705.661209408]: Robot state - x: 0.742844, y: -0.012993, phi: -0.054068[0m
+[0m[ INFO] [1747889705.661334366]: v: 6.106211, w: 0.445179[0m
+[0m[ INFO] [1747889705.681944649]: Reference trajectory - x: 1.499096, y: 0.000000, phi: 0.000000, v: 0.900000, w: 0.000000[0m
+[0m[ INFO] [1747889705.749733390]: Robot state - x: 0.819272, y: -0.017122, phi: -0.063493[0m
+[0m[ INFO] [1747889705.749911243]: v: 6.377347, w: 0.534392[0m
+[0m[ INFO] [1747889705.781830444]: Reference trajectory - x: 1.589056, y: 0.000000, phi: 0.000000, v: 0.898589, w: 0.000000[0m
+[0m[ INFO] [1747889705.856688615]: Robot state - x: 0.899409, y: -0.021801, phi: -0.071995[0m
+[0m[ INFO] [1747889705.856796229]: v: 6.633711, w: 0.621193[0m
+[0m[ INFO] [1747889705.881954667]: Reference trajectory - x: 1.678702, y: 0.000000, phi: 0.000000, v: 0.894299, w: 0.000000[0m
+[0m[ INFO] [1747889705.949606195]: Robot state - x: 0.983031, y: -0.027510, phi: -0.081357[0m
+[0m[ INFO] [1747889705.949706769]: v: 6.873753, w: 0.720405[0m
+[0m[ INFO] [1747889705.981965261]: Reference trajectory - x: 1.767807, y: 0.000000, phi: 0.000000, v: 0.887127, w: 0.000000[0m
+[0m[ INFO] [1747889706.061334823]: Robot state - x: 1.070523, y: -0.034274, phi: -0.091674[0m
+[0m[ INFO] [1747889706.061457349]: v: 7.093600, w: 0.833125[0m
+[0m[ INFO] [1747889706.081886644]: Reference trajectory - x: 1.856038, y: 0.000000, phi: 0.000000, v: 0.877077, w: 0.000000[0m
+[0m[ INFO] [1747889706.150078999]: Robot state - x: 1.161474, y: -0.042202, phi: -0.102850[0m
+[0m[ INFO] [1747889706.150194421]: v: 7.292203, w: 0.959560[0m
+[0m[ INFO] [1747889706.182122135]: Reference trajectory - x: 1.943146, y: 0.000000, phi: 0.000000, v: 0.864142, w: 0.000000[0m
+[0m[ INFO] [1747889706.252610872]: Robot state - x: 1.252531, y: -0.051173, phi: -0.115906[0m
+[0m[ INFO] [1747889706.252728214]: v: 7.481703, w: 1.106530[0m
+[0m[ INFO] [1747889706.281753316]: Reference trajectory - x: 2.028755, y: 0.000000, phi: 0.000000, v: 0.848338, w: 0.000000[0m
+[0m[ INFO] [1747889706.349770058]: Robot state - x: 1.350326, y: -0.061904, phi: -0.128802[0m
+[0m[ INFO] [1747889706.350015238]: v: 7.631207, w: 1.263764[0m
+[0m[ INFO] [1747889706.381636013]: Reference trajectory - x: 2.112683, y: 0.000000, phi: 0.000000, v: 0.829647, w: 0.000000[0m
+[0m[ INFO] [1747889706.461839324]: Robot state - x: 1.452464, y: -0.074426, phi: -0.140966[0m
+[0m[ INFO] [1747889706.461979386]: v: 7.747716, w: 1.428000[0m
+[0m[ INFO] [1747889706.481974575]: Reference trajectory - x: 2.194639, y: 0.000000, phi: 0.000000, v: 0.808064, w: 0.000000[0m
+[0m[ INFO] [1747889706.549945141]: Robot state - x: 1.557751, y: -0.088660, phi: -0.152110[0m
+[0m[ INFO] [1747889706.550054324]: v: 7.833272, w: 1.597446[0m
+[0m[ INFO] [1747889706.582220242]: Reference trajectory - x: 2.274380, y: 0.000000, phi: 0.000000, v: 0.783568, w: 0.000000[0m
+[0m[ INFO] [1747889706.649786783]: Robot state - x: 1.658378, y: -0.103549, phi: -0.163988[0m
+[0m[ INFO] [1747889706.649960444]: v: 7.919188, w: 1.779631[0m
+[0m[ INFO] [1747889706.681627778]: Reference trajectory - x: 2.351222, y: 0.000000, phi: 0.000000, v: 0.756296, w: 0.000000[0m
+[0m[ INFO] [1747889706.749941060]: Robot state - x: 1.770469, y: -0.121579, phi: -0.178731[0m
+[0m[ INFO] [1747889706.750095073]: v: 7.933146, w: 2.001524[0m
+[0m[ INFO] [1747889706.781702056]: Reference trajectory - x: 2.425361, y: 0.000000, phi: 0.000000, v: 0.726087, w: 0.000000[0m
+[0m[ INFO] [1747889706.851644465]: Robot state - x: 1.884634, y: -0.141585, phi: -0.197709[0m
+[0m[ INFO] [1747889706.851744944]: v: 7.912212, w: 2.267945[0m
+[0m[ INFO] [1747889706.881647952]: Reference trajectory - x: 2.496342, y: 0.000000, phi: 0.000000, v: 0.692996, w: 0.000000[0m
+[0m[ INFO] [1747889706.950283149]: Robot state - x: 2.001013, y: -0.163679, phi: -0.215476[0m
+[0m[ INFO] [1747889706.950380459]: v: 7.852331, w: 2.542445[0m
+[0m[ INFO] [1747889706.981677111]: Reference trajectory - x: 2.563879, y: 0.000000, phi: 0.000000, v: 0.657019, w: 0.000000[0m
+[0m[ INFO] [1747889707.086963603]: Reference trajectory - x: 2.627657, y: 0.000000, phi: 0.000000, v: 0.618172, w: 0.000000[0m
+[0m[ INFO] [1747889707.131718648]: Robot state - x: 2.108676, y: -0.186231, phi: -0.233022[0m
+[0m[ INFO] [1747889707.131836150]: v: 8.037188, w: 2.824607[0m
+[0m[ INFO] [1747889707.149061557]: Robot state - x: 2.223438, y: -0.212187, phi: -0.246937[0m
+[0m[ INFO] [1747889707.149142996]: v: 7.701331, w: 3.105311[0m
+[0m[ INFO] [1747889707.181682671]: Reference trajectory - x: 2.687404, y: 0.000000, phi: 0.000000, v: 0.576447, w: 0.000000[0m
+[0m[ INFO] [1747889707.262460346]: Robot state - x: 2.330828, y: -0.238576, phi: -0.262794[0m
+[0m[ INFO] [1747889707.262588473]: v: 7.579871, w: 3.409733[0m
+[0m[ INFO] [1747889707.281943896]: Reference trajectory - x: 2.742847, y: 0.000000, phi: 0.000000, v: 0.531832, w: 0.000000[0m
+[0m[ INFO] [1747889707.349774980]: Robot state - x: 2.445642, y: -0.268496, phi: -0.278779[0m
+[0m[ INFO] [1747889707.349970242]: v: 7.389354, w: 3.740483[0m
+[0m[ INFO] [1747889707.381763815]: Reference trajectory - x: 2.793681, y: 0.000000, phi: 0.000000, v: 0.484341, w: 0.000000[0m
+[0m[ INFO] [1747889707.452277324]: Robot state - x: 2.553967, y: -0.298265, phi: -0.289573[0m
+[0m[ INFO] [1747889707.452395850]: v: 7.185380, w: 4.044107[0m
+[0m[ INFO] [1747889707.481803220]: Reference trajectory - x: 2.839616, y: 0.000000, phi: 0.000000, v: 0.433976, w: 0.000000[0m
+[0m[ INFO] [1747889707.550168216]: Robot state - x: 2.667071, y: -0.331383, phi: -0.301705[0m
+[0m[ INFO] [1747889707.550265495]: v: 6.918192, w: 4.382596[0m
+[0m[ INFO] [1747889707.581974462]: Reference trajectory - x: 2.880395, y: 0.000000, phi: 0.000000, v: 0.380695, w: 0.000000[0m
+[0m[ INFO] [1747889707.654218697]: Robot state - x: 2.775692, y: -0.365168, phi: -0.325651[0m
+[0m[ INFO] [1747889707.654322951]: v: 6.623912, w: 4.816398[0m
+[0m[ INFO] [1747889707.681712751]: Reference trajectory - x: 2.915663, y: 0.000000, phi: 0.000000, v: 0.324599, w: 0.000000[0m
+[0m[ INFO] [1747889707.750206833]: Robot state - x: 2.888324, y: -0.401203, phi: -0.341540[0m
+[0m[ INFO] [1747889707.750293008]: v: 6.263878, w: 5.216130[0m
+[0m[ INFO] [1747889707.781763099]: Reference trajectory - x: 2.945199, y: 0.000000, phi: 0.000000, v: 0.265582, w: 0.000000[0m
+[0m[ INFO] [1747889707.859459124]: Robot state - x: 2.987470, y: -0.435382, phi: -0.354181[0m
+[0m[ INFO] [1747889707.859549203]: v: 5.910244, w: 5.595829[0m
+[0m[ INFO] [1747889707.881959173]: Reference trajectory - x: 2.968692, y: 0.000000, phi: 0.000000, v: 0.203675, w: 0.000000[0m
+[0m[ INFO] [1747889707.949640307]: Robot state - x: 3.098145, y: -0.475940, phi: -0.373637[0m
+[0m[ INFO] [1747889707.949750514]: v: 5.455151, w: 6.064303[0m
+[0m[ INFO] [1747889707.981677590]: Reference trajectory - x: 2.985842, y: 0.000000, phi: 0.000000, v: 0.138919, w: 0.000000[0m
+[0m[ INFO] [1747889708.051043406]: Robot state - x: 3.201772, y: -0.515090, phi: -0.387711[0m
+[0m[ INFO] [1747889708.051139148]: v: 4.972705, w: 6.501608[0m
+[0m[ INFO] [1747889708.081628232]: Reference trajectory - x: 2.996375, y: 0.000000, phi: 0.000000, v: 0.071274, w: 0.000000[0m
+[0m[ INFO] [1747889708.149853394]: Robot state - x: 3.311886, y: -0.559279, phi: -0.403696[0m
+[0m[ INFO] [1747889708.150099790]: v: 4.402940, w: 6.988892[0m
+[0m[ INFO] [1747889708.181850839]: Reference trajectory - x: 3.000000, y: 0.000000, phi: 0.000000, v: 0.000745, w: 0.000000[0m
+[0m[ INFO] [1747889708.251088594]: Robot state - x: 3.420574, y: -0.604317, phi: -0.413949[0m
+[0m[ INFO] [1747889708.251229744]: v: 3.774914, w: 7.454665[0m
+[0m[ INFO] [1747889708.281700460]: Reference trajectory - x: 3.000000, y: 0.000000, phi: 0.000000, v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1747889708.349680602]: Robot state - x: 3.526801, y: -0.650657, phi: -0.429265[0m
+[0m[ INFO] [1747889708.349806104]: v: 3.178382, w: 7.975962[0m
+[0m[ INFO] [1747889708.456920129]: Robot state - x: 3.634905, y: -0.699064, phi: -0.443371[0m
+[0m[ INFO] [1747889708.457232924]: v: 2.540819, w: 8.513560[0m
+[0m[ INFO] [1747889708.549494338]: Robot state - x: 3.742256, y: -0.749120, phi: -0.457477[0m
+[0m[ INFO] [1747889708.549617504]: v: 1.872357, w: 9.074455[0m
+[0m[ INFO] [1747889708.650285512]: Robot state - x: 3.848804, y: -0.800886, phi: -0.475245[0m
+[0m[ INFO] [1747889708.650424102]: v: 1.173440, w: 9.684752[0m
+[0m[ INFO] [1747889708.749489223]: Robot state - x: 3.955138, y: -0.853933, phi: -0.485785[0m
+[0m[ INFO] [1747889708.749611525]: v: 0.441767, w: 10.267691[0m
+[0m[ INFO] [1747889708.858133305]: Robot state - x: 4.057305, y: -0.907371, phi: -0.499127[0m
+[0m[ INFO] [1747889708.858232535]: v: -0.305380, w: 10.888656[0m
+[0m[ INFO] [1747889708.949657801]: Robot state - x: 4.161279, y: -0.962833, phi: -0.507597[0m
+[0m[ INFO] [1747889708.949782535]: v: -1.092709, w: 11.502662[0m
+[0m[ INFO] [1747889709.052231096]: Robot state - x: 4.265065, y: -1.019871, phi: -0.514379[0m
+[0m[ INFO] [1747889709.052389526]: v: -1.912098, w: 12.130184[0m
+[0m[ INFO] [1747889709.149984658]: Robot state - x: 4.367709, y: -1.077780, phi: -0.526511[0m
+[0m[ INFO] [1747889709.150156943]: v: -2.759329, w: 12.816915[0m
+[0m[ INFO] [1747889709.249701486]: Robot state - x: 4.464658, y: -1.133370, phi: -0.538994[0m
+[0m[ INFO] [1747889709.249801644]: v: -3.614211, w: 13.513144[0m
+[0m[ INFO] [1747889709.349479497]: Robot state - x: 4.566406, y: -1.193216, phi: -0.549342[0m
+[0m[ INFO] [1747889709.349595464]: v: -4.520659, w: 14.232829[0m
+[0m[ INFO] [1747889709.452002140]: Robot state - x: 4.657922, y: -1.248309, phi: -0.555138[0m
+[0m[ INFO] [1747889709.452485237]: v: -5.414704, w: 14.916967[0m
+[0m[ INFO] [1747889709.549784213]: Robot state - x: 4.758390, y: -1.310664, phi: -0.567365[0m
+[0m[ INFO] [1747889709.549914419]: v: -6.376692, w: 15.698121[0m
+[0m[ INFO] [1747889709.652992894]: Robot state - x: 4.857287, y: -1.372943, phi: -0.581089[0m
+[0m[ INFO] [1747889709.653092317]: v: -7.363605, w: 16.508968[0m
+[0m[ INFO] [1747889709.757440148]: Robot state - x: 4.956288, y: -1.436879, phi: -0.593221[0m
+[0m[ INFO] [1747889709.757558579]: v: -8.382246, w: 17.336536[0m
+[0m[ INFO] [1747889709.859593741]: Robot state - x: 5.054184, y: -1.502150, phi: -0.607136[0m
+[0m[ INFO] [1747889709.859739147]: v: -9.427382, w: 18.203100[0m
+[0m[ INFO] [1747889709.949750615]: Robot state - x: 5.152257, y: -1.568893, phi: -0.615797[0m
+[0m[ INFO] [1747889709.949919124]: v: -10.504243, w: 19.061142[0m
+[0m[ INFO] [1747889710.061207560]: Robot state - x: 5.152568, y: -1.568914, phi: 0.465471[0m
+[0m[ INFO] [1747889710.061335463]: v: -11.186205, w: 12.087976[0m
+[0m[ INFO] [1747889710.149139928]: Robot state - x: 5.159687, y: -1.569653, phi: 1.490186[0m
+[0m[ INFO] [1747889710.149275286]: v: -11.897928, w: 5.508956[0m
+[0m[ INFO] [1747889710.252323047]: Robot state - x: 5.169429, y: -1.556413, phi: 2.432144[0m
+[0m[ INFO] [1747889710.252471781]: v: -12.623327, w: -0.565825[0m
+[0m[ INFO] [1747889710.353441429]: Robot state - x: 5.160626, y: -1.531798, phi: -3.002923[0m
+[0m[ INFO] [1747889710.353835119]: v: -13.271015, w: 37.352608[0m
+[0m[ INFO] [1747889710.451738347]: Robot state - x: 5.212001, y: -1.593023, phi: 2.953847[0m
+[0m[ INFO] [1747889710.451853802]: v: -14.178091, w: -3.015892[0m
+[0m[ INFO] [1747889710.549426315]: Robot state - x: 5.175356, y: -1.610449, phi: -2.718922[0m
+[0m[ INFO] [1747889710.549542154]: v: -14.717947, w: 36.759735[0m
+[0m[ INFO] [1747889710.651494411]: Robot state - x: 5.221511, y: -1.629633, phi: -3.131279[0m
+[0m[ INFO] [1747889710.651588297]: v: -15.606939, w: 40.210464[0m
+[0m[ INFO] [1747889710.750764755]: Robot state - x: 5.265508, y: -1.619773, phi: 2.747510[0m
+[0m[ INFO] [1747889710.750854354]: v: -16.501125, w: 0.067388[0m
+[0m[ INFO] [1747889710.849586051]: Robot state - x: 5.303888, y: -1.625631, phi: 2.423929[0m
+[0m[ INFO] [1747889710.849682785]: v: -17.384754, w: 2.843275[0m
+[0m[ INFO] [1747889710.949012777]: Robot state - x: 5.331409, y: -1.640832, phi: 2.202848[0m
+[0m[ INFO] [1747889710.949273221]: v: -18.233213, w: 4.958179[0m
+[0m[ INFO] [1747889711.055738727]: Robot state - x: 5.348320, y: -1.657400, phi: 2.087834[0m
+[0m[ INFO] [1747889711.055858693]: v: -19.044149, w: 6.351804[0m
+[0m[ INFO] [1747889711.151695589]: Robot state - x: 5.357588, y: -1.670104, phi: 2.084331[0m
+[0m[ INFO] [1747889711.151815812]: v: -19.827137, w: 6.961635[0m
+[0m[ INFO] [1747889711.255962058]: Robot state - x: 5.363132, y: -1.678975, phi: 2.167376[0m
+[0m[ INFO] [1747889711.256085961]: v: -20.596830, w: 6.959053[0m
+[0m[ INFO] [1747889711.349531276]: Robot state - x: 5.369691, y: -1.689355, phi: 2.267329[0m
+[0m[ INFO] [1747889711.349689674]: v: -21.372696, w: 6.849784[0m
+[0m[ INFO] [1747889711.452521476]: Robot state - x: 5.379570, y: -1.702454, phi: 2.366453[0m
+[0m[ INFO] [1747889711.452615619]: v: -22.165104, w: 6.762682[0m
+[0m[ INFO] [1747889711.549433909]: Robot state - x: 5.393268, y: -1.717233, phi: 2.468317[0m
+[0m[ INFO] [1747889711.549525811]: v: -22.977274, w: 6.668942[0m
+[0m[ INFO] [1747889711.652836838]: Robot state - x: 5.410856, y: -1.732807, phi: 2.569161[0m
+[0m[ INFO] [1747889711.652926725]: v: -23.810722, w: 6.590759[0m
+[0m[ INFO] [1747889711.749685720]: Robot state - x: 5.433142, y: -1.748797, phi: 2.670961[0m
+[0m[ INFO] [1747889711.749812534]: v: -24.670198, w: 6.512920[0m
+[0m[ INFO] [1747889711.852157495]: Robot state - x: 5.460003, y: -1.764216, phi: 2.773621[0m
+[0m[ INFO] [1747889711.852282326]: v: -25.556652, w: 6.431431[0m
+[0m[ INFO] [1747889711.955310605]: Robot state - x: 5.491894, y: -1.778413, phi: 2.877235[0m
+[0m[ INFO] [1747889711.955544361]: v: -26.473518, w: 6.342306[0m
+[0m[ INFO] [1747889712.198295143]: Robot state - x: 5.528647, y: -1.790380, phi: 2.983588[0m
+[0m[ INFO] [1747889712.198505764]: v: -27.421652, w: 6.227955[0m
+[0m[ INFO] [1747889712.199863504]: Robot state - x: 5.569910, y: -1.799208, phi: 3.090801[0m
+[0m[ INFO] [1747889712.199961967]: v: -28.401049, w: 6.096245[0m
+[0m[ INFO] [1747889712.250344718]: Robot state - x: 5.614820, y: -1.808837, phi: -3.086095[0m
+[0m[ INFO] [1747889712.250621226]: v: -29.409386, w: 49.381832[0m
+[0m[ INFO] [1747889712.356264353]: Robot state - x: 5.664302, y: -1.808608, phi: -2.975284[0m
+[0m[ INFO] [1747889712.356842872]: v: -30.451851, w: 49.187252[0m
+[0m[ INFO] [1747889712.449516364]: Robot state - x: 5.717391, y: -1.802671, phi: -2.863517[0m
+[0m[ INFO] [1747889712.449606571]: v: -31.525673, w: 48.958351[0m
+[0m[ INFO] [1747889712.550542439]: Robot state - x: 5.770858, y: -1.790736, phi: -2.756909[0m
+[0m[ INFO] [1747889712.550637413]: v: -32.617928, w: 48.734177[0m
+[0m[ INFO] [1747889712.650506064]: Robot state - x: 5.826052, y: -1.771945, phi: -2.656765[0m
+[0m[ INFO] [1747889712.650611535]: v: -33.734615, w: 48.517677[0m
+[0m[ INFO] [1747889712.748946224]: Robot state - x: 5.884501, y: -1.744356, phi: -2.544108[0m
+[0m[ INFO] [1747889712.749123182]: v: -34.882938, w: 48.166183[0m
+[0m[ INFO] [1747889712.849581840]: Robot state - x: 5.942250, y: -1.709622, phi: -2.430781[0m
+[0m[ INFO] [1747889712.849711918]: v: -36.046696, w: 47.766754[0m
+[0m[ INFO] [1747889712.949511514]: Robot state - x: 5.998950, y: -1.666019, phi: -2.314620[0m
+[0m[ INFO] [1747889712.949664952]: v: -37.224148, w: 47.293812[0m
+[0m[ INFO] [1747889713.050376441]: Robot state - x: 6.051918, y: -1.615403, phi: -2.210847[0m
+[0m[ INFO] [1747889713.050612630]: v: -38.403263, w: 46.858696[0m
+[0m[ INFO] [1747889713.149179802]: Robot state - x: 6.101964, y: -1.554006, phi: -2.090992[0m
+[0m[ INFO] [1747889713.149326840]: v: -39.586407, w: 46.244282[0m
+[0m[ INFO] [1747889713.257555726]: Robot state - x: 6.147080, y: -1.485105, phi: -1.970374[0m
+[0m[ INFO] [1747889713.257649165]: v: -40.763893, w: 45.568840[0m
+[0m[ INFO] [1747889713.349181271]: Robot state - x: 6.185654, y: -1.407483, phi: -1.852366[0m
+[0m[ INFO] [1747889713.349300438]: v: -41.927147, w: 44.847412[0m
+[0m[ INFO] [1747889713.451316423]: Robot state - x: 6.215286, y: -1.324793, phi: -1.741396[0m
+[0m[ INFO] [1747889713.451442117]: v: -43.063641, w: 44.125515[0m
+[0m[ INFO] [1747889713.549144661]: Robot state - x: 6.235657, y: -1.233661, phi: -1.618103[0m
+[0m[ INFO] [1747889713.549291507]: v: -44.169159, w: 43.251465[0m
+[0m[ INFO] [1747889713.652560851]: Robot state - x: 6.246362, y: -1.142127, phi: -1.509744[0m
+[0m[ INFO] [1747889713.652663025]: v: -45.239006, w: 42.449810[0m
+[0m[ INFO] [1747889713.749118675]: Robot state - x: 6.244737, y: -1.041471, phi: -1.382852[0m
+[0m[ INFO] [1747889713.749221042]: v: -46.258526, w: 41.447021[0m
+[0m[ INFO] [1747889713.857236364]: Robot state - x: 6.231874, y: -0.938261, phi: -1.256980[0m
+[0m[ INFO] [1747889713.857676102]: v: -47.228573, w: 40.407074[0m
+[0m[ INFO] [1747889713.949179856]: Robot state - x: 6.205764, y: -0.834561, phi: -1.139546[0m
+[0m[ INFO] [1747889713.949300270]: v: -48.136837, w: 39.390404[0m
+[0m[ INFO] [1747889714.049509725]: Robot state - x: 6.170849, y: -0.741717, phi: -1.047776[0m
+[0m[ INFO] [1747889714.049669818]: v: -48.998486, w: 38.570801[0m
+[0m[ INFO] [1747889714.153988432]: Robot state - x: 6.120286, y: -0.643364, phi: -0.960560[0m
+[0m[ INFO] [1747889714.154118062]: v: -49.780918, w: 37.726624[0m
+[0m[ INFO] [1747889714.250187996]: Robot state - x: 6.063257, y: -0.551455, phi: -0.895889[0m
+[0m[ INFO] [1747889714.250302010]: v: -50.519192, w: 37.038277[0m
+[0m[ INFO] [1747889714.349032449]: Robot state - x: 5.995323, y: -0.459621, phi: -0.842553[0m
+[0m[ INFO] [1747889714.349150207]: v: -51.191925, w: 36.399536[0m
+[0m[ INFO] [1747889714.455338042]: Robot state - x: 5.921283, y: -0.370880, phi: -0.801699[0m
+[0m[ INFO] [1747889714.455785971]: v: -51.816570, w: 35.832962[0m
+[0m[ INFO] [1747889714.549170536]: Robot state - x: 5.842236, y: -0.285506, phi: -0.764316[0m
+[0m[ INFO] [1747889714.549274086]: v: -52.395988, w: 35.278603[0m
+[0m[ INFO] [1747889714.651200927]: Robot state - x: 5.766415, y: -0.209603, phi: -0.732793[0m
+[0m[ INFO] [1747889714.651299517]: v: -52.964462, w: 34.783585[0m
+[0m[ INFO] [1747889714.749175313]: Robot state - x: 5.680937, y: -0.130668, phi: -0.695410[0m
+[0m[ INFO] [1747889714.749301903]: v: -53.466892, w: 34.209408[0m
+[0m[ INFO] [1747889714.854177340]: Robot state - x: 5.598430, y: -0.059036, phi: -0.659746[0m
+[0m[ INFO] [1747889714.854600854]: v: -53.955235, w: 33.657505[0m
+[0m[ INFO] [1747889714.949044795]: Robot state - x: 5.507636, y: 0.014027, phi: -0.624147[0m
+[0m[ INFO] [1747889714.949183097]: v: -54.381382, w: 33.076462[0m
+[0m[ INFO] [1747889715.056435463]: Robot state - x: 5.414797, y: 0.083180, phi: -0.585076[0m
+[0m[ INFO] [1747889715.056537798]: v: -54.769905, w: 32.467270[0m
+[0m[ INFO] [1747889715.149463046]: Robot state - x: 5.319260, y: 0.149568, phi: -0.551355[0m
+[0m[ INFO] [1747889715.149598340]: v: -55.117317, w: 31.886559[0m
+[0m[ INFO] [1747889715.255183918]: Robot state - x: 5.227778, y: 0.207862, phi: -0.515883[0m
+[0m[ INFO] [1747889715.255564520]: v: -55.452187, w: 31.311945[0m
+[0m[ INFO] [1747889715.349319356]: Robot state - x: 5.127666, y: 0.267126, phi: -0.482162[0m
+[0m[ INFO] [1747889715.349426427]: v: -55.720524, w: 30.726299[0m
+[0m[ INFO] [1747889715.470838559]: Robot state - x: 5.032476, y: 0.319125, phi: -0.450352[0m
+[0m[ INFO] [1747889715.470932542]: v: -55.978653, w: 30.170286[0m
+[0m[ INFO] [1747889715.549062996]: Robot state - x: 4.928506, y: 0.371326, phi: -0.416631[0m
+[0m[ INFO] [1747889715.549175699]: v: -56.168423, w: 29.583662[0m
+[0m[ INFO] [1747889715.649670854]: Robot state - x: 4.822960, y: 0.419830, phi: -0.377465[0m
+[0m[ INFO] [1747889715.649800452]: v: -56.318451, w: 28.960812[0m
+[0m[ INFO] [1747889715.749832125]: Robot state - x: 4.715566, y: 0.465087, phi: -0.341865[0m
+[0m[ INFO] [1747889715.750000795]: v: -56.427044, w: 28.362980[0m
+[0m[ INFO] [1747889715.855195722]: Robot state - x: 4.611296, y: 0.504369, phi: -0.307507[0m
+[0m[ INFO] [1747889715.855653859]: v: -56.515293, w: 27.788349[0m
+[0m[ INFO] [1747889715.949245338]: Robot state - x: 4.500821, y: 0.541478, phi: -0.271908[0m
+[0m[ INFO[0m[ INFO] [1747889700.136987254]: [I2C FOR MOTORS] Now launching this node in namespace: /asc[0m
+[0m[ INFO] [1747889700.215800671]: [I2C FOR MOTORS] publish motor duty cycle requests from command line with: rostopic pub --once /asc/set_motor_duty_cycle asclinic_pkg/LeftRightFloat32 "{left: 10.1, right: 10.1}"[0m
+[0m[ INFO] [1747889700.215994172]: [I2C FOR MOTORS] Successfully opened named /dev/i2c-1, with file descriptor = 11[0m
+[0m[ INFO] [1747889700.216139322]: [I2C FOR MOTORS] Actual acceleration limit = 0.0003125%/ms (after conversation to "internal units")[0m
+[0m[ INFO] [1747889700.216187929]: [I2C FOR MOTORS] Actual deceleration limit = 0.0015625%/ms (after conversation to "internal units")[0m
+[0m[ INFO] [1747889700.216230745]: [I2C FOR MOTORS] Now initialising SMC with I2C address 13[0m
+[0m[ INFO] [1747889700.231290194]: [I2C FOR MOTORS] Now initialising SMC with I2C address 14[0m
+[0m[ INFO] [1747889700.246514249]: [I2C FOR MOTORS] Node initialisation complete[0m
+] [1747889715.949370648]: v: -56.543537, w: 27.203239[0m
+[0m[ INFO] [1747889716.058069815]: Robot state - x: 4.397469, y: 0.572405, phi: -0.238410[0m
+[0m[ INFO] [1747889716.058217301]: v: -56.567879, w: 26.650848[0m
+[0m[ INFO] [1747889716.148969754]: Robot state - x: 4.284893, y: 0.601757, phi: -0.204689[0m
+[0m[ INFO] [1747889716.149075768]: v: -56.519344, w: 26.094767[0m
+[0m[ INFO] [1747889716.257508831]: Robot state - x: 4.178496, y: 0.625719, phi: -0.170904[0m
+[0m[ INFO] [1747889716.257618397]: v: -56.462135, w: 25.555059[0m
+
+[ARUCO DETECTOR] Camera properties upon initialisation:
+CV_CAP_PROP_FRAME_HEIGHT : '480.0'
+CV_CAP_PROP_FRAME_WIDTH :  '640.0'
+CAP_PROP_FPS :             '30.0'
+CAP_PROP_FOCUS :           '0.0'
+CAP_PROP_AUTOFOCUS :       '0.0'
+CAP_PROP_BRIGHTNESS :      '128.0'
+CAP_PROP_CONTRAST :        '128.0'
+CAP_PROP_SATURATION :      '128.0'
+CAP_PROP_BUFFERSIZE :      '4.0'
+
+[ARUCO DETECTOR] Camera properties upon initialisation:
+CV_CAP_PROP_FRAME_HEIGHT : '1080.0'
+CV_CAP_PROP_FRAME_WIDTH :  '1920.0'
+CAP_PROP_FPS :             '5.0'
+CAP_PROP_FOCUS :           '0.0'
+CAP_PROP_AUTOFOCUS :       '0.0'
+CAP_PROP_BRIGHTNESS :      '128.0'
+CAP_PROP_CONTRAST :        '128.0'
+CAP_PROP_SATURATION :      '128.0'
+CAP_PROP_BUFFERSIZE :      '1.0'
+[INFO] [1747889704.276005]: [ARUCO DETECTOR] As a double check of the camera properties set, a frame captured just now has dimensions = (1080, 1920, 3)
+[INFO] [1747889704.280721]: [ARUCO DETECTOR] publish request from command line to save a single camera image using: rostopic pub --once /asc/request_save_image std_msgs/UInt32 1
+[INFO] [1747889704.285263]: [ARUCO DETECTOR] Node initialisation complete
+... logging to /home/asc/.ros/log/43bec514-36bf-11f0-a5e2-d8c0a650f677/roslaunch-asc12-jetson-16909.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/launch/trajectory.launch
+[1mstarted roslaunch server http://asc12-jetson:35471/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /asc/aruco_detector/aruco_detector_desired_camera_fps: 5
+ * /asc/aruco_detector/aruco_detector_desired_camera_frame_height: 1080
+ * /asc/aruco_detector/aruco_detector_desired_camera_frame_width: 1920
+ * /asc/aruco_detector/aruco_detector_marker_size: 0.25
+ * /asc/aruco_detector/aruco_detector_save_image_path: /home/asc/saved_c...
+ * /asc/aruco_detector/aruco_detector_should_publish_camera_images: False
+ * /asc/aruco_detector/aruco_detector_should_save_all_aruco_images: False
+ * /asc/aruco_detector/aruco_detector_should_show_camera_images: False
+ * /asc/aruco_detector/aruco_detector_usb_camera_device_number: 0
+ * /asc/aruco_detector/aruco_detector_verbosity: 1
+ * /asc/encoder_read_multi_threaded/delta_t_for_publishing_encoder_counts: 0.1
+ * /asc/encoder_read_multi_threaded/encoder_events_to_monitor: rising
+ * /asc/encoder_read_multi_threaded/encoder_read_verbosity: 1
+ * /asc/encoder_read_multi_threaded/gpio_chip_number_for_encoder_lines: 1
+ * /asc/encoder_read_multi_threaded/line_number_for_left_side_encoder_channel_a: 105
+ * /asc/encoder_read_multi_threaded/line_number_for_left_side_encoder_channel_b: 106
+ * /asc/encoder_read_multi_threaded/line_number_for_right_side_encoder_channel_a: 84
+ * /asc/encoder_read_multi_threaded/line_number_for_right_side_encoder_channel_b: 130
+ * /asc/encoder_read_multi_threaded/should_monitor_left_side_encoder_channel_a: True
+ * /asc/encoder_read_multi_threaded/should_monitor_left_side_encoder_channel_b: False
+ * /asc/encoder_read_multi_threaded/should_monitor_right_side_encoder_channel_a: True
+ * /asc/encoder_read_multi_threaded/should_monitor_right_side_encoder_channel_b: False
+ * /asc/i2c_for_motors/motor_driver_current_limit_in_milliamps: 5000
+ * /asc/i2c_for_motors/motor_driver_left_side_multiplier: 1
+ * /asc/i2c_for_motors/motor_driver_max_accel_limit_in_percent_per_millisecond: 0.04
+ * /asc/i2c_for_motors/motor_driver_max_decel_limit_in_percent_per_millisecond: 0.16
+ * /asc/i2c_for_motors/motor_driver_max_duty_cycle_limit_in_percent: 100.0
+ * /asc/i2c_for_motors/motor_driver_right_side_multiplier: 1
+ * /asc/i2c_for_motors/motor_driver_verbosity: 1
+ * /rosdistro: noetic
+ * /rosversion: 1.17.0
+
+NODES
+  /
+    aruco_positioning (asclinic_pkg/aruco_positioning.py)
+    kf_fusion_node (asclinic_pkg/KF.py)
+    odomdelta (asclinic_pkg/odomdelta)
+    trajectory_generator (asclinic_pkg/trajectory_generator_state_space)
+    trajectory_tracker (asclinic_pkg/trajectory_tracker_state_space)
+    velocity_PI_control (asclinic_pkg/velocity_PI_control)
+  /asc/
+    aruco_detector (asclinic_pkg/aruco_detector.py)
+    encoder_read_multi_threaded (asclinic_pkg/encoder_read_multi_threaded)
+    i2c_for_motors (asclinic_pkg/i2c_for_motors)
+
+[1mROS_MASTER_URI=http://localhost:11311[0m
+]2;/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/launch/trajectory.launch http://localhost:11311
+[1mprocess[asc/i2c_for_motors-1]: started with pid [16949][0m
+[1mprocess[asc/encoder_read_multi_threaded-2]: started with pid [16950][0m
+[1mprocess[odomdelta-3]: started with pid [16951][0m
+[1mprocess[asc/aruco_detector-4]: started with pid [16952][0m
+[1mprocess[aruco_positioning-5]: started with pid [16953][0m
+[1mprocess[trajectory_tracker-6]: started with pid [16954][0m
+[1mprocess[trajectory_generator-7]: started with pid [16955][0m
+[1mprocess[velocity_PI_control-8]: started with pid [16966][0m
+[1mprocess[kf_fusion_node-9]: started with pid [16974][0m
+[kf_fusion_node-9] killing on exit
+[velocity_PI_control-8] killing on exit
+[trajectory_generator-7] killing on exit
+[trajectory_tracker-6] killing on exit
+[asc/encoder_read_multi_threaded-2] killing on exit
+[aruco_positioning-5] killing on exit
+[asc/aruco_detector-4] killing on exit
+[odomdelta-3] killing on exit
+[asc/i2c_for_motors-1] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m
