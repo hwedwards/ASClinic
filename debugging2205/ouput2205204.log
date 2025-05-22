@@ -1,0 +1,272 @@
+[0m[ INFO] [1747886713.094058428]: v: 16.490650, w: 0.000000[0m
+[0m[ INFO] [1747886713.194163410]: v: 20.161493, w: 0.000000[0m
+[0m[ INFO] [1747886713.294366602]: v: 24.166706, w: 0.000000[0m
+[0m[ INFO] [1747886713.401718913]: v: 28.516361, w: 0.000000[0m
+[0m[ INFO] [1747886713.494301076]: v: 33.144299, w: -0.011036[0m
+[0m[ INFO] [1747886713.594942097]: v: 37.904533, w: -0.014180[0m
+[0m[ INFO] [1747886713.694547713]: v: 42.799797, w: -0.024046[0m
+[0m[ INFO] [1747886713.796028394]: v: 47.844048, w: -0.028435[0m
+[0m[ INFO] [1747886713.893929379]: v: 52.998100, w: -0.027415[0m
+[0m[ INFO] [1747886714.000705907]: v: 58.272713, w: -0.021128[0m
+[0m[ INFO] [1747886714.094194677]: v: 63.619499, w: -0.007796[0m
+[0m[ INFO] [1747886714.195155772]: v: 69.044708, w: -0.000064[0m
+[0m[ INFO] [1747886714.294628078]: v: 74.512421, w: 0.032116[0m
+[0m[ INFO] [1747886714.396135676]: v: 80.029251, w: 0.045720[0m
+[0m[ INFO] [1747886714.494707842]: v: 85.542953, w: 0.075686[0m
+[0m[ INFO] [1747886714.601123538]: v: 91.057457, w: 0.117543[0m
+[0m[ INFO] [1747886714.694900504]: v: 96.529480, w: 0.175398[0m
+[0m[ INFO] [1747886714.796619208]: v: 101.966858, w: 0.236476[0m
+[0m[ INFO] [1747886714.894218978]: v: 107.303780, w: 0.337112[0m
+[0m[ INFO] [1747886714.999406753]: v: 112.562767, w: 0.459399[0m
+[0m[ INFO] [1747886715.094051574]: v: 117.680885, w: 0.585579[0m
+[0m[ INFO] [1747886715.197906536]: v: 122.651459, w: 0.781770[0m
+[0m[ INFO] [1747886715.354725984]: v: 127.417480, w: 0.999473[0m
+[0m[ INFO] [1747886715.393844301]: v: 132.013519, w: 1.267191[0m
+[0m[ INFO] [1747886715.494092334]: v: 136.344238, w: 1.594400[0m
+[0m[ INFO] [1747886715.599553813]: v: 140.425400, w: 2.000719[0m
+[0m[ INFO] [1747886715.695096343]: v: 144.193573, w: 2.498889[0m
+[0m[ INFO] [1747886715.800964484]: v: 147.643707, w: 3.089737[0m
+[0m[ INFO] [1747886715.894184775]: v: 150.738098, w: 3.793747[0m
+[0m[ INFO] [1747886716.000802877]: v: 153.520905, w: 4.594138[0m
+[0m[ INFO] [1747886716.093961603]: v: 155.731003, w: 5.619283[0m
+[0m[ INFO] [1747886716.201194695]: v: 157.796921, w: 6.673897[0m
+[0m[ INFO] [1747886716.294840212]: v: 159.093002, w: 7.991835[0m
+[0m[ INFO] [1747886716.394164589]: v: 160.075256, w: 9.417064[0m
+[0m[ INFO] [1747886716.494061069]: v: 160.259567, w: 11.171576[0m
+[0m[ INFO] [1747886716.600990509]: v: 160.123764, w: 13.070404[0m
+[0m[ INFO] [1747886716.694317141]: v: 159.253143, w: 15.183694[0m
+[0m[ INFO] [1747886716.794191957]: v: 157.870407, w: 17.536743[0m
+[0m[ INFO] [1747886716.893970293]: v: 155.873657, w: 20.030605[0m
+[0m[ INFO] [1747886716.998566133]: v: 153.592072, w: 22.724739[0m
+[0m[ INFO] [1747886717.094147359]: v: 150.516144, w: 25.774521[0m
+[0m[ INFO] [1747886717.194507403]: v: 146.877228, w: 28.946262[0m
+[0m[ INFO] [1747886717.294213485]: v: 143.371506, w: 32.491325[0m
+[0m[ INFO] [1747886717.397835332]: v: 139.738708, w: 36.223209[0m
+[0m[ INFO] [1747886717.493974167]: v: 135.728256, w: 40.225803[0m
+[0m[ INFO] [1747886717.594360386]: v: 131.437057, w: 44.553997[0m
+[0m[ INFO] [1747886717.694090277]: v: 126.836800, w: 49.187019[0m
+[0m[ INFO] [1747886717.794216461]: v: 122.150826, w: 54.011711[0m
+[0m[ INFO] [1747886717.893940784]: v: 117.018616, w: 59.183060[0m
+[0m[ INFO] [1747886717.994404733]: v: 111.762970, w: 64.638565[0m
+[0m[ INFO] [1747886718.093968961]: v: 106.076843, w: 70.513519[0m
+[0m[ INFO] [1747886718.193917355]: v: 100.122269, w: 76.747849[0m
+[0m[ INFO] [1747886718.293824564]: v: 93.928169, w: 83.320084[0m
+[0m[ INFO] [1747886718.394125827]: v: 87.505234, w: 90.268509[0m
+[0m[ INFO] [1747886718.494157358]: v: 80.868896, w: 97.633850[0m
+[0m[ INFO] [1747886718.595821712]: v: 74.025406, w: 105.282669[0m
+[0m[ INFO] [1747886718.694255205]: v: 67.040268, w: 113.363678[0m
+[0m[ INFO] [1747886718.797211832]: v: 59.951984, w: 121.633179[0m
+[0m[ INFO] [1747886718.894019447]: v: 52.669598, w: 130.352921[0m
+[0m[ INFO] [1747886718.993949217]: v: 45.231377, w: 139.427307[0m
+[0m[ INFO] [1747886719.094155602]: v: 37.571571, w: 148.915253[0m
+[0m[ INFO] [1747886719.197495087]: v: 29.749340, w: 158.877274[0m
+[0m[ INFO] [1747886719.294398612]: v: 21.788017, w: 169.077148[0m
+[0m[ INFO] [1747886719.394279489]: v: 13.733200, w: 179.750153[0m
+[0m[ INFO] [1747886719.494002988]: v: 5.487602, w: 190.853760[0m
+[0m[ INFO] [1747886719.594151965]: v: -2.821297, w: 202.374390[0m
+[0m[ INFO] [1747886719.693819656]: v: -11.275959, w: 214.375458[0m
+[0m[ INFO] [1747886719.793715893]: v: -19.675098, w: 226.363007[0m
+[0m[ INFO] [1747886719.894044489]: v: -28.215885, w: 239.015167[0m
+[0m[ INFO] [1747886719.995099366]: v: -36.904758, w: 252.019058[0m
+[0m[ INFO] [1747886720.094187660]: v: -45.688507, w: 265.556244[0m
+[0m[ INFO] [1747886720.194323073]: v: -54.469536, w: 279.115234[0m
+[0m[ INFO] [1747886720.438305919]: v: -63.364143, w: 293.343750[0m
+[0m[ INFO] [1747886720.438481314]: v: -72.278168, w: 307.746490[0m
+[0m[ INFO] [1747886720.494331227]: v: -81.341995, w: 322.485168[0m
+[0m[ INFO] [1747886720.600887720]: v: -90.239212, w: 337.661255[0m
+[0m[ INFO] [1747886720.694053470]: v: -99.281097, w: 353.488770[0m
+[0m[ INFO] [1747886720.800392519]: v: -108.279320, w: 369.665161[0m
+[0m[ INFO] [1747886720.894068900]: v: -117.226990, w: 386.419250[0m
+[0m[ INFO] [1747886720.994367228]: v: -126.153366, w: 403.411102[0m
+[0m[ INFO] [1747886721.094090255]: v: -135.049133, w: 420.892700[0m
+[0m[ INFO] [1747886721.193732289]: v: -143.870331, w: 438.668121[0m
+[0m[ INFO] [1747886721.294060285]: v: -152.654633, w: 456.798279[0m
+[0m[ INFO] [1747886721.394206359]: v: -161.395737, w: 475.110992[0m
+[0m[ INFO] [1747886721.493846441]: v: -170.070648, w: 494.133118[0m
+[0m[ INFO] [1747886721.594686188]: v: -178.752289, w: 513.083618[0m
+[0m[ INFO] [1747886721.694011962]: v: -187.308197, w: 529.287842[0m
+[0m[ INFO] [1747886721.796663510]: v: -195.872192, w: 534.801392[0m
+[0m[ INFO] [1747886721.894026249]: v: -204.321991, w: 540.436035[0m
+[0m[ INFO] [1747886721.993964544]: v: -212.724182, w: 545.974365[0m
+[0m[ INFO] [1747886722.094164894]: v: -220.893967, w: 538.192871[0m
+[0m[ INFO] [1747886722.194037528]: v: -229.076569, w: 530.862732[0m
+[0m[ INFO] [1747886722.294053236]: v: -237.529495, w: 523.660034[0m
+[0m[ INFO] [1747886722.396111340]: v: -246.027771, w: 516.752747[0m
+[0m[ INFO] [1747886722.500376930]: v: -253.686310, w: 553.163330[0m
+[0m[ INFO] [1747886722.595706077]: v: -260.319550, w: 547.588684[0m
+[0m[ INFO] [1747886722.694193988]: v: -266.792725, w: 544.184753[0m
+[0m[ INFO] [1747886722.798425018]: v: -274.222198, w: 542.599426[0m
+[0m[ INFO] [1747886722.894454335]: v: -283.211945, w: 541.119629[0m
+[0m[ INFO] [1747886722.999769412]: v: -293.314148, w: 538.482422[0m
+[0m[ INFO] [1747886723.101165655]: v: -303.828949, w: 534.345703[0m
+[0m[ INFO] [1747886723.193797841]: v: -314.025574, w: 528.818848[0m
+[0m[ INFO] [1747886723.293829233]: v: -323.278595, w: 522.326111[0m
+[0m[ INFO] [1747886723.397981450]: v: -330.900452, w: 528.473083[0m
+[0m[ INFO] [1747886723.494411833]: v: -340.376465, w: 534.335083[0m
+[0m[ INFO] [1747886723.596132240]: v: -348.742615, w: 539.363464[0m
+[0m[ INFO] [1747886723.694137397]: v: -356.204041, w: 543.358276[0m
+[0m[ INFO] [1747886723.799152250]: v: -363.243347, w: 545.971436[0m
+[0m[ INFO] [1747886723.894361752]: v: -370.180298, w: 547.298584[0m
+[0m[ INFO] [1747886723.998345326]: v: -377.211639, w: 547.553284[0m
+[0m[ INFO] [1747886724.094216729]: v: -384.447052, w: 546.922363[0m
+[0m[ INFO] [1747886724.194677411]: v: -391.708069, w: 546.085266[0m
+[0m[ INFO] [1747886724.294324770]: v: -398.967590, w: 545.537354[0m
+[0m[ INFO] [1747886724.401370184]: v: -406.368164, w: 545.289307[0m
+[0m[ INFO] [1747886724.494012038]: v: -414.011414, w: 545.305786[0m
+[0m[ INFO] [1747886724.595715810]: v: -417.325195, w: 545.521362[0m
+[0m[ INFO] [1747886724.694219281]: v: -417.832001, w: 545.829041[0m
+[0m[ INFO] [1747886724.795676329]: v: -418.785522, w: 546.071655[0m
+[0m[ INFO] [1747886724.895584236]: v: -420.215576, w: 546.130493[0m
+[0m[ INFO] [1747886724.998353878]: v: -422.079590, w: 545.851196[0m
+[0m[ INFO] [1747886725.094652459]: v: -424.320435, w: 588.510559[0m
+[0m[ INFO] [1747886725.203000103]: v: -426.829193, w: 587.157104[0m
+[0m[ INFO] [1747886725.436332516]: v: -429.478607, w: 585.088623[0m
+[0m[ INFO] [1747886725.438029244]: v: -432.101013, w: 582.265015[0m
+[0m[ INFO] [1747886725.494201893]: v: -434.870972, w: 579.368286[0m
+[0m[ INFO] [1747886725.598828973]: v: -436.866302, w: 575.349304[0m
+[0m[ INFO] [1747886725.694528378]: v: -438.341919, w: 570.423462[0m
+[0m[ INFO] [1747886725.800217713]: v: -439.189270, w: 565.010498[0m
+[0m[ INFO] [1747886725.893991843]: v: -439.223083, w: 559.337463[0m
+[0m[ INFO] [1747886726.000235906]: v: -438.400726, w: 553.821838[0m
+[0m[ INFO] [1747886726.093782036]: v: -436.642883, w: 548.385986[0m
+[0m[ INFO] [1747886726.194294664]: v: -434.326874, w: 543.867676[0m
+[0m[ INFO] [1747886726.293925807]: v: -431.137634, w: 539.771484[0m
+[0m[ INFO] [1747886726.395232717]: v: -427.646576, w: 536.631348[0m
+[0m[ INFO] [1747886726.494148010]: v: -423.671234, w: 534.279785[0m
+[0m[ INFO] [1747886726.595535274]: v: -419.528290, w: 532.783264[0m
+[0m[ INFO] [1747886726.693801822]: v: -415.274109, w: 532.190063[0m
+[0m[ INFO] [1747886726.794060750]: v: -411.277618, w: 532.449585[0m
+[0m[ INFO] [1747886726.894062458]: v: -407.172546, w: 533.445068[0m
+[0m[ INFO] [1747886726.994235977]: v: -403.312256, w: 534.994324[0m
+[0m[ INFO] [1747886727.094034358]: v: -399.484314, w: 537.179749[0m
+[0m[ INFO] [1747886727.201276940]: v: -395.805603, w: 539.853333[0m
+[0m[ INFO] [1747886727.293795988]: v: -392.271088, w: 542.963806[0m
+[0m[ INFO] [1747886727.394111785]: v: -388.988922, w: 546.253845[0m
+[0m[ INFO] [1747886727.494036536]: v: -385.727356, w: 549.836670[0m
+[0m[ INFO] [1747886727.595766081]: v: -382.687805, w: 553.412842[0m
+[0m[ INFO] [1747886727.694152347]: v: -379.665100, w: 557.233826[0m
+[0m[ INFO] [1747886727.794460271]: v: -376.872406, w: 561.015015[0m
+[0m[ INFO] [1747886727.894000953]: v: -374.112762, w: 565.064270[0m
+[0m[ INFO] [1747886728.002441535]: v: -371.502350, w: 569.229004[0m
+[0m[ INFO] [1747886728.094160800]: v: -369.034149, w: 573.495239[0m
+[0m[ INFO] [1747886728.194356951]: v: -366.718933, w: 577.842346[0m
+[0m[ INFO] [1747886728.298077408]: v: -364.551483, w: 582.278992[0m
+[0m[ INFO] [1747886728.394378145]: v: -362.699921, w: 586.410706[0m
+[0m[ INFO] [1747886728.494953117]: v: -360.835388, w: 591.008301[0m
+[0m[ INFO] [1747886728.594204167]: v: -359.193970, w: 595.448364[0m
+[0m[ INFO] [1747886728.694131163]: v: -357.626038, w: 600.194275[0m
+[0m[ INFO] [1747886728.796773748]: v: -356.218048, w: 604.978271[0m
+[0m[ INFO] [1747886728.894017890]: v: -354.965485, w: 609.834839[0m
+[0m[ INFO] [1747886728.994246650]: v: -353.917694, w: 614.586670[0m
+[0m[ INFO] [1747886708.921392919]: [I2C FOR MOTORS] Now launching this node in namespace: /asc[0m
+[0m[ INFO] [1747886708.964949490]: [I2C FOR MOTORS] publish motor duty cycle requests from command line with: rostopic pub --once /asc/set_motor_duty_cycle asclinic_pkg/LeftRightFloat32 "{left: 10.1, right: 10.1}"[0m
+[0m[ INFO] [1747886708.965121908]: [I2C FOR MOTORS] Successfully opened named /dev/i2c-1, with file descriptor = 11[0m
+[0m[ INFO] [1747886708.965235798]: [I2C FOR MOTORS] Actual acceleration limit = 0.0003125%/ms (after conversation to "internal units")[0m
+[0m[ INFO] [1747886708.965333495]: [I2C FOR MOTORS] Actual deceleration limit = 0.0015625%/ms (after conversation to "internal units")[0m
+[0m[ INFO] [1747886708.965387000]: [I2C FOR MOTORS] Now initialising SMC with I2C address 13[0m
+[0m[ INFO] [1747886708.988501863]: [I2C FOR MOTORS] Now initialising SMC with I2C address 14[0m
+[0m[ INFO] [1747886709.004308950]: [I2C FOR MOTORS] Node initialisation complete[0m
+
+[ARUCO DETECTOR] Camera properties upon initialisation:
+CV_CAP_PROP_FRAME_HEIGHT : '480.0'
+CV_CAP_PROP_FRAME_WIDTH :  '640.0'
+CAP_PROP_FPS :             '30.0'
+CAP_PROP_FOCUS :           '0.0'
+CAP_PROP_AUTOFOCUS :       '0.0'
+CAP_PROP_BRIGHTNESS :      '128.0'
+CAP_PROP_CONTRAST :        '128.0'
+CAP_PROP_SATURATION :      '128.0'
+CAP_PROP_BUFFERSIZE :      '4.0'
+
+[ARUCO DETECTOR] Camera properties upon initialisation:
+CV_CAP_PROP_FRAME_HEIGHT : '1080.0'
+CV_CAP_PROP_FRAME_WIDTH :  '1920.0'
+CAP_PROP_FPS :             '5.0'
+CAP_PROP_FOCUS :           '0.0'
+CAP_PROP_AUTOFOCUS :       '0.0'
+CAP_PROP_BRIGHTNESS :      '128.0'
+CAP_PROP_CONTRAST :        '128.0'
+CAP_PROP_SATURATION :      '128.0'
+CAP_PROP_BUFFERSIZE :      '1.0'
+[INFO] [1747886711.863339]: [ARUCO DETECTOR] As a double check of the camera properties set, a frame captured just now has dimensions = (1080, 1920, 3)
+[INFO] [1747886711.867787]: [ARUCO DETECTOR] publish request from command line to save a single camera image using: rostopic pub --once /asc/request_save_image std_msgs/UInt32 1
+[INFO] [1747886711.870939]: [ARUCO DETECTOR] Node initialisation complete
+... logging to /home/asc/.ros/log/43bec514-36bf-11f0-a5e2-d8c0a650f677/roslaunch-asc12-jetson-12315.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/launch/trajectory.launch
+[1mstarted roslaunch server http://asc12-jetson:37479/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /asc/aruco_detector/aruco_detector_desired_camera_fps: 5
+ * /asc/aruco_detector/aruco_detector_desired_camera_frame_height: 1080
+ * /asc/aruco_detector/aruco_detector_desired_camera_frame_width: 1920
+ * /asc/aruco_detector/aruco_detector_marker_size: 0.25
+ * /asc/aruco_detector/aruco_detector_save_image_path: /home/asc/saved_c...
+ * /asc/aruco_detector/aruco_detector_should_publish_camera_images: False
+ * /asc/aruco_detector/aruco_detector_should_save_all_aruco_images: False
+ * /asc/aruco_detector/aruco_detector_should_show_camera_images: False
+ * /asc/aruco_detector/aruco_detector_usb_camera_device_number: 0
+ * /asc/aruco_detector/aruco_detector_verbosity: 1
+ * /asc/encoder_read_multi_threaded/delta_t_for_publishing_encoder_counts: 0.1
+ * /asc/encoder_read_multi_threaded/encoder_events_to_monitor: rising
+ * /asc/encoder_read_multi_threaded/encoder_read_verbosity: 1
+ * /asc/encoder_read_multi_threaded/gpio_chip_number_for_encoder_lines: 1
+ * /asc/encoder_read_multi_threaded/line_number_for_left_side_encoder_channel_a: 105
+ * /asc/encoder_read_multi_threaded/line_number_for_left_side_encoder_channel_b: 106
+ * /asc/encoder_read_multi_threaded/line_number_for_right_side_encoder_channel_a: 84
+ * /asc/encoder_read_multi_threaded/line_number_for_right_side_encoder_channel_b: 130
+ * /asc/encoder_read_multi_threaded/should_monitor_left_side_encoder_channel_a: True
+ * /asc/encoder_read_multi_threaded/should_monitor_left_side_encoder_channel_b: False
+ * /asc/encoder_read_multi_threaded/should_monitor_right_side_encoder_channel_a: True
+ * /asc/encoder_read_multi_threaded/should_monitor_right_side_encoder_channel_b: False
+ * /asc/i2c_for_motors/motor_driver_current_limit_in_milliamps: 5000
+ * /asc/i2c_for_motors/motor_driver_left_side_multiplier: 1
+ * /asc/i2c_for_motors/motor_driver_max_accel_limit_in_percent_per_millisecond: 0.04
+ * /asc/i2c_for_motors/motor_driver_max_decel_limit_in_percent_per_millisecond: 0.16
+ * /asc/i2c_for_motors/motor_driver_max_duty_cycle_limit_in_percent: 100.0
+ * /asc/i2c_for_motors/motor_driver_right_side_multiplier: 1
+ * /asc/i2c_for_motors/motor_driver_verbosity: 1
+ * /rosdistro: noetic
+ * /rosversion: 1.17.0
+
+NODES
+  /
+    aruco_positioning (asclinic_pkg/aruco_positioning.py)
+    kf_fusion_node (asclinic_pkg/KF.py)
+    odomdelta (asclinic_pkg/odomdelta)
+    trajectory_generator (asclinic_pkg/trajectory_generator_state_space)
+    trajectory_tracker (asclinic_pkg/trajectory_tracker_state_space)
+    velocity_PI_control (asclinic_pkg/velocity_PI_control)
+  /asc/
+    aruco_detector (asclinic_pkg/aruco_detector.py)
+    encoder_read_multi_threaded (asclinic_pkg/encoder_read_multi_threaded)
+    i2c_for_motors (asclinic_pkg/i2c_for_motors)
+
+[1mROS_MASTER_URI=http://localhost:11311[0m
+]2;/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/launch/trajectory.launch http://localhost:11311
+[1mprocess[asc/i2c_for_motors-1]: started with pid [12348][0m
+[1mprocess[asc/encoder_read_multi_threaded-2]: started with pid [12349][0m
+[1mprocess[odomdelta-3]: started with pid [12355][0m
+[1mprocess[asc/aruco_detector-4]: started with pid [12361][0m
+[1mprocess[aruco_positioning-5]: started with pid [12370][0m
+[1mprocess[trajectory_tracker-6]: started with pid [12372][0m
+[1mprocess[trajectory_generator-7]: started with pid [12373][0m
+[1mprocess[velocity_PI_control-8]: started with pid [12379][0m
+[1mprocess[kf_fusion_node-9]: started with pid [12385][0m
+[kf_fusion_node-9] killing on exit
+[velocity_PI_control-8] killing on exit
+[trajectory_generator-7] killing on exit
+[trajectory_tracker-6] killing on exit
+[odomdelta-3] killing on exit
+[asc/aruco_detector-4] killing on exit
+[aruco_positioning-5] killing on exit
+[asc/i2c_for_motors-1] killing on exit
+[asc/encoder_read_multi_threaded-2] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m

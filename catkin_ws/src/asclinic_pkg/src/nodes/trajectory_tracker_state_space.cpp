@@ -59,7 +59,7 @@ void publishMotorCommand(float left_speed, float right_speed) {
     asclinic_pkg::LeftRightFloat32 motor_command;
     motor_command.left = left_speed*RADS_TO_RPM;
     motor_command.right = right_speed*RADS_TO_RPM;
-    ROS_INFO("Publishing motor command - Left: %f, Right: %f", motor_command.left, motor_command.right);
+    //ROS_INFO("Publishing motor command - Left: %f, Right: %f", motor_command.left, motor_command.right);
     velocity_reference_publisher.publish(motor_command);
 }
 // Function to calculate wheel speeds from v and w and publish the command
@@ -71,11 +71,15 @@ void calculateAndPublishWheelSpeeds(float v, float w) {
 }
 // Callback for reference trajectory
 void referenceCallback(const asclinic_pkg::referenceVelocityPose& msg) {
-    ReferenceTrajectory::target_x = msg.x/100.0f; // Convert to meters
-    ReferenceTrajectory::target_y = msg.y/100.0f;
-    ReferenceTrajectory::target_phi = msg.phi*M_PI/180.0f; // Convert to radians
-    ReferenceTrajectory::target_v = msg.v/100.0f; // Convert mm/s to m/s
-    ReferenceTrajectory::target_w = msg.w; // Already in rad/s
+    ReferenceTrajectory::target_x = msg.x/1000.0f; // Convert to meters
+    ReferenceTrajectory::target_y = msg.y/1000.0f;
+    ReferenceTrajectory::target_phi = msg.phi*M_PI/180.0f; // Convert to radians not sure what this is in
+    ReferenceTrajectory::target_v = msg.v/1000.0f; // Convert mm/s to m/s
+    ReferenceTrajectory::target_w = msg.w; // Already in rad/s not sure about this either
+    ROS_INFO("Reference trajectory - x: %f, y: %f, phi: %f, v: %f, w: %f", 
+             ReferenceTrajectory::target_x, ReferenceTrajectory::target_y, 
+             ReferenceTrajectory::target_phi, ReferenceTrajectory::target_v, 
+             ReferenceTrajectory::target_w);
 }
 double signedAngleDiffDeg(double ref_deg, double meas_deg) {
     double diff = ref_deg - meas_deg;
@@ -105,13 +109,15 @@ void lineFollowingControllerLQR(float *v, float *w) {
     w_int = K_p[1][0] * Error::integral_error_x + K_p[1][1] * Error::integral_error_y;
     *v = ReferenceTrajectory::target_v + del_v + v_int;
     *w = ReferenceTrajectory::target_w + del_w + w_int;
+    ROS_INFO("v: %f, w: %f", *v, *w);
 }
 // Callback to update the robot's current state
 void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
-    RobotState::current_x = msg.x/100.0f; // Convert to meters
-    RobotState::current_y = msg.y/100.0f;
+    RobotState::current_x = msg.x/1000.0f; // Convert to meters from mm
+    RobotState::current_y = msg.y/1000.0f;
     RobotState::current_phi = msg.phi *M_PI/180.0f; // Convert to radians
-
+    ROS_INFO("Robot state - x: %f, y: %f, phi: %f", 
+             RobotState::current_x, RobotState::current_y, RobotState::current_phi);
     Error::error_x = ReferenceTrajectory::target_x - RobotState::current_x;
     Error::error_y = ReferenceTrajectory::target_y - RobotState::current_y;
     Error::error_phi = signedAngleDiffDeg(ReferenceTrajectory::target_phi, RobotState::current_phi);

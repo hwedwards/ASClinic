@@ -15,10 +15,10 @@
   <node pkg="asclinic_pkg" type="aruco_positioning.py" name="aruco_positioning" output="screen"/>
 
   <!-- Run Trajectory Tracker node -->
-  <node pkg="asclinic_pkg" type="trajectory_tracker" name="trajectory_tracker" output="screen"/>
+  <node pkg="asclinic_pkg" type="trajectory_tracker_state_space" name="trajectory_tracker" output="screen"/>
 
   <!-- Run Trajectory Generator node -->
-  <node pkg="asclinic_pkg" type="trajectory_generator" name="trajectory_generator" output="screen"/>
+  <node pkg="asclinic_pkg" type="trajectory_generator_state_space" name="trajectory_generator" output="screen"/>
 
   <!-- Run Velocity PI Control node -->
   <node pkg="asclinic_pkg" type="velocity_PI_control" name="velocity_PI_control" output="screen"/>

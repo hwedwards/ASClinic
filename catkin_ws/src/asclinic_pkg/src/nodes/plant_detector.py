@@ -14,7 +14,7 @@ import threading
 
 plant_id = 0
 bridge = CvBridge()
-model = YOLO("/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/src/plant_detector/weights.pt")
+model = YOLO("/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/src/plant_detector/weights_2.pt")
 save_dir_base = "/home/asc/saved_camera_images/saved_plant_images"
 
 BLURRINESS_THRESHOLD = 80  # Ignore frames with Laplacian variance below this threshold (decided from calculating the variance of the training set of model and seeing which is acceptable)
