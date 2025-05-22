@@ -139,7 +139,7 @@ void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
 int main(int argc, char** argv) {
     ros::init(argc, argv, "trajectory_tracker_state_space");
     ros::NodeHandle nh;
-    velocity_reference_publisher = nh.advertise<asclinic_pkg::LeftRightFloat32>("/set_reference", 10);
+    velocity_reference_publisher = nh.advertise<asclinic_pkg::LeftRightFloat32>("/set_wheel_velocity_reference", 10);
     ros::Subscriber reference_subscriber = nh.subscribe("/reference_trajectory", 10, referenceCallback);
     ros::Subscriber state_subscriber = nh.subscribe("/pose_estimate_fused", 10, stateUpdateCallback);
     driving_state_subscriber = nh.subscribe("/driving_state", 10, drivingStateCallback);
