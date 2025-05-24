@@ -8,22 +8,31 @@ current_state = {'plant_id': 1, 'location': 1, 'step': 0}
 
 def plant_done_callback(msg):
     if msg.data:
-        rospy.loginfo(f"[Test Plant] Received plant_done=True for step {current_state['step']}")
-        rospy.sleep(5.0)
         pub = rospy.Publisher('/asc/at_plant', PlantDetection, queue_size=1)
         rospy.sleep(1.0)  # ensure publisher is registered
+
+        # signal that we are no longer at any plant
+        off_msg = PlantDetection()
+        off_msg.are_at_plant = False
+        off_msg.plant_id = -1
+        off_msg.location = -1
+        pub.publish(off_msg)
+        rospy.loginfo("[Test Plant] Published at_plant=False (reset)")
+
+        rospy.loginfo(f"[Test Plant] Received plant_done=True for step {current_state['step']}")
+        rospy.sleep(10.0)
 
         current_state['step'] += 1
 
         if current_state['step'] == 1:
             current_state['location'] = 2
             current_state['plant_id'] = 1
-        elif current_state['step'] == 2:
-            current_state['location'] = 1
-            current_state['plant_id'] = 2
-        elif current_state['step'] == 3:
-            current_state['location'] = 2
-            current_state['plant_id'] = 2
+#        elif current_state['step'] == 2:
+#            current_state['location'] = 1
+#            current_state['plant_id'] = 2
+#        elif current_state['step'] == 3:
+#            current_state['location'] = 2
+#            current_state['plant_id'] = 2
         else:
             rospy.loginfo("[Test Plant] All locations tested. Shutting down.")
             rospy.signal_shutdown("Test complete.")

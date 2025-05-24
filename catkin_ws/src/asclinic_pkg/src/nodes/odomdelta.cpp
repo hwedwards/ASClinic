@@ -11,7 +11,7 @@
 #define WHEELBASETWO 215 // 2b = 215
 #define COUNTS_PER_REV 16
 #define LEFTCOUNTSPERREV 1120  // 1123.1
-#define RIGHTCOUNTSPERREV 1180 // 1129.4
+#define RIGHTCOUNTSPERREV 1120 // 1129.4 decreasing right relative to left makes it veer more to the right
 #define KL 0.0003862           // proportionality constant between total angular displacement and variance of angular displacement for the left wheel
 #define KR 0.0006456           // same for the right wheel
 

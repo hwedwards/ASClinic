@@ -1,0 +1,133 @@
+[0m[ INFO] [1748069169.542948059]: [1748069169.543] Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1748069169.547781037]: [1748069169.548] Reference trajectory - x: 0.000000, y: 0.000000, phi: 0.000000, v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1748069169.642320635]: [1748069169.642] Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1748069169.642417756]: [1748069169.642] Reference trajectory - x: 0.000000, y: 0.000000, phi: 0.000000, v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1748069169.742216641]: [1748069169.742] Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1748069169.742340195]: [1748069169.742] Reference trajectory - x: 0.000000, y: 0.000000, phi: 0.000000, v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1748069169.842975696]: [1748069169.843] Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1748069169.843077905]: [1748069169.843] Reference trajectory - x: 0.000000, y: 0.000000, phi: 0.000000, v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1748069169.943402939]: [1748069169.943] Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1748069169.944468102]: [1748069169.944] Reference trajectory - x: 0.000000, y: 0.000000, phi: 0.000000, v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1748069170.050923536]: [1748069170.050] Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1748069170.051535382]: [1748069170.051] Reference trajectory - x: 0.000000, y: 0.000000, phi: 0.000000, v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1748069170.150426545]: [1748069170.150] Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1748069170.150747029]: [1748069170.151] Reference trajectory - x: 0.000000, y: 0.000000, phi: 0.000000, v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1748069170.246403790]: [1748069170.246] Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1748069170.246591952]: [1748069170.246] Reference trajectory - x: 0.000000, y: 0.000000, phi: 0.000000, v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1748069170.441748396]: [1748069170.442] Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1748069170.442225681]: [1748069170.442] Reference trajectory - x: 0.000000, y: 0.000000, phi: 0.000000, v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1748069170.443004121]: [1748069170.443] Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1748069170.443404573]: [1748069170.443] Reference trajectory - x: 0.000000, y: 0.000000, phi: 0.000000, v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1748069170.551230452]: [1748069170.551] Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1748069170.553164584]: [1748069170.552] Reference trajectory - x: 0.000000, y: 0.000000, phi: 0.000000, v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1748069170.643733774]: [1748069170.644] Robot state - x: 0.000000, y: 0.000000, phi: 0.000000[0m
+[0m[ INFO] [1748069170.644037905]: [1748069170.644] Reference trajectory - x: 0.000000, y: 0.000000, phi: 0.000000, v: 0.000000, w: 0.000000[0m
+[0m[ INFO] [1748069167.664643604]: [I2C FOR MOTORS] Now launching this node in namespace: /asc[0m
+[0m[ INFO] [1748069167.683188147]: [I2C FOR MOTORS] publish motor duty cycle requests from command line with: rostopic pub --once /asc/set_motor_duty_cycle asclinic_pkg/LeftRightFloat32 "{left: 10.1, right: 10.1}"[0m
+[0m[ INFO] [1748069167.683385365]: [I2C FOR MOTORS] Successfully opened named /dev/i2c-1, with file descriptor = 10[0m
+[0m[ INFO] [1748069167.683517207]: [I2C FOR MOTORS] Actual acceleration limit = 0.0003125%/ms (after conversation to "internal units")[0m
+[0m[ INFO] [1748069167.683602359]: [I2C FOR MOTORS] Actual deceleration limit = 0.0015625%/ms (after conversation to "internal units")[0m
+[0m[ INFO] [1748069167.684001724]: [I2C FOR MOTORS] Now initialising SMC with I2C address 13[0m
+[0m[ INFO] [1748069167.702002677]: [I2C FOR MOTORS] Now initialising SMC with I2C address 14[0m
+[0m[ INFO] [1748069167.717553814]: [I2C FOR MOTORS] Node initialisation complete[0m
+
+[ARUCO DETECTOR] Camera properties upon initialisation:
+CV_CAP_PROP_FRAME_HEIGHT : '480.0'
+CV_CAP_PROP_FRAME_WIDTH :  '640.0'
+CAP_PROP_FPS :             '30.0'
+CAP_PROP_FOCUS :           '0.0'
+CAP_PROP_AUTOFOCUS :       '0.0'
+CAP_PROP_BRIGHTNESS :      '128.0'
+CAP_PROP_CONTRAST :        '128.0'
+CAP_PROP_SATURATION :      '128.0'
+CAP_PROP_BUFFERSIZE :      '4.0'
+
+[ARUCO DETECTOR] Camera properties upon initialisation:
+CV_CAP_PROP_FRAME_HEIGHT : '1080.0'
+CV_CAP_PROP_FRAME_WIDTH :  '1920.0'
+CAP_PROP_FPS :             '5.0'
+CAP_PROP_FOCUS :           '0.0'
+CAP_PROP_AUTOFOCUS :       '0.0'
+CAP_PROP_BRIGHTNESS :      '128.0'
+CAP_PROP_CONTRAST :        '128.0'
+CAP_PROP_SATURATION :      '128.0'
+CAP_PROP_BUFFERSIZE :      '1.0'
+... logging to /home/asc/.ros/log/42870390-3869-11f0-b419-d8c0a650f677/roslaunch-asc12-jetson-16278.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/launch/trajectory.launch
+[1mstarted roslaunch server http://asc12-jetson:45911/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /asc/aruco_detector/aruco_detector_desired_camera_fps: 5
+ * /asc/aruco_detector/aruco_detector_desired_camera_frame_height: 1080
+ * /asc/aruco_detector/aruco_detector_desired_camera_frame_width: 1920
+ * /asc/aruco_detector/aruco_detector_marker_size: 0.25
+ * /asc/aruco_detector/aruco_detector_save_image_path: /home/asc/saved_c...
+ * /asc/aruco_detector/aruco_detector_should_publish_camera_images: False
+ * /asc/aruco_detector/aruco_detector_should_save_all_aruco_images: False
+ * /asc/aruco_detector/aruco_detector_should_show_camera_images: False
+ * /asc/aruco_detector/aruco_detector_usb_camera_device_number: 0
+ * /asc/aruco_detector/aruco_detector_verbosity: 1
+ * /asc/encoder_read_multi_threaded/delta_t_for_publishing_encoder_counts: 0.1
+ * /asc/encoder_read_multi_threaded/encoder_events_to_monitor: rising
+ * /asc/encoder_read_multi_threaded/encoder_read_verbosity: 1
+ * /asc/encoder_read_multi_threaded/gpio_chip_number_for_encoder_lines: 1
+ * /asc/encoder_read_multi_threaded/line_number_for_left_side_encoder_channel_a: 105
+ * /asc/encoder_read_multi_threaded/line_number_for_left_side_encoder_channel_b: 106
+ * /asc/encoder_read_multi_threaded/line_number_for_right_side_encoder_channel_a: 84
+ * /asc/encoder_read_multi_threaded/line_number_for_right_side_encoder_channel_b: 130
+ * /asc/encoder_read_multi_threaded/should_monitor_left_side_encoder_channel_a: True
+ * /asc/encoder_read_multi_threaded/should_monitor_left_side_encoder_channel_b: False
+ * /asc/encoder_read_multi_threaded/should_monitor_right_side_encoder_channel_a: True
+ * /asc/encoder_read_multi_threaded/should_monitor_right_side_encoder_channel_b: False
+ * /asc/i2c_for_motors/motor_driver_current_limit_in_milliamps: 5000
+ * /asc/i2c_for_motors/motor_driver_left_side_multiplier: 1
+ * /asc/i2c_for_motors/motor_driver_max_accel_limit_in_percent_per_millisecond: 0.04
+ * /asc/i2c_for_motors/motor_driver_max_decel_limit_in_percent_per_millisecond: 0.16
+ * /asc/i2c_for_motors/motor_driver_max_duty_cycle_limit_in_percent: 100.0
+ * /asc/i2c_for_motors/motor_driver_right_side_multiplier: 1
+ * /asc/i2c_for_motors/motor_driver_verbosity: 1
+ * /rosdistro: noetic
+ * /rosversion: 1.17.0
+
+NODES
+  /
+    aruco_positioning (asclinic_pkg/aruco_positioning.py)
+    kf_fusion_node (asclinic_pkg/KF.py)
+    odomdelta (asclinic_pkg/odomdelta)
+    trajectory_generator (asclinic_pkg/trajectory_generator_state_space)
+    trajectory_tracker (asclinic_pkg/trajectory_tracker_state_space)
+    velocity_PI_control (asclinic_pkg/velocity_PI_control)
+  /asc/
+    aruco_detector (asclinic_pkg/aruco_detector.py)
+    encoder_read_multi_threaded (asclinic_pkg/encoder_read_multi_threaded)
+    i2c_for_motors (asclinic_pkg/i2c_for_motors)
+
+[1mROS_MASTER_URI=http://localhost:11311[0m
+]2;/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/launch/trajectory.launch http://localhost:11311
+[1mprocess[asc/i2c_for_motors-1]: started with pid [16318][0m
+[1mprocess[asc/encoder_read_multi_threaded-2]: started with pid [16319][0m
+[1mprocess[odomdelta-3]: started with pid [16321][0m
+[1mprocess[asc/aruco_detector-4]: started with pid [16331][0m
+[1mprocess[aruco_positioning-5]: started with pid [16340][0m
+[1mprocess[trajectory_tracker-6]: started with pid [16342][0m
+[1mprocess[trajectory_generator-7]: started with pid [16343][0m
+[1mprocess[velocity_PI_control-8]: started with pid [16345][0m
+[1mprocess[kf_fusion_node-9]: started with pid [16355][0m
+[kf_fusion_node-9] killing on exit
+[velocity_PI_control-8] killing on exit
+[asc/aruco_detector-4] killing on exit
+[trajectory_tracker-6] killing on exit
+[trajectory_generator-7] killing on exit
+[odomdelta-3] killing on exit
+[aruco_positioning-5] killing on exit
+[asc/i2c_for_motors-1] killing on exit
+[asc/encoder_read_multi_threaded-2] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m
