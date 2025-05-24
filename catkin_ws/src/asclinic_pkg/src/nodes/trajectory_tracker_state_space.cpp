@@ -4,6 +4,9 @@
 #include "asclinic_pkg/referenceVelocityPose.h"
 #include <cmath>
 #include "std_msgs/String.h"
+#include <fstream>
+#include <sstream>
+#include <vector>
 // Constants
 const float POSITION_TOLERANCE = 0.1; // in meters
 const float ANGLE_TOLERANCE = 5.0;    // in degrees
@@ -14,12 +17,12 @@ const int RADS_TO_RPM = 9.549; // conversion factor
 const float K_angular = 60; // Proportional gain for angular velocity control
 const float Kd_angular = 25; // Derivative gain for angular velocity control
 float K_p[2][2] = {
-    {3.1623, 0},
-    {0, 3.1623}
+    {2.236, 2.236},
+    {-2.236, 2.236}
  };  // proportional integral gain matrix
  float K_x[2][3] = {
-    {4.0404, 0, 0},
-    {0, 4.526, 6.908}
+    {2.857, 2.857, 0},
+    {-6.849, 6.849, 3.976}
  }; // state feedback gain matrix assume phi = 0 and v = 4.167 
 ros::Publisher velocity_reference_publisher;
 ros::Subscriber driving_state_subscriber;
@@ -141,10 +144,12 @@ void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
     // Calculate the desired linear and angular velocities
     float v; 
     float w; 
+    // Have an if statement here to test whether we are in DRIVING or TURNING state which will determine the controller to use
     lineFollowingControllerLQR(&v, &w);
     // Convert to wheel speeds
     calculateAndPublishWheelSpeeds(v, w);
 }
+
 int main(int argc, char** argv) {
     ros::init(argc, argv, "trajectory_tracker_state_space");
     ros::NodeHandle nh;

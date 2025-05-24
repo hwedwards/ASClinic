@@ -94,5 +94,18 @@ def main():
     plt.savefig('z_figures/y_position_plot.png')
     print("Saved plot to y_position_plot.png")
 
+    # Plot x vs y (bird's eye view)
+    plt.figure()
+    plt.plot(ref_x_interp, ref_y_interp, label='Reference Trajectory')
+    plt.plot(state_x, state_y, label='Robot Trajectory')
+    plt.xlabel('x position [m]')
+    plt.ylabel('y position [m]')
+    plt.title("XY Trajectory (Bird's Eye View)")
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig('z_figures/xy_trajectory_plot.png')
+    print("Saved plot to xy_trajectory_plot.png")
+
 if __name__ == "__main__":
     main()

@@ -1,2 +1,3 @@
-coeffx_0,coeffx_1,coeffx_2,coeffx_3,coeffy_0,coeffy_1,coeffy_2,coeffy_3,tf
-0.0,0.0,30.0,-0.6666666666666666,0.0,0.0,-0.0,0.0,30
+FLAG, coeffx_0,coeffx_1,coeffx_2,coeffx_3,coeffy_0,coeffy_1,coeffy_2,coeffy_3,tf
+0,0.0,0.0,30.0,-0.6666666666666666,0.0,0.0,-0.0,0.0,30
+1, 180.0, 5

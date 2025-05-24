@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import CubicSpline
 import csv
 import control
+from math import acos, sin, cos, sqrt, atan2
 
 # Define coordinates and velocities [x0; y0; xf; yf] and [vx0; vy0; vxf; vyf]
 def calculateLinAB(v, phi):
@@ -18,22 +19,22 @@ def calculateLinAB(v, phi):
     ])
     return A, B
 def calculateAugmented(A, B):
-    A_aug = np.array([
-        [A, np.zeros(3,2)],
-        [np.eye(2), np.zeros(2,3)]
-        ])
-    B_aug = np.array([
+    A_aug = np.block([
+        [A, np.zeros((3,2))],
+        [np.eye(2), np.zeros((2,3))]
+    ])
+    B_aug = np.block([
         [B],
-        [np.zeros(2,2)]
+        [np.zeros((2,2))]
     ])
     return A_aug, B_aug
 def calculateGainsK(A_aug, B_aug):
     Q = np.array([
-        [1, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0],
-        [0, 0, 1, 0, 0],
-        [0, 0, 0, 1, 0],
-        [0, 0, 0, 0, 1]
+        [10, 0, 0, 0, 0],
+        [0, 10, 0, 0, 0],
+        [0, 0, 10, 0, 0],
+        [0, 0, 0, 10, 0],
+        [0, 0, 0, 0, 10]
     ])
     R = np.array([
         [1, 0],
@@ -64,44 +65,52 @@ def get_traj(coords, vels, tf):
 def main():
     # Example usage for a linear trajectory in mm and seconds
     # I have found from testing that an operating speed of 0.3 m/s is pretty good. 
-    coords = [0, 0, 9000, 0]  # mm
+    coords = [0, 0, 5000, 5000]  # mm
     vels = [0, 0, 0, 0]       # mm/s
     tf = 30                    # seconds
     coeffx, coeffy = get_traj(coords, vels, tf)
     t_var = np.linspace(0, tf, 1000)
-    x_traj = coeffx[0] + coeffx[1]*t_var + coeffx[2]*t_var**2 + coeffx[3]*t_var**3
-    y_traj = coeffy[0] + coeffy[1]*t_var + coeffy[2]*t_var**2 + coeffy[3]*t_var**3
+    v = 0.3 # m/s
+    phi = atan2((coords[3] - coords[1]),(coords[2] - coords[0]))
+    A, B = calculateLinAB(v, phi)
+    A_aug, B_aug = calculateAugmented(A, B)
+    K, S, E = calculateGainsK(A_aug, B_aug)
+    print("K matrix: ", K)
+    print("Phi", phi)
 
-    x_dot = coeffx[1] + 2*coeffx[2]*t_var + 3*coeffx[3]*t_var**2
-    y_dot = coeffy[1] + 2*coeffy[2]*t_var + 3*coeffy[3]*t_var**2
+    # Save K matrix to CSV
+    with open('trajectoryGainsK.csv', 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow([f'K_{i}_{j}' for i in range(K.shape[0]) for j in range(K.shape[1])])
+        writer.writerow(K.flatten())
 
-    # v = np.sqrt(x_dot**2 + y_dot**2)
-    # phi = 0.0 
-    # A, B = calculateLinAB(v[0], phi)
-    # A_aug, B_aug = calculateAugmented(A, B)
-    # K = calculateGainsK(A_aug, B_aug)
-    # print("LQR Gain Matrix K:")
-    # print(K)
+    # plt.figure(figsize=(15, 4))
+    # plt.subplot(1, 3, 1)
+    # plt.plot(t_var, x_traj, label='x (mm)')
+    # plt.xlabel('Time (s)')
+    # plt.ylabel('X (mm)')
+    # plt.title('Cubic Trajectory for X')
+    # plt.grid(True)
+    # plt.legend()
 
-    plt.figure(figsize=(10, 4))
-    plt.subplot(1, 2, 1)
-    plt.plot(t_var, x_traj, label='x (mm)')
-    plt.xlabel('Time (s)')
-    plt.ylabel('X (mm)')
-    plt.title('Cubic Trajectory for X')
-    plt.grid(True)
-    plt.legend()
+    # plt.subplot(1, 3, 2)
+    # plt.plot(t_var, y_traj, label='y (mm)', color='orange')
+    # plt.xlabel('Time (s)')
+    # plt.ylabel('Y (mm)')
+    # plt.title('Cubic Trajectory for Y')
+    # plt.grid(True)
+    # plt.legend()
 
-    plt.subplot(1, 2, 2)
-    plt.plot(t_var, y_traj, label='y (mm)', color='orange')
-    plt.xlabel('Time (s)')
-    plt.ylabel('Y (mm)')
-    plt.title('Cubic Trajectory for Y')
-    plt.grid(True)
-    plt.legend()
+    # plt.subplot(1, 3, 3)
+    # plt.plot(x_traj, y_traj, label='Trajectory (x vs y)', color='green')
+    # plt.xlabel('X (mm)')
+    # plt.ylabel('Y (mm)')
+    # plt.title('Trajectory in XY Plane')
+    # plt.grid(True)
+    # plt.legend()
 
-    plt.tight_layout()
-    plt.savefig('cubic_trajectories.png')
+    # plt.tight_layout()
+    # plt.savefig('cubic_trajectories.png')
     # plt.show()  # Optionally keep this for interactive viewing
 
     # Save coefficients to CSV for ROS trajectory tracking node
