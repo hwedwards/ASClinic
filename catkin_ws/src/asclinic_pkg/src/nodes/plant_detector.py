@@ -18,7 +18,7 @@ from std_msgs.msg import Bool
 # Nested dictionary mapping plant IDs to location-specific lists of servo pulse widths
 # Populate with: plant_id: { location: [pulse_width1, pulse_width2, ...], ... }
 SERVO_PULSE_WIDTH_MAP = {
-    1: { 0: [1950, 2000, 2150, 1500], 1: [750, 825, 950, 1500] },
+    1: { 1: [1950, 2000, 2150, 1500], 2: [750, 825, 950, 1500] },
 }
 
 # Will hold the servo command publisher
@@ -26,7 +26,7 @@ servo_pub = None
 
 plant_id = 0
 bridge = CvBridge()
-model = YOLO("/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/src/plant_detector/weights_2.pt")
+model = YOLO("/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/src/plant_detector/weights.pt")
 save_dir_base = "/home/asc/saved_camera_images/saved_plant_images"
 
 BLURRINESS_THRESHOLD = 80  # Ignore frames with Laplacian variance below this threshold (decided from calculating the variance of the training set of model and seeing which is acceptable)
@@ -117,49 +117,37 @@ class PlantCollector:
     def save_best_frame_and_summary(self):
         rospy.loginfo("[YOLO Stream] Entering save_best_frame_and_summary()")
         with self.lock:
+            rospy.loginfo("[YOLO Stream] Saving all collected good frames")
             if not self.frames_info:
                 rospy.logwarn("[YOLO Stream] No good frames collected to save")
                 return
-            best_frame_info = max(self.frames_info, key=lambda x: cv2.Laplacian(x['frame'], cv2.CV_64F).var())
-            rospy.loginfo(f"[YOLO Stream] Saving best frame from location {best_frame_info['location']}")
             plant_folder = os.path.join(save_dir_base, f"plant_{self.current_plant_id:03d}")
             os.makedirs(plant_folder, exist_ok=True)
-            image_path = os.path.join(plant_folder, f"location_{best_frame_info['location']:02d}.jpg")
-            results = model(best_frame_info['frame'])[0]
-            annotated = results.plot()
-            for box in results.boxes:
-                # extract coords and compute area
-                x1, y1, x2, y2 = map(int, box.xyxy[0])
-                area = (x2 - x1) * (y2 - y1)
-                # put the area as text just above the box
-                cv2.putText(
-                    annotated,
-                    str(area),
-                    (x1, y1 - 10),                   # position
-                    cv2.FONT_HERSHEY_SIMPLEX,        # font
-                    0.5,                             # font scale
-                    (0, 255, 0),                     # color (green)
-                    1                                # thickness
-                )
-            success = cv2.imwrite(image_path, annotated)
-            if success:
-                rospy.loginfo(f"[YOLO Stream] Image successfully saved to: {image_path}")
-            else:
-                rospy.logerr(f"[YOLO Stream] Failed to save image to: {image_path}")
-
-            location = best_frame_info['location']
-            flower_present = any(f['flower_present'] for f in self.characteristics)
-            bug_present = any(f['bug_present'] for f in self.characteristics)
-            plant_type = best_frame_info['detections']['plant_type']
-            avg_conf = sum(best_frame_info['detections']['confidences']) / len(best_frame_info['detections']['confidences']) if best_frame_info['detections']['confidences'] else 0.0
-
-            location_csv_path = os.path.join(plant_folder, "locations.csv")
-            write_header = not os.path.exists(location_csv_path)
-            with open(location_csv_path, "a") as f:
-                if write_header:
-                    f.write("location,plant_type,bug_present,flower_present,avg_confidence\n")
-                f.write(f"{location},{plant_type},{bug_present},{flower_present},{avg_conf:.2f}\n")
-
+            for idx, info in enumerate(self.frames_info, start=1):
+                frame = info['frame']
+                # Re-run detection to generate annotations
+                results = model(frame)[0]
+                annotated = results.plot()
+                # Optionally annotate areas as before
+                for box in results.boxes:
+                    x1, y1, x2, y2 = map(int, box.xyxy[0])
+                    area = (x2 - x1) * (y2 - y1)
+                    cv2.putText(
+                        annotated,
+                        str(area),
+                        (x1, y1 - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.5,
+                        (0, 255, 0),
+                        1
+                    )
+                image_path = os.path.join(plant_folder, f"frame_{idx}_location_{info['location']:02d}.jpg")
+                success = cv2.imwrite(image_path, annotated)
+                if success:
+                    rospy.loginfo(f"[YOLO Stream] Saved frame {idx} to: {image_path}")
+                else:
+                    rospy.logerr(f"[YOLO Stream] Failed to save frame {idx} to: {image_path}")
+            # After saving all frames, publish done signal
             self.done_pub.publish(Bool(data=True))
 
 plant_collector = PlantCollector()
@@ -173,23 +161,35 @@ def at_plant_callback(msg):
     plant_collector.reset()
     plant_collector.collecting = True
 
-    # Publish all configured pulse widths for this plant_id and location
+    # Iterate servo positions, collect and save NUM_PHOTOS_TO_TAKE frames at each
     servo_list = SERVO_PULSE_WIDTH_MAP.get(msg.plant_id, {}).get(msg.location)
     if servo_list:
         for pulse_width in servo_list:
+            # Move servo
             servo_msg = ServoPulseWidth(channel=3, pulse_width_in_microseconds=pulse_width)
             servo_pub.publish(servo_msg)
-            rospy.loginfo(f"[YOLO Stream] Published servo pulse width for plant_id {msg.plant_id}, location {msg.location}: {pulse_width} μs")
-            rospy.sleep(2)
+            rospy.loginfo(f"[YOLO Stream] Moved servo to {pulse_width} μs for plant_id {msg.plant_id}, location {msg.location}")
+            rospy.sleep(2)  # allow servo to reach position
+
+            # Collect frames at this position
+            plant_collector.reset()
+            plant_collector.collecting = True
+            rospy.loginfo(f"[YOLO Stream] Collecting {NUM_PHOTOS_TO_TAKE} frames at pulse {pulse_width}")
+            start_time = rospy.Time.now()
+            while plant_collector.collecting and not rospy.is_shutdown():
+                if (rospy.Time.now() - start_time).to_sec() > 10.0:
+                    rospy.loginfo("[YOLO Stream] Collection timeout after 10 seconds")
+                    break
+                rospy.sleep(0.1)
+            plant_collector.collecting = False
+
+            # Save all collected frames
+            plant_collector.save_best_frame_and_summary()
+
+        rospy.loginfo(f"[YOLO Stream] Completed all positions for plant_id {msg.plant_id}, location {msg.location}")
         plant_collector.done_pub.publish(Bool(data=True))
     else:
         rospy.logwarn(f"[YOLO Stream] No servo pulse widths configured for plant_id {msg.plant_id}, location {msg.location}")
-
-    # Wait until collection is done
-    while plant_collector.collecting and not rospy.is_shutdown():
-        rospy.sleep(0.1)
-    plant_collector.collecting = False
-    rospy.loginfo(f"[YOLO Stream] Completed frame collection for plant_id {msg.plant_id}")
 
 def camera_callback(msg):
     try:

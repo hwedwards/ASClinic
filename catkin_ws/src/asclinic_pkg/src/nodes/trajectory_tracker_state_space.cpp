@@ -17,12 +17,12 @@ const int RADS_TO_RPM = 9.549; // conversion factor
 const float K_angular = 1.5; // Proportional gain for angular velocity control
 const float Kd_angular = 0; // Derivative gain for angular velocity control
 float K_p[2][2] = {
-    {2.236, 2.236},
-    {-2.236, 2.236}
+    {3.16, 0},
+    {0, 3.16}
  };  // proportional integral gain matrix
  float K_x[2][3] = {
-    {2.857, 2.857, 0},
-    {-6.849, 6.849, 3.976}
+    {4.04, 0, 0},
+    {0, 9.687, 3.976}
  }; // state feedback gain matrix assume phi = 0 and v = 4.167 
 ros::Publisher velocity_reference_publisher;
 ros::Subscriber driving_state_subscriber;
@@ -32,6 +32,7 @@ namespace DrivingState {
 void drivingStateCallback(const std_msgs::String& msg) {
     DrivingState::current_state = msg.data;
 }
+
 namespace RobotState {
     float current_x = 0.0;
     float current_y = 0.0;
