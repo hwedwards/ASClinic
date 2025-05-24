@@ -36,12 +36,13 @@ marker_positions = {
    }
 """    12: (3, -0.8, 180),
     13: (4.5, 1, 180),
-    15: (3.0, 1.5, -90)"""
+    15: (3.0, 1.5, -90)
+    straight line test, x facing the exit"""
 """
     12: (-0.8, -3.0, 90),
     13: (1.0, -4.5, 90),
     15: (1.5, -3.0, 180)
-    """
+    replicating the first part of the course, x facing the lecture theatre"""
 
 """    1: (1.973, -0.600, 180),
     2: (2.033, -0.600,   0),

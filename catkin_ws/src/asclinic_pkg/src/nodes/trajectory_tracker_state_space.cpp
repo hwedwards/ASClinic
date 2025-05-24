@@ -163,6 +163,30 @@ void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
 }
 
 int main(int argc, char** argv) {
+    // Read K_p and K_x from trajectoryGainsK.csv
+    std::ifstream kfile("/home/asc/ASClinic/trajectoryGainsK.csv");
+    std::string kline;
+    std::getline(kfile, kline); // skip header
+    if (std::getline(kfile, kline)) {
+        std::stringstream ss(kline);
+        std::string val;
+        std::vector<float> K_vals;
+        while (std::getline(ss, val, ',')) {
+            K_vals.push_back(std::stof(val));
+        }
+        // K_x = K(:, 0:2)
+        K_x[0][0] = K_vals[0];
+        K_x[0][1] = K_vals[1];
+        K_x[0][2] = K_vals[2];
+        K_x[1][0] = K_vals[5];
+        K_x[1][1] = K_vals[6];
+        K_x[1][2] = K_vals[7];
+        // K_p = K(:, 3:4)
+        K_p[0][0] = K_vals[3];
+        K_p[0][1] = K_vals[4];
+        K_p[1][0] = K_vals[8];
+        K_p[1][1] = K_vals[9];
+    }
     ros::init(argc, argv, "trajectory_tracker_state_space");
     ros::NodeHandle nh;
     velocity_reference_publisher = nh.advertise<asclinic_pkg::LeftRightFloat32>("/set_wheel_velocity_reference", 10);
