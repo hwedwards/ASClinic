@@ -1,0 +1,7 @@
+<launch>
+  
+  <!-- Run Trajectory Generator node -->
+  <node pkg="asclinic_pkg" type="trajectory_generator_state_space" name="trajectory_generator" output="screen"/>
+
+ 
+</launch>

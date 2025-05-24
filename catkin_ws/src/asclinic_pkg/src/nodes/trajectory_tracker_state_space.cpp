@@ -74,11 +74,13 @@ void calculateAndPublishWheelSpeeds(float v, float w) {
 }
 // Callback for reference trajectory
 void referenceCallback(const asclinic_pkg::referenceVelocityPose& msg) {
+    ROS_INFO("Received reference trajectory - x: %f, y: %f, phi: %f, v: %f, w: %f", 
+             msg.x, msg.y, msg.phi, msg.v, msg.w);
     ReferenceTrajectory::target_x = msg.x/1000.0f; // Convert to meters
     ReferenceTrajectory::target_y = msg.y/1000.0f;
     ReferenceTrajectory::target_phi = msg.phi*M_PI/180.0f; // Convert to radians not sure what this is in
     ReferenceTrajectory::target_v = msg.v/1000.0f; // Convert mm/s to m/s
-    ReferenceTrajectory::target_w = msg.w; // Already in rad/s not sure about this either
+    ReferenceTrajectory::target_w = msg.w*M_PI/180.0f; // Already in rad/s not sure about this either
 }
 double signedAngleDiffDeg(double ref_deg, double meas_deg) {
     double diff = ref_deg - meas_deg;
@@ -87,11 +89,11 @@ double signedAngleDiffDeg(double ref_deg, double meas_deg) {
         diff += 2.0 * M_PI;
     return diff - M_PI;
 }
-double pureRotationController(){
+void pureRotationController(float *w){
     float error_phi = signedAngleDiffDeg(ReferenceTrajectory::target_phi, RobotState::current_phi);
     float dphi = (error_phi - Error::error_phi) / 0.1;
     Error::error_phi = error_phi;
-    return (error_phi * K_angular + Kd_angular * dphi);
+    *w = (error_phi * K_angular + Kd_angular * dphi);
 }
 // LQR-based line following controller
 void lineFollowingControllerLQR(float *v, float *w) {
@@ -144,9 +146,17 @@ void stateUpdateCallback(const asclinic_pkg::PoseCovar& msg) {
     // Calculate the desired linear and angular velocities
     float v; 
     float w; 
-    // Have an if statement here to test whether we are in DRIVING or TURNING state which will determine the controller to use
-    lineFollowingControllerLQR(&v, &w);
-    // Convert to wheel speeds
+    if (DrivingState::current_state == "DRIVING"){
+        // Use the line following controller
+        lineFollowingControllerLQR(&v, &w);
+    } else if (DrivingState::current_state == "TURNING") {
+        pureRotationController(&w);
+    } else {
+        // Default to zero velocities if not in a valid state
+        v = 0.0;
+        w = 0.0;
+    }
+    
     calculateAndPublishWheelSpeeds(v, w);
 }
 

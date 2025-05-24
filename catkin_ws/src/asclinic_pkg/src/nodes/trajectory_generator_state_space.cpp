@@ -10,7 +10,7 @@ ros::Publisher motor_reference_position;
 ros::Publisher driving_state_publisher;
 ros::Time start_time;
 
-enum TrajectoryType{ DRIVING, TURNING}; 
+enum TrajectoryType{DRIVING, TURNING}; 
 struct Trajectory {
     TrajectoryType type;
     std::vector<double> coeffx;
@@ -54,13 +54,14 @@ int main(int argc, char** argv) {
     // Pause for 3 seconds at the start
     ros::Duration(3.0).sleep();
     ros::Rate loop_rate(10); // 10 Hz
-
+    ROS_INFO("Trajectory Generator Node Started");
     // Read coefficients from CSV
     std::vector<Trajectory> trajectory_info;
-    std::ifstream file("trajectory_coeffs.csv");
+    std::ifstream file("/home/asc/ASClinic/trajectory_coeffs.csv");
     std::string line;
     std::getline(file, line); // skip header
     while (std::getline(file, line)) {
+        ROS_INFO("Reading trajectory coeffs"); 
         std::stringstream ss(line);
         std::string val;
         std::getline(ss, val, ',');
@@ -102,18 +103,22 @@ int main(int argc, char** argv) {
         // have we reached all the trajectories? 
         if (i >= trajectory_info.size() ) {
             sent_final = true;
+            // std_msgs::String state_msg;
+            // state_msg.data = "STOP";
+            // driving_state_publisher.publish(state_msg);
             // stop where ever the robot is
-            publishPositionCommand(last_x, last_y, last_phi, 0.0, 0.0);
         } else {
             // Are we DRIVING or TURNING?
            if (trajectory_info[i].type == DRIVING){
+                std_msgs::String state_msg;
+                state_msg.data = "DRIVING";
+                driving_state_publisher.publish(state_msg);
                 // Have we run out of time?
                 if (t <= trajectory_info[i].tf) {
                     x = evalCubic(trajectory_info[i].coeffx, t);
                     y = evalCubic(trajectory_info[i].coeffy, t);
                     dx = evalCubicDot(trajectory_info[i].coeffx, t);
                     dy = evalCubicDot(trajectory_info[i].coeffy, t);
-                    
                     // I am not currently passing a regerence angle with the Trajectory. FIX THIS!!
                     phi = 0.0;
                     if (dx != 0.0 || dy != 0.0) {
@@ -133,11 +138,15 @@ int main(int argc, char** argv) {
                     start_time = ros::Time::now();
                 }
             } else {
+                std_msgs::String state_msg;
+                state_msg.data = "TURNING";
+                driving_state_publisher.publish(state_msg);
                 // For TURNING, we need to handle the trajectory differently
                 if (t <= trajectory_info[i].tf) {
                     // For TURNING, we can use the phi value directly
                     phi = trajectory_info[i].phi;
                     publishPositionCommand(last_x, last_y, phi, v, w);
+                    last_phi = phi; 
                 } else {
                     i++; 
                     start_time = ros::Time::now();
