@@ -19,7 +19,7 @@ void publishPositionCommand(float x, float y, float phi, float v, float w) {
     position_command.w = w;
     motor_reference_position.publish(position_command);
 }
-
+// hello 
 // Helper function to evaluate cubic polynomial and its derivative
 double evalCubic(const std::vector<double>& coeffs, double t) {
     return coeffs[0] + coeffs[1]*t + coeffs[2]*t*t + coeffs[3]*t*t*t;
