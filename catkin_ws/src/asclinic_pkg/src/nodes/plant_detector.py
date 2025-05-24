@@ -3,6 +3,7 @@
 import rospy
 from sensor_msgs.msg import Image
 from asclinic_pkg.msg import PlantDetection
+from asclinic_pkg.msg import ServoPulseWidth
 from std_msgs.msg import Bool
 from cv_bridge import CvBridge
 from ultralytics import YOLO
@@ -12,6 +13,16 @@ from datetime import datetime
 import glob
 import threading
 from std_msgs.msg import Bool
+
+
+# Nested dictionary mapping plant IDs to location-specific lists of servo pulse widths
+# Populate with: plant_id: { location: [pulse_width1, pulse_width2, ...], ... }
+SERVO_PULSE_WIDTH_MAP = {
+    1: { 0: [1950, 2000, 2150, 1500], 1: [750, 825, 950, 1500] },
+}
+
+# Will hold the servo command publisher
+servo_pub = None
 
 plant_id = 0
 bridge = CvBridge()
@@ -161,6 +172,19 @@ def at_plant_callback(msg):
     plant_collector.current_location = msg.location
     plant_collector.reset()
     plant_collector.collecting = True
+
+    # Publish all configured pulse widths for this plant_id and location
+    servo_list = SERVO_PULSE_WIDTH_MAP.get(msg.plant_id, {}).get(msg.location)
+    if servo_list:
+        for pulse_width in servo_list:
+            servo_msg = ServoPulseWidth(channel=3, pulse_width_in_microseconds=pulse_width)
+            servo_pub.publish(servo_msg)
+            rospy.loginfo(f"[YOLO Stream] Published servo pulse width for plant_id {msg.plant_id}, location {msg.location}: {pulse_width} μs")
+            rospy.sleep(2)
+        plant_collector.done_pub.publish(Bool(data=True))
+    else:
+        rospy.logwarn(f"[YOLO Stream] No servo pulse widths configured for plant_id {msg.plant_id}, location {msg.location}")
+
     # Wait until collection is done
     while plant_collector.collecting and not rospy.is_shutdown():
         rospy.sleep(0.1)
@@ -181,6 +205,9 @@ def main():
         os.remove(f)
 
     rospy.init_node("yolo_stream_node", anonymous=True)
+    # Initialize servo publisher
+    global servo_pub
+    servo_pub = rospy.Publisher("/asc/set_servo_pulse_width", ServoPulseWidth, queue_size=1)
     rospy.Subscriber("/asc/at_plant", PlantDetection, at_plant_callback, queue_size=1, buff_size=2**24)
     rospy.Subscriber("/asc/camera_image", Image, camera_callback, queue_size=1, buff_size=2**24)
     rospy.loginfo("[YOLO Stream] Subscribed to /asc/at_plant and /asc/camera_image")

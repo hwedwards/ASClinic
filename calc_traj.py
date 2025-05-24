@@ -62,6 +62,7 @@ def get_traj(coords, vels, tf):
     coeffy = np.linalg.solve(A, By)
     return coeffx, coeffy
 
+    
 def main():
     # Example usage for a linear trajectory in mm and seconds
     # I have found from testing that an operating speed of 0.3 m/s is pretty good. 
