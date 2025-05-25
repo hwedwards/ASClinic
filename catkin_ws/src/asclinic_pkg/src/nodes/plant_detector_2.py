@@ -33,6 +33,11 @@ class PlantCollector:
         # publisher to request camera_capture to save an image
         self.save_req_pub = rospy.Publisher("/asc/request_save_image", UInt32, queue_size=1)
         self.last_command_time = rospy.Time(0)
+        self.plant_done_timer = None
+
+    def _publish_not_done(self, event):
+        # continuously signal not done while sweeping
+        self.done_pub.publish(Bool(data=False))
 
     def start_collection(self, plant_id, location):
         self.done_pub.publish(Bool(data=False))  # set done to false - suspend aruco positioning
@@ -57,6 +62,9 @@ class PlantCollector:
             # all positions done: reset servo and signal done
             servo_pub.publish(ServoPulseWidth(channel=3, pulse_width_in_microseconds=1500))
             rospy.sleep(1.0)
+            if self.plant_done_timer:
+                self.plant_done_timer.shutdown()
+                self.plant_done_timer = None
             self.done_pub.publish(Bool(data=True))
             return
         # move to this servo position
@@ -64,6 +72,13 @@ class PlantCollector:
         rospy.loginfo(f"[YOLO Stream] Position {self.index+1}/{len(self.positions)}: moving servo to {pulse}")
         servo_pub.publish(ServoPulseWidth(channel=3, pulse_width_in_microseconds=pulse))
         rospy.sleep(3.0)  # wait for servo to settle
+
+        # start continuously publishing False while not at home
+        if pulse != 1500:
+            if self.plant_done_timer:
+                self.plant_done_timer.shutdown()
+            self.plant_done_timer = rospy.Timer(rospy.Duration(1.0),
+                                                self._publish_not_done)
 
         # request saving of CAPTURE_COUNT images
         for i in range(self.capture_count):
