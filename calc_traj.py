@@ -68,7 +68,7 @@ def main():
     # I have found from testing that an operating speed of 0.3 m/s is pretty good. 
     coords = [0, 0, 5000, 0]  # mm
     vels = [0, 0, 0, 0]       # mm/s
-    tf = 15                    # seconds
+    tf = 20                    # seconds
     coeffx, coeffy = get_traj(coords, vels, tf)
     t_var = np.linspace(0, tf, 1000)
     v = 0.3 # m/s
