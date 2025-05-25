@@ -64,61 +64,42 @@ def get_traj(coords, vels, tf):
 
     
 def main():
-    # Example usage for a linear trajectory in mm and seconds
-    # I have found from testing that an operating speed of 0.3 m/s is pretty good. 
-    coords = [0, 0, 5000, 0]  # mm
-    vels = [0, 0, 0, 0]       # mm/s
-    tf = 20                    # seconds
-    coeffx, coeffy = get_traj(coords, vels, tf)
-    t_var = np.linspace(0, tf, 1000)
-    v = 0.3 # m/s
-    phi = atan2((coords[3] - coords[1]),(coords[2] - coords[0]))
-    A, B = calculateLinAB(v, phi)
-    A_aug, B_aug = calculateAugmented(A, B)
-    K, S, E = calculateGainsK(A_aug, B_aug)
-    print("K matrix: ", K)
-    print("Phi", phi)
-
-    # Save K matrix to CSV
+    # Example: define multiple line segments
+    segments = [
+        # Each tuple: (coords, vels, tf)
+        ([0, 0, 5000, 0], [0, 0, 0, 0], 20),
+        ([5000, 0, 5000, 2000], [0, 0, 0, 0], 10),
+        ([5000, 2000, 0, 2000], [0, 0, 0, 0], 20),
+        ([0, 2000, 0, 0], [0, 0, 0, 0], 10)
+    ]
+    phi_list = []
+    coeffx_list = []
+    coeffy_list = []
+    tf_list = []
+    K_list = []
+    for idx, (coords, vels, tf) in enumerate(segments):
+        coeffx, coeffy = get_traj(coords, vels, tf)
+        phi = atan2((coords[3] - coords[1]), (coords[2] - coords[0]))
+        v = 0.3 # m/s (or set per segment if needed)
+        A, B = calculateLinAB(v, phi)
+        A_aug, B_aug = calculateAugmented(A, B)
+        K, S, E = calculateGainsK(A_aug, B_aug)
+        phi_list.append(phi)
+        coeffx_list.append(coeffx)
+        coeffy_list.append(coeffy)
+        tf_list.append(tf)
+        K_list.append(K)
+    # Save K matrix for the first segment (or average, or all if needed)
     with open('trajectoryGainsK.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow([f'K_{i}_{j}' for i in range(K.shape[0]) for j in range(K.shape[1])])
-        writer.writerow(K.flatten())
-
-    # plt.figure(figsize=(15, 4))
-    # plt.subplot(1, 3, 1)
-    # plt.plot(t_var, x_traj, label='x (mm)')
-    # plt.xlabel('Time (s)')
-    # plt.ylabel('X (mm)')
-    # plt.title('Cubic Trajectory for X')
-    # plt.grid(True)
-    # plt.legend()
-
-    # plt.subplot(1, 3, 2)
-    # plt.plot(t_var, y_traj, label='y (mm)', color='orange')
-    # plt.xlabel('Time (s)')
-    # plt.ylabel('Y (mm)')
-    # plt.title('Cubic Trajectory for Y')
-    # plt.grid(True)
-    # plt.legend()
-
-    # plt.subplot(1, 3, 3)
-    # plt.plot(x_traj, y_traj, label='Trajectory (x vs y)', color='green')
-    # plt.xlabel('X (mm)')
-    # plt.ylabel('Y (mm)')
-    # plt.title('Trajectory in XY Plane')
-    # plt.grid(True)
-    # plt.legend()
-
-    # plt.tight_layout()
-    # plt.savefig('cubic_trajectories.png')
-    # plt.show()  # Optionally keep this for interactive viewing
-
+        writer.writerow([f'K_{i}_{j}' for i in range(K_list[0].shape[0]) for j in range(K_list[0].shape[1])])
+        writer.writerow(K_list[0].flatten())
     # Save coefficients to CSV for ROS trajectory tracking node
     with open('trajectory_coeffs.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["FLAG", 'coeffx_0', 'coeffx_1', 'coeffx_2', 'coeffx_3', 'coeffy_0', 'coeffy_1', 'coeffy_2', 'coeffy_3', 'tf', "start_phi", "segment_no"])
-        writer.writerow([0] + list(coeffx) + list(coeffy) + [tf] + [0] + [0])
+        for idx, (coeffx, coeffy, tf, phi) in enumerate(zip(coeffx_list, coeffy_list, tf_list, phi_list)):
+            writer.writerow([0] + list(coeffx) + list(coeffy) + [tf] + [phi] + [idx])
 
 if __name__ == "__main__":
     main()

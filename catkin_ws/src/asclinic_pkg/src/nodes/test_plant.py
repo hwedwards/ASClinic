@@ -34,7 +34,12 @@ def plant_done_callback(msg):
 #            current_state['location'] = 2
 #            current_state['plant_id'] = 2
         else:
-            rospy.loginfo("[Test Plant] All locations tested. Shutting down.")
+            rospy.loginfo("[Test Plant] All locations tested. Beginning inference.")
+            # trigger batch inference
+            batch_pub = rospy.Publisher('/batch_inference', Bool, queue_size=1)
+            rospy.sleep(1.0)  # ensure publisher is registered
+            batch_pub.publish(Bool(data=True))
+            rospy.loginfo("[Test Plant] Published /batch_inference=true")
             rospy.signal_shutdown("Test complete.")
             return
 

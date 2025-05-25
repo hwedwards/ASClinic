@@ -14,7 +14,7 @@ const float WHEEL_RADIUS = 0.072;     // in meters
 const float WHEEL_BASE = 0.215 / 2;   // in meters
 const float GEAR_RATIO = 70.0;        // Gear ratio
 const int RADS_TO_RPM = 9.549;        // conversion factor
-const float K_angular = 1.5;          // Proportional gain for angular velocity control
+const float K_angular = 0.5;          // Proportional gain for angular velocity control
 const float Kd_angular = 0;           // Derivative gain for angular velocity control
 namespace Gains
 {

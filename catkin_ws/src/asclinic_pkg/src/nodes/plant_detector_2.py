@@ -25,8 +25,9 @@ save_dir_base = "/home/asc/saved_camera_images/saved_plant_images/raw_images"
 
 class PlantCollector:
     def __init__(self):
-        self.current_plant_id = 0
-        self.current_location = 0
+        self.collecting = False
+        self.current_plant_id = 1
+        self.current_location = 1
         self.positions = []
         self.index = 0
         self.raw_frames = []
@@ -80,9 +81,12 @@ class PlantCollector:
                     best_var = var
                     best_img = img
             # save best_img
-            folder = os.path.join(save_dir_base, f"plant_{self.current_plant_id}_location_{self.current_location}")
+            # include current pulse value for debugging
+            pulse = self.positions[self.index]
+            folder = save_dir_base
             os.makedirs(folder, exist_ok=True)
-            fname = f"plant_{self.current_plant_id}_location_{self.current_location}_position_{self.index}.jpg"
+            fname = f"plant_{self.current_plant_id}_location_{self.current_location}_position_{self.index}_pulse_{pulse}.jpg"
+            rospy.loginfo(f"Saving image for pulse={pulse} as {fname}")
             cv2.imwrite(os.path.join(folder, fname), best_img)
             rospy.loginfo(f"Saved best (variance={best_var:.2f}) to {fname}")
             # advance to next position

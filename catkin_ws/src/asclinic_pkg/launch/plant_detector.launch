@@ -5,6 +5,9 @@
   <!-- Include I2C servo setup -->
   <include file="$(find asclinic_pkg)/launch/i2c_for_servos.launch"/>
 
+  <!-- Run the inference.py node -->
+  <node pkg="asclinic_pkg" type="inference.py" name="inference" output="screen" respawn="false"/>
+
   <!-- Run the plant_detector.py node -->
   <node pkg="asclinic_pkg" type="plant_detector_2.py" name="plant_detector" output="screen" respawn="false">
     <!-- remap or param entries can go here if needed -->
