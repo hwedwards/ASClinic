@@ -8,7 +8,7 @@ import glob
 from ultralytics import YOLO
 
 # Path configuration
-RAW_DIR = "/home/asc/saved_camera_images/saved_plant_images/raw_images"
+RAW_DIR = "/home/asc/saved_camera_images/saved_plant_images/filtered_images"
 PROCESSED_DIR = "/home/asc/saved_camera_images/saved_plant_images/processed_images"
 MODEL_PATH = "/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/src/plant_detector/weights_2.pt"
 
@@ -20,13 +20,22 @@ class BatchInferencer:
         rospy.Subscriber("/batch_inference", Bool, self.trigger_cb)
         rospy.loginfo("[BatchInference] Ready, waiting for /batch_inference")
 
+        # Clear processed images directory
+        if os.path.exists(PROCESSED_DIR):
+            for f in glob.glob(os.path.join(PROCESSED_DIR, "*")):
+                os.remove(f)
+            rospy.loginfo(f"[BatchInference] Cleared processed images in {PROCESSED_DIR}")
+        else:
+            os.makedirs(PROCESSED_DIR, exist_ok=True)
+            rospy.loginfo(f"[BatchInference] Created processed images directory {PROCESSED_DIR}")
+
     def trigger_cb(self, msg: Bool):
         if not msg.data:
             return
         rospy.loginfo("[BatchInference] Trigger received, running inference on raw images")
         # Ensure processed dir exists
         os.makedirs(PROCESSED_DIR, exist_ok=True)
-        # Iterate all jpg/png in raw folder
+        # Iterate all jpg/png in filtered folder
         patterns = [os.path.join(RAW_DIR, "*.jpg"),
                     os.path.join(RAW_DIR, "*.png")]
                    
@@ -41,11 +50,25 @@ class BatchInferencer:
                 # Run YOLO inference
                 results = self.model(img)[0]
 
-                # Filter out low-confidence detections
-                results = results.filter(conf=0.70)
+                # skip if no detections
+                if not results.boxes or len(results.boxes) == 0:
+                    rospy.loginfo(f"[BatchInference] No detections in {raw_path}, skipping")
+                    continue
 
-                # Plot bounding boxes on the image
-                annotated = results.plot()
+                # Draw bounding boxes with conf ≥ 0.70
+                annotated = img.copy()
+                for box in results.boxes:
+                    conf = float(box.conf)
+                    if conf < 0.70:
+                        continue
+                    x1, y1, x2, y2 = map(int, box.xyxy[0])
+                    # draw rectangle
+                    cv2.rectangle(annotated, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                    # label text
+                    cls = int(box.cls)
+                    label = f"{results.names[cls]}:{conf:.2f}"
+                    cv2.putText(annotated, label, (x1, y1 - 10),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
 
                 # Construct processed path
                 filename = os.path.basename(raw_path)

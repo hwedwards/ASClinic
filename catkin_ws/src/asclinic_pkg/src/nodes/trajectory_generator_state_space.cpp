@@ -127,10 +127,10 @@ int main(int argc, char** argv) {
                     dy = evalCubicDot(trajectory_info[i].coeffy, t);
                     // I am not currently passing a regerence angle with the Trajectory. FIX THIS!!
                     phi = trajectory_info[i].phi; // This should be the angle of the line segment
-                    if (dx != 0.0 || dy != 0.0) {
-                        phi = std::atan2(dy, dx);
-                    }
-                    // The calculation of phi and w is weird here, but I'll leave it because it extends to when I am passing non straight line trajectories
+                    // This Part Changed hmmmmm could be a source of error later
+                    // if (dx != 0.0 || dy != 0.0) {
+                    //     phi = std::atan2(dy, dx);
+                    // }
                     v = std::sqrt(dx*dx + dy*dy);
                     w = (phi - last_phi_sent) / 0.1;
                     last_phi_sent = phi;

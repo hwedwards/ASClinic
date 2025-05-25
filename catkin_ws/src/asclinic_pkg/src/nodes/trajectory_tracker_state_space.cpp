@@ -14,16 +14,12 @@ const float WHEEL_RADIUS = 0.072;     // in meters
 const float WHEEL_BASE = 0.215 / 2;   // in meters
 const float GEAR_RATIO = 70.0;        // Gear ratio
 const int RADS_TO_RPM = 9.549;        // conversion factor
-const float K_angular = 0.5;          // Proportional gain for angular velocity control
+const float K_angular = 0.8;          // Proportional gain for angular velocity control
 const float Kd_angular = 0;           // Derivative gain for angular velocity control
 namespace Gains
 {
-    float K_p[2][2] = {
-        {0, 0},
-        {0, 0}}; // proportional integral gain matrix
-    float K_x[2][3] = {
-        {0, 0, 0},
-        {0, 0, 0}}; // state feedback gain matrix assume phi = 0 and v = 4.167
+    std::vector<std::vector<std::vector<float>>> K_x; // [segment][row][col]
+    std::vector<std::vector<std::vector<float>>> K_p; // [segment][row][col]
 }
 ros::Publisher velocity_reference_publisher;
 ros::Subscriber driving_state_subscriber;
@@ -49,6 +45,7 @@ namespace ReferenceTrajectory
     float target_phi = 0.0;
     float target_v = 0.0; // Target linear velocity
     float target_w = 0.0; // Target angular velocity
+    int line_segment_no = 0; // Line segment number for the trajectory
 }
 namespace Error
 {
@@ -88,9 +85,10 @@ void referenceCallback(const asclinic_pkg::referenceVelocityPose &msg)
              msg.x, msg.y, msg.phi, msg.v, msg.w, msg.line_segment_no);
     ReferenceTrajectory::target_x = msg.x / 1000.0f; // Convert to meters
     ReferenceTrajectory::target_y = msg.y / 1000.0f;
-    ReferenceTrajectory::target_phi = msg.phi * M_PI / 180.0f; // Convert to radians not sure what this is in
+    ReferenceTrajectory::target_phi = msg.phi; // Convert to radians not sure what this is in
     ReferenceTrajectory::target_v = msg.v / 1000.0f;           // Convert mm/s to m/s
-    ReferenceTrajectory::target_w = msg.w * M_PI / 180.0f;     // Already in rad/s not sure about this either
+    ReferenceTrajectory::target_w = msg.w;     // Already in rad/s not sure about this either
+    ReferenceTrajectory::line_segment_no = msg.line_segment_no;
 }
 double signedAngleDiffDeg(double ref_deg, double meas_deg)
 {
@@ -110,20 +108,21 @@ void pureRotationController(float *w)
 // LQR-based line following controller
 void lineFollowingControllerLQR(float *v, float *w)
 {
+    int seg = ReferenceTrajectory::line_segment_no;
+    if (seg < 0 || seg >= Gains::K_x.size()) seg = 0; // fallback
     float del_v = 0.0f;
     float del_w = 0.0f;
     float v_int = 0.0f;
     float w_int = 0.0f;
-
     // Full-state feedback control
-    del_v = Gains::K_x[0][0] * Error::error_x + Gains::K_x[0][1] * Error::error_y + Gains::K_x[0][2] * Error::error_phi;
-    del_w = Gains::K_x[1][0] * Error::error_x + Gains::K_x[1][1] * Error::error_y + Gains::K_x[1][2] * Error::error_phi;
+    del_v = Gains::K_x[seg][0][0] * Error::error_x + Gains::K_x[seg][0][1] * Error::error_y + Gains::K_x[seg][0][2] * Error::error_phi;
+    del_w = Gains::K_x[seg][1][0] * Error::error_x + Gains::K_x[seg][1][1] * Error::error_y + Gains::K_x[seg][1][2] * Error::error_phi;
     // Augmented integrator component
-    v_int = Gains::K_p[0][0] * Error::integral_error_x + Gains::K_p[0][1] * Error::integral_error_y;
-    w_int = Gains::K_p[1][0] * Error::integral_error_x + Gains::K_p[1][1] * Error::integral_error_y;
+    v_int = Gains::K_p[seg][0][0] * Error::integral_error_x + Gains::K_p[seg][0][1] * Error::integral_error_y;
+    w_int = Gains::K_p[seg][1][0] * Error::integral_error_x + Gains::K_p[seg][1][1] * Error::integral_error_y;
     *v = ReferenceTrajectory::target_v + del_v + v_int;
     *w = ReferenceTrajectory::target_w + del_w + w_int;
-    ROS_INFO("[%.3f] v: %f, w: %f", ros::Time::now().toSec(), *v, *w);
+    ROS_INFO("[%.3f] v: %f, w: %f (segment %d)", ros::Time::now().toSec(), *v, *w, seg);
 }
 // Callback to update the robot's current state
 void stateUpdateCallback(const asclinic_pkg::PoseCovar &msg)
@@ -188,39 +187,56 @@ void stateUpdateCallback(const asclinic_pkg::PoseCovar &msg)
 
 int main(int argc, char **argv)
 {
-    ROS_INFO("K_x: [%f, %f, %f; %f, %f, %f]", 
-             Gains::K_x[0][0], Gains::K_x[0][1], Gains::K_x[0][2],
-             Gains::K_x[1][0], Gains::K_x[1][1], Gains::K_x[1][2]);
-    // Read K_p and K_x from trajectoryGainsK.csv
+    // Read all K_p and K_x from trajectoryGainsK.csv
     std::ifstream kfile("/home/asc/ASClinic/trajectoryGainsK.csv");
     std::string kline;
     std::getline(kfile, kline); // skip header
-    if (std::getline(kfile, kline)) {
+    while (std::getline(kfile, kline)) {
         std::stringstream ss(kline);
         std::string val;
         std::vector<float> K_vals;
+        std::getline(ss, val, ','); // segment index
         while (std::getline(ss, val, ',')) {
             K_vals.push_back(std::stof(val));
         }
-        // K_x = K(:, 0:2)
-        Gains::K_x[0][0] = K_vals[0];
-        Gains::K_x[0][1] = K_vals[1];
-        Gains::K_x[0][2] = K_vals[2];
-        Gains::K_x[1][0] = K_vals[5];
-        Gains::K_x[1][1] = K_vals[6];
-        Gains::K_x[1][2] = K_vals[7];
-        // K_p = K(:, 3:4)
-        Gains::K_p[0][0] = K_vals[3];
-        Gains::K_p[0][1] = K_vals[4];
-        Gains::K_p[1][0] = K_vals[8];
-        Gains::K_p[1][1] = K_vals[9];
+        // K_x = K(:, 0:2), K_p = K(:, 3:4)
+        std::vector<std::vector<float>> Kx(2, std::vector<float>(3, 0.0f));
+        std::vector<std::vector<float>> Kp(2, std::vector<float>(2, 0.0f));
+        Kx[0][0] = K_vals[0]; Kx[0][1] = K_vals[1]; Kx[0][2] = K_vals[2];
+        Kx[1][0] = K_vals[5]; Kx[1][1] = K_vals[6]; Kx[1][2] = K_vals[7];
+        Kp[0][0] = K_vals[3]; Kp[0][1] = K_vals[4];
+        Kp[1][0] = K_vals[8]; Kp[1][1] = K_vals[9];
+        Gains::K_x.push_back(Kx);
+        Gains::K_p.push_back(Kp);
     }
-    ROS_INFO("K_x: [%f, %f, %f; %f, %f, %f]", 
-             Gains::K_x[0][0], Gains::K_x[0][1], Gains::K_x[0][2],
-             Gains::K_x[1][0], Gains::K_x[1][1], Gains::K_x[1][2]);
-    ROS_INFO("K_p: [%f, %f; %f, %f]",
-             Gains::K_p[0][0], Gains::K_p[0][1],
-             Gains::K_p[1][0], Gains::K_p[1][1]);
+    ROS_INFO("Loaded %zu segments of gains", Gains::K_x.size());
+    // Print all K_x and K_p
+    for (size_t seg = 0; seg < Gains::K_x.size(); ++seg) {
+        ROS_INFO("Segment %zu:", seg);
+        ROS_INFO("  K_x:");
+        for (size_t row = 0; row < Gains::K_x[seg].size(); ++row) {
+            std::ostringstream oss;
+            oss << "    [";
+            for (size_t col = 0; col < Gains::K_x[seg][row].size(); ++col) {
+                oss << Gains::K_x[seg][row][col];
+                if (col + 1 < Gains::K_x[seg][row].size()) oss << ", ";
+            }
+            oss << "]";
+            ROS_INFO("%s", oss.str().c_str());
+        }
+        ROS_INFO("  K_p:");
+        for (size_t row = 0; row < Gains::K_p[seg].size(); ++row) {
+            std::ostringstream oss;
+            oss << "    [";
+            for (size_t col = 0; col < Gains::K_p[seg][row].size(); ++col) {
+                oss << Gains::K_p[seg][row][col];
+                if (col + 1 < Gains::K_p[seg][row].size()) oss << ", ";
+            }
+            oss << "]";
+            ROS_INFO("%s", oss.str().c_str());
+        }
+    }
+
     ros::init(argc, argv, "trajectory_tracker_state_space");
     ros::NodeHandle nh;
     velocity_reference_publisher = nh.advertise<asclinic_pkg::LeftRightFloat32>("/set_wheel_velocity_reference", 10);

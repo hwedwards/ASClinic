@@ -20,7 +20,7 @@ def plant_done_callback(msg):
         rospy.loginfo("[Test Plant] Published at_plant=False (reset)")
 
         rospy.loginfo(f"[Test Plant] Received plant_done=True for step {current_state['step']}")
-        rospy.sleep(10.0)
+        rospy.sleep(3.0)
 
         current_state['step'] += 1
 

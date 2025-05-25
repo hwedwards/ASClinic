@@ -46,8 +46,10 @@ import rospy
 from std_msgs.msg import UInt32
 from sensor_msgs.msg import Image
 
-# Import opencv
 import cv2
+
+# Import os for file path operations
+import os
 
 # Package to convert between ROS and OpenCV Images
 from cv_bridge import CvBridge, CvBridgeError
@@ -79,7 +81,7 @@ DEFAULT_CHESSBOARD_SIZE_WIDTH  = 6
 #   Note: ensure that this path already exists
 #   Note: one image is saved each time a message is received
 #         on the "request_save_image" topic.
-DEFAULT_SAVE_IMAGE_PATH = "/home/asc/saved_camera_images/plant_images/"
+DEFAULT_SAVE_IMAGE_PATH = "/home/asc/saved_camera_images/saved_plant_images/raw_images/"
 
 # > A flag for whether to save any images that contains
 #   a camera calibration chessboard
@@ -150,6 +152,7 @@ class CameraCapture:
         # > For where to save images captured by the camera
         if (rospy.has_param(node_namespace + node_name + "/" + "camera_capture_save_image_path")):
             self.save_image_path = rospy.get_param(node_namespace + node_name + "/" + "camera_capture_save_image_path")
+            rospy.loginfo(f"[CAMERA CAPTURE] Saving images to: {self.save_image_path}")
         else:
             rospy.logwarn("[CAMERA CAPTURE] FAILED to get \"camera_capture_save_image_path\" parameter. Using default value instead.")
             self.save_image_path = DEFAULT_SAVE_IMAGE_PATH
@@ -180,8 +183,9 @@ class CameraCapture:
         # Initialise a publisher for the images
         self.image_publisher = rospy.Publisher(node_namespace+"camera_image", Image, queue_size=10)
 
-        # Initialise a subscriber for flagging when to save an image
-        rospy.Subscriber(node_namespace+"request_save_image", UInt32, self.requestSaveImageSubscriberCallback)
+        # Subscribe for save requests under both namespace and absolute asc topic
+        rospy.Subscriber(node_namespace + "request_save_image", UInt32, self.requestSaveImageSubscriberCallback)
+        rospy.Subscriber("/asc/request_save_image",    UInt32, self.requestSaveImageSubscriberCallback)
         # > For convenience, the command line can be used to trigger this subscriber
         #   by publishing a message to the "request_save_image" as follows:
         #
@@ -362,12 +366,14 @@ class CameraCapture:
             if (self.should_save_image):
                 # Increment the image counter
                 self.save_image_counter += 1
-                # Write the image to file
-                temp_filename = self.save_image_path + "image" + str(self.save_image_counter) + ".jpg"
-                cv2.imwrite(temp_filename,current_frame)
+                # make a raw copy before any overlays
+                raw_frame = current_frame.copy()
+                # Write the raw image to file
+                temp_filename = os.path.join(self.save_image_path, f"image{self.save_image_counter}.jpg")
+                cv2.imwrite(temp_filename, raw_frame)
                 # Display the path to where the image was saved
                 if (self.camera_capture_verbosity >= 2):
-                    rospy.loginfo("[CAMERA CAPTURE] Saved camera frame to: " + temp_filename)
+                    rospy.loginfo(f"[CAMERA CAPTURE] Saved raw camera frame to: {temp_filename}")
                 # Reset the flag to false
                 self.should_save_image = False
 

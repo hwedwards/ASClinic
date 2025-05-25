@@ -10,9 +10,12 @@ from std_msgs.msg import String
 x_odom = 0.0
 y_odom = 0.0
 
-
 # Global state and covariance
-x_est = np.zeros((3, 1))  # [x, y, theta]
+x_est = np.zeros((3, 1))  # [x, y, theta in radians]
+# manually setting the initial pose to something other than the origin
+#x_est[0] = 5000
+#x_est[1] = 0
+#x_est[2] = np.pi # initial heading in degrees
 P_est = np.eye(3) * 0.01
 #x_est[2,0] = np.pi/4 # initial heading
 

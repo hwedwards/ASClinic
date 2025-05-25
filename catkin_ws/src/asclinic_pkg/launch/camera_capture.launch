@@ -40,11 +40,11 @@
 			/>
 			<param
 				name   = "camera_capture_save_image_path"
-				value  = "/home/asc/saved_camera_images/plant_images/"
+				value  = "/home/asc/saved_camera_images/saved_plant_images/raw_images/"
 			/>
 			<param
 				name   = "camera_capture_should_save_all_chessboard_images"
-				value  = "True"
+				value  = "False"
 			/>
 			<param
 				name   = "camera_capture_should_publish_camera_images"

@@ -5,6 +5,9 @@
   <!-- Include I2C servo setup -->
   <include file="$(find asclinic_pkg)/launch/i2c_for_servos.launch"/>
 
+  <!-- Include the ArUco positioning to test that it is being suppressed correctly -->
+  <node pkg="asclinic_pkg" type="aruco_positioning.py" name="aruco_positioning" output="screen"/>
+
   <!-- Run the inference.py node -->
   <node pkg="asclinic_pkg" type="inference.py" name="inference" output="screen" respawn="false"/>
 

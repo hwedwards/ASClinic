@@ -11,6 +11,7 @@ import rospy
 import numpy as np # type: ignore
 import cv2
 import math
+from std_msgs.msg import Bool
 # Scaling factors
 MM2 = 1e6  # (1000 mm/m)^2 for variances in mm^2
 MM = 1000.0  # for covariances mixing mm with radians or degrees
@@ -26,16 +27,24 @@ RAD2DEG2 = RAD2DEG ** 2
 from asclinic_pkg.msg import FiducialMarkerArray
 from asclinic_pkg.msg import PoseCovar
 pose_pub = None
+plant_done = True  # Only publish while this is True
 
 # Counter to throttle logging: only log every 10 callbacks
 log_counter = 1
 
 # Mapping from ArUco marker ID to its measured world-frame position (x, y) and heading phi (degrees)
 marker_positions = {
+    12: (3, -0.8, 180),
+    13: (4.5, 1, 180),
+    15: (3, 1.5, 90),
+    16: (5.5, 0, 180)
+   }
+"""
     12: (-0.8, -3.0, 90),
     13: (1.0, -4.5, 90),
     15: (1.5, -3.0, 180)
-   }
+    replicating the first part of the course, x facing the lecture theatre"""
+
 """    1: (1.973, -0.600, 180),
     2: (2.033, -0.600,   0),
     3: (3.952,  1.200, 180),
@@ -63,6 +72,9 @@ def get_marker_pose(marker_id):
     return pose
 
 def callback(data):
+    global plant_done
+    if not plant_done:
+        return
     if data.num_markers >0:
         global log_counter
         log_counter += 1
@@ -226,11 +238,18 @@ def callback(data):
                     csv_header_written = True
                 writer.writerow([timestamp, marker_id, msg.x, msg.y, msg.phi])
 
+def plant_done_callback(msg: Bool):
+    global plant_done
+    plant_done = msg.data
+    if plant_done == False:
+        rospy.logwarn("[Aruco] plant_done set to False, ARUCO positioning will not publish.")
+
 def listener():
     global pose_pub
     rospy.init_node('aruco_positioning', anonymous=True)
     pose_pub = rospy.Publisher('aruco_pose', PoseCovar, queue_size=10)
     rospy.Subscriber("/asc/aruco_detections", FiducialMarkerArray, callback)
+    rospy.Subscriber("/asc/plant_done", Bool, plant_done_callback, queue_size=1)
     rospy.spin()
 
 if __name__ == '__main__':

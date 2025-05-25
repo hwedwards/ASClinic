@@ -37,8 +37,8 @@ def calculateGainsK(A_aug, B_aug):
         [0, 0, 0, 0, 1]
     ])
     R = np.array([
-        [40, 0],
-        [0, 40]
+        [4, 0],
+        [0, 4]
     ])
     K = control.lqr(A_aug, B_aug, Q, R)
     return K
@@ -67,10 +67,7 @@ def main():
     # Example: define multiple line segments
     segments = [
         # Each tuple: (coords, vels, tf)
-        ([0, 0, 5000, 0], [0, 0, 0, 0], 20),
-        ([5000, 0, 5000, 2000], [0, 0, 0, 0], 10),
-        ([5000, 2000, 0, 2000], [0, 0, 0, 0], 20),
-        ([0, 2000, 0, 0], [0, 0, 0, 0], 10)
+        ([0, 0, 0, 5000], [0, 0, 0, 0], 25),
     ]
     phi_list = []
     coeffx_list = []
@@ -80,6 +77,7 @@ def main():
     for idx, (coords, vels, tf) in enumerate(segments):
         coeffx, coeffy = get_traj(coords, vels, tf)
         phi = atan2((coords[3] - coords[1]), (coords[2] - coords[0]))
+        print(f"Segment {idx}: phi = {phi} radians")
         v = 0.3 # m/s (or set per segment if needed)
         A, B = calculateLinAB(v, phi)
         A_aug, B_aug = calculateAugmented(A, B)
@@ -89,11 +87,14 @@ def main():
         coeffy_list.append(coeffy)
         tf_list.append(tf)
         K_list.append(K)
-    # Save K matrix for the first segment (or average, or all if needed)
+    # Save K matrix for all segments
     with open('trajectoryGainsK.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow([f'K_{i}_{j}' for i in range(K_list[0].shape[0]) for j in range(K_list[0].shape[1])])
-        writer.writerow(K_list[0].flatten())
+        writer.writerow([f'segment', f'K_0_0', f'K_0_1', f'K_0_2', f'K_0_3', f'K_0_4',
+                         f'K_1_0', f'K_1_1', f'K_1_2', f'K_1_3', f'K_1_4'])
+        for idx, K in enumerate(K_list):
+            # Flatten K to 1D array (should be 2x5)
+            writer.writerow([idx] + list(K.flatten()))
     # Save coefficients to CSV for ROS trajectory tracking node
     with open('trajectory_coeffs.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
