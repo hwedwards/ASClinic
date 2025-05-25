@@ -213,8 +213,8 @@ def aruco_callback(msg):
     dx = K.dot(y)
 
     # Saturation thresholds
-    max_dx = 100       # mm
-    max_dy = 100       # mm
+    max_dx = 28 # 100       # mm
+    max_dy = 28 # 100       # mm # 28 in both dimensions limits the maximum jump to 4 cm per timestep which is 40 cm per second
     max_dphi = np.deg2rad(10)  # radians
 
     dx[0,0] = np.clip(dx[0,0], -max_dx, max_dx)

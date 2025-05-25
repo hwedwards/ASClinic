@@ -16,24 +16,26 @@ struct Trajectory {
     std::vector<double> coeffx;
     std::vector<double> coeffy;
     double tf; 
-    double phi; 
+    double phi;
+    int line_segment_no; //Tells us which line segment we are on.  
 
     // Constructor for DRIVING
-    Trajectory(const std::vector<double>& cx, const std::vector<double>& cy, double t)
-        : type(DRIVING), coeffx(cx), coeffy(cy), tf(t), phi(0.0) {}
-
+    Trajectory(const std::vector<double>& cx, const std::vector<double>& cy, double t, int line_segment, double start_phi)
+        : type(DRIVING), coeffx(cx), coeffy(cy), tf(t), phi(start_phi), line_segment_no(line_segment){}
+        // PHI SHOULD NOT INITIALISE TO ZERO, IT SHOULD BE THE ANGLE OF THE LINE SEGMENT.
     // Constructor for TURNING
     Trajectory(double p, double t)
         : type(TURNING), coeffx(4, 0.0), coeffy(4, 0.0), tf(t), phi(p) {}
 };
 // Helper function to publish position and velocity commands
-void publishPositionCommand(float x, float y, float phi, float v, float w) {
+void publishPositionCommand(float x, float y, float phi, float v, float w, int segment_no) {
     asclinic_pkg::referenceVelocityPose position_command;
     position_command.x = x;
     position_command.y = y;
     position_command.phi = phi;
     position_command.v = v;
     position_command.w = w;
+    position_command.line_segment_no = segment_no; // Add line segment number to the message
     motor_reference_position.publish(position_command);
 }
 
@@ -54,7 +56,6 @@ int main(int argc, char** argv) {
     // Pause for 3 seconds at the start
     ros::Duration(3.0).sleep();
     ros::Rate loop_rate(10); // 10 Hz
-    ROS_INFO("Trajectory Generator Node Started");
     // Read coefficients from CSV
     std::vector<Trajectory> trajectory_info;
     std::ifstream file("/home/asc/ASClinic/trajectory_coeffs.csv");
@@ -78,7 +79,11 @@ int main(int argc, char** argv) {
             }
             std::getline(ss, val, ',');
             double tf = std::stod(val);
-            trajectory_info.emplace_back(cx, cy, tf);
+            std::getline(ss, val, ',');
+            double phi = std::stod(val);
+            std::getline(ss, val, ',');
+            int line_segment_no = std::stoi(val);
+            trajectory_info.emplace_back(cx, cy, tf, phi, line_segment_no);
         } else if (flag == 1) { // TURNING
             std::getline(ss, val, ',');
             double phi = std::stod(val);
@@ -94,6 +99,7 @@ int main(int argc, char** argv) {
     double last_x = 0.0, last_y = 0.0, last_phi = 0.0;
     static double last_phi_sent = 0.0;
     double x, y, dx, dy, phi, v, w, t; 
+    int segment_no = 0;
     // initialise the trajectory coefficients
     // counter
     int i = 0; 
@@ -120,18 +126,22 @@ int main(int argc, char** argv) {
                     dx = evalCubicDot(trajectory_info[i].coeffx, t);
                     dy = evalCubicDot(trajectory_info[i].coeffy, t);
                     // I am not currently passing a regerence angle with the Trajectory. FIX THIS!!
-                    phi = 0.0;
+                    phi = trajectory_info[i].phi; // This should be the angle of the line segment
                     if (dx != 0.0 || dy != 0.0) {
                         phi = std::atan2(dy, dx);
                     }
+                    // The calculation of phi and w is weird here, but I'll leave it because it extends to when I am passing non straight line trajectories
                     v = std::sqrt(dx*dx + dy*dy);
                     w = (phi - last_phi_sent) / 0.1;
                     last_phi_sent = phi;
                     last_x = x;
                     last_y = y;
                     last_phi = phi;
-                    publishPositionCommand(x, y, phi, v, w);
+                    segment_no = trajectory_info[i].line_segment_no;
+                    publishPositionCommand(x, y, phi, v, w, segment_no);
                     sent_final = false;
+                    // ROS_INFO("line segment no: %d, phi: %f",
+                    //          trajectory_info[i].line_segment_no, trajectory_info[i].phi);
                 } else {
                     // Times up, move to the next trajectory and reset the timer
                     i++; 
@@ -145,7 +155,7 @@ int main(int argc, char** argv) {
                 if (t <= trajectory_info[i].tf) {
                     // For TURNING, we can use the phi value directly
                     phi = trajectory_info[i].phi;
-                    publishPositionCommand(last_x, last_y, phi, v, w);
+                    publishPositionCommand(last_x, last_y, phi, v, w, segment_no);
                     last_phi = phi; 
                 } else {
                     i++; 

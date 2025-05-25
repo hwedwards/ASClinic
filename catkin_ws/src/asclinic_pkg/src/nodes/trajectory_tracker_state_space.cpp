@@ -84,8 +84,8 @@ void calculateAndPublishWheelSpeeds(float v, float w)
 // Callback for reference trajectory
 void referenceCallback(const asclinic_pkg::referenceVelocityPose &msg)
 {
-    ROS_INFO("Received reference trajectory - x: %f, y: %f, phi: %f, v: %f, w: %f",
-             msg.x, msg.y, msg.phi, msg.v, msg.w);
+    ROS_INFO("Received reference trajectory - x: %f, y: %f, phi: %f, v: %f, w: %f, line_no: %d",
+             msg.x, msg.y, msg.phi, msg.v, msg.w, msg.line_segment_no);
     ReferenceTrajectory::target_x = msg.x / 1000.0f; // Convert to meters
     ReferenceTrajectory::target_y = msg.y / 1000.0f;
     ReferenceTrajectory::target_phi = msg.phi * M_PI / 180.0f; // Convert to radians not sure what this is in

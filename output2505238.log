@@ -1,0 +1,83 @@
+... logging to /home/asc/.ros/log/0725ea1e-3922-11f0-8573-d8c0a650f677/roslaunch-asc12-jetson-6804.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/launch/trajectory.launch
+[1mstarted roslaunch server http://asc12-jetson:39177/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /asc/aruco_detector/aruco_detector_desired_camera_fps: 5
+ * /asc/aruco_detector/aruco_detector_desired_camera_frame_height: 1080
+ * /asc/aruco_detector/aruco_detector_desired_camera_frame_width: 1920
+ * /asc/aruco_detector/aruco_detector_marker_size: 0.25
+ * /asc/aruco_detector/aruco_detector_save_image_path: /home/asc/saved_c...
+ * /asc/aruco_detector/aruco_detector_should_publish_camera_images: False
+ * /asc/aruco_detector/aruco_detector_should_save_all_aruco_images: False
+ * /asc/aruco_detector/aruco_detector_should_show_camera_images: False
+ * /asc/aruco_detector/aruco_detector_usb_camera_device_number: 0
+ * /asc/aruco_detector/aruco_detector_verbosity: 1
+ * /asc/encoder_read_multi_threaded/delta_t_for_publishing_encoder_counts: 0.1
+ * /asc/encoder_read_multi_threaded/encoder_events_to_monitor: rising
+ * /asc/encoder_read_multi_threaded/encoder_read_verbosity: 1
+ * /asc/encoder_read_multi_threaded/gpio_chip_number_for_encoder_lines: 1
+ * /asc/encoder_read_multi_threaded/line_number_for_left_side_encoder_channel_a: 105
+ * /asc/encoder_read_multi_threaded/line_number_for_left_side_encoder_channel_b: 106
+ * /asc/encoder_read_multi_threaded/line_number_for_right_side_encoder_channel_a: 84
+ * /asc/encoder_read_multi_threaded/line_number_for_right_side_encoder_channel_b: 130
+ * /asc/encoder_read_multi_threaded/should_monitor_left_side_encoder_channel_a: True
+ * /asc/encoder_read_multi_threaded/should_monitor_left_side_encoder_channel_b: False
+ * /asc/encoder_read_multi_threaded/should_monitor_right_side_encoder_channel_a: True
+ * /asc/encoder_read_multi_threaded/should_monitor_right_side_encoder_channel_b: False
+ * /asc/i2c_for_motors/motor_driver_current_limit_in_milliamps: 5000
+ * /asc/i2c_for_motors/motor_driver_left_side_multiplier: 1
+ * /asc/i2c_for_motors/motor_driver_max_accel_limit_in_percent_per_millisecond: 0.04
+ * /asc/i2c_for_motors/motor_driver_max_decel_limit_in_percent_per_millisecond: 0.16
+ * /asc/i2c_for_motors/motor_driver_max_duty_cycle_limit_in_percent: 100.0
+ * /asc/i2c_for_motors/motor_driver_right_side_multiplier: 1
+ * /asc/i2c_for_motors/motor_driver_verbosity: 1
+ * /rosdistro: noetic
+ * /rosversion: 1.17.0
+
+NODES
+  /
+    aruco_positioning (asclinic_pkg/aruco_positioning.py)
+    kf_fusion_node (asclinic_pkg/KF.py)
+    odomdelta (asclinic_pkg/odomdelta)
+    trajectory_generator (asclinic_pkg/trajectory_generator_state_space)
+    trajectory_tracker (asclinic_pkg/trajectory_tracker_state_space)
+    velocity_PI_control (asclinic_pkg/velocity_PI_control)
+  /asc/
+    aruco_detector (asclinic_pkg/aruco_detector.py)
+    encoder_read_multi_threaded (asclinic_pkg/encoder_read_multi_threaded)
+    i2c_for_motors (asclinic_pkg/i2c_for_motors)
+
+[1mROS_MASTER_URI=http://localhost:11311[0m
+]2;/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/launch/trajectory.launch http://localhost:11311
+[1mprocess[asc/i2c_for_motors-1]: started with pid [7025][0m
+[1mprocess[asc/encoder_read_multi_threaded-2]: started with pid [7026][0m
+[1mprocess[odomdelta-3]: started with pid [7029][0m
+[1mprocess[asc/aruco_detector-4]: started with pid [7042][0m
+[1mprocess[aruco_positioning-5]: started with pid [7048][0m
+[1mprocess[trajectory_tracker-6]: started with pid [7050][0m
+[0m[ INFO] [1748147995.335148447]: K_x: [0.000000, 0.000000, 0.000000; 0.000000, 0.000000, 0.000000][0m
+[0m[ INFO] [1748147995.335396930]: K_x: [0.752481, 0.000000, 0.000000; 0.000000, 1.124046, 0.961472][0m
+[0m[ INFO] [1748147995.335432131]: K_p: [0.158114, 0.000000; 0.000000, 0.158114][0m
+[0m[ INFO] [1748147994.994155972]: [I2C FOR MOTORS] Now launching this node in namespace: /asc[0m
+[0m[ INFO] [1748147995.056930955]: [I2C FOR MOTORS] publish motor duty cycle requests from command line with: rostopic pub --once /asc/set_motor_duty_cycle asclinic_pkg/LeftRightFloat32 "{left: 10.1, right: 10.1}"[0m
+[0m[ INFO] [1748147995.057101933]: [I2C FOR MOTORS] Successfully opened named /dev/i2c-1, with file descriptor = 10[0m
+[0m[ INFO] [1748147995.057220879]: [I2C FOR MOTORS] Actual acceleration limit = 0.0003125%/ms (after conversation to "internal units")[0m
+[0m[ INFO] [1748147995.057292015]: [I2C FOR MOTORS] Actual deceleration limit = 0.0015625%/ms (after conversation to "internal units")[0m
+[0m[ INFO] [1748147995.057352592]: [I2C FOR MOTORS] Now initialising SMC with I2C address 13[0m
+[0m[ INFO] [1748147995.075238806]: [I2C FOR MOTORS] Now initialising SMC with I2C address 14[0m
+[0m[ INFO] [1748147995.096696105]: [I2C FOR MOTORS] Node initialisation complete[0m
+[1m[trajectory_generator-7] process has died without exit code [pid -1, cmd /home/asc/ASClinic/catkin_ws/devel/lib/asclinic_pkg/trajectory_generator_state_space __name:=trajectory_generator __log:=/home/asc/.ros/log/0725ea1e-3922-11f0-8573-d8c0a650f677/trajectory_generator-7.log].
+log file: /home/asc/.ros/log/0725ea1e-3922-11f0-8573-d8c0a650f677/trajectory_generator-7*.log[0m
+[trajectory_tracker-6] killing on exit
+[aruco_positioning-5] killing on exit
+[asc/aruco_detector-4] killing on exit
+[odomdelta-3] killing on exit
+[asc/encoder_read_multi_threaded-2] killing on exit
+[asc/i2c_for_motors-1] killing on exit

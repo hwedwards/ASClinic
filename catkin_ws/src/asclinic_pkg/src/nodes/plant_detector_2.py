@@ -2,95 +2,120 @@
 
 import rospy
 from sensor_msgs.msg import Image
-from asclinic_pkg.msg import PlantDetection, ServoPulseWidth
-from cv_bridge import CvBridge
+from asclinic_pkg.msg import PlantDetection
+from asclinic_pkg.msg import ServoPulseWidth
 from std_msgs.msg import Bool
+from cv_bridge import CvBridge
 import cv2
 import os
-from datetime import datetime
+import glob
 
-# map of plant → location → list of pulse widths
+# Nested dictionary mapping plant IDs to location-specific lists of servo pulse widths
+# Populate with: plant_id: { location: [pulse_width1, pulse_width2, ...], ... }
 SERVO_PULSE_WIDTH_MAP = {
-    1: {1: [1950, 2000, 2150, 1500], 2: [750, 825, 950, 1500]},
+    1: { 1: [1950, 2000, 2150], 2: [750, 825, 950] },
 }
 
-# how many images to take per position
-NUM_IMAGES = 3
+BLURRINESS_THRESHOLD = 80  # Ignore frames with Laplacian variance below this threshold (decided from calculating the variance of the training set of model and seeing which is acceptable)
+CAPTURE_COUNT = 5  # Number of good frames to collect before stopping
 
-# output directory
-save_dir_base = "/home/asc/saved_camera_images/saved_plant_images"
-
-bridge = CvBridge()
 servo_pub = None
-images_taken = 0
-current_plant = None
-current_location = None
+bridge = CvBridge()
+save_dir_base = "/home/asc/saved_camera_images/saved_plant_images/raw_images"
 
-def at_plant_callback(msg: PlantDetection):
-    global images_taken, current_plant, current_location
-    rospy.loginfo(f"[Image Capture] Starting capture for plant {msg.plant_id}, location {msg.location}")
-    servo_list = SERVO_PULSE_WIDTH_MAP.get(msg.plant_id, {}).get(msg.location, [])
-    if not servo_list:
-        rospy.logwarn(f"[Image Capture] No servo positions for plant {msg.plant_id}, location {msg.location}")
-        rospy.Publisher("/asc/plant_done", Bool, queue_size=1).publish(Bool(data=True))
-        return
+class PlantCollector:
+    def __init__(self):
+        self.current_plant_id = 0
+        self.current_location = 0
+        self.positions = []
+        self.index = 0
+        self.raw_frames = []
+        self.capture_count = CAPTURE_COUNT
+        self.done_pub = rospy.Publisher("/asc/plant_done", Bool, queue_size=1)
 
-    current_plant = msg.plant_id
-    current_location = msg.location
+    def start_collection(self, plant_id, location):
+        self.current_plant_id = plant_id
+        self.current_location = location
+        # prepare positions
+        self.positions = SERVO_PULSE_WIDTH_MAP.get(plant_id, {}).get(location, [])
+        self.index = 0
+        if not self.positions:
+            # reset servo and signal done
+            servo_pub.publish(ServoPulseWidth(channel=3, pulse_width_in_microseconds=1500))
+            rospy.sleep(1.0)
+            self.done_pub.publish(Bool(data=True))
+            return
+        self._next_position()
 
-    # ensure output dir exists
-    plant_folder = os.path.join(save_dir_base, f"plant_{msg.plant_id}_{msg.location}")
-    os.makedirs(plant_folder, exist_ok=True)
-    # clear old images
-    for f in os.listdir(plant_folder):
-        if f.endswith(".jpg"):
-            os.remove(os.path.join(plant_folder, f))
-
-    # capture loop
-    for pulse in servo_list:
-        rospy.loginfo(f"[Image Capture] Moving servo to {pulse}µs")
+    def _next_position(self):
+        if self.index >= len(self.positions):
+            # all positions done: reset servo and signal done
+            servo_pub.publish(ServoPulseWidth(channel=3, pulse_width_in_microseconds=1500))
+            rospy.sleep(1.0)
+            self.done_pub.publish(Bool(data=True))
+            return
+        # move to this servo position
+        pulse = self.positions[self.index]
         servo_pub.publish(ServoPulseWidth(channel=3, pulse_width_in_microseconds=pulse))
+        rospy.loginfo(f"Moving servo to {pulse} at plant {self.current_plant_id}, loc {self.current_location}, pos idx {self.index}")
         rospy.sleep(1.0)
+        # clear buffer and start capture
+        self.raw_frames = []
+        self.collecting = True
 
-        images_taken = 0
-        start = rospy.Time.now()
-        while images_taken < NUM_IMAGES and (rospy.Time.now() - start).to_sec() < 10.0:
-            rospy.sleep(0.1)
+    def process_frame(self, frame):
+        if not getattr(self, 'collecting', False):
+            return
+        self.raw_frames.append(frame.copy())
+        rospy.loginfo(f"Captured frame {len(self.raw_frames)}/{self.capture_count}")
+        if len(self.raw_frames) >= self.capture_count:
+            # stop collecting
+            self.collecting = False
+            # pick least blurry (max Laplacian variance)
+            best_var = -1
+            best_img = None
+            for img in self.raw_frames:
+                var = cv2.Laplacian(img, cv2.CV_64F).var()
+                if var > best_var:
+                    best_var = var
+                    best_img = img
+            # save best_img
+            folder = os.path.join(save_dir_base, f"plant_{self.current_plant_id}_location_{self.current_location}")
+            os.makedirs(folder, exist_ok=True)
+            fname = f"plant_{self.current_plant_id}_location_{self.current_location}_position_{self.index}.jpg"
+            cv2.imwrite(os.path.join(folder, fname), best_img)
+            rospy.loginfo(f"Saved best (variance={best_var:.2f}) to {fname}")
+            # advance to next position
+            self.index += 1
+            self._next_position()
 
-    rospy.loginfo(f"[Image Capture] Finished all positions")
-    rospy.Publisher("/asc/plant_done", Bool, queue_size=1).publish(Bool(data=True))
+plant_collector = PlantCollector()
 
-def camera_callback(msg: Image):
-    global images_taken
-    if images_taken >= NUM_IMAGES:
+def at_plant_callback(msg):
+    if msg.plant_id == -1:
         return
+    plant_collector.start_collection(msg.plant_id, msg.location)
+
+def camera_callback(msg):
     try:
         frame = bridge.imgmsg_to_cv2(msg, "bgr8")
-    except Exception as e:
-        rospy.logwarn(f"[Image Capture] Failed to convert image: {e}")
+    except:
         return
-
-    # save the frame
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-    fname = f"img_{ts}_{images_taken}.jpg"
-    plant_folder = os.path.join(save_dir_base, f"plant_{current_plant}_{current_location}")
-    path = os.path.join(plant_folder, fname)
-    if cv2.imwrite(path, frame):
-        rospy.loginfo(f"[Image Capture] Saved image {images_taken+1}/{NUM_IMAGES}: {path}")
-        images_taken += 1
-    else:
-        rospy.logwarn(f"[Image Capture] Failed to write {path}")
+    plant_collector.process_frame(frame)
 
 def main():
-    global servo_pub, current_plant, current_location
-    current_plant = None
-    current_location = None
-    rospy.init_node("image_capture_node")
+    os.makedirs(save_dir_base, exist_ok=True)
+    for f in glob.glob(os.path.join(save_dir_base, "*.jpg")):
+        os.remove(f)
+
+    rospy.init_node("plant_detector_node", anonymous=True)
+    global servo_pub
     servo_pub = rospy.Publisher("/asc/set_servo_pulse_width", ServoPulseWidth, queue_size=1)
-    rospy.Subscriber("/asc/at_plant", PlantDetection, at_plant_callback)
-    rospy.Subscriber("/asc/camera_image", Image, camera_callback)
-    rospy.loginfo("[Image Capture] Node ready, waiting for /asc/at_plant")
+    rospy.Subscriber("/asc/at_plant", PlantDetection, at_plant_callback, queue_size=1, buff_size=2**24)
+    rospy.Subscriber("/asc/camera_image", Image, camera_callback, queue_size=1, buff_size=2**24)
+    rospy.loginfo("Subscribed to /asc/at_plant and /asc/camera_image")
+
     rospy.spin()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
