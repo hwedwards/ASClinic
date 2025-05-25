@@ -31,14 +31,14 @@ def calculateAugmented(A, B):
 def calculateGainsK(A_aug, B_aug):
     Q = np.array([
         [10, 0, 0, 0, 0],
-        [0, 10, 0, 0, 0],
+        [0, 1, 0, 0, 0],
         [0, 0, 10, 0, 0],
         [0, 0, 0, 1, 0],
         [0, 0, 0, 0, 1]
     ])
     R = np.array([
-        [1, 0],
-        [0, 1]
+        [40, 0],
+        [0, 40]
     ])
     K = control.lqr(A_aug, B_aug, Q, R)
     return K
@@ -117,8 +117,8 @@ def main():
     # Save coefficients to CSV for ROS trajectory tracking node
     with open('trajectory_coeffs.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['coeffx_0', 'coeffx_1', 'coeffx_2', 'coeffx_3', 'coeffy_0', 'coeffy_1', 'coeffy_2', 'coeffy_3', 'tf'])
-        writer.writerow(list(coeffx) + list(coeffy) + [tf])
+        writer.writerow(["FLAG", 'coeffx_0', 'coeffx_1', 'coeffx_2', 'coeffx_3', 'coeffy_0', 'coeffy_1', 'coeffy_2', 'coeffy_3', 'tf'])
+        writer.writerow([0] + list(coeffx) + list(coeffy) + [tf])
 
 if __name__ == "__main__":
     main()
