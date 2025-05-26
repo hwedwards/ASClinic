@@ -17,7 +17,7 @@ SERVO_PULSE_WIDTH_MAP = {
     3: { 1: [2000, 2150, 2250], 2: [2000, 2150, 2250]},
     4: { 1: [1200, 1300, 1400], 2: [2000, 2150, 2250] },
     5: { 1: [2000, 1900, 1800], 2: [750, 825, 950] },
-    6: { 1: [1800, 1700, 1600], 2: [750, 825, 950] }
+    6: { 1: [1800, 1700, 1600], 2: [2000, 2150, 2250] }
 }
 
 BLURRINESS_THRESHOLD = 80  # Ignore frames with Laplacian variance below this threshold (decided from calculating the variance of the training set of model and seeing which is acceptable)

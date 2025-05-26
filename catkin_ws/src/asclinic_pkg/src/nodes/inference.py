@@ -61,18 +61,21 @@ class BatchInferencer:
                     rospy.loginfo(f"[BatchInference] No detections in {raw_path}, skipping")
                     continue
 
-                # Draw bounding boxes with conf ≥ 0.70
+                # Draw bounding boxes with conf ≥ 0.70 (or 0.5 for "bug" class)
                 annotated = img.copy()
                 for box in results.boxes:
                     conf = float(box.conf)
-                    if conf < 0.70:
+                    cls = int(box.cls)
+                    label_name = results.names[cls]
+                    # use lower threshold for bug class
+                    threshold = 0.5 if label_name == "bug" else 0.70
+                    if conf < threshold:
                         continue
                     x1, y1, x2, y2 = map(int, box.xyxy[0])
                     # draw rectangle
                     cv2.rectangle(annotated, (x1, y1), (x2, y2), (0, 255, 0), 2)
                     # label text
-                    cls = int(box.cls)
-                    label = f"{results.names[cls]}:{conf:.2f}"
+                    label = f"{label_name}:{conf:.2f}"
                     cv2.putText(annotated, label, (x1, y1 - 10),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
 
