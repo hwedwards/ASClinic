@@ -67,14 +67,23 @@ def main():
     # Example: define multiple line segments
     segments = [
         # Each tuple: (coords, vels, tf)
-        ([0, 0, 2000, 0], [0, 0, 0, 0], 15),  # Segment 1
-        ([2000, 0, 3000, 1000], [0, 0, 0, 0], 15),  # Segment 2
-        ([3000, 1000, 4000, 0], [0, 0, 0, 0], 15),  # Segment 3
-        # ([0, 0, -600, -2400], [0, 0, 0, 0], 15),
-        # ([-600, -2400, 1000, -3100], [0, 0, 0, 0], 15),
-        # ([1000, -3100, 3600, -1600], [0, 0, 0, 0], 15),
-        # ([3600, -1600, 4400, -2400], [0, 0, 0, 0], 15)
-        
+        ([0, 0, -600, -2400], [0, 0, 0, 0], 10), # 1
+        ([-600, -2400, 1000, -3100], [0, 0, 0, 0], 10), #2
+        ([1000, -3100, 3600, -1600], [0, 0, 0, 0], 12), #3
+        ([3600, -1600, 4400, -2400], [0, 0, 0, 0], 5), #4
+        ([4400, -2400, 5000, -3800], [0, 0, 0, 0], 7), #5
+        ([5000, -3800, 6600, -2000], [0, 0, 0, 0], 10), #6
+        ([6600, -2000, 7600, 500], [0, 0, 0, 0], 10), #6.5
+        ([7600, 500, 7600, 1100], [0, 0, 0, 0], 3), #7
+        ([7600, 1100, 6000, 500], [0, 0, 0, 0], 7), #8
+        ([6000, 500, 5000, 200], [0, 0, 0, 0], 4), # 9
+        ([5000, 200, 4000, 1400], [0, 0, 0, 0], 6), # 10
+        ([4000, 1400, 4200, 3400], [0, 0, 0, 0], 8), # 11
+        ([4200, 3400, 5000, 4800], [0, 0, 0, 0], 7), #12
+        ([5000, 4800, 600, 4600], [0, 0, 0, 0], 18), #13
+        ([600, 4600, 0, 3200], [0, 0, 0, 0], 6), #14
+        ([0, 3200, -1200, 500], [0, 0, 0, 0], 12), #15
+        ([-1200, 500, 0, 0 ], [0, 0, 0, 0], 5) #16
     ]
     phi_list = []
     coeffx_list = []
@@ -84,14 +93,13 @@ def main():
     for idx, (coords, vels, tf) in enumerate(segments):
         coeffx, coeffy = get_traj(coords, vels, tf)
         phi = atan2((coords[3] - coords[1]), (coords[2] - coords[0])) #phi needs to be in radians here to calculate gains
-        
         v = 0.3 # m/s (or set per segment if needed)
         A, B = calculateLinAB(v, phi)
         A_aug, B_aug = calculateAugmented(A, B)
         K, S, E = calculateGainsK(A_aug, B_aug)
-        phi = phi * 180 / np.pi  # Convert to degrees for storage
-        print(f"Segment {idx}: phi = {phi} degress")
-        phi_list.append(phi)
+        phi_deg = phi * 180 / np.pi  # Convert to degrees for storage
+        print(f"Segment {idx}: phi = {phi_deg} degrees")
+        phi_list.append(phi_deg)
         coeffx_list.append(coeffx)
         coeffy_list.append(coeffy)
         tf_list.append(tf)
@@ -102,7 +110,6 @@ def main():
         writer.writerow([f'segment', f'K_0_0', f'K_0_1', f'K_0_2', f'K_0_3', f'K_0_4',
                          f'K_1_0', f'K_1_1', f'K_1_2', f'K_1_3', f'K_1_4'])
         for idx, K in enumerate(K_list):
-            # Flatten K to 1D array (should be 2x5)
             writer.writerow([idx] + list(K.flatten()))
     # Save coefficients to CSV for ROS trajectory tracking node
     with open('trajectory_coeffs.csv', 'w', newline='') as csvfile:
