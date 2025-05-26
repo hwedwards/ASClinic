@@ -1,0 +1,293 @@
+[0m[ INFO] [1748219884.324310082]: Reading trajectory coeffs[0m
+[0m[ INFO] [1748219884.328411834]: Reading trajectory coeffs[0m
+[0m[ INFO] [1748219884.328637695]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219884.424783093]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219884.525011906]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219884.624396830]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219884.724754670]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219884.824389263]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219884.924968900]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219885.024307262]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219885.124809264]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219885.224402862]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219885.324921088]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219885.424280377]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219885.524940462]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219885.624362504]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219885.724894203]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219885.824305013]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219885.924271739]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219886.024333635]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219886.124881459]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219886.224377805]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219886.325051457]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219886.424358423]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219886.524938056]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219886.624362913]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219886.724912242]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219886.824309866]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219886.924917404]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219887.024391477]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219887.124313495]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219887.224251064]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219887.324858345]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219887.424341217]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219887.525021234]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219887.624330247]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219887.724256264]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219887.824256555]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219887.924281679]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219888.024295058]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219888.124261235]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219888.224316853]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219888.324270390]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219888.424240854]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219888.525120522]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219888.624314618]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219888.725191470]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219888.824269564]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219888.924201532]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219889.024279102]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219889.125033326]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219889.224408800]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219889.324905994]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219889.525558423]: Published position command - x: 0.000000, y: 0.239156, phi: 0.000000, v: 4.778772, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219889.526082498]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219889.624309276]: Published position command - x: 0.000000, y: 0.954066, phi: 0.000000, v: 9.519163, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219889.624615074]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219889.724989130]: Published position command - x: 0.000000, y: 2.143537, phi: 0.000000, v: 14.229890, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219889.725369938]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219889.824266426]: Published position command - x: 0.000000, y: 3.796858, phi: 0.000000, v: 18.887432, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219889.824397789]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219889.924302298]: Published position command - x: 0.000000, y: 5.917258, phi: 0.000000, v: 23.514627, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219889.924468990]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219890.024231160]: Published position command - x: 0.000000, y: 8.497522, phi: 0.000000, v: 28.101910, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219890.024329850]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219890.124978149]: Published position command - x: 0.000000, y: 11.537467, phi: 0.000000, v: 32.655018, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219890.125386670]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219890.224273428]: Published position command - x: 0.000000, y: 15.028136, phi: 0.000000, v: 37.166142, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219890.224411895]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219890.324820477]: Published position command - x: 0.000000, y: 18.971395, phi: 0.000000, v: 41.642612, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219890.325151812]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219890.424286927]: Published position command - x: 0.000000, y: 23.355776, phi: 0.000000, v: 46.075951, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219890.424406002]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219890.524254796]: Published position command - x: 0.000000, y: 28.181570, phi: 0.000000, v: 50.471085, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219890.524345166]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219890.624254250]: Published position command - x: 0.000000, y: 33.446640, phi: 0.000000, v: 54.829311, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219890.624351660]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219890.724885813]: Published position command - x: 0.000000, y: 39.151016, phi: 0.000000, v: 59.153088, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219890.725408800]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219890.824268261]: Published position command - x: 0.000000, y: 45.275703, phi: 0.000000, v: 63.431332, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219890.824369128]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219890.924905521]: Published position command - x: 0.000000, y: 51.836655, phi: 0.000000, v: 67.677910, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219890.926527475]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219891.024501349]: Published position command - x: 0.000000, y: 58.814350, phi: 0.000000, v: 71.882347, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219891.024637640]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219891.124288957]: Published position command - x: 0.000000, y: 66.205063, phi: 0.000000, v: 76.045410, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219891.124410335]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219891.224335449]: Published position command - x: 0.000000, y: 74.022102, phi: 0.000000, v: 80.176422, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219891.224432699]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219891.324301876]: Published position command - x: 0.000000, y: 82.239075, phi: 0.000000, v: 84.263405, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219891.324420343]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219891.424288656]: Published position command - x: 0.000000, y: 90.869545, phi: 0.000000, v: 88.315224, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219891.424540821]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219891.524984923]: Published position command - x: 0.000000, y: 99.906799, phi: 0.000000, v: 92.330132, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219891.525362339]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219891.624290216]: Published position command - x: 0.000000, y: 109.334717, phi: 0.000000, v: 96.302864, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219891.624423626]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219891.724863024]: Published position command - x: 0.000000, y: 119.165398, phi: 0.000000, v: 100.240181, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219891.725240920]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219891.824291711]: Published position command - x: 0.000000, y: 129.381790, phi: 0.000000, v: 104.136757, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219891.824417890]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219891.925194478]: Published position command - x: 0.000000, y: 140.013184, phi: 0.000000, v: 108.004692, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219891.925633752]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219892.024324919]: Published position command - x: 0.000000, y: 150.980957, phi: 0.000000, v: 111.817261, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219892.024438458]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219892.124965375]: Published position command - x: 0.000000, y: 162.358704, phi: 0.000000, v: 115.601837, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219892.125352615]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219892.224306187]: Published position command - x: 0.000000, y: 174.099838, phi: 0.000000, v: 119.343803, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219892.224404877]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219892.324962451]: Published position command - x: 0.000000, y: 186.227051, phi: 0.000000, v: 123.051605, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219892.325326043]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219892.424284670]: Published position command - x: 0.000000, y: 198.705597, phi: 0.000000, v: 126.715858, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219892.424384000]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219892.525167339]: Published position command - x: 0.000000, y: 211.595596, phi: 0.000000, v: 130.354843, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219892.525746135]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219892.624291442]: Published position command - x: 0.000000, y: 224.773331, phi: 0.000000, v: 133.935165, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219892.624390676]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219892.726191541]: Published position command - x: 0.000000, y: 238.366577, phi: 0.000000, v: 137.492813, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219892.727723222]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219892.831238683]: Published position command - x: 0.000000, y: 252.417572, phi: 0.000000, v: 141.037537, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219892.831364701]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219892.924229983]: Published position command - x: 0.000000, y: 266.539764, phi: 0.000000, v: 144.475159, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219892.924330209]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219893.024274490]: Published position command - x: 0.000000, y: 281.160614, phi: 0.000000, v: 147.912277, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219893.024415741]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219893.124984001]: Published position command - x: 0.000000, y: 296.143005, phi: 0.000000, v: 151.315399, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219893.125479019]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219893.224263562]: Published position command - x: 0.000000, y: 311.424316, phi: 0.000000, v: 154.671402, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219893.224462766]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219893.324228385]: Published position command - x: 0.000000, y: 327.052551, phi: 0.000000, v: 157.991928, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219893.324331203]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219893.424287898]: Published position command - x: 0.000000, y: 343.024658, phi: 0.000000, v: 161.276901, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219893.424393789]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219893.524311027]: Published position command - x: 0.000000, y: 359.309296, phi: 0.000000, v: 164.520630, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219893.524476247]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219893.624324076]: Published position command - x: 0.000000, y: 375.934631, phi: 0.000000, v: 167.729477, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219893.624427310]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219893.725280792]: Published position command - x: 0.000000, y: 392.898560, phi: 0.000000, v: 170.903442, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219893.727358820]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219893.824376317]: Published position command - x: 0.000000, y: 410.107788, phi: 0.000000, v: 174.026215, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219893.824477055]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219893.924213010]: Published position command - x: 0.000000, y: 427.653412, phi: 0.000000, v: 177.115387, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219893.924331956]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219894.024210857]: Published position command - x: 0.000000, y: 445.516510, phi: 0.000000, v: 180.168015, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219894.024310123]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219894.124285665]: Published position command - x: 0.000000, y: 463.686707, phi: 0.000000, v: 183.182861, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219894.124399076]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219894.224327449]: Published position command - x: 0.000000, y: 482.169006, phi: 0.000000, v: 186.161270, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219894.224471804]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219894.324320079]: Published position command - x: 0.000000, y: 500.918793, phi: 0.000000, v: 189.096817, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219894.324546868]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219894.424395367]: Published position command - x: 0.000000, y: 519.978455, phi: 0.000000, v: 191.996765, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219894.424489481]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219894.525588822]: Published position command - x: 0.000000, y: 539.332031, phi: 0.000000, v: 194.859146, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219894.526019744]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219894.624243120]: Published position command - x: 0.000000, y: 558.943787, phi: 0.000000, v: 197.679352, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219894.624348946]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219894.724245606]: Published position command - x: 0.000000, y: 578.849426, phi: 0.000000, v: 200.463165, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219894.724340840]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219894.824269853]: Published position command - x: 0.000000, y: 599.038452, phi: 0.000000, v: 203.209503, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219894.824374048]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219894.926991566]: Published position command - x: 0.000000, y: 619.542358, phi: 0.000000, v: 205.922913, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219894.928839349]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219895.024309002]: Published position command - x: 0.000000, y: 640.228760, phi: 0.000000, v: 208.586639, w: 0.000000, segment_no: 1[0m
+[0m[0m[ INFO] [1748219881.190738045]: Loaded 1 segments of gains[0m
+[0m[ INFO] [1748219881.190831199]: Segment 0:[0m
+[0m[ INFO] [1748219881.190855808]:   K_x:[0m
+[0m[ INFO] [1748219881.190906881]:     [-2.68003e-17, 1.87083, -1.10342e-16][0m
+[0m[ INFO] [1748219881.190937826]:     [-3.07369, 7.78674e-17, 2.08428][0m
+[0m[ INFO] [1748219881.190961282]:   K_p:[0m
+[0m[ INFO] [1748219881.190994307]:     [-6.65586e-18, 0.5][0m
+[0m[ INFO] [1748219881.191021987]:     [-0.5, -1.02901e-16][0m
+[0m[ INFO] [1748219880.977216477]: [I2C FOR MOTORS] Now launching this node in namespace: /asc[0m
+[0m[ INFO] [1748219881.000664407]: [I2C FOR MOTORS] publish motor duty cycle requests from command line with: rostopic pub --once /asc/set_motor_duty_cycle asclinic_pkg/LeftRightFloat32 "{left: 10.1, right: 10.1}"[0m
+[0m[ INFO] [1748219881.000830843]: [I2C FOR MOTORS] Successfully opened named /dev/i2c-1, with file descriptor = 10[0m
+[0m[ INFO] [1748219881.000990430]: [I2C FOR MOTORS] Actual acceleration limit = 0.0003125%/ms (after conversation to "internal units")[0m
+[0m[ INFO] [1748219881.001094432]: [I2C FOR MOTORS] Actual deceleration limit = 0.0015625%/ms (after conversation to "internal units")[0m
+[0m[ INFO] [1748219881.001139681]: [I2C FOR MOTORS] Now initialising SMC with I2C address 13[0m
+[0m[ INFO] [1748219881.016433739]: [I2C FOR MOTORS] Now initialising SMC with I2C address 14[0m
+[0m[ INFO] [1748219881.031966523]: [I2C FOR MOTORS] Node initialisation complete[0m
+[ INFO] [1748219895.024415789]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219895.124299647]: Published position command - x: 0.000000, y: 661.212280, phi: 0.000000, v: 211.216217, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219895.124467298]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219895.224232850]: Published position command - x: 0.000000, y: 682.457275, phi: 0.000000, v: 213.807465, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219895.224357653]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219895.325187323]: Published position command - x: 0.000000, y: 704.022217, phi: 0.000000, v: 216.367706, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219895.325568195]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219895.424291804]: Published position command - x: 0.000000, y: 725.740173, phi: 0.000000, v: 218.877731, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219895.424389726]: line segment no: 1, phi: 0.000000[0m
+
+[ARUCO DETECTOR] Camera properties upon initialisation:
+CV_CAP_PROP_FRAME_HEIGHT : '480.0'
+CV_CAP_PROP_FRAME_WIDTH :  '640.0'
+CAP_PROP_FPS :             '30.0'
+CAP_PROP_FOCUS :           '0.0'
+CAP_PROP_AUTOFOCUS :       '0.0'
+CAP_PROP_BRIGHTNESS :      '128.0'
+CAP_PROP_CONTRAST :        '128.0'
+CAP_PROP_SATURATION :      '128.0'
+CAP_PROP_BUFFERSIZE :      '4.0'
+
+[ARUCO DETECTOR] Camera properties upon initialisation:
+CV_CAP_PROP_FRAME_HEIGHT : '1080.0'
+CV_CAP_PROP_FRAME_WIDTH :  '1920.0'
+CAP_PROP_FPS :             '5.0'
+CAP_PROP_FOCUS :           '0.0'
+CAP_PROP_AUTOFOCUS :       '0.0'
+CAP_PROP_BRIGHTNESS :      '128.0'
+CAP_PROP_CONTRAST :        '128.0'
+CAP_PROP_SATURATION :      '128.0'
+CAP_PROP_BUFFERSIZE :      '1.0'
+[INFO] [1748219884.023377]: [ARUCO DETECTOR] As a double check of the camera properties set, a frame captured just now has dimensions = (1080, 1920, 3)
+[INFO] [1748219884.028835]: [ARUCO DETECTOR] publish request from command line to save a single camera image using: rostopic pub --once /asc/request_save_image std_msgs/UInt32 1
+[INFO] [1748219884.033145]: [ARUCO DETECTOR] Node initialisation complete
+... logging to /home/asc/.ros/log/d0b22016-39c5-11f0-933a-d8c0a650f677/roslaunch-asc12-jetson-14352.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/launch/trajectory.launch
+[1mstarted roslaunch server http://asc12-jetson:35833/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /asc/aruco_detector/aruco_detector_desired_camera_fps: 5
+ * /asc/aruco_detector/aruco_detector_desired_camera_frame_height: 1080
+ * /asc/aruco_detector/aruco_detector_desired_camera_frame_width: 1920
+ * /asc/aruco_detector/aruco_detector_marker_size: 0.25
+ * /asc/aruco_detector/aruco_detector_save_image_path: /home/asc/saved_c...
+ * /asc/aruco_detector/aruco_detector_should_publish_camera_images: False
+ * /asc/aruco_detector/aruco_detector_should_save_all_aruco_images: False
+ * /asc/aruco_detector/aruco_detector_should_show_camera_images: False
+ * /asc/aruco_detector/aruco_detector_usb_camera_device_number: 0
+ * /asc/aruco_detector/aruco_detector_verbosity: 1
+ * /asc/encoder_read_multi_threaded/delta_t_for_publishing_encoder_counts: 0.1
+ * /asc/encoder_read_multi_threaded/encoder_events_to_monitor: rising
+ * /asc/encoder_read_multi_threaded/encoder_read_verbosity: 1
+ * /asc/encoder_read_multi_threaded/gpio_chip_number_for_encoder_lines: 1
+ * /asc/encoder_read_multi_threaded/line_number_for_left_side_encoder_channel_a: 105
+ * /asc/encoder_read_multi_threaded/line_number_for_left_side_encoder_channel_b: 106
+ * /asc/encoder_read_multi_threaded/line_number_for_right_side_encoder_channel_a: 84
+ * /asc/encoder_read_multi_threaded/line_number_for_right_side_encoder_channel_b: 130
+ * /asc/encoder_read_multi_threaded/should_monitor_left_side_encoder_channel_a: True
+ * /asc/encoder_read_multi_threaded/should_monitor_left_side_encoder_channel_b: False
+ * /asc/encoder_read_multi_threaded/should_monitor_right_side_encoder_channel_a: True
+ * /asc/encoder_read_multi_threaded/should_monitor_right_side_encoder_channel_b: False
+ * /asc/i2c_for_motors/motor_driver_current_limit_in_milliamps: 5000
+ * /asc/i2c_for_motors/motor_driver_left_side_multiplier: 1
+ * /asc/i2c_for_motors/motor_driver_max_accel_limit_in_percent_per_millisecond: 0.04
+ * /asc/i2c_for_motors/motor_driver_max_decel_limit_in_percent_per_millisecond: 0.16
+ * /asc/i2c_for_motors/motor_driver_max_duty_cycle_limit_in_percent: 100.0
+ * /asc/i2c_for_motors/motor_driver_right_side_multiplier: 1
+ * /asc/i2c_for_motors/motor_driver_verbosity: 1
+ * /rosdistro: noetic
+ * /rosversion: 1.17.0
+
+NODES
+  /
+    aruco_positioning (asclinic_pkg/aruco_positioning.py)
+    kf_fusion_node (asclinic_pkg/KF.py)
+    odomdelta (asclinic_pkg/odomdelta)
+    trajectory_generator (asclinic_pkg/trajectory_generator_state_space)
+    trajectory_tracker (asclinic_pkg/trajectory_tracker_state_space)
+    velocity_PI_control (asclinic_pkg/velocity_PI_control)
+  /asc/
+    aruco_detector (asclinic_pkg/aruco_detector.py)
+    encoder_read_multi_threaded (asclinic_pkg/encoder_read_multi_threaded)
+    i2c_for_motors (asclinic_pkg/i2c_for_motors)
+
+[1mROS_MASTER_URI=http://localhost:11311[0m
+]2;/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/launch/trajectory.launch http://localhost:11311
+[1mprocess[asc/i2c_for_motors-1]: started with pid [14387][0m
+[1mprocess[asc/encoder_read_multi_threaded-2]: started with pid [14388][0m
+[1mprocess[odomdelta-3]: started with pid [14394][0m
+[1mprocess[asc/aruco_detector-4]: started with pid [14400][0m
+[1mprocess[aruco_positioning-5]: started with pid [14410][0m
+[1mprocess[trajectory_tracker-6]: started with pid [14411][0m
+[1mprocess[trajectory_generator-7]: started with pid [14412][0m
+[1mprocess[velocity_PI_control-8]: started with pid [14418][0m
+[1mprocess[kf_fusion_node-9]: started with pid [14424][0m
+[kf_fusion_node-9] killing on exit
+[velocity_PI_control-8] killing on exit
+[trajectory_generator-7] killing on exit
+[trajectory_tracker-6] killing on exit
+[asc/encoder_read_multi_threaded-2] killing on exit
+[asc/aruco_detector-4] killing on exit
+[aruco_positioning-5] killing on exit
+[odomdelta-3] killing on exit
+[asc/i2c_for_motors-1] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m

@@ -1,0 +1,22 @@
+[0m[ INFO] [1748221186.399262096]: Reading trajectory coeffs[0m
+[0m[ INFO] [1748221186.412241302]: Reading trajectory coeffs[0m
+[0m[ INFO] [1748221186.412545978]: phi: 90.000000[0m
+[0m[ INFO] [1748221186.412815293]: line_segment_no: 0[0m
+[0m[ INFO] [1748221186.412969119]: trajectory_info:[0m
+[0m[ INFO] [1748221186.413033152]: [TURNING] idx=0, phi=90.000000, tf=5.000000[0m
+[0m[ INFO] [1748221186.413549991]: [DRIVING] idx=1, coeffx=[0, 0, -0, 0], coeffy=[0, 0, 24, -0.64], tf=25, phi=90, line_segment_no=0[0m
+[0m[ INFO] [1748221191.598422639]: Published position command - x: 0.000000, y: 0.239163, phi: 90.000000, v: 4.778840, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748221191.698014761]: Published position command - x: 0.000000, y: 0.954344, phi: 90.000000, v: 9.520541, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748221191.797982376]: Published position command - x: 0.000000, y: 2.141927, phi: 90.000000, v: 14.224588, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748221191.897998599]: Published position command - x: 0.000000, y: 3.799046, phi: 90.000000, v: 18.892815, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748221191.997950214]: Published position command - x: 0.000000, y: 5.919121, phi: 90.000000, v: 23.518277, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748221192.097861060]: Published position command - x: 0.000000, y: 8.500114, phi: 90.000000, v: 28.106124, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748221192.197890147]: Published position command - x: 0.000000, y: 11.539123, phi: 90.000000, v: 32.657318, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748221192.298064485]: Published position command - x: 0.000000, y: 15.031236, phi: 90.000000, v: 37.169890, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748221192.397664127]: Published position command - x: 0.000000, y: 18.970032, phi: 90.000000, v: 41.641155, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748221192.497625117]: Published position command - x: 0.000000, y: 23.354970, phi: 90.000000, v: 46.075179, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748221192.597975393]: Published position command - x: 0.000000, y: 28.184780, phi: 90.000000, v: 50.473869, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748221192.697968288]: Published position command - x: 0.000000, y: 33.450931, phi: 90.000000, v: 54.832708, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748221192.797923966]: Published position command - x: 0.000000, y: 39.149990, phi: 90.000000, v: 59.152342, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748221192.897914237]: Published position command - x: 0.000000, y: 45.279940, phi: 90.000000, v: 63.434179, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748221192.998352642]: Published position command - x: 0.000000, y: 51.854944, phi: 90.000000, v: 67.689326, w: 0.000000, segment_no: 0[0m

@@ -1,0 +1,575 @@
+[0m[ INFO] [1748219529.057219028]: Loaded 1 segments of gains[0m
+[0m[ INFO] [1748219529.057315669]: Segment 0:[0m
+[0m[ INFO] [1748219529.057343414]:   K_x:[0m
+[0m[ INFO] [1748219529.057396822]:     [-2.68003e-17, 1.87083, -1.10342e-16][0m
+[0m[ INFO] [1748219529.057428983]:     [-3.07369, 7.78674e-17, 2.08428][0m
+[0m[ INFO] [1748219529.057453207]:   K_p:[0m
+[0m[ INFO] [1748219529.057490167]:     [-6.65586e-18, 0.5][0m
+[0m[ INFO] [1748219529.064120320]:     [-0.5, -1.02901e-16][0m
+[0m[ INFO] [1748219530.894647566]: [1748219530.894] Errors - x: 0.000000, y: 0.000000, phi: 0.000000, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219531.007037187]: [1748219531.006] Errors - x: 0.000000, y: 0.000000, phi: 0.000000, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219531.095202061]: [1748219531.095] Errors - x: 0.000000, y: 0.000000, phi: 0.000000, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219531.195694430]: [1748219531.196] Errors - x: 0.000000, y: 0.000000, phi: 0.000000, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219531.302240307]: [1748219531.302] Errors - x: 0.000000, y: 0.000000, phi: 0.000000, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219531.401327861]: [1748219531.401] Errors - x: 0.000000, y: 0.000000, phi: 0.000000, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219531.501296321]: [1748219531.501] Errors - x: 0.000000, y: 0.000000, phi: 0.000000, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219531.600797256]: [1748219531.600] Errors - x: 0.000000, y: 0.000000, phi: 0.000000, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219531.701458011]: [1748219531.701] Errors - x: 0.000000, y: 0.000000, phi: 0.000000, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219531.802266160]: [1748219531.802] Errors - x: 0.000000, y: 0.000000, phi: 0.000000, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219531.902448286]: [1748219531.902] Errors - x: 0.000000, y: 0.000000, phi: 0.000000, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219532.002514571]: [1748219532.002] Errors - x: 0.000000, y: 0.000000, phi: 0.000000, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219532.108334584]: [1748219532.108] Errors - x: 0.000000, y: 0.000000, phi: 0.000000, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219532.398146348]: [1748219532.398] Errors - x: 0.000000, y: 0.000000, phi: 0.000000, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219532.399701117]: [1748219532.400] Errors - x: 0.000000, y: 0.000000, phi: 0.000000, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219532.399862591]: [1748219532.400] Errors - x: 0.000000, y: 0.000000, phi: 0.000000, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219532.404144206]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219532.405689599]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219532.444805326]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219532.494560497]: [1748219532.494] Errors - x: 0.000000, y: 0.000000, phi: 2.035406, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219532.546191465]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219532.602135952]: [1748219532.602] Errors - x: 0.000000, y: 0.000000, phi: 2.035406, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219532.646169877]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219532.695207600]: [1748219532.695] Errors - x: 0.000000, y: 0.000000, phi: 2.035406, integral_x: 0.000000, integral_y: 0.000000[0m
+[0m[ INFO] [1748219532.744736881]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219532.795280349]: [1748219532.795] Errors - x: 0.000202, y: 0.000000, phi: 2.033527, integral_x: 0.000020, integral_y: 0.000000[0m
+[0m[ INFO] [1748219532.846590994]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219532.901272972]: [1748219532.901] Errors - x: 0.000404, y: 0.000002, phi: 2.016619, integral_x: 0.000061, integral_y: 0.000000[0m
+[0m[ INFO] [1748219532.944771690]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219532.995342263]: [1748219532.995] Errors - x: 0.000404, y: 0.000002, phi: 1.960258, integral_x: 0.000101, integral_y: 0.000000[0m
+[0m[ INFO] [1748219533.045661440]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219533.107216133]: [1748219533.107] Errors - x: -0.000201, y: -0.000037, phi: 1.868202, integral_x: 0.000081, integral_y: -0.000003[0m
+[0m[ INFO] [1748219533.144677153]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219533.195042348]: [1748219533.195] Errors - x: -0.000201, y: -0.000037, phi: 1.759238, integral_x: 0.000061, integral_y: -0.000007[0m
+[0m[ INFO] [1748219533.246366848]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219533.312057971]: [1748219533.312] Errors - x: -0.000201, y: -0.000037, phi: 1.669060, integral_x: 0.000041, integral_y: -0.000011[0m
+[0m[ INFO] [1748219533.344626265]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219533.403051068]: [1748219533.402] Errors - x: -0.000584, y: -0.000165, phi: 1.578883, integral_x: -0.000018, integral_y: -0.000027[0m
+[0m[ INFO] [1748219533.445886419]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219533.495349363]: [1748219533.495] Errors - x: -0.000769, y: -0.000246, phi: 1.483070, integral_x: -0.000095, integral_y: -0.000052[0m
+[0m[ INFO] [1748219533.544866932]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219533.603475033]: [1748219533.603] Errors - x: -0.000946, y: -0.000343, phi: 1.391014, integral_x: -0.000189, integral_y: -0.000086[0m
+[0m[ INFO] [1748219533.645963436]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219533.713112207]: [1748219533.713] Errors - x: -0.000946, y: -0.000343, phi: 1.304594, integral_x: -0.000284, integral_y: -0.000121[0m
+[0m[ INFO] [1748219533.744662154]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219533.802246084]: [1748219533.802] Errors - x: -0.001102, y: -0.000472, phi: 1.216295, integral_x: -0.000394, integral_y: -0.000168[0m
+[0m[ INFO] [1748219533.844583606]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219533.894933951]: [1748219533.895] Errors - x: -0.001102, y: -0.000472, phi: 1.133633, integral_x: -0.000504, integral_y: -0.000215[0m
+[0m[ INFO] [1748219533.944880549]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219533.994467559]: [1748219533.994] Errors - x: -0.001365, y: -0.000778, phi: 1.050970, integral_x: -0.000641, integral_y: -0.000293[0m
+[0m[ INFO] [1748219534.046442690]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, l[0m[ INFO] [1748219532.245474332]: Reading trajectory coeffs[0m
+[0m[ INFO] [1748219532.402219929]: Reading trajectory coeffs[0m
+[0m[ INFO] [1748219532.403320197]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219532.405099609]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219532.444090694]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219532.544732985]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219532.644553347]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219532.744082314]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219532.844870751]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219532.944148835]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219533.044723542]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219533.144109051]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219533.244654541]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219533.344061555]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219533.444557957]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219533.544091212]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219533.644584093]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219533.744081028]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219533.844027983]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219533.944051452]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219534.044767440]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219534.144077556]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219534.244613606]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219534.344072525]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219534.444851873]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219534.544088869]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219534.644676792]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219534.744064605]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219534.844595055]: Puine_no: 0[0m
+[0m[ INFO] [1748219534.095641920]: [1748219534.096] Errors - x: -0.001246, y: -0.000615, phi: 0.973944, integral_x: -0.000765, integral_y: -0.000354[0m
+[0m[ INFO] [1748219534.144542202]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219534.194903844]: [1748219534.195] Errors - x: -0.001246, y: -0.000615, phi: 0.895039, integral_x: -0.000890, integral_y: -0.000416[0m
+[0m[ INFO] [1748219534.246025974]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219534.309991414]: [1748219534.310] Errors - x: -0.001430, y: -0.000974, phi: 0.823649, integral_x: -0.001033, integral_y: -0.000513[0m
+[0m[ INFO] [1748219534.344601970]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219534.400727932]: [1748219534.401] Errors - x: -0.001430, y: -0.000974, phi: 0.752258, integral_x: -0.001176, integral_y: -0.000611[0m
+[0m[ INFO] [1748219534.446521396]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219534.496765180]: [1748219534.497] Errors - x: -0.001430, y: -0.000974, phi: 0.688383, integral_x: -0.001319, integral_y: -0.000708[0m
+[0m[ INFO] [1748219534.544662155]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219534.597642546]: [1748219534.598] Errors - x: -0.001481, y: -0.001170, phi: 0.622628, integral_x: -0.001467, integral_y: -0.000825[0m
+[0m[ INFO] [1748219534.646559692]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219534.695045730]: [1748219534.695] Errors - x: -0.001481, y: -0.001170, phi: 0.562510, integral_x: -0.001615, integral_y: -0.000942[0m
+[0m[ INFO] [1748219534.744819717]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219534.798595125]: [1748219534.798] Errors - x: -0.001507, y: -0.001370, phi: 0.504271, integral_x: -0.001766, integral_y: -0.001079[0m
+[0m[ INFO] [1748219534.849060768]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219534.895177755]: [1748219534.895] Errors - x: -0.001493, y: -0.001169, phi: 0.449789, integral_x: -0.001915, integral_y: -0.001196[0m
+[0m[ INFO] [1748219534.944658108]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219535.003572068]: [1748219535.003] Errors - x: -0.001495, y: -0.001371, phi: 0.395306, integral_x: -0.002065, integral_y: -0.001333[0m
+[0m[ INFO] [1748219535.045086220]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219535.095413238]: [1748219535.095] Errors - x: -0.001504, y: -0.001169, phi: 0.344582, integral_x: -0.002215, integral_y: -0.001450[0m
+[0m[ INFO] [1748219535.145182746]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219535.195985416]: [1748219535.196] Errors - x: -0.001485, y: -0.001370, phi: 0.297614, integral_x: -0.002364, integral_y: -0.001587[0m
+[0m[ INFO] [1748219535.246249009]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219535.294955913]: [1748219535.295] Errors - x: -0.001485, y: -0.001370, phi: 0.252526, integral_x: -0.002512, integral_y: -0.001724[0m
+[0m[ INFO] [1748219535.345144625]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219535.396602439]: [1748219535.396] Errors - x: -0.001447, y: -0.001568, phi: 0.213073, integral_x: -0.002657, integral_y: -0.001881[0m
+[0m[ INFO] [1748219535.445059644]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219535.516016873]: [1748219535.516] Errors - x: -0.001494, y: -0.001372, phi: 0.173621, integral_x: -0.002806, integral_y: -0.002018[0m
+[0m[ INFO] [1748219535.544694660]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219535.599708578]: [1748219535.600] Errors - x: -0.001494, y: -0.001372, phi: 0.139804, integral_x: -0.002955, integral_y: -0.002155[0m
+[0m[ INFO] [1748219535.646106560]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219535.695216764]: [1748219535.695] Errors - x: -0.001494, y: -0.001372, phi: 0.105988, integral_x: -0.003105, integral_y: -0.002292[0m
+[0m[ INFO] [1748219535.744759805]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219535.804510959]: [1748219535.804] Errors - x: -0.001494, y: -0.001372, phi: 0.079686, integral_x: -0.003254, integral_y: -0.002429[0m
+[0m[ INFO] [1748219535.846312058]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219535.912199471]: [1748219535.912] Errors - x: -0.001494, y: -0.001372, phi: 0.049627, integral_x: -0.003404, integral_y: -0.002566[0m
+[0m[ INFO] [1748219535.944717461]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219535.995413155]: [1748219535.995] Errors - x: -0.001416, y: -0.001558, phi: 0.025204, integral_x: -0.003545, integral_y: -0.002722[0m
+[0m[ INFO] [1748219536.046250258]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219536.095174956]: [1748219536.095] Errors - x: -0.001416, y: -0.001558, phi: 0.002660, integral_x: -0.003687, integral_y: -0.002878[0m
+[0m[ INFO] [1748219536.145752888]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219536.205022564]: [1748219536.205] Errors - x: -0.001327, y: -0.001740, phi: -0.021763, integral_x: -0.003819, integral_y: -0.003052[0m
+[0m[ INFO] [1748219536.247002194]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219536.303026138]: [1748219536.303] Errors - x: -0.001327, y: -0.001740, phi: -0.040550, integral_x: -0.003952, integral_y: -0.003226[0m
+[0m[ INFO] [1748219536.344939848]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219536.402395360]: [1748219536.402] Errors - x: -0.001327, y: -0.001740, phi: -0.059337, integral_x: -0.004085, integral_y: -0.003400[0m
+[0m[ INFO] [1748219536.448106358]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219536.497778489]: [1748219536.498] Errors - x: -0.001327, y: -0.001740, phi: -0.078124, integral_x: -0.004218, integral_y: -0.003574[0m
+[0m[ INFO] [1748219536.544843838]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219536.597329088]: [1748219536.597] Errors - x: -0.001429, y: -0.001565, phi: -0.087518, integral_x: -0.004361, integral_y: -0.003730[0m
+[0m[ INFO] [1748219536.646413500]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219536.707554460]: [1748219536.707] Errors - x: -0.001849, y: -0.000875, phi: -0.095032, integral_x: -0.004546, integral_y: -0.003818[0m
+[0m[ INFO] [1748219536.744819158]: Received reference trajectory - x: 0.000000, y: 0.00blished position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219534.944115318]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219535.044048001]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219535.144066509]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219535.244710656]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219535.344142790]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219535.444067249]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219535.544058493]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219535.644588239]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219535.744052854]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219535.844644104]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219535.944071630]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219536.044629664]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219536.144216648]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219536.244703609]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219536.344068990]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219536.444922451]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219536.544129623]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219536.644726473]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219536.744111662]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219536.844745761]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219536.944078438]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219537.044557687]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219537.144099870]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219537.244134987]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219537.344039158]: Published position command - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, segment_no: 0[0m
+[0m[ INFO] [1748219537.544082382]: Published position command - x: 0.000000, y: 0.238862, phi: 0.000000, v: 4.775833, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219537.544187151]: line segment no: 1, ph0000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219536.802596466]: [1748219536.802] Errors - x: -0.002275, y: -0.000189, phi: -0.102547, integral_x: -0.004773, integral_y: -0.003837[0m
+[0m[ INFO] [1748219536.848675309]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219536.900123267]: [1748219536.900] Errors - x: -0.002275, y: -0.000189, phi: -0.102547, integral_x: -0.005001, integral_y: -0.003856[0m
+[0m[ INFO] [1748219536.944646284]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219537.002149509]: [1748219537.002] Errors - x: -0.001729, y: -0.001038, phi: -0.111941, integral_x: -0.005174, integral_y: -0.003960[0m
+[0m[ INFO] [1748219537.046958002]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219537.107244713]: [1748219537.107] Errors - x: -0.001511, y: -0.001378, phi: -0.115698, integral_x: -0.005325, integral_y: -0.004097[0m
+[0m[ INFO] [1748219537.144758758]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219537.245884350]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219537.345502150]: Received reference trajectory - x: 0.000000, y: 0.000000, phi: 90.000000, v: 0.000000, w: 0.000000, line_no: 0[0m
+[0m[ INFO] [1748219537.367372790]: [1748219537.367] Errors - x: -0.001511, y: -0.001378, phi: -0.115698, integral_x: -0.005476, integral_y: -0.004235[0m
+[0m[ INFO] [1748219537.370220598]: [1748219537.370] Errors - x: -0.001400, y: -0.001547, phi: -0.117577, integral_x: -0.005616, integral_y: -0.004390[0m
+[0m[ INFO] [1748219537.394991846]: [1748219537.395] Errors - x: -0.001400, y: -0.001547, phi: -0.117577, integral_x: -0.005756, integral_y: -0.004545[0m
+[0m[ INFO] [1748219537.509397808]: [1748219537.509] Errors - x: -0.001400, y: -0.001547, phi: -0.117577, integral_x: -0.005896, integral_y: -0.004699[0m
+[0m[ INFO] [1748219537.544649236]: Received reference trajectory - x: 0.000000, y: 0.238862, phi: 0.000000, v: 4.775833, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219537.602875349]: [1748219537.602] Errors - x: -0.001400, y: -0.001308, phi: -2.152982, integral_x: -0.006036, integral_y: -0.004830[0m
+[0m[ INFO] [1748219537.646436980]: Received reference trajectory - x: 0.000000, y: 0.954565, phi: 0.000000, v: 9.521635, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219537.708527199]: [1748219537.708] Errors - x: -0.001400, y: -0.000593, phi: -2.152982, integral_x: -0.006176, integral_y: -0.004889[0m
+[0m[ INFO] [1748219537.744625996]: Received reference trajectory - x: 0.000000, y: 2.141624, phi: 0.000000, v: 14.223590, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219537.801738688]: [1748219537.801] Errors - x: -0.001400, y: 0.000595, phi: -2.152982, integral_x: -0.006316, integral_y: -0.004830[0m
+[0m[ INFO] [1748219537.845887654]: Received reference trajectory - x: 0.000000, y: 3.798001, phi: 0.000000, v: 18.890245, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219537.906704547]: [1748219537.906] Errors - x: -0.001511, y: 0.002420, phi: -2.151104, integral_x: -0.006467, integral_y: -0.004588[0m
+[0m[ INFO] [1748219537.944632484]: Received reference trajectory - x: 0.000000, y: 5.918050, phi: 0.000000, v: 23.516180, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219538.002016315]: [1748219538.002] Errors - x: -0.001402, y: 0.004370, phi: -2.134196, integral_x: -0.006607, integral_y: -0.004151[0m
+[0m[ INFO] [1748219538.046211841]: Received reference trajectory - x: 0.000000, y: 8.500151, phi: 0.000000, v: 28.106184, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219538.096771181]: [1748219538.097] Errors - x: -0.001508, y: 0.007124, phi: -2.083471, integral_x: -0.006758, integral_y: -0.003439[0m
+[0m[ INFO] [1748219538.145290947]: Received reference tri: 0.000000[0m
+[0m[ INFO] [1748219537.644718113]: Published position command - x: 0.000000, y: 0.954565, phi: 0.000000, v: 9.521635, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219537.645072517]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219537.744079590]: Published position command - x: 0.000000, y: 2.141624, phi: 0.000000, v: 14.223590, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219537.744192743]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219537.844552375]: Published position command - x: 0.000000, y: 3.798001, phi: 0.000000, v: 18.890245, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219537.844977020]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219537.944056158]: Published position command - x: 0.000000, y: 5.918050, phi: 0.000000, v: 23.516180, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219537.944182815]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219538.044533775]: Published position command - x: 0.000000, y: 8.500151, phi: 0.000000, v: 28.106184, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219538.044877011]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219538.144097622]: Published position command - x: 0.000000, y: 11.538297, phi: 0.000000, v: 32.656170, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219538.144243224]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219538.244736745]: Published position command - x: 0.000000, y: 15.030907, phi: 0.000000, v: 37.169491, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219538.245325935]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219538.344076302]: Published position command - x: 0.000000, y: 18.970522, phi: 0.000000, v: 41.641678, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219538.344209103]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219538.444598143]: Published position command - x: 0.000000, y: 23.356953, phi: 0.000000, v: 46.077080, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219538.444915011]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219538.544054693]: Published position command - x: 0.000000, y: 28.183811, phi: 0.000000, v: 50.473030, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219538.544182535]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219538.644629975]: Published position command - x: 0.000000, y: 33.453217, phi: 0.000000, v: 54.834518, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219538.645045948]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219538.744107902]: Published position command - x: 0.000000, y: 39.149342, phi: 0.000000, v: 59.151871, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219538.744202463]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219538.844015848]: Published position command - x: 0.000000, y: 45.277306, phi: 0.000000, v: 63.432411, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219538.844127786]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219538.944064309]: Published position command - x: 0.000000, y: 51.832859, phi: 0.000000, v: 67.675545, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219538.944186966]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219539.047248644]: Published position command - x: 0.000000, y: 59.035557, phi: 0.000000, v: 72.011017, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219539.047347141]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219539.144107821]: Published position command - x: 0.000000, y: 66.208237, phi: 0.000000, v: 76.047142, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219539.144227022]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219539.244070009]: Published position command - x: 0.000000, y: 74.019096, phi: 0.000000, v: 80.174881, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219539.244202042]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219539.344080325]: Published position command - x: 0.000000, y: 82.241150, phi: 0.000000, v: 84.264412, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219539.344182086]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [17482ajectory - x: 0.000000, y: 11.538297, phi: 0.000000, v: 32.656170, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219538.205498905]: [1748219538.205] Errors - x: -0.001708, y: 0.010513, phi: -1.993294, integral_x: -0.006929, integral_y: -0.002387[0m
+[0m[ INFO] [1748219538.247466951]: Received reference trajectory - x: 0.000000, y: 15.030907, phi: 0.000000, v: 37.169491, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219538.303349966]: [1748219538.303] Errors - x: -0.001884, y: 0.014369, phi: -1.869300, integral_x: -0.007117, integral_y: -0.000950[0m
+[0m[ INFO] [1748219538.344633332]: Received reference trajectory - x: 0.000000, y: 18.970522, phi: 0.000000, v: 41.641678, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219538.402881620]: [1748219538.402] Errors - x: -0.001952, y: 0.018499, phi: -1.709611, integral_x: -0.007313, integral_y: 0.000900[0m
+[0m[ INFO] [1748219538.447391774]: Received reference trajectory - x: 0.000000, y: 23.356953, phi: 0.000000, v: 46.077080, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219538.496690908]: [1748219538.497] Errors - x: -0.002033, y: 0.023281, phi: -1.514227, integral_x: -0.007516, integral_y: 0.003228[0m
+[0m[ INFO] [1748219538.544586955]: Received reference trajectory - x: 0.000000, y: 28.183811, phi: 0.000000, v: 50.473030, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219538.603214736]: [1748219538.603] Errors - x: -0.002042, y: 0.028512, phi: -1.285026, integral_x: -0.007720, integral_y: 0.006079[0m
+[0m[ INFO] [1748219538.645626658]: Received reference trajectory - x: 0.000000, y: 33.453217, phi: 0.000000, v: 54.834518, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219538.709332287]: [1748219538.709] Errors - x: -0.002298, y: 0.032391, phi: -1.035160, integral_x: -0.007950, integral_y: 0.009318[0m
+[0m[ INFO] [1748219538.744813061]: Received reference trajectory - x: 0.000000, y: 39.149342, phi: 0.000000, v: 59.151871, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219538.802276957]: [1748219538.802] Errors - x: -0.004550, y: 0.032900, phi: -0.787172, integral_x: -0.008405, integral_y: 0.012608[0m
+[0m[ INFO] [1748219538.844463469]: Received reference trajectory - x: 0.000000, y: 45.277306, phi: 0.000000, v: 63.432411, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219538.900354772]: [1748219538.900] Errors - x: -0.009569, y: 0.032442, phi: -0.556093, integral_x: -0.009362, integral_y: 0.015852[0m
+[0m[ INFO] [1748219538.944883454]: Received reference trajectory - x: 0.000000, y: 51.832859, phi: 0.000000, v: 67.675545, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219538.994778147]: [1748219538.995] Errors - x: -0.015196, y: 0.034394, phi: -0.353194, integral_x: -0.010882, integral_y: 0.019291[0m
+[0m[ INFO] [1748219539.047855915]: Received reference trajectory - x: 0.000000, y: 59.035557, phi: 0.000000, v: 72.011017, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219539.094873968]: [1748219539.095] Errors - x: -0.022217, y: 0.038025, phi: -0.182233, integral_x: -0.013103, integral_y: 0.023094[0m
+[0m[ INFO] [1748219539.144651059]: Received reference trajectory - x: 0.000000, y: 66.208237, phi: 0.000000, v: 76.047142, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219539.194504631]: [1748219539.194] Errors - x: -0.030565, y: 0.042806, phi: -0.033816, integral_x: -0.016160, integral_y: 0.027375[0m
+[0m[ INFO] [1748219539.244818497]: Received reference trajectory - x: 0.000000, y: 74.019096, phi: 0.000000, v: 80.174881, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219539.295208811]: [1748219539.295] Errors - x: -0.039990, y: 0.049487, phi: 0.092056, integral_x: -0.020159, integral_y: 0.032323[0m
+[0m[ INFO] [1748219539.344755980]: Received reference trajectory - x: 0.000000, y: 82.241150, phi: 0.000000, v: 84.264412, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219539.396109057]: [1748219539.396] Errors - x: -0.050895, y: 0.057853, phi: 0.185991, integral_x: -0.025248, integral_y: 0.038109[0m
+[0m[ INFO] [1748219539.446795758]: Received reference trajectory - x: 0.000000, y: 90.876312, phi: 0.000000, v: 88.318314, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219539.495217507]: [1748219539.495] Errors - x: -0.060895, y: 0.067887, phi: 0.279925, integral_x: -0.031338, integral_y: 0.044897[0m
+[0m[ INFO] [1748219539.547866022]: Received reference trajectory - x: 0.000000, y: 100.060768, phi: 0.000000, v: 92.396706, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219539.594976140]: [1748219539.595] Errors - x: -0.070928, y: 0.079403, phi: 0.364467, integral_x: -0.038430, integral_y: 0.052838[0m
+[0m[ INFO] [1748219539.646337153]: Received reference trajectory - x: 0.000000, y: 109.341232, phi: 0.000000, v: 96.305534, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219539.696168613]: [1748219539.696] Errors - x: -0.082265, y: 0.092350, phi: 0.430221, integral_x: -0.046657, integral_y: 0.062073[0m
+[0m[ INFO] [1748219539.744638682]: Received reference trajectory - x: 0.000000, y: 119.164742, phi: 0.000000, v: 100.239929, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219539.794555583]: [1748219539.794] Errors - x: -0.095357, y: 0.107509, phi: 0.475309, integral_x: -0.056193, integral_y: 0.072823[0m
+[0m[ INFO] [1748219539.846669948]: Received reference trajectory - x: 0.000000, y: 129.386093, phi: 0.000000, v: 104.138359, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219539.912988726]: [1748219539.913] Errors - x: -0.110127, y: 0.124762, phi: 0.503490, integral_x: -0.067205, integral_y: 0.085300[0m
+[0m[ INFO] [1748219539.944667602]: Received reference trajectory - x: 0.000000, y: 139.990051, phi: 0.000000, v: 107.996460, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219540.002425486]: [1748219540.002] Errors - x: -0.126413, y: 0.143883, phi: 0.516641, integral_x: -0.079847, integral_y: 0.099688[0m
+[0m[ INFO] [1748219540.044781023]: Received reference trajectory - x: 0.000000, y: 150.982788, phi: 0.000000, v: 111.817886, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219540.103701927]: [1748219540.103] Errors - x: -0.144643, y: 0.164895, phi: 0.514762, integral_x: -0.094311, integral_y: 0.116178[0m
+[0m[ INFO] [1748219540.144732235]: Received reference trajectory - x: 0.000000, y: 162.350189, phi: 0.000000, v: 115.599068, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219540.206245999]: [1748219540.206] Errors - x: -0.165264, y: 0.187799, phi: 0.501611, integral_x: -0.110837, integral_y: 0.134957[0m
+[0m[ INFO] [1748219540.246290440]: Received reference trajectory - x: 0.000000, y: 174.102524, phi: 0.000000, v: 119.344643, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219540.313114951]: [1748219540.313] Errors - x: -0.188261, y: 0.212219, phi: 0.479067, integral_x: -0.129663, integral_y: 0.156179[0m
+[0m[ INFO] [1748219540.344662274]: Received reference trajectory - x: 0.000000, y: 186.220825, phi: 0.000000, v: 123.049744, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219540.402549214]: [1748219540.402] Errors - x: -0.214490, y: 0.238245, phi: 0.450886, integral_x: -0.151112, integral_y: 0.180004[0m
+[0m[ INFO] [1748219540.446665315]: Received reference trajectory - x: 0.000000, y: 198.716095, phi: 0.000000, v: 126.718872, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219540.495317179]: [1748219540.495] Errors - x: -0.243775, y: 0.265328, phi: 0.417070, integral_x: -0.175490, integral_y: 0.206537[0m
+[0m[ INFO] [1748219540.544655225]: Received reference trajectory - x: 0.000000, y: 211.561371, phi: 0.000000, v: 130.345367, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219540.602720856]: [1748219540.602] Errors - x: -0.276448, y: 0.293166, phi: 0.375739, integral_x: -0.203135, integral_y: 0.235853[0m
+[0m[ INFO] [1748219540.644792199]: Received reference trajectory - x: 0.000000, y: 224.779190, phi: 0.000000, v: 133.936722, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219540.704638489]: [1748219540.704] Errors - x: -0.313163, y: 0.321711, phi: 0.332529, integral_x: -0.234451, integral_y: 0.268024[0m
+[0m[ INFO] [1748219540.744574320]: Received reference trajectory - x: 0.000000, y: 238.347397, phi: 0.000000, v: 137.487885, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219540.802285163]: [1748219540.802] Errors - x: -0.353890, y: 0.350337, phi: 0.289319, integral_x: -0.269840, integral_y: 0.303058[0m
+[0m19539.444650999]: Published position command - x: 0.000000, y: 90.876312, phi: 0.000000, v: 88.318314, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219539.445677602]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219539.545747375]: Published position command - x: 0.000000, y: 100.060768, phi: 0.000000, v: 92.396706, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219539.545873488]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219539.644713263]: Published position command - x: 0.000000, y: 109.341232, phi: 0.000000, v: 96.305534, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219539.645036371]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219539.744067444]: Published position command - x: 0.000000, y: 119.164742, phi: 0.000000, v: 100.239929, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219539.744209558]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219539.844663238]: Published position command - x: 0.000000, y: 129.386093, phi: 0.000000, v: 104.138359, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219539.845036619]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219539.944058860]: Published position command - x: 0.000000, y: 139.990051, phi: 0.000000, v: 107.996460, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219539.944152333]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219540.044131096]: Published position command - x: 0.000000, y: 150.982788, phi: 0.000000, v: 111.817886, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219540.044284730]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219540.144035875]: Published position command - x: 0.000000, y: 162.350189, phi: 0.000000, v: 115.599068, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219540.144129764]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219540.244640758]: Published position command - x: 0.000000, y: 174.102524, phi: 0.000000, v: 119.344643, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219540.244999802]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219540.344093179]: Published position command - x: 0.000000, y: 186.220825, phi: 0.000000, v: 123.049744, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219540.344209469]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219540.444680910]: Published position command - x: 0.000000, y: 198.716095, phi: 0.000000, v: 126.718872, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219540.445063730]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219540.544109363]: Published position command - x: 0.000000, y: 211.561371, phi: 0.000000, v: 130.345367, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219540.544229941]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219540.644316705]: Published position command - x: 0.000000, y: 224.779190, phi: 0.000000, v: 133.936722, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219540.644422338]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219540.744048522]: Published position command - x: 0.000000, y: 238.347397, phi: 0.000000, v: 137.487885, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219540.744141931]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219540.844615612]: Published position command - x: 0.000000, y: 252.277634, phi: 0.000000, v: 141.002869, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219540.844770430]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219540.944043522]: Published position command - x: 0.000000, y: 266.546265, phi: 0.000000, v: 144.476715, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219540.944138627]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219541.044042350]: Published position command - x: 0.000000, y: 281.166382, phi: 0.000000, v: 147.913620, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219541.044136399]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219541.144059034]: Published position command - x: 0.000000, y: 296.125305, phi: 0.000000, v: 151.311447, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219541.144160827]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1[ INFO] [1748219540.845215139]: Received reference trajectory - x: 0.000000, y: 252.277634, phi: 0.000000, v: 141.002869, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219540.905051573]: [1748219540.905] Errors - x: -0.398896, y: 0.378683, phi: 0.244230, integral_x: -0.309730, integral_y: 0.340926[0m
+[0m[ INFO] [1748219540.944681897]: Received reference trajectory - x: 0.000000, y: 266.546265, phi: 0.000000, v: 144.476715, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219540.995221045]: [1748219540.995] Errors - x: -0.448380, y: 0.406475, phi: 0.199141, integral_x: -0.354568, integral_y: 0.381574[0m
+[0m[ INFO] [1748219541.045081721]: Received reference trajectory - x: 0.000000, y: 281.166382, phi: 0.000000, v: 147.913620, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219541.106639614]: [1748219541.107] Errors - x: -0.501968, y: 0.433173, phi: 0.154053, integral_x: -0.404765, integral_y: 0.424891[0m
+[0m[ INFO] [1748219541.144945283]: Received reference trajectory - x: 0.000000, y: 296.125305, phi: 0.000000, v: 151.311447, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219541.197780200]: [1748219541.197] Errors - x: -0.559834, y: 0.458403, phi: 0.107085, integral_x: -0.460748, integral_y: 0.470732[0m
+[0m[ INFO] [1748219541.248541239]: Received reference trajectory - x: 0.000000, y: 311.432953, phi: 0.000000, v: 154.673264, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219541.313783652]: [1748219541.314] Errors - x: -0.621708, y: 0.481836, phi: 0.060118, integral_x: -0.522919, integral_y: 0.518915[0m
+[0m[ INFO] [1748219541.344691320]: Received reference trajectory - x: 0.000000, y: 327.063171, phi: 0.000000, v: 157.994156, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219541.394661374]: [1748219541.395] Errors - x: -0.687322, y: 0.502902, phi: 0.011272, integral_x: -0.591651, integral_y: 0.569205[0m
+[0m[ INFO] [1748219541.446888924]: Received reference trajectory - x: 0.000000, y: 343.031616, phi: 0.000000, v: 161.278305, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219541.498267953]: [1748219541.498] Errors - x: -0.757360, y: 0.521306, phi: -0.039453, integral_x: -0.667387, integral_y: 0.621336[0m
+[0m[ INFO] [1748219541.544810449]: Received reference trajectory - x: 0.000000, y: 359.315552, phi: 0.000000, v: 164.521851, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219541.594789623]: [1748219541.595] Errors - x: -0.831068, y: 0.536551, phi: -0.090177, integral_x: -0.750494, integral_y: 0.674991[0m
+[0m[ INFO] [1748219541.646794931]: Received reference trajectory - x: 0.000000, y: 375.933929, phi: 0.000000, v: 167.729355, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219541.695012549]: [1748219541.695] Errors - x: -0.908462, y: 0.548219, phi: -0.139023, integral_x: -0.841340, integral_y: 0.729813[0m
+[0m[ INFO] [1748219541.744670599]: Received reference trajectory - x: 0.000000, y: 392.859131, phi: 0.000000, v: 170.896179, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219541.802399298]: [1748219541.802] Errors - x: -0.989309, y: 0.555761, phi: -0.189748, integral_x: -0.940271, integral_y: 0.785389[0m
+[0m[ INFO] [1748219541.844784756]: Received reference trajectory - x: 0.000000, y: 410.102203, phi: 0.000000, v: 174.025223, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219541.905312878]: [1748219541.905] Errors - x: -1.073400, y: 0.559136, phi: -0.238594, integral_x: -1.047611, integral_y: 0.841303[0m
+[0m[ INFO] [1748219541.945082307]: Received reference trajectory - x: 0.000000, y: 427.660339, phi: 0.000000, v: 177.116592, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219541.995578190]: [1748219541.995] Errors - x: -1.160591, y: 0.557558, phi: -0.291197, integral_x: -1.163670, integral_y: 0.897059[0m
+[0m[ INFO] [1748219542.046421822]: Received reference trajectory - x: 0.000000, y: 445.534821, phi: 0.000000, v: 180.171097, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219542.109897592]: [1748219542.110] Errors - x: -1.248348, y: 0.551804, phi: -0.340043, integral_x: -1.288505, integral_y: 0.952239[0m
+[0m[ INFO] [1748219542.144821848]: Received reference trajectory - x: 0.000000, y: 463.702332, phi: 0.000000, v: 1748219541.244647020]: Published position command - x: 0.000000, y: 311.432953, phi: 0.000000, v: 154.673264, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219541.245673975]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219541.344063313]: Published position command - x: 0.000000, y: 327.063171, phi: 0.000000, v: 157.994156, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219541.344160530]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219541.444723236]: Published position command - x: 0.000000, y: 343.031616, phi: 0.000000, v: 161.278305, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219541.445045832]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219541.544058537]: Published position command - x: 0.000000, y: 359.315552, phi: 0.000000, v: 164.521851, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219541.544156266]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219541.644683675]: Published position command - x: 0.000000, y: 375.933929, phi: 0.000000, v: 167.729355, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219541.644990559]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219541.744073056]: Published position command - x: 0.000000, y: 392.859131, phi: 0.000000, v: 170.896179, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219541.744171713]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219541.844043308]: Published position command - x: 0.000000, y: 410.102203, phi: 0.000000, v: 174.025223, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219541.844129773]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219541.944060856]: Published position command - x: 0.000000, y: 427.660339, phi: 0.000000, v: 177.116592, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219541.944154841]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219542.044594217]: Published position command - x: 0.000000, y: 445.534821, phi: 0.000000, v: 180.171097, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219542.045027598]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219542.144088720]: Published position command - x: 0.000000, y: 463.702332, phi: 0.000000, v: 183.185410, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219542.144186641]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219542.244050235]: Published position command - x: 0.000000, y: 482.159973, phi: 0.000000, v: 186.159836, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219542.244145852]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219542.343998630]: Published position command - x: 0.000000, y: 500.924225, phi: 0.000000, v: 189.097641, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219542.344074055]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219542.444055570]: Published position command - x: 0.000000, y: 519.978638, phi: 0.000000, v: 191.996796, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219542.444147795]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219542.544038814]: Published position command - x: 0.000000, y: 539.321594, phi: 0.000000, v: 194.857620, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219542.544138911]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219542.644049994]: Published position command - x: 0.000000, y: 558.950134, phi: 0.000000, v: 197.680267, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219542.644168971]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219542.744039381]: Published position command - x: 0.000000, y: 578.856995, phi: 0.000000, v: 200.464203, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219542.744295640]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219542.844530247]: Published position command - x: 0.000000, y: 599.053162, phi: 0.000000, v: 203.211472, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219542.844948747]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219542.944117326]: Published position command - x: 0.000000, y: 619.504517, phi: 0.000000, v: 205.917984, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219542.944218575]: line segment no: 1, phi: 0.000000[0m
+[0m[ 83.185410, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219542.194768349]: [1748219542.195] Errors - x: -1.340443, y: 0.539707, phi: -0.392647, integral_x: -1.422549, integral_y: 1.006210[0m
+[0m[ INFO] [1748219542.244912676]: Received reference trajectory - x: 0.000000, y: 482.159973, phi: 0.000000, v: 186.159836, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219542.342403349]: [1748219542.342] Errors - x: -1.429255, y: 0.524664, phi: -0.433978, integral_x: -1.565475, integral_y: 1.058676[0m
+[0m[ INFO] [1748219542.344774959]: Received reference trajectory - x: 0.000000, y: 500.924225, phi: 0.000000, v: 189.097641, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219542.394656851]: [1748219542.395] Errors - x: -1.524309, y: 0.501206, phi: -0.484703, integral_x: -1.717906, integral_y: 1.108797[0m
+[0m[ INFO] [1748219542.445037693]: Received reference trajectory - x: 0.000000, y: 519.978638, phi: 0.000000, v: 191.996796, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219542.494881857]: [1748219542.495] Errors - x: -1.604940, y: 0.480567, phi: -0.531670, integral_x: -1.878400, integral_y: 1.156853[0m
+[0m[ INFO] [1748219542.544974952]: Received reference trajectory - x: 0.000000, y: 539.321594, phi: 0.000000, v: 194.857620, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219542.595155920]: [1748219542.595] Errors - x: -1.697900, y: 0.445235, phi: -0.625605, integral_x: -2.048190, integral_y: 1.201377[0m
+[0m[ INFO] [1748219542.645307896]: Received reference trajectory - x: 0.000000, y: 558.950134, phi: 0.000000, v: 197.680267, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219542.709930430]: [1748219542.701] Errors - x: -1.787743, y: 0.405571, phi: -0.728933, integral_x: -2.226964, integral_y: 1.241934[0m
+[0m[ INFO] [1748219542.745070913]: Received reference trajectory - x: 0.000000, y: 578.856995, phi: 0.000000, v: 200.464203, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219542.794900709]: [1748219542.795] Errors - x: -1.871980, y: 0.355895, phi: -0.858563, integral_x: -2.414162, integral_y: 1.277523[0m
+[0m[ INFO] [1748219542.849012728]: Received reference trajectory - x: 0.000000, y: 599.053162, phi: 0.000000, v: 203.211472, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219542.909097293]: [1748219542.908] Errors - x: -1.943122, y: 0.304427, phi: -0.978799, integral_x: -2.608474, integral_y: 1.307966[0m
+[0m[ INFO] [1748219542.944842454]: Received reference trajectory - x: 0.000000, y: 619.504517, phi: 0.000000, v: 205.917984, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219542.995483491]: [1748219542.995] Errors - x: -2.007477, y: 0.238086, phi: -1.127216, integral_x: -2.809222, integral_y: 1.331775[0m
+[0m[ INFO] [1748219543.045739531]: Received reference trajectory - x: 0.000000, y: 640.222168, phi: 0.000000, v: 208.585800, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219543.095755313]: [1748219543.096] Errors - x: -2.058325, y: 0.169928, phi: -1.271875, integral_x: -3.015054, integral_y: 1.348768[0m
+[0m[ INFO] [1748219543.144921038]: Received reference trajectory - x: 0.000000, y: 661.212708, phi: 0.000000, v: 211.216263, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219543.195685948]: [1748219543.196] Errors - x: -2.092949, y: 0.094557, phi: -1.469138, integral_x: -3.224349, integral_y: 1.358223[0m
+[0m[ INFO] [1748219543.247019057]: Received reference trajectory - x: 0.000000, y: 682.477722, phi: 0.000000, v: 213.809921, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219543.295332516]: [1748219543.295] Errors - x: -2.111809, y: 0.017236, phi: -1.688945, integral_x: -3.435530, integral_y: 1.359947[0m
+[0m[ INFO] [1748219543.344636386]: Received reference trajectory - x: 0.000000, y: 703.971619, phi: 0.000000, v: 216.361771, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219543.394911883]: [1748219543.395] Errors - x: -2.109722, y: -0.058795, phi: -1.935054, integral_x: -3.646502, integral_y: 1.354067[0m
+[0m[ INFO] [1748219543.445739450]: Received reference trajectory - x: 0.000000, y: 725.763794, phi: 0.000000, v: 218.880432, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219543.507514145]: [1748219543.507] Errors - x: INFO] [1748219543.044019224]: Published position command - x: 0.000000, y: 640.222168, phi: 0.000000, v: 208.585800, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219543.044294459]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219543.144029220]: Published position command - x: 0.000000, y: 661.212708, phi: 0.000000, v: 211.216263, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219543.144159494]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219543.244668759]: Published position command - x: 0.000000, y: 682.477722, phi: 0.000000, v: 213.809921, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219543.245088764]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219543.344047420]: Published position command - x: 0.000000, y: 703.971619, phi: 0.000000, v: 216.361771, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219543.344142525]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219543.444686447]: Published position command - x: 0.000000, y: 725.763794, phi: 0.000000, v: 218.880432, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219543.445000690]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219543.544044499]: Published position command - x: 0.000000, y: 747.750183, phi: 0.000000, v: 221.354355, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219543.544173269]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219543.644331298]: Published position command - x: 0.000000, y: 770.008911, phi: 0.000000, v: 223.792908, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219543.644722854]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219543.744113163]: Published position command - x: 0.000000, y: 792.522400, phi: 0.000000, v: 226.194412, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219543.744217068]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219543.844608956]: Published position command - x: 0.000000, y: 815.254822, phi: 0.000000, v: 228.555466, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219543.845067489]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219543.944063106]: Published position command - x: 0.000000, y: 838.220642, phi: 0.000000, v: 230.878067, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219543.944167939]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219544.044604564]: Published position command - x: 0.000000, y: 861.446350, phi: 0.000000, v: 233.165161, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219544.045006296]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219544.144037689]: Published position command - x: 0.000000, y: 884.846375, phi: 0.000000, v: 235.408813, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219544.144150074]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219544.244072997]: Published position command - x: 0.000000, y: 908.499939, phi: 0.000000, v: 237.617035, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219544.244200455]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219544.344095441]: Published position command - x: 0.000000, y: 932.378784, phi: 0.000000, v: 239.787415, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219544.344216658]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219544.444078429]: Published position command - x: 0.000000, y: 956.458984, phi: 0.000000, v: 241.918167, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219544.444175070]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219544.544165737]: Published position command - x: 0.000000, y: 980.780396, phi: 0.000000, v: 244.013092, w: 0.000000, segment_no: 1[0m
+[0m[ INFO] [1748219544.544254218]: line segment no: 1, phi: 0.000000[0m
+[0m[ INFO] [1748219528.868748122]: [I2C FOR MOTORS] Now launching this node in namespace: /asc[0m
+[0m[ INFO] [1748219528.893906799]: [I2C FOR MOTORS] publish motor duty cycle requests from command line with: rostopic pub --once /asc/set_motor_duty_cycle asclinic_pkg/LeftRightFloat32 "{left: 10.1, right: 10.1}"[0m
+[0m[ INFO] [1748219528.894066737]: [I2C FOR MOTORS] Successfully opened named /dev/i2c-1, with file descriptor = 10[0m
+[0m[ INFO] [1748219528.894169138]: [I2C FOR MOTORS] Actual acceleration limit = 0.0003125%/ms (after conversation to "internal units")[0m
+[0m[ INFO] [1748219528.894214771]: [I2C FOR MOTORS] Actual deceleration limit = 0.0015625%/ms (after conversation to "internal units")[0m
+[0m[ INFO] [1748219528.894313812]: [I2C FOR MOTORS] Now initialising SMC with I2C address 13[0m
+[0m[ INFO] [1748219528.913500679]: [I2C FOR MOTORS] Now initialising SMC with I2C address 14[0m
+[0m[ INFO] [1748219528.933861959]: [I2C FOR MOTORS] Node initialisation complete[0m
+-2.087002, y: -0.126458, phi: -2.196193, integral_x: -3.855203, integral_y: 1.341421[0m
+[0m[ INFO] [1748219543.545136575]: Received reference trajectory - x: 0.000000, y: 747.750183, phi: 0.000000, v: 221.354355, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219543.594761121]: [1748219543.595] Errors - x: -2.041978, y: -0.183417, phi: -2.504298, integral_x: -4.059401, integral_y: 1.323080[0m
+[0m[ INFO] [1748219543.646710972]: Received reference trajectory - x: 0.000000, y: 770.008911, phi: 0.000000, v: 223.792908, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219543.701713753]: [1748219543.702] Errors - x: -1.979384, y: -0.223090, phi: -2.834948, integral_x: -4.257339, integral_y: 1.300771[0m
+[0m[ INFO] [1748219543.744739954]: Received reference trajectory - x: 0.000000, y: 792.522400, phi: 0.000000, v: 226.194412, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219543.794892218]: [1748219543.795] Errors - x: -1.902609, y: -0.238501, phi: 3.091285, integral_x: -4.447600, integral_y: 1.276921[0m
+[0m[ INFO] [1748219543.847435676]: Received reference trajectory - x: 0.000000, y: 815.254822, phi: 0.000000, v: 228.555466, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219543.895420619]: [1748219543.895] Errors - x: -1.819415, y: -0.225935, phi: 2.721183, integral_x: -4.629541, integral_y: 1.254327[0m
+[0m[ INFO] [1748219543.944713097]: Received reference trajectory - x: 0.000000, y: 838.220642, phi: 0.000000, v: 230.878067, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219543.994768720]: [1748219543.995] Errors - x: -1.783254, y: -0.185898, phi: 1.939646, integral_x: -4.807867, integral_y: 1.235737[0m
+[0m[ INFO] [1748219544.045996771]: Received reference trajectory - x: 0.000000, y: 861.446350, phi: 0.000000, v: 233.165161, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219544.109859361]: [1748219544.110] Errors - x: -1.754947, y: -0.133858, phi: 1.191927, integral_x: -4.983361, integral_y: 1.222352[0m
+[0m[ INFO] [1748219544.144891875]: Received reference trajectory - x: 0.000000, y: 884.846375, phi: 0.000000, v: 235.408813, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219544.195211340]: [1748219544.195] Errors - x: -1.753735, y: -0.060185, phi: 0.502446, integral_x: -5.158735, integral_y: 1.216333[0m
+[0m[ INFO] [1748219544.244961007]: Received reference trajectory - x: 0.000000, y: 908.499939, phi: 0.000000, v: 237.617035, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219544.303249264]: [1748219544.303] Errors - x: -1.785814, y: 0.005802, phi: -0.036739, integral_x: -5.337316, integral_y: 1.216913[0m
+[0m[ INFO] [1748219544.345084508]: Received reference trajectory - x: 0.000000, y: 932.378784, phi: 0.000000, v: 239.787415, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219544.394921664]: [1748219544.395] Errors - x: -1.847215, y: 0.042909, phi: -0.617255, integral_x: -5.522038, integral_y: 1.221204[0m
+[0m[ INFO] [1748219544.444764900]: Received reference trajectory - x: 0.000000, y: 956.458984, phi: 0.000000, v: 241.918167, w: 0.000000, line_no: 1[0m
+[0m[ INFO] [1748219544.507000976]: [1748219544.507] Errors - x: -1.899104, y: 0.051591, phi: -1.120745, integral_x: -5.711948, integral_y: 1.226363[0m
+
+[ARUCO DETECTOR] Camera properties upon initialisation:
+CV_CAP_PROP_FRAME_HEIGHT : '480.0'
+CV_CAP_PROP_FRAME_WIDTH :  '640.0'
+CAP_PROP_FPS :             '30.0'
+CAP_PROP_FOCUS :           '0.0'
+CAP_PROP_AUTOFOCUS :       '0.0'
+CAP_PROP_BRIGHTNESS :      '128.0'
+CAP_PROP_CONTRAST :        '128.0'
+CAP_PROP_SATURATION :      '128.0'
+CAP_PROP_BUFFERSIZE :      '4.0'
+
+[ARUCO DETECTOR] Camera properties upon initialisation:
+CV_CAP_PROP_FRAME_HEIGHT : '1080.0'
+CV_CAP_PROP_FRAME_WIDTH :  '1920.0'
+CAP_PROP_FPS :             '5.0'
+CAP_PROP_FOCUS :           '0.0'
+CAP_PROP_AUTOFOCUS :       '0.0'
+CAP_PROP_BRIGHTNESS :      '128.0'
+CAP_PROP_CONTRAST :        '128.0'
+CAP_PROP_SATURATION :      '128.0'
+CAP_PROP_BUFFERSIZE :      '1.0'
+[INFO] [1748219532.124107]: [ARUCO DETECTOR] As a double check of the camera properties set, a frame captured just now has dimensions = (1080, 1920, 3)
+[INFO] [1748219532.128959]: [ARUCO DETECTOR] publish request from command line to save a single camera image using: rostopic pub --once /asc/request_save_image std_msgs/UInt32 1
+[INFO] [1748219532.132775]: [ARUCO DETECTOR] Node initialisation complete
+... logging to /home/asc/.ros/log/d0b22016-39c5-11f0-933a-d8c0a650f677/roslaunch-asc12-jetson-13113.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/launch/trajectory.launch
+[1mstarted roslaunch server http://asc12-jetson:45517/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /asc/aruco_detector/aruco_detector_desired_camera_fps: 5
+ * /asc/aruco_detector/aruco_detector_desired_camera_frame_height: 1080
+ * /asc/aruco_detector/aruco_detector_desired_camera_frame_width: 1920
+ * /asc/aruco_detector/aruco_detector_marker_size: 0.25
+ * /asc/aruco_detector/aruco_detector_save_image_path: /home/asc/saved_c...
+ * /asc/aruco_detector/aruco_detector_should_publish_camera_images: False
+ * /asc/aruco_detector/aruco_detector_should_save_all_aruco_images: False
+ * /asc/aruco_detector/aruco_detector_should_show_camera_images: False
+ * /asc/aruco_detector/aruco_detector_usb_camera_device_number: 0
+ * /asc/aruco_detector/aruco_detector_verbosity: 1
+ * /asc/encoder_read_multi_threaded/delta_t_for_publishing_encoder_counts: 0.1
+ * /asc/encoder_read_multi_threaded/encoder_events_to_monitor: rising
+ * /asc/encoder_read_multi_threaded/encoder_read_verbosity: 1
+ * /asc/encoder_read_multi_threaded/gpio_chip_number_for_encoder_lines: 1
+ * /asc/encoder_read_multi_threaded/line_number_for_left_side_encoder_channel_a: 105
+ * /asc/encoder_read_multi_threaded/line_number_for_left_side_encoder_channel_b: 106
+ * /asc/encoder_read_multi_threaded/line_number_for_right_side_encoder_channel_a: 84
+ * /asc/encoder_read_multi_threaded/line_number_for_right_side_encoder_channel_b: 130
+ * /asc/encoder_read_multi_threaded/should_monitor_left_side_encoder_channel_a: True
+ * /asc/encoder_read_multi_threaded/should_monitor_left_side_encoder_channel_b: False
+ * /asc/encoder_read_multi_threaded/should_monitor_right_side_encoder_channel_a: True
+ * /asc/encoder_read_multi_threaded/should_monitor_right_side_encoder_channel_b: False
+ * /asc/i2c_for_motors/motor_driver_current_limit_in_milliamps: 5000
+ * /asc/i2c_for_motors/motor_driver_left_side_multiplier: 1
+ * /asc/i2c_for_motors/motor_driver_max_accel_limit_in_percent_per_millisecond: 0.04
+ * /asc/i2c_for_motors/motor_driver_max_decel_limit_in_percent_per_millisecond: 0.16
+ * /asc/i2c_for_motors/motor_driver_max_duty_cycle_limit_in_percent: 100.0
+ * /asc/i2c_for_motors/motor_driver_right_side_multiplier: 1
+ * /asc/i2c_for_motors/motor_driver_verbosity: 1
+ * /rosdistro: noetic
+ * /rosversion: 1.17.0
+
+NODES
+  /
+    aruco_positioning (asclinic_pkg/aruco_positioning.py)
+    kf_fusion_node (asclinic_pkg/KF.py)
+    odomdelta (asclinic_pkg/odomdelta)
+    trajectory_generator (asclinic_pkg/trajectory_generator_state_space)
+    trajectory_tracker (asclinic_pkg/trajectory_tracker_state_space)
+    velocity_PI_control (asclinic_pkg/velocity_PI_control)
+  /asc/
+    aruco_detector (asclinic_pkg/aruco_detector.py)
+    encoder_read_multi_threaded (asclinic_pkg/encoder_read_multi_threaded)
+    i2c_for_motors (asclinic_pkg/i2c_for_motors)
+
+[1mROS_MASTER_URI=http://localhost:11311[0m
+]2;/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/launch/trajectory.launch http://localhost:11311
+[1mprocess[asc/i2c_for_motors-1]: started with pid [13146][0m
+[1mprocess[asc/encoder_read_multi_threaded-2]: started with pid [13147][0m
+[1mprocess[odomdelta-3]: started with pid [13153][0m
+[1mprocess[asc/aruco_detector-4]: started with pid [13158][0m
+[1mprocess[aruco_positioning-5]: started with pid [13163][0m
+[1mprocess[trajectory_tracker-6]: started with pid [13170][0m
+[1mprocess[trajectory_generator-7]: started with pid [13171][0m
+[1mprocess[velocity_PI_control-8]: started with pid [13172][0m
+[1mprocess[kf_fusion_node-9]: started with pid [13179][0m
+[kf_fusion_node-9] killing on exit
+[velocity_PI_control-8] killing on exit
+[trajectory_generator-7] killing on exit
+[trajectory_tracker-6] killing on exit
+[aruco_positioning-5] killing on exit
+[asc/aruco_detector-4] killing on exit
+[odomdelta-3] killing on exit
+[asc/encoder_read_multi_threaded-2] killing on exit
+[asc/i2c_for_motors-1] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m

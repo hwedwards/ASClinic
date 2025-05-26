@@ -20,7 +20,7 @@ struct Trajectory {
     int line_segment_no; //Tells us which line segment we are on.  
 
     // Constructor for DRIVING
-    Trajectory(const std::vector<double>& cx, const std::vector<double>& cy, double t, int line_segment, double start_phi)
+    Trajectory(const std::vector<double>& cx, const std::vector<double>& cy, double t, double start_phi, int line_segment)
         : type(DRIVING), coeffx(cx), coeffy(cy), tf(t), phi(start_phi), line_segment_no(line_segment){}
         // PHI SHOULD NOT INITIALISE TO ZERO, IT SHOULD BE THE ANGLE OF THE LINE SEGMENT.
     // Constructor for TURNING
@@ -37,6 +37,8 @@ void publishPositionCommand(float x, float y, float phi, float v, float w, int s
     position_command.w = w;
     position_command.line_segment_no = segment_no; // Add line segment number to the message
     motor_reference_position.publish(position_command);
+    // ROS_INFO("Published position command - x: %f, y: %f, phi: %f, v: %f, w: %f, segment_no: %d",
+    //          x, y, phi, v, w, segment_no);
 }
 
 // Helper function to evaluate cubic polynomial and its derivative
@@ -81,9 +83,12 @@ int main(int argc, char** argv) {
             double tf = std::stod(val);
             std::getline(ss, val, ',');
             double phi = std::stod(val);
+            ROS_INFO("phi: %f", phi);
             std::getline(ss, val, ',');
             int line_segment_no = std::stoi(val);
+            ROS_INFO("line_segment_no: %d", line_segment_no);
             trajectory_info.emplace_back(cx, cy, tf, phi, line_segment_no);
+        
         } else if (flag == 1) { // TURNING
             std::getline(ss, val, ',');
             double phi = std::stod(val);
@@ -91,6 +96,22 @@ int main(int argc, char** argv) {
             double tf = std::stod(val);
             trajectory_info.emplace_back(phi, tf);
             // For TURNING, we only need the angle and time
+        }
+    }
+    ROS_INFO("trajectory_info:");
+    for (size_t idx = 0; idx < trajectory_info.size(); ++idx) {
+        const auto& traj = trajectory_info[idx];
+        if (traj.type == DRIVING) {
+            std::ostringstream oss;
+            oss << "[DRIVING] idx=" << idx
+                << ", coeffx=[" << traj.coeffx[0] << ", " << traj.coeffx[1] << ", " << traj.coeffx[2] << ", " << traj.coeffx[3] << "]"
+                << ", coeffy=[" << traj.coeffy[0] << ", " << traj.coeffy[1] << ", " << traj.coeffy[2] << ", " << traj.coeffy[3] << "]"
+                << ", tf=" << traj.tf
+                << ", phi=" << traj.phi
+                << ", line_segment_no=" << traj.line_segment_no;
+            ROS_INFO("%s", oss.str().c_str());
+        } else if (traj.type == TURNING) {
+            ROS_INFO("[TURNING] idx=%zu, phi=%f, tf=%f", idx, traj.phi, traj.tf);
         }
     }
 
@@ -132,7 +153,8 @@ int main(int argc, char** argv) {
                     //     phi = std::atan2(dy, dx);
                     // }
                     v = std::sqrt(dx*dx + dy*dy);
-                    w = (phi - last_phi_sent) / 0.1;
+                    // We are doing straight line driving, so w is always zero... for now
+                    w = 0;
                     last_phi_sent = phi;
                     last_x = x;
                     last_y = y;
@@ -140,8 +162,8 @@ int main(int argc, char** argv) {
                     segment_no = trajectory_info[i].line_segment_no;
                     publishPositionCommand(x, y, phi, v, w, segment_no);
                     sent_final = false;
-                    // ROS_INFO("line segment no: %d, phi: %f",
-                    //          trajectory_info[i].line_segment_no, trajectory_info[i].phi);
+                    ROS_INFO("Published position command - x: %f, y: %f, phi: %f, v: %f, w: %f, segment_no: %d",
+                             x, y, phi, v, w, segment_no);
                 } else {
                     // Times up, move to the next trajectory and reset the timer
                     i++; 

@@ -81,11 +81,11 @@ void calculateAndPublishWheelSpeeds(float v, float w)
 // Callback for reference trajectory
 void referenceCallback(const asclinic_pkg::referenceVelocityPose &msg)
 {
-    ROS_INFO("Received reference trajectory - x: %f, y: %f, phi: %f, v: %f, w: %f, line_no: %d",
-             msg.x, msg.y, msg.phi, msg.v, msg.w, msg.line_segment_no);
+    // ROS_INFO("Received reference trajectory - x: %f, y: %f, phi: %f, v: %f, w: %f, line_no: %d",
+    //          msg.x, msg.y, msg.phi, msg.v, msg.w, msg.line_segment_no);
     ReferenceTrajectory::target_x = msg.x / 1000.0f; // Convert to meters
     ReferenceTrajectory::target_y = msg.y / 1000.0f;
-    ReferenceTrajectory::target_phi = msg.phi; // Convert to radians not sure what this is in
+    ReferenceTrajectory::target_phi = msg.phi * M_PI/180; // Convert to radians not sure what this is in
     ReferenceTrajectory::target_v = msg.v / 1000.0f;           // Convert mm/s to m/s
     ReferenceTrajectory::target_w = msg.w;     // Already in rad/s not sure about this either
     ReferenceTrajectory::line_segment_no = msg.line_segment_no;
@@ -120,9 +120,19 @@ void lineFollowingControllerLQR(float *v, float *w)
     // Augmented integrator component
     v_int = Gains::K_p[seg][0][0] * Error::integral_error_x + Gains::K_p[seg][0][1] * Error::integral_error_y;
     w_int = Gains::K_p[seg][1][0] * Error::integral_error_x + Gains::K_p[seg][1][1] * Error::integral_error_y;
+    // ROS_INFO("Segment %d: del_v: %f, del_w: %f, v_int: %f, w_int: %f",
+    //          seg, del_v, del_w, v_int, w_int);
+    // ROS_INFO("Errors - x: %f, y: %f, phi: %f, integraler_x: %f, integral_y: %f",
+    //          Error::error_x, Error::error_y, Error::error_phi,
+    //          Error::integral_error_x, Error::integral_error_y);
+    // ROS_INFO("Gains - K_x: [%f, %f, %f], [%f, %f, %f], K_p: [%f, %f], [%f, %f]",
+    //          Gains::K_x[seg][0][0], Gains::K_x[seg][0][1], Gains::K_x[seg][0][2],
+    //          Gains::K_x[seg][1][0], Gains::K_x[seg][1][1], Gains::K_x[seg][1][2],
+    //          Gains::K_p[seg][0][0], Gains::K_p[seg][0][1],
+    //          Gains::K_p[seg][1][0], Gains::K_p[seg][1][1]);
     *v = ReferenceTrajectory::target_v + del_v + v_int;
     *w = ReferenceTrajectory::target_w + del_w + w_int;
-    ROS_INFO("[%.3f] v: %f, w: %f (segment %d)", ros::Time::now().toSec(), *v, *w, seg);
+    // ROS_INFO("[%.3f] v: %f, w: %f (segment %d)", ros::Time::now().toSec(), *v, *w, seg);
 }
 // Callback to update the robot's current state
 void stateUpdateCallback(const asclinic_pkg::PoseCovar &msg)
@@ -134,16 +144,20 @@ void stateUpdateCallback(const asclinic_pkg::PoseCovar &msg)
     ROS_INFO("[%.3f] Robot state - x: %f, y: %f, phi: %f",
              ros::Time::now().toSec(),
              RobotState::current_x, RobotState::current_y, RobotState::current_phi);
-    ROS_INFO("[%.3f] Reference trajectory - x: %f, y: %f, phi: %f, v: %f, w: %f",
+    ROS_INFO("[%.3f] Reference trajectory - x: %f, y: %f, phi: %f, v: %f, w: %f, line_no: %d",
              ros::Time::now().toSec(),
              ReferenceTrajectory::target_x, ReferenceTrajectory::target_y,
              ReferenceTrajectory::target_phi, ReferenceTrajectory::target_v,
-             ReferenceTrajectory::target_w);
+             ReferenceTrajectory::target_w, ReferenceTrajectory::line_segment_no);
     Error::error_x = ReferenceTrajectory::target_x - RobotState::current_x;
     Error::error_y = ReferenceTrajectory::target_y - RobotState::current_y;
     Error::error_phi = signedAngleDiffDeg(ReferenceTrajectory::target_phi, RobotState::current_phi);
     Error::integral_error_x += Error::error_x * 0.1; // Integral term for longitudinal error
     Error::integral_error_y += Error::error_y * 0.1; // Integral term for lateral error
+    // ROS_INFO("[%.3f] Errors - x: %f, y: %f, phi: %f, integral_x: %f, integral_y: %f",
+    //          ros::Time::now().toSec(),
+    //          Error::error_x, Error::error_y, Error::error_phi,
+    //          Error::integral_error_x, Error::integral_error_y);
     // Clamp integral error to prevent windup
     if (Error::integral_error_x > Error::INTEGRAL_MAX)
     {

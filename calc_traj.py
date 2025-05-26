@@ -76,12 +76,14 @@ def main():
     K_list = []
     for idx, (coords, vels, tf) in enumerate(segments):
         coeffx, coeffy = get_traj(coords, vels, tf)
-        phi = atan2((coords[3] - coords[1]), (coords[2] - coords[0]))
-        print(f"Segment {idx}: phi = {phi} radians")
+        phi = atan2((coords[3] - coords[1]), (coords[2] - coords[0])) #phi needs to be in radians here to calculate gains
+        
         v = 0.3 # m/s (or set per segment if needed)
         A, B = calculateLinAB(v, phi)
         A_aug, B_aug = calculateAugmented(A, B)
         K, S, E = calculateGainsK(A_aug, B_aug)
+        phi = phi * 180 / np.pi  # Convert to degrees for storage
+        print(f"Segment {idx}: phi = {phi} degress")
         phi_list.append(phi)
         coeffx_list.append(coeffx)
         coeffy_list.append(coeffy)
