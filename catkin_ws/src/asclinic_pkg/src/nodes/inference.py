@@ -12,7 +12,7 @@ RAW_DIR = "/home/asc/saved_camera_images/saved_plant_images/filtered_images"
 PROCESSED_DIR = "/home/asc/saved_camera_images/saved_plant_images/processed_images"
 MODEL_PATH = "/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/src/plant_detector/weights_2.pt"
 
-NUMBER_OF_LOCATIONS = 2  # Number of locations to wait for before triggering batch inference
+NUMBER_OF_LOCATIONS = 12  # Number of locations to wait for before triggering batch inference
 
 class BatchInferencer:
     def __init__(self):

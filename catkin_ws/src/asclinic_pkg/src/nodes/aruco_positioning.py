@@ -35,6 +35,30 @@ log_counter = 1
 
 # Mapping from ArUco marker ID to its measured world-frame position (x, y) and heading phi (degrees)
 marker_positions = {
+    1: (-2.220,  3.000,   0),
+    2: (-2.220,  0.500,   0),
+    3: (-2.220, -2.000,   0),
+    4: ( 1.000, -4.570,  90),
+    5: ( 5.000, -4.570,  90),
+    6: ( 7.780, -2.000, 180),
+    7: ( 7.780,  0.500, 180),
+    8: ( 7.780,  3.000, 180),
+    9: ( 4.970,  5.540, -90),
+   10: ( 3.000,  5.540, -90),
+   11: ( 1.000,  5.540, -90),
+   12: ( 0.000,  1.020,  90),
+   13: ( 0.000,  0.980, -90),
+   14: ( 2.320, -3.090, 180),
+   15: ( 3.000, -2.720,  90),
+   16: ( 3.660, -3.120,   0),
+   18: ( 2.500,  2.250,   0),
+   19: ( 1.750,  1.500, -90),
+   20: ( 4.500, -1.250, 180),
+   22: ( 5.250, -0.500,  90),
+   # added in arucos:
+   25: ( -0.6,  -3.0, 90   ),
+   26: ( 7.6, 2.0, -90),
+   27: ( -0.4, 4.60,  0) 
    }
 
 """1: (-2.220,  3.000,   0),
@@ -66,7 +90,7 @@ def get_marker_pose(marker_id):
     pose = marker_positions.get(marker_id)
     if pose is None:
         #rospy.logwarn(f"Unknown marker ID: {marker_id}")
-    return pose
+        return pose
 
 def callback(data):
     global servo
