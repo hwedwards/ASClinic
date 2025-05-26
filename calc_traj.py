@@ -67,7 +67,8 @@ def main():
     # Example: define multiple line segments
     segments = [
         # Each tuple: (coords, vels, tf)
-        ([0, 0, 0, 5000], [0, 0, 0, 0], 25),
+        ([0, 0, -5000, 0], [0, 0, 0, 0], 25),
+        ([-5000, 0, -5000, 5000], [0, 0, 0, 0], 25),
     ]
     phi_list = []
     coeffx_list = []
