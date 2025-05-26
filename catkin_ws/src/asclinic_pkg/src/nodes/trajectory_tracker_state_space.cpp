@@ -83,12 +83,19 @@ void referenceCallback(const asclinic_pkg::referenceVelocityPose &msg)
 {
     // ROS_INFO("Received reference trajectory - x: %f, y: %f, phi: %f, v: %f, w: %f, line_no: %d",
     //          msg.x, msg.y, msg.phi, msg.v, msg.w, msg.line_segment_no);
+    
     ReferenceTrajectory::target_x = msg.x / 1000.0f; // Convert to meters
     ReferenceTrajectory::target_y = msg.y / 1000.0f;
     ReferenceTrajectory::target_phi = msg.phi * M_PI/180; // Convert to radians not sure what this is in
     ReferenceTrajectory::target_v = msg.v / 1000.0f;           // Convert mm/s to m/s
     ReferenceTrajectory::target_w = msg.w;     // Already in rad/s not sure about this either
+    if (ReferenceTrajectory::line_segment_no != msg.line_segment_no){
+        // New segment, reset integral errors
+        Error::integral_error_x = 0.0f;
+        Error::integral_error_y = 0.0f;
+    }
     ReferenceTrajectory::line_segment_no = msg.line_segment_no;
+
 }
 double signedAngleDiffDeg(double ref_deg, double meas_deg)
 {
@@ -141,14 +148,14 @@ void stateUpdateCallback(const asclinic_pkg::PoseCovar &msg)
     RobotState::current_y = msg.y / 1000.0f;
     RobotState::current_phi = msg.phi * M_PI / 180.0f; // Convert to radians
     // Log control system information.
-    ROS_INFO("[%.3f] Robot state - x: %f, y: %f, phi: %f",
-             ros::Time::now().toSec(),
-             RobotState::current_x, RobotState::current_y, RobotState::current_phi);
-    ROS_INFO("[%.3f] Reference trajectory - x: %f, y: %f, phi: %f, v: %f, w: %f, line_no: %d",
-             ros::Time::now().toSec(),
-             ReferenceTrajectory::target_x, ReferenceTrajectory::target_y,
-             ReferenceTrajectory::target_phi, ReferenceTrajectory::target_v,
-             ReferenceTrajectory::target_w, ReferenceTrajectory::line_segment_no);
+    // ROS_INFO("[%.3f] Robot state - x: %f, y: %f, phi: %f",
+    //          ros::Time::now().toSec(),
+    //          RobotState::current_x, RobotState::current_y, RobotState::current_phi);
+    // ROS_INFO("[%.3f] Reference trajectory - x: %f, y: %f, phi: %f, v: %f, w: %f, line_no: %d",
+    //          ros::Time::now().toSec(),
+    //          ReferenceTrajectory::target_x, ReferenceTrajectory::target_y,
+    //          ReferenceTrajectory::target_phi, ReferenceTrajectory::target_v,
+    //          ReferenceTrajectory::target_w, ReferenceTrajectory::line_segment_no);
     Error::error_x = ReferenceTrajectory::target_x - RobotState::current_x;
     Error::error_y = ReferenceTrajectory::target_y - RobotState::current_y;
     Error::error_phi = signedAngleDiffDeg(ReferenceTrajectory::target_phi, RobotState::current_phi);

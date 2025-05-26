@@ -1,27 +1,28 @@
 <launch>
+  <!-- ALL THESE COMMENTED OUT ON 26/05 by Toby TO MAKE IT CONSISTENT WITH PLANT_DETECTOR.LAUNCH FOR TESTING OF FINAL LOGIC -->
   <!-- Launch I2C motor controller -->
-  <include file="$(find asclinic_pkg)/launch/i2c_for_motors.launch"/>
+  <!--<include file="$(find asclinic_pkg)/launch/i2c_for_motors.launch"/>-->
 
   <!-- Launch encoder driver -->
-  <include file="$(find asclinic_pkg)/launch/encoder.launch"/>
+  <!--<include file="$(find asclinic_pkg)/launch/encoder.launch"/>-->
 
   <!-- Launch odometry node -->
-  <node pkg="asclinic_pkg" type="odomdelta" name="odomdelta" output="screen"/>
+  <!--<node pkg="asclinic_pkg" type="odomdelta" name="odomdelta" output="screen"/>-->
 
   <!-- Launch ArUco detector -->
-  <include file="$(find asclinic_pkg)/launch/aruco_detector.launch"/>
+  <!--<include file="$(find asclinic_pkg)/launch/aruco_detector.launch"/>-->
 
   <!-- Run ArUco positioning node -->
-  <node pkg="asclinic_pkg" type="aruco_positioning.py" name="aruco_positioning" output="screen"/>
+  <!--<node pkg="asclinic_pkg" type="aruco_positioning.py" name="aruco_positioning" output="screen"/>-->
 
   <!-- Run Trajectory Tracker node -->
   <node pkg="asclinic_pkg" type="trajectory_tracker_state_space" name="trajectory_tracker" output="screen"/>
 
   <!-- Run Trajectory Generator node -->
-  <node pkg="asclinic_pkg" type="trajectory_generator_state_space" name="trajectory_generator" output="screen"/>
+  <node pkg="asclinic_pkg" type="trajectory_generator_state_space" name="trajectory_generator" output="log"/>
 
   <!-- Run Velocity PI Control node -->
   <node pkg="asclinic_pkg" type="velocity_PI_control" name="velocity_PI_control" output="screen"/>
    <!-- Run Kalman filter fusion node -->
-  <node pkg="asclinic_pkg" type="KF.py" name="kf_fusion_node" output="screen"/>
+  <!--<node pkg="asclinic_pkg" type="KF.py" name="kf_fusion_node" output="screen"/>-->
 </launch>

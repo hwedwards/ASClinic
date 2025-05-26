@@ -27,39 +27,36 @@ RAD2DEG2 = RAD2DEG ** 2
 from asclinic_pkg.msg import FiducialMarkerArray
 from asclinic_pkg.msg import PoseCovar
 pose_pub = None
-plant_done = True  # Only publish while this is True
+# Flag indicating whether servo is in position; initialized true to allow initial publishing
+servo = True
 
 # Counter to throttle logging: only log every 10 callbacks
 log_counter = 1
 
 # Mapping from ArUco marker ID to its measured world-frame position (x, y) and heading phi (degrees)
 marker_positions = {
-    12: (3, -0.8, 180),
-    13: (4.5, 1, 180),
-    15: (3, 1.5, 90),
-    16: (5.5, 0, 180)
    }
-"""
-    12: (-0.8, -3.0, 90),
-    13: (1.0, -4.5, 90),
-    15: (1.5, -3.0, 180)
-    replicating the first part of the course, x facing the lecture theatre"""
 
-"""    1: (1.973, -0.600, 180),
-    2: (2.033, -0.600,   0),
-    3: (3.952,  1.200, 180),
-    4: (4.012,  1.200,   0),
-    5: (5.953, -0.600, 180),
-    6: (6.013, -0.600,   0),
-    7: (7.926,  1.200, 180),
-    8: (7.986,  1.200,   0),
-    9: (9.913, -0.600, 180),
-   10: (9.973, -0.600,   0),
-   11: (11.900, 0.000, 180),
-   12: (9.943,  1.500, -90),
-   13: (0.030, -0.600,   0),
-   14: (0.030,  1.200,   0)"""
-
+"""1: (-2.220,  3.000,   0),
+    2: (-2.220,  0.500,   0),
+    3: (-2.220, -2.000,   0),
+    4: ( 1.000, -4.570,  90),
+    5: ( 5.000, -4.570,  90),
+    6: ( 7.780, -2.000, 180),
+    7: ( 7.780,  0.500, 180),
+    8: ( 7.780,  3.000, 180),
+    9: ( 4.970,  5.540, -90),
+   10: ( 3.000,  5.540, -90),
+   11: ( 1.000,  5.540, -90),
+   12: ( 0.000,  1.020,  90),
+   13: ( 0.000,  0.980, -90),
+   14: ( 2.320, -3.090, 180),
+   15: ( 3.000, -2.720,  90),
+   16: ( 3.660, -3.120,   0),
+   18: ( 2.500,  2.250,   0),
+   19: ( 1.750,  1.500, -90),
+   20: ( 4.500, -1.250, 180),
+   22: ( 5.250, -0.500,  90)"""
 
 def get_marker_pose(marker_id):
     """
@@ -68,12 +65,12 @@ def get_marker_pose(marker_id):
     """
     pose = marker_positions.get(marker_id)
     if pose is None:
-        rospy.logwarn(f"Unknown marker ID: {marker_id}")
+        #rospy.logwarn(f"Unknown marker ID: {marker_id}")
     return pose
 
 def callback(data):
-    global plant_done
-    if not plant_done:
+    global servo
+    if not servo:
         return
     if data.num_markers >0:
         global log_counter
@@ -239,17 +236,17 @@ def callback(data):
                 writer.writerow([timestamp, marker_id, msg.x, msg.y, msg.phi])
 
 def plant_done_callback(msg: Bool):
-    global plant_done
-    plant_done = msg.data
-    if plant_done == False:
-        rospy.logwarn("[Aruco] plant_done set to False, ARUCO positioning will not publish.")
+    global servo
+    servo = msg.data
+    if servo == False:
+        rospy.logwarn("[Aruco] servo_in_position set to False, ARUCO positioning will not publish.")
 
 def listener():
     global pose_pub
     rospy.init_node('aruco_positioning', anonymous=True)
     pose_pub = rospy.Publisher('aruco_pose', PoseCovar, queue_size=10)
     rospy.Subscriber("/asc/aruco_detections", FiducialMarkerArray, callback)
-    rospy.Subscriber("/asc/plant_done", Bool, plant_done_callback, queue_size=1)
+    rospy.Subscriber("/asc/servo_in_position", Bool, plant_done_callback, queue_size=1)
     rospy.spin()
 
 if __name__ == '__main__':

@@ -12,7 +12,7 @@ import cv2
 
 # Nested dictionary mapping plant IDs to location-specific lists of servo pulse widths
 SERVO_PULSE_WIDTH_MAP = {
-    1: { 1: [1800, 2000], 2: [850, 1050] },
+    1: { 1: [1450, 1550], 2: [900, 100] },
 }
 
 BLURRINESS_THRESHOLD = 80  # Ignore frames with Laplacian variance below this threshold (decided from calculating the variance of the training set of model and seeing which is acceptable)
@@ -29,7 +29,8 @@ class PlantCollector:
         self.positions = []
         self.index = 0
         self.capture_count = CAPTURE_COUNT
-        self.done_pub = rospy.Publisher("/asc/plant_done", Bool, queue_size=1)
+        self.done_pub = rospy.Publisher("/asc/servo_in_position", Bool, queue_size=1)
+        self.location_done_pub = rospy.Publisher("/asc/location_done", Bool, queue_size=1)
         # publisher to request camera_capture to save an image
         self.save_req_pub = rospy.Publisher("/asc/request_save_image", UInt32, queue_size=1)
         self.last_command_time = rospy.Time(0)
@@ -41,6 +42,7 @@ class PlantCollector:
 
     def start_collection(self, plant_id, location):
         self.done_pub.publish(Bool(data=False))  # set done to false - suspend aruco positioning
+        self.location_done_pub.publish(Bool(data=False))  # reset location_done to false
         self.current_plant_id = plant_id
         self.current_location = location
         # prepare positions
@@ -51,6 +53,7 @@ class PlantCollector:
             servo_pub.publish(ServoPulseWidth(channel=3, pulse_width_in_microseconds=1500))
             rospy.sleep(1.0)
             self.done_pub.publish(Bool(data=True))
+            self.location_done_pub.publish(Bool(data=True))  # no positions, signal location done
             return
         rospy.loginfo(f"[YOLO Stream] Positions list: {self.positions}")
         self._next_position()
@@ -66,6 +69,7 @@ class PlantCollector:
                 self.plant_done_timer.shutdown()
                 self.plant_done_timer = None
             self.done_pub.publish(Bool(data=True))
+            self.location_done_pub.publish(Bool(data=True))  # signal that this location is done
             return
         # move to this servo position
         pulse = self.positions[self.index]

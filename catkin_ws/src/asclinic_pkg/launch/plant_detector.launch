@@ -5,6 +5,9 @@
   <!-- Include the ArUco positioning to test that it is being suppressed correctly -->
   <include file="$(find asclinic_pkg)/launch/positioning.launch"/>
 
+  <!-- Include the trajectory launch file to include all control -->
+  <include file="$(find asclinic_pkg)/launch/trajectory.launch"/>
+
   <!-- Run the inference.py node -->
   <node pkg="asclinic_pkg" type="inference.py" name="inference" output="screen" respawn="false"/>
 

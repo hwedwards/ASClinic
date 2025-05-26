@@ -1,6 +1,8 @@
 #include <ros/ros.h>
 #include "asclinic_pkg/referenceVelocityPose.h"
 #include "std_msgs/String.h"
+#include "std_msgs/Bool.h"
+#include "asclinic_pkg/PlantDetection.h"
 #include <fstream>
 #include <sstream>
 #include <vector>
@@ -8,9 +10,10 @@
 // Variables
 ros::Publisher motor_reference_position;
 ros::Publisher driving_state_publisher;
+ros::Publisher plant_dectect_publisher; // Publisher for plant detection state
 ros::Time start_time;
 
-enum TrajectoryType{DRIVING, TURNING}; 
+enum TrajectoryType{DRIVING, TURNING, STOP}; 
 struct Trajectory {
     TrajectoryType type;
     std::vector<double> coeffx;
@@ -26,7 +29,15 @@ struct Trajectory {
     // Constructor for TURNING
     Trajectory(double p, double t)
         : type(TURNING), coeffx(4, 0.0), coeffy(4, 0.0), tf(t), phi(p) {}
+    Trajectory(double plant_id, int location_no)
+        : type(STOP), coeffx(4, 0.0), coeffy(4, 0.0), tf(0.0), phi(plant_id), line_segment_no(location_no) {
+            // For STOP, we can set coefficients to zero and tf to zero
+            // plant_id is not used in this context but can be used for future functionality
+        }
 };
+namespace isDoneDetection {
+    bool isDone = false; // Flag to indicate if the plant detection is done
+}
 // Helper function to publish position and velocity commands
 void publishPositionCommand(float x, float y, float phi, float v, float w, int segment_no) {
     asclinic_pkg::referenceVelocityPose position_command;
@@ -40,7 +51,10 @@ void publishPositionCommand(float x, float y, float phi, float v, float w, int s
     // ROS_INFO("Published position command - x: %f, y: %f, phi: %f, v: %f, w: %f, segment_no: %d",
     //          x, y, phi, v, w, segment_no);
 }
-
+void location_done_callback(const std_msgs::Bool& msg) {
+    ROS_INFO("Received location done message: %s", msg.data ? "true" : "false");
+    isDoneDetection::isDone = msg.data; // Update the flag based on the message
+}
 // Helper function to evaluate cubic polynomial and its derivative
 double evalCubic(const std::vector<double>& coeffs, double t) {
     return coeffs[0] + coeffs[1]*t + coeffs[2]*t*t + coeffs[3]*t*t*t;
@@ -49,18 +63,31 @@ double evalCubicDot(const std::vector<double>& coeffs, double t) {
     return coeffs[1] + 2*coeffs[2]*t + 3*coeffs[3]*t*t;
 }
 
+// Helper function to publish plant detection message
+void publishPlantDetection(int plant_id, int location) {
+    asclinic_pkg::PlantDetection plant_detection;
+    plant_detection.are_at_plant = true; // Set to true when stopped at plant
+    plant_detection.plant_id = plant_id;
+    plant_detection.location = location;
+    plant_dectect_publisher.publish(plant_detection);
+    ROS_INFO("Published plant detection - Plant ID: %d, Location: %d", plant_id, location);
+}
+
 int main(int argc, char** argv) {
     ros::init(argc, argv, "trajectory_generator_state_space");
     ros::NodeHandle nh;
 
     motor_reference_position = nh.advertise<asclinic_pkg::referenceVelocityPose>("/reference_trajectory", 10);
     driving_state_publisher = nh.advertise<std_msgs::String>("/driving_state", 10);
-    // Pause for 3 seconds at the start
+    plant_dectect_publisher = nh.advertise<asclinic_pkg::PlantDetection>("/asc/at_plant", 10);
+    ros::Subscriber location_done = nh.subscribe("/asc/location_done", 10, location_done_callback); 
+
     ros::Duration(3.0).sleep();
     ros::Rate loop_rate(10); // 10 Hz
     // Read coefficients from CSV
     std::vector<Trajectory> trajectory_info;
     std::ifstream file("/home/asc/ASClinic/trajectory_coeffs.csv");
+    // READ IN TRAJECTORY INFO
     std::string line;
     std::getline(file, line); // skip header
     while (std::getline(file, line)) {
@@ -96,6 +123,14 @@ int main(int argc, char** argv) {
             double tf = std::stod(val);
             trajectory_info.emplace_back(phi, tf);
             // For TURNING, we only need the angle and time
+        } else if (flag == 2) { // STOP TO TAKE A PHOTO OF A PLANT
+            // This is a placeholder for future functionality
+            std::getline(ss, val, ',');
+            double plant_id = std::stod(val); // This could be used to identify the plant
+            std::getline(ss, val, ',');
+            int location_no = std::stoi(val); // This could be used to identify the location
+            trajectory_info.emplace_back(plant_id, location_no);
+
         }
     }
     ROS_INFO("trajectory_info:");
@@ -124,6 +159,7 @@ int main(int argc, char** argv) {
     // initialise the trajectory coefficients
     // counter
     int i = 0; 
+    bool sentFirstCommand = false;
     while (ros::ok()) {
         ros::Time now = ros::Time::now();
         t = (now - start_time).toSec();
@@ -169,7 +205,7 @@ int main(int argc, char** argv) {
                     i++; 
                     start_time = ros::Time::now();
                 }
-            } else {
+            } else if (trajectory_info[i].type == TURNING) {
                 std_msgs::String state_msg;
                 state_msg.data = "TURNING";
                 driving_state_publisher.publish(state_msg);
@@ -182,6 +218,29 @@ int main(int argc, char** argv) {
                 } else {
                     i++; 
                     start_time = ros::Time::now();
+                }
+            } else if (trajectory_info[i].type == STOP) {
+                // We are at a plant, we need to stop and take a photo
+                if (!isDoneDetection::isDone) {
+                    std_msgs::String state_msg;
+                    state_msg.data = "STOP";
+                    driving_state_publisher.publish(state_msg);
+                    // Publish plant detection state using correct types
+                    if (!sentFirstCommand) {
+                        // Publish the first command to stop at the plant
+                        publishPositionCommand(last_x, last_y, last_phi, 0.0, 0.0, 0.0);
+                        publishPlantDetection(static_cast<int>(trajectory_info[i].phi), trajectory_info[i].line_segment_no);
+                        sentFirstCommand = true; // Set flag to indicate we sent the first command
+                    } else {
+                        publishPositionCommand(last_x, last_y, last_phi, 0.0, 0.0, 0.0);
+                    }
+                } else {
+                    // If we are done with the plant detection, move to the next trajectory
+                    isDoneDetection::isDone = false; // Reset the flag for the next trajectory
+                    sentFirstCommand = false; // Reset the flag for the next trajectory
+                    i++;
+                    start_time = ros::Time::now();
+                    ros::Duration(0.5).sleep(); // Add a short delay to ensure transition
                 }
             }
 

@@ -12,10 +12,16 @@ RAW_DIR = "/home/asc/saved_camera_images/saved_plant_images/filtered_images"
 PROCESSED_DIR = "/home/asc/saved_camera_images/saved_plant_images/processed_images"
 MODEL_PATH = "/home/asc/ASClinic/catkin_ws/src/asclinic_pkg/src/plant_detector/weights_2.pt"
 
+NUMBER_OF_LOCATIONS = 2  # Number of locations to wait for before triggering batch inference
+
 class BatchInferencer:
     def __init__(self):
         # Load model once
         self.model = YOLO(MODEL_PATH)
+        # Initialize counter for location_done messages
+        self.location_done_count = 0
+        # Subscribe to location_done to trigger inference after ten True signals
+        rospy.Subscriber("/asc/location_done", Bool, self.location_done_cb)
         # Subscribe to trigger
         rospy.Subscriber("/batch_inference", Bool, self.trigger_cb)
         rospy.loginfo("[BatchInference] Ready, waiting for /batch_inference")
@@ -82,6 +88,18 @@ class BatchInferencer:
                     rospy.logerr(f"[BatchInference] Failed to save: {proc_path}")
 
         rospy.loginfo("[BatchInference] Batch inference complete")
+
+    def location_done_cb(self, msg: Bool):
+        if not msg.data:
+            return
+        self.location_done_count += 1
+        rospy.loginfo(f"[BatchInference] location_done True count: {self.location_done_count}/{NUMBER_OF_LOCATIONS}")
+        if self.location_done_count >= NUMBER_OF_LOCATIONS:
+            rospy.loginfo("[BatchInference] Finished all plant locations signals, running batch inference")
+            # call trigger directly
+            self.trigger_cb(Bool(data=True))
+            # reset counter for next cycle
+            self.location_done_count = 0
 
 def main():
     rospy.init_node("batch_inference_node", anonymous=True)
