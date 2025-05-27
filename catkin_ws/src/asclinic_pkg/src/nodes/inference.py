@@ -24,7 +24,7 @@ class BatchInferencer:
         rospy.Subscriber("/asc/location_done", Bool, self.location_done_cb)
         # Subscribe to trigger
         rospy.Subscriber("/batch_inference", Bool, self.trigger_cb)
-        rospy.loginfo("[BatchInference] Ready, waiting for /batch_inference")
+        rospy.loginfo("[BatchInference] Ready, waiting for /batch_inference or {NUMBER_OF_LOCATIONS} location_done signals")
 
         # Clear processed images directory
         if os.path.exists(PROCESSED_DIR):

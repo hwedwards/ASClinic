@@ -53,7 +53,7 @@ def plant_done_callback(msg):
 def main():
     rospy.init_node('test_plant_publisher')
     pub = rospy.Publisher('/asc/at_plant', PlantDetection, queue_size=1)
-    rospy.Subscriber('/asc/plant_done', Bool, plant_done_callback)
+    rospy.Subscriber('/asc/location_done', Bool, plant_done_callback)
     rospy.sleep(1.0)  # wait for publisher to register
     msg = PlantDetection()
     msg.are_at_plant = True

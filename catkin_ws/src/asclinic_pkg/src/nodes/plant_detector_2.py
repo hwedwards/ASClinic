@@ -14,7 +14,7 @@ import cv2
 SERVO_PULSE_WIDTH_MAP = {
     1: { 1: [1950, 2000, 2150], 2: [750, 825, 950] },
     2: { 1: [1600, 1500, 1450], 2: [1900, 1800, 1700] },
-    3: { 1: [2000, 2150, 2250], 2: [2000, 2150, 2250]},
+    3: { 1: [1400, 1300, 1250], 2: [2000, 2150, 2250]},
     4: { 1: [1200, 1300, 1400], 2: [2000, 2150, 2250] },
     5: { 1: [2000, 1900, 1800], 2: [750, 825, 950] },
     6: { 1: [1800, 1700, 1600], 2: [2000, 2150, 2250] }
@@ -80,7 +80,7 @@ class PlantCollector:
         pulse = self.positions[self.index]
         rospy.loginfo(f"[YOLO Stream] Position {self.index+1}/{len(self.positions)}: moving servo to {pulse}")
         servo_pub.publish(ServoPulseWidth(channel=3, pulse_width_in_microseconds=pulse))
-        rospy.sleep(3.0)  # wait for servo to settle
+        rospy.sleep(0.5)  # wait for servo to settle
 
         # start continuously publishing False while not at home
         if pulse != 1500:
@@ -93,7 +93,7 @@ class PlantCollector:
         for i in range(self.capture_count):
             self.save_req_pub.publish(UInt32(data=1))
             rospy.loginfo(f"[YOLO Stream] Requested save image {i+1}/{self.capture_count}")
-            rospy.sleep(1.0)
+            rospy.sleep(0.3)
 
         # filter and save the least blurry of the batch
         self._filter_and_save_best()
