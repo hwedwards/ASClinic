@@ -13,9 +13,9 @@ def parse_log(filename):
     state_x = []
     state_y = []
 
-    # Updated regex to extract timestamp and values
-    ref_re = re.compile(r'\[(\d+\.\d+)\] Reference trajectory - x: ([\d\.-]+), y: ([\d\.-]+), phi: ([\d\.-]+), v: ([\d\.-]+), w: ([\d\.-]+)')
-    state_re = re.compile(r'\[(\d+\.\d+)\] Robot state - x: ([\d\.-]+), y: ([\d\.-]+), phi: ([\d\.-]+)')
+    # Updated regex to extract timestamp and values with [TRACKER] prefix
+    ref_re = re.compile(r'\[TRACKER\] \[(\d+\.\d+)\] Reference trajectory - x: ([\d\.-]+), y: ([\d\.-]+), phi: ([\d\.-]+), v: ([\d\.-]+), w: ([\d\.-]+)')
+    state_re = re.compile(r'\[TRACKER\] \[(\d+\.\d+)\] Robot state - x: ([\d\.-]+), y: ([\d\.-]+), phi: ([\d\.-]+)')
 
     ref_times = []
     state_times = []
