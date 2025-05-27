@@ -27,10 +27,7 @@ namespace DrivingState
 {
     std::string current_state = "FORWARD"; // Default state
 }
-void drivingStateCallback(const std_msgs::String &msg)
-{
-    DrivingState::current_state = msg.data;
-}
+
 
 namespace RobotState
 {
@@ -56,6 +53,15 @@ namespace Error
     float integral_error_x = 0.0;      // Integral of the longitudinal error
     const float INTEGRAL_MAX = 100.0;  // Maximum limit for integral term
     const float INTEGRAL_MIN = -100.0; // Minimum limit for integral term
+}
+void drivingStateCallback(const std_msgs::String &msg)
+{
+    if (DrivingState::current_state != msg.data) {
+        // State changed, purge integrals
+        Error::integral_error_x = 0.0f;
+        Error::integral_error_y = 0.0f;
+    }
+    DrivingState::current_state = msg.data;
 }
 // Function to publish motor commands
 void publishMotorCommand(float left_speed, float right_speed)
@@ -89,13 +95,7 @@ void referenceCallback(const asclinic_pkg::referenceVelocityPose &msg)
     ReferenceTrajectory::target_phi = msg.phi * M_PI/180; // Convert to radians not sure what this is in
     ReferenceTrajectory::target_v = msg.v / 1000.0f;           // Convert mm/s to m/s
     ReferenceTrajectory::target_w = msg.w;     // Already in rad/s not sure about this either
-    if (ReferenceTrajectory::line_segment_no != msg.line_segment_no){
-        // New segment, reset integral errors
-        Error::integral_error_x = 0.0f;
-        Error::integral_error_y = 0.0f;
-    }
     ReferenceTrajectory::line_segment_no = msg.line_segment_no;
-
 }
 double signedAngleDiffDeg(double ref_deg, double meas_deg)
 {
